@@ -1,32 +1,43 @@
-# Ignore Composer vendor directory
-/vendor
+/vendor/
+/node_modules/
+composer.phar
 
-# Ignore node_modules directory if using npm or yarn
-/node_modules
+# Local env files
+.env
+.env.*
+!.env.example
 
-# Ignore PHPStorm project files
-.idea
-
-# Ignore temporary files and directories
-*.swp
-*.swo
-*.bak
-*~
-
-# Ignore log files
-*.log
-
-# Ignore cache files
-*.cache
-
-# Ignore database dump files
-*.sql
-
-# Ignore IDE specific settings
+# IDE/editor
+.idea/
+.vscode/
 *.iml
 *.sublime-project
 *.sublime-workspace
 
-# Ignore OS-specific files and directories
+# OS/temp
 .DS_Store
 Thumbs.db
+*.swp
+*.swo
+*.bak
+*~
+*.tmp
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Python/tool caches (if any)
+__pycache__/
+*.pyc
+
+# Cursor/agent local artifacts
+.aider*
+.cursor/
+agent-tools/
+agent-transcripts/
+
+# Docker local data overrides
+docker-compose.override.yml
