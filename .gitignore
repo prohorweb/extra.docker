@@ -1,1 +1,32 @@
-.aider*
+# Ignore Composer vendor directory
+/vendor
+
+# Ignore node_modules directory if using npm or yarn
+/node_modules
+
+# Ignore PHPStorm project files
+.idea
+
+# Ignore temporary files and directories
+*.swp
+*.swo
+*.bak
+*~
+
+# Ignore log files
+*.log
+
+# Ignore cache files
+*.cache
+
+# Ignore database dump files
+*.sql
+
+# Ignore IDE specific settings
+*.iml
+*.sublime-project
+*.sublime-workspace
+
+# Ignore OS-specific files and directories
+.DS_Store
+Thumbs.db
