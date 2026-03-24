@@ -41,3 +41,14 @@ agent-transcripts/
 
 # Docker local data overrides
 docker-compose.override.yml
+
+# Yii runtime/assets (generated)
+frontend/runtime/
+frontend/web/assets/
+backend/runtime/
+backend/web/assets/
+api/runtime/
+api/web/assets/
+
+# Frontend build caches
+frontend/web/.sass-cache/

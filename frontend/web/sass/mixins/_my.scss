@@ -1,0 +1,147 @@
+// Ascending
+// Used to evaluate Sass maps like our grid breakpoints. 
+@mixin _assert-ascending($map, $map-name) {
+  $prev-key: null;
+  $prev-num: null;
+  @each $key, $num in $map {
+    @if $prev-num == null {
+      // Do nothing
+    } @else if not comparable($prev-num, $num) {
+      @warn "Potentially invalid value for #{$map-name}: This map must be in ascending order, but key '#{$key}' has value #{$num} whose unit makes it incomparable to #{$prev-num}, the value of the previous key '#{$prev-key}' !";
+    } @else if $prev-num < $num {
+      @warn "Invalid value for #{$map-name}: This map must be in ascending order, but key '#{$key}' has value #{$num} which isn't greater than #{$prev-num}, the value of the previous key '#{$prev-key}' !";
+    }
+    $prev-key: $key;
+    $prev-num: $num;
+  }
+}
+
+// медиа вставки  @include media($max, $min){ ... }
+@mixin media($max: 0, $min: 0){
+
+	@if ($min != 0 and $max != 0) {
+		@media (min-width: $min) and (max-width: $max){
+			@content;
+		}
+	} @else if ($min != 0 and $max == 0) {
+		@media (min-width: $min){
+			@content;
+		}
+	} @else if ($max != 0) {
+		@media (max-width: $max){
+			@content;
+		}
+	}
+	
+}
+
+// Starts at zero
+// Another grid mixin that ensures the min-width of the lowest breakpoint starts at 0.
+@mixin _assert-starts-at-zero($map) {
+  $values: map-values($map);
+  $first-value: nth($values, 1);
+  @if $first-value != 0 {
+    @warn "First breakpoint in `$grid-breakpoints` must start at 0, but starts at #{$first-value}.";
+  }
+}
+
+@mixin clearfix {
+	&::before,
+	&::after {
+		content: "";
+		display: block;
+		clear: both;
+	}
+}
+
+@mixin flex ($justifyContent: flex-start, $alignItems: flex-start, $align-content: flex-start, $wrap: wrap, $flex-direction: row ){
+	display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+	display: flex;
+	
+	@if not ($flex-direction == 0) { 
+		-webkit-flex-direction: $flex-direction;
+		-ms-flex-direction: $flex-direction;
+		flex-direction: $flex-direction;
+	}
+	
+	@if not ($wrap == 0) { 
+		-webkit-flex-wrap: $wrap;
+		-ms-flex-wrap: $wrap;
+		flex-wrap: $wrap;
+	}
+	
+	@if not ($justifyContent == 0) { 
+		-webkit-justify-content: $justifyContent;
+		-ms-flex-pack: $justifyContent;
+		justify-content: $justifyContent;
+	}
+	
+	@if not ($alignItems == 0) { 
+		-webkit-align-items: $alignItems;
+		-ms-flex-align: $alignItems;
+		align-items: $alignItems;
+	}
+	
+	@if not ($align-content == 0) { 
+		-webkit-align-content: $align-content;
+		-ms-flex-line-pack: $align-content;
+		align-content: $align-content;
+	}
+    
+}
+//@include flex(space-around, center);
+@mixin flex-items($flex-items: 0 1 auto, $flex-items-order: "", $flex-items-align: ""){
+	@if not ($flex-items == 0) { 
+		-webkit-flex: $flex-items;
+		-ms-flex: $flex-items;
+		flex: $flex-items;
+	}
+	
+	@if not ($flex-items-order == "") { 
+		-webkit-order: $flex-items-order;
+		-ms-flex-order: $flex-items-order;
+		order: $flex-items-order;
+	}
+	
+	@if not ($flex-items-align == "") { 
+		-webkit-align-self: $flex-items-align;
+		-ms-flex-item-align: $flex-items-align;
+		align-self: $flex-items-align;
+	}
+}
+
+@mixin brs($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+          border-radius: $radius;
+}
+
+@mixin box-shadow($i1, $i2, $i3, $color) {
+	-moz-box-shadow: $i1 $i2 $i3 $color;
+	-webkit-box-shadow: $i1 $i2 $i3 $color;
+	box-shadow: $i1 $i2 $i3 $color;
+}
+//@include box-shadow(0px, 0px, 0px, #000);
+
+// Функция времени. Вызов time(n);
+@mixin time($times: 0.35s, $all: all, $func: ease){
+	-webkit-transition: $all $times $func;
+	-moz-transition: $all $times $func;
+	-o-transition: $all $times $func;
+	transition: $all $times $func;
+}
+
+// Функция ширины колонок. Вызов column-width(n);
+@function column-width($col, $total: $grid-columns) {  
+	@return percentage($col/$total);  
+}
+
+// Функция перевода в rem. Вызов rem(n);
+@function rem($size, $base-font: 14) {  
+	$fin: ($size)/($base-font);
+	@return $fin+rem;  
+}

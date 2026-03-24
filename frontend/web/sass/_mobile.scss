@@ -1,0 +1,3121 @@
+@media (max-width: 1500px) {
+	.btn {
+		&--back {
+			padding: 0 5px;
+			&:before {
+				margin-right: 0;
+			}
+			span {
+				display: none;
+			}
+		}
+	}
+
+	.share-blog {
+		&__row {
+			margin: 0 -2.5rem -6rem;
+		}
+		&__item {
+			padding: 0 2.5rem;
+		}
+	}
+
+	.sale-section {
+		padding: 5.5rem 0 6rem;
+		&__title {
+			margin-bottom: 4rem;
+		}
+		&__row {
+			margin: 0 -2.5rem 3rem;
+		}
+		&__item {
+			margin-bottom: 2rem;
+			padding: 0 2.5rem;
+		}
+	}
+
+	.product-block {
+		&__title {
+			font: 3rem $family;
+		}
+		&__text {
+			font: 1.8rem $family;
+		}
+		&__date {
+			padding: 1rem 2rem;
+			font: 1.8rem/20px $family;
+			strong {
+				font: 800 2rem $family;
+			}
+		}
+
+		&--event {
+			.product-block__title {
+				font: 800 1.8rem $family;
+				margin-bottom: 1rem;
+			}
+			.product-block__text {
+				font: 1.4rem $family;
+				margin-bottom: 3rem;
+			}
+		}
+	}
+
+	.article-blog {
+		&__pagination {
+			padding-top: 6rem;
+		}
+	}
+}
+@media (max-width: 1400px) {
+	$title-h1: 3rem $family;
+
+	body {
+		font: 14px/1.5 $family;
+	}
+
+	.hidden-lg {
+		display: none;
+	}
+	.visible-lg {
+		display: block;
+	}
+	.visible-lg-inline {
+		display: inline-block;
+	}
+
+	.lg-mb0 {
+		margin-bottom: 0px !important;
+	}
+	.lg-mb5 {
+		margin-bottom: 5px !important;
+	}
+	.lg-mb10 {
+		margin-bottom: 10px !important;
+	}
+	.lg-mb15 {
+		margin-bottom: 15px !important;
+	}
+	.lg-mb20 {
+		margin-bottom: 20px !important;
+	}
+	.lg-mb25 {
+		margin-bottom: 25px !important;
+	}
+
+	h1,
+	.title-h1 {
+		font: 3rem $family;
+	}
+	h2,
+	.title-h2 {
+		font: 3rem $family;
+	}
+	h3,
+	.title-h3 {
+		font: 800 2rem $family;
+	}
+
+	.menu {
+		&__item {
+			font: 13px $family;
+		}
+	}
+
+	.header {
+		&__logo {
+			max-width: 350px;
+		}
+		&__adres {
+			font: 13px/16px $family;
+			.select-noborder-white {
+				font: 13px/16px $family;
+			}
+		}
+	}
+
+	.header-contacts {
+		&__phone {
+			font: 15px $family;
+		}
+		&__zvon {
+			font: 900 13px $family;
+		}
+	}
+
+	.slideshow-wrapper {
+		&__wrap {
+			padding: 4.5rem 6rem;
+		}
+		&__link {
+			padding-right: 14rem;
+			background-size: 90px auto;
+		}
+		&__title {
+			font: 4rem $family;
+		}
+		&__subtitle {
+			font: 3rem $family;
+		}
+
+		&--index {
+			.slick-slide {
+				& > img {
+					min-height: 550px;
+				}
+			}
+		}
+	}
+
+	.vr-banner {
+		&__link {
+			font: 3rem $family;
+		}
+	}
+
+	.about-section {
+		padding: 5.5rem 0 6rem;
+		&__title {
+			margin-bottom: 5rem;
+		}
+		&__text {
+			padding: 5.5rem 6rem !important;
+			font: 1.4rem $family;
+			p {
+				margin-bottom: 3rem;
+				&:last-child {
+					margin-bottom: 0;
+				}
+			}
+		}
+	}
+
+	.btn {
+		font: 900 1.6rem/21px $family;
+		&--sm {
+			font: 12px/16px $family;
+		}
+		&--xs {
+			font: 800 12px/16px $family;
+		}
+	}
+
+	.form-section {
+		padding: 5.5rem 0 6rem;
+		&__wrap {
+			max-width: 800px;
+		}
+		&__soglas {
+			margin-bottom: 5rem;
+		}
+
+		&--zvon {
+			.form-section__title {
+				margin-bottom: 3.5rem;
+				font: 900 1.8rem $family;
+			}
+		}
+	}
+
+	.service-section {
+		padding: 6rem 0;
+		&__info {
+			padding: 5rem 6rem !important;
+			&__title {
+				margin-bottom: 3rem;
+			}
+		}
+
+		&__title {
+			margin-bottom: 3rem;
+		}
+		&__button {
+			margin-top: 3rem;
+		}
+	}
+
+	.tab-nav {
+		margin-bottom: 3.5rem;
+		&__item {
+			font: 1.8rem $family;
+			margin-left: 4rem;
+			&:first-child {
+				margin-left: 0;
+			}
+		}
+	}
+
+	.inst-block {
+		&__text {
+			margin-bottom: 2rem;
+		}
+		&__date {
+			span {
+				font: 900 1.6rem $family;
+			}
+		}
+	}
+
+	.instagram-section {
+		padding: 6rem 0 3rem;
+		&__row {
+			margin-left: -2.5rem;
+			margin-right: -2.5rem;
+		}
+		&__item {
+			margin-bottom: 3rem;
+			padding-left: 2.5rem;
+			padding-right: 2.5rem;
+		}
+	}
+
+	.map-section {
+		padding: 7rem 0;
+		&__contacts {
+			padding: 5rem 8rem;
+			max-width: 570px;
+		}
+		&__title {
+			font: 3rem $family;
+			margin-bottom: 4rem;
+		}
+	}
+
+	.footer {
+		&__body {
+			padding: 4rem 0 6rem;
+		}
+		&__contacts {
+			margin-right: 4rem;
+		}
+		&__menu {
+			margin-left: 4rem;
+		}
+	}
+
+	.popup {
+		max-width: 930px;
+		&--club {
+			max-width: 78rem;
+			padding: 7rem 10rem;
+			.popup__text {
+				font: 900 16px $family;
+			}
+		}
+		&--career {
+			.popup__body {
+				padding: 5rem 12rem;
+			}
+			.popup__subtitle {
+				margin-bottom: 3.5rem;
+			}
+
+			.popup__button {
+				margin-top: 3.5rem;
+			}
+		}
+		&--form {
+			padding: 8rem 10rem;
+			max-width: 780px;
+			.popup__title {
+				margin-bottom: 4rem;
+			}
+			.popup__desc {
+				margin-bottom: 4rem;
+			}
+			.input-row {
+				margin-bottom: 4rem;
+			}
+		}
+		&--finish {
+			font: 1.6rem $family;
+			max-width: 750px;
+		}
+	}
+
+	.club-link {
+		a {
+			padding-right: 60px;
+			&:after {
+				width: 50px;
+				height: 50px;
+				font: 800 24px $gilroy;
+			}
+		}
+		&__title {
+			font: 900 2.2rem $family;
+		}
+		&__text {
+			font: 16px $family;
+		}
+	}
+
+	.breadcramb {
+		font: 800 13px $family;
+	}
+
+	.nav-section {
+		padding: 20px 0;
+		&__item {
+			font: 800 13px $family;
+		}
+	}
+
+	.main-section {
+		padding: 6rem 0;
+		&--card-choice {
+			padding: 5.5rem 0;
+		}
+	}
+
+	.card-choice {
+		&__services {
+			margin: 0 -4rem;
+			&__item {
+				margin-bottom: 35px;
+				padding: 0 4rem;
+			}
+		}
+		&__info-text {
+			font: 12px $family;
+			margin-bottom: 5.5rem;
+		}
+		&__cards {
+			&__item {
+				margin-bottom: 20px;
+				&:last-child {
+					margin-bottom: 0;
+				}
+			}
+		}
+		&__seo-text {
+			margin: 5.5rem auto 0;
+		}
+	}
+
+	.card-block {
+		padding: 5rem 6rem;
+		&__img {
+			margin-right: 6rem;
+		}
+	}
+
+	.blog-item {
+		&__title {
+			font: 800 1.6rem/2.4rem $family;
+		}
+	}
+
+	.article-page {
+		&__title {
+			margin-bottom: 3rem;
+		}
+		&__date {
+			font: 14px $family;
+			margin-bottom: 2.5rem;
+		}
+	}
+
+	.group-text {
+		margin-bottom: 3rem;
+	}
+
+	.careers-page {
+		.container {
+			max-width: 1110px;
+		}
+		&__title {
+			margin-bottom: 4rem;
+		}
+		&__desc {
+			max-width: 780px;
+			margin: 0 auto 4rem;
+		}
+		&__subtitle {
+			margin-bottom: 4rem;
+		}
+		&__row {
+			margin-bottom: -2rem;
+		}
+		&__item {
+			margin-bottom: 2rem;
+		}
+	}
+
+	.career-item {
+		min-height: 60px;
+		&__title {
+			padding: 1.5rem 3rem;
+			font: 12px/16px $family;
+		}
+		&__sep {
+			@include flex-items(0 0 60px);
+			max-width: 60px;
+			font: 800 24px $gilroy;
+		}
+	}
+
+	.contacts-page {
+		&__title {
+			margin-bottom: 4rem;
+		}
+		&__info {
+			padding: 6rem;
+		}
+	}
+
+	.team-blog {
+		&__filter {
+			margin-bottom: 5rem;
+		}
+		&__title {
+			margin-bottom: 4rem;
+		}
+
+		&--doposle {
+			.team-blog__wrap {
+				max-width: 1180px;
+				margin: 0 auto;
+			}
+		}
+	}
+
+	.team-item {
+		&__img {
+			margin-bottom: 20px;
+		}
+		&__title {
+			font: 1.8rem $family;
+		}
+		&__text {
+			font: 800 12px $family;
+		}
+
+		&--doposle {
+			.team-item__img {
+				margin-bottom: 2.5rem;
+			}
+			.team-item__title {
+				font: 800 2rem $family;
+				margin-bottom: 1rem;
+			}
+			.team-item__text {
+				font: 1.4rem $family;
+			}
+		}
+	}
+
+	.team-page {
+		&__position {
+			margin-bottom: 4rem;
+		}
+		&__button {
+			margin-top: 4rem;
+		}
+		&__date {
+			font: 14px $family;
+			margin-bottom: 3.5rem;
+		}
+
+		.group-text {
+			margin-bottom: 1.5rem;
+		}
+
+		&--doposle {
+			.team-page__wrap {
+				max-width: 980px;
+			}
+		}
+		&--personal {
+			.team-page__title {
+				margin-bottom: 4rem;
+			}
+		}
+	}
+
+	.share-blog {
+		&__desc {
+			max-width: 980px;
+		}
+	}
+
+	.share-page {
+		&__title {
+			font: 3.6rem $family;
+			margin-bottom: 4rem;
+		}
+		&__subtitle {
+			margin-bottom: 3rem;
+		}
+		&__info {
+			padding: 5.5rem 6rem !important;
+		}
+		&__button {
+			margin-top: 4rem;
+		}
+	}
+
+	.service-blog {
+		&__title {
+			margin-bottom: 3.5rem;
+		}
+		&__subtitle {
+			margin-bottom: 3.5rem;
+		}
+		&__desc {
+			max-width: 980px;
+		}
+		&__wrap {
+			max-width: 1180px;
+			margin: 0 auto;
+		}
+		&__row {
+			margin: 0 -5rem -5rem;
+		}
+		&__item {
+			padding: 0 5rem;
+			margin-bottom: 5rem;
+		}
+
+		&--group-programs {
+			.service-blog__desc {
+				margin-bottom: 4rem;
+			}
+		}
+	}
+
+	.service-block {
+		&__img {
+			margin-bottom: 3rem;
+		}
+		&__title {
+			margin-bottom: 2rem;
+		}
+	}
+
+	.other-services {
+		padding: 5.5rem 0;
+		&__row {
+			margin: 0 -5rem -4rem;
+		}
+		&__item {
+			padding: 0 5rem;
+		}
+	}
+
+	.other-teams {
+		padding: 5.5rem 0;
+		&__title {
+			margin-bottom: 4.5rem;
+		}
+		&__row,
+		&__list {
+			margin-bottom: -4rem;
+		}
+		&__item {
+			margin-bottom: 4rem;
+		}
+		&__buttons {
+			margin-top: 4.5rem;
+		}
+	}
+
+	.news-blog {
+		&__title {
+			margin-bottom: 4rem;
+		}
+		&__list {
+			max-width: 1170px;
+			margin: 0 auto -4.5rem;
+		}
+		&__item {
+			margin-bottom: 4.5rem;
+		}
+	}
+
+	.news-block {
+		&__date {
+			@include flex-items(0 0 20rem);
+		}
+		&__title {
+			margin-bottom: 1.5rem;
+		}
+		&__text {
+			margin-bottom: 2.5rem;
+		}
+	}
+
+	.group-program-page {
+		&__title {
+			margin-bottom: 3.5rem;
+		}
+		&__desc {
+			margin-bottom: 4rem;
+		}
+		&__subtitle {
+			margin-bottom: 2rem;
+		}
+		&__group {
+			margin-bottom: 5rem;
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+		&__text {
+			margin-bottom: 5rem;
+		}
+		&__info {
+			margin-bottom: 5rem;
+		}
+	}
+
+	.about-page {
+		&__title {
+			margin-bottom: 4rem;
+		}
+		&__desc {
+			max-width: 980px;
+			margin: 0 auto 4rem;
+		}
+		&__row {
+			margin-bottom: 5rem;
+		}
+		&__contacts-row {
+			margin-left: -1.5rem;
+			margin-right: -1.5rem;
+		}
+		&__contacts-item {
+			padding: 0 1.5rem;
+		}
+
+		&__gallery {
+			margin-bottom: 5rem;
+		}
+		&__params {
+			max-width: 980px;
+			&__title {
+				margin-bottom: 4rem;
+			}
+			&__row {
+				margin-bottom: 1rem;
+			}
+			&__item {
+				margin-bottom: 3rem;
+			}
+		}
+	}
+
+	.time-box-hint {
+		&__wrap {
+			max-width: 620px;
+		}
+		&__person {
+			font: 900 16px $family;
+		}
+	}
+}
+@media (max-width: 1300px) {
+	.team-page,
+	.article-page {
+		&__wrap {
+			margin: 0 40px;
+		}
+		&__back {
+			top: 2px;
+		}
+	}
+
+	.schedule-page {
+		&__filter {
+			&__type {
+				display: none;
+			}
+		}
+	}
+}
+@media (max-width: 1200px) {
+	.footer {
+		&__contacts {
+			margin-right: 0;
+		}
+		&__menu {
+			display: none;
+		}
+	}
+
+	.menu {
+		&__item {
+			margin-left: 2rem;
+			font-size: 12px;
+		}
+	}
+}
+@media (max-width: 1100px) {
+	.header {
+		&__menu {
+			display: none;
+		}
+		&__show-menu {
+			display: block;
+		}
+	}
+
+	.map-section {
+		&__contacts {
+			max-width: 470px;
+		}
+	}
+}
+@media (max-width: 1024px) {
+	//NOTE
+	.hidden-md,
+	.hidden-1024 {
+		display: none;
+	}
+	.visible-md,
+	.visible-1024 {
+		display: block;
+	}
+	.visible-md-inline,
+	.visible-1024-inline {
+		display: inline-block;
+	}
+
+	.md-left {
+		text-align: left !important;
+	}
+	.md-tcenter {
+		text-align: center !important;
+	}
+
+	.md-mb0 {
+		margin-bottom: 0px !important;
+	}
+	.md-mb5 {
+		margin-bottom: 5px !important;
+	}
+	.md-mb10 {
+		margin-bottom: 10px !important;
+	}
+	.md-mb15 {
+		margin-bottom: 15px !important;
+	}
+	.md-mb20 {
+		margin-bottom: 20px !important;
+	}
+	.md-mb25 {
+		margin-bottom: 25px !important;
+	}
+	.md-mb30 {
+		margin-bottom: 30px !important;
+	}
+	.md-mb40 {
+		margin-bottom: 40px !important;
+	}
+	.md-mb50 {
+		margin-bottom: 50px !important;
+	}
+	.md-mb60 {
+		margin-bottom: 60px !important;
+	}
+
+	.table-responsive {
+		width: 100%;
+		margin-bottom: 15px;
+		overflow-y: hidden;
+		-ms-overflow-style: -ms-autohiding-scrollbar;
+	}
+
+	.card-choice {
+		&__services {
+			margin: 0 auto;
+			max-width: 600px;
+			&__item {
+				margin-bottom: 25px;
+				padding: 0 2.5rem;
+				@include flex-items(0 1 33.33%);
+				img {
+					height: 50px;
+				}
+			}
+		}
+	}
+
+	.schedule-list {
+		&__row {
+			margin: 0 -1rem 5rem;
+			.day-col {
+				padding: 0 1rem;
+				@include flex-items(0 0 20%);
+			}
+		}
+	}
+
+	.schedule-page {
+		&__title {
+			margin-bottom: 2.5rem;
+		}
+		&__dates {
+			margin-bottom: 2rem;
+			.col-auto {
+				margin-bottom: 1rem;
+			}
+			a {
+				display: inline-block;
+				padding: 5px 2.5rem;
+				font: 800 1.2rem/22px $family;
+			}
+		}
+		&__filter {
+			&__buttons {
+				@include flex(center, center, center);
+				@include flex-items(1 1 100%);
+				margin-top: 2rem;
+				.btn {
+					margin: 0 1.5rem;
+					&:first-child {
+						margin-left: 0;
+					}
+					&:last-child {
+						margin-right: 0;
+					}
+				}
+			}
+			&__type {
+				display: none;
+			}
+		}
+		&__body {
+			padding-top: 4rem;
+		}
+	}
+}
+
+@media (max-width: 980px) {
+	$title-h1: 24px $family;
+
+	body {
+		font-size: 12px;
+		line-height: normal;
+	}
+
+	.hidden-sm {
+		display: none;
+	}
+	.visible-sm {
+		display: block;
+	}
+	.visible-sm-inline {
+		display: inline-block;
+	}
+
+	.sm-mb0 {
+		margin-bottom: 0px !important;
+	}
+	.sm-mb5 {
+		margin-bottom: 5px !important;
+	}
+	.sm-mb10 {
+		margin-bottom: 10px !important;
+	}
+	.sm-mb15 {
+		margin-bottom: 15px !important;
+	}
+	.sm-mb20 {
+		margin-bottom: 20px !important;
+	}
+	.sm-mb25 {
+		margin-bottom: 25px !important;
+	}
+	.sm-mb30 {
+		margin-bottom: 30px !important;
+	}
+	.sm-mb40 {
+		margin-bottom: 40px !important;
+	}
+	.sm-mb45 {
+		margin-bottom: 45px !important;
+	}
+	.sm-mb50 {
+		margin-bottom: 50px !important;
+	}
+
+	h1,
+	.title-h1 {
+		font: 24px $family;
+	}
+	h2,
+	.title-h2 {
+		font: 24px $family;
+	}
+	h3,
+	.title-h3 {
+		font: 800 18px $family;
+	}
+
+	.slideshow-wrapper {
+		&__wrap {
+			padding: 3rem;
+		}
+		&__link {
+			padding-right: 8rem;
+			background-size: 45px auto;
+		}
+		&__title {
+			font: 24px $family;
+		}
+		&__subtitle {
+			font: 18px $family;
+		}
+
+		&--index {
+			.slick-slide {
+				& > img {
+					min-height: 350px;
+				}
+			}
+		}
+	}
+
+	.popup {
+		&--club {
+			max-width: 66rem;
+			padding: 6rem 8rem;
+			.popup__text {
+				font: 900 14px $family;
+			}
+		}
+		&--career {
+			.popup__body {
+				padding: 5rem 7rem;
+			}
+			.popup__subtitle {
+				margin-bottom: 3rem;
+			}
+
+			.popup__button {
+				margin-top: 3rem;
+			}
+		}
+		&--form {
+			max-width: 705px;
+		}
+		&--finish {
+			font: 1.4rem $family;
+			max-width: 540px;
+			padding: 11rem 6rem;
+			.popup__title {
+				margin-bottom: 2.5rem;
+			}
+		}
+	}
+
+	.club-link {
+		a {
+			&:after {
+				width: 45px;
+				height: 45px;
+			}
+		}
+		&__title {
+			font: 900 1.8rem $family;
+		}
+		&__text {
+			font: 14px $family;
+		}
+	}
+
+	.vr-banner {
+		&__link {
+			font: 2.4rem $family;
+			display: block;
+			&:after {
+				display: block;
+				width: 45px;
+				height: 45px;
+				margin: 1.5rem auto 0;
+			}
+		}
+	}
+
+	.about-section {
+		&__title {
+			margin-bottom: 25px;
+		}
+		&__text {
+			padding: 35px !important;
+			font: 12px $family;
+		}
+	}
+
+	.btn {
+		font: 900 14px/21px $family;
+		&--product {
+			padding: 10px 15px;
+			&:before {
+				width: 15px;
+				height: 12px;
+				background-size: contain;
+			}
+		}
+	}
+
+	.sale-section {
+		padding: 35px 0 40px;
+		&__title {
+			margin-bottom: 25px;
+		}
+		&__row {
+			margin: 0 -1.5rem 10px;
+		}
+		&__item {
+			margin-bottom: 30px;
+			padding: 0 1.5rem;
+		}
+	}
+
+	.form-section {
+		padding: 5rem 0;
+		&__wrap {
+			max-width: 650px;
+		}
+		&__title {
+			margin-bottom: 25px;
+		}
+		&__subtitle {
+			margin-bottom: 25px;
+		}
+		&__text {
+			margin-bottom: 25px;
+		}
+		&__row {
+			margin-left: -3rem;
+			margin-right: -3rem;
+		}
+		&__item {
+			padding: 0 3rem;
+			margin-bottom: 3rem;
+		}
+		&__soglas {
+			margin-bottom: 40px;
+		}
+
+		&--zvon {
+			.form-section__title {
+				margin-bottom: 30px;
+				font-size: 16px;
+			}
+		}
+	}
+
+	textarea,
+	.inputbox {
+		font: 800 14px $family;
+	}
+
+	.radiobox,
+	.checkbox {
+		label {
+			font-size: 12px;
+			padding-left: 35px;
+		}
+	}
+	.checkbox {
+		label {
+			font: 300 12px/20px $family;
+			&:before {
+				width: 20px;
+				height: 20px;
+			}
+		}
+		input[type="checkbox"]:checked + label {
+			&:after {
+				width: 20px;
+				height: 20px;
+			}
+		}
+	}
+
+	.service-section {
+		padding: 4rem 0;
+		&__info {
+			padding: 35px 4rem !important;
+			&__title {
+				margin-bottom: 20px;
+				font: 900 1.8rem $family;
+			}
+		}
+		&__title {
+			margin-bottom: 25px;
+		}
+		&__button {
+			margin-top: 25px;
+		}
+		&__gallery {
+			max-height: 400px;
+		}
+	}
+
+	.tab-nav {
+		margin-bottom: 25px;
+		&__item {
+			font: 12px $family;
+			margin-left: 2.5rem;
+			&:first-child {
+				margin-left: 0;
+			}
+		}
+	}
+
+	.instagram-section {
+		padding: 35px 0 0;
+		&__row {
+			margin-left: -1.5rem;
+			margin-right: -1.5rem;
+		}
+		&__item {
+			margin-bottom: 35px;
+			padding-left: 1.5rem;
+			padding-right: 1.5rem;
+		}
+	}
+
+	.inst-block {
+		&__img {
+			margin-bottom: 15px;
+			img {
+				height: 215px;
+			}
+		}
+		&__text {
+			margin-bottom: 15px;
+		}
+		&__date {
+			font-size: 14px;
+			span {
+				font: 900 1.6rem $family;
+			}
+		}
+	}
+
+	.map-section {
+		padding: 40px 0;
+		&__contacts {
+			padding: 35px 30px;
+			max-width: 355px;
+			font: 12px/18px $family;
+		}
+		&__title {
+			font: 18px $family;
+			margin-bottom: 25px;
+		}
+		&__phone {
+			padding-left: 25px;
+			margin-bottom: 10px;
+		}
+		&__zvon {
+			font: 900 12px/18px $family;
+			margin-left: 15px;
+		}
+		&__adres {
+			padding-left: 25px;
+			margin-bottom: 10px;
+		}
+		&__metro {
+			padding-left: 25px;
+			margin-bottom: 10px;
+			background-size: auto 14px;
+		}
+		&__time {
+			padding-left: 25px;
+			margin-bottom: 10px;
+			background-size: 16px auto;
+		}
+		&__prodag {
+			padding-left: 25px;
+			margin-bottom: 10px;
+			background-size: auto 18px;
+			line-height: 18px;
+		}
+		&__mail {
+			padding-left: 25px;
+			margin-bottom: 10px;
+		}
+	}
+
+	.footer {
+		&__body {
+			padding: 30px 0;
+		}
+		&__left {
+			@include flex-items(0 0 50%);
+			.footer__soc {
+				margin-top: 20px;
+			}
+		}
+		&__logo {
+			margin-bottom: 6rem;
+			img {
+				max-width: 260px;
+				margin: 0 auto;
+			}
+		}
+		&__api {
+			@include flex(center, center);
+			a {
+				margin: 0 1rem;
+				&:first-child {
+					margin-left: 0;
+				}
+				&:last-child {
+					margin-right: 0;
+				}
+				img {
+					width: 120px;
+				}
+			}
+		}
+		&__center {
+			@include flex-items(0 0 50%);
+		}
+		&__right {
+			display: none;
+		}
+		&__bottom {
+			font: 12px $family;
+			padding: 10px 0;
+		}
+		&__links {
+			display: none;
+		}
+		&__mob-links {
+			display: block;
+			font: 12px/18px $family;
+		}
+	}
+
+	.footer-contacts {
+		font: 12px $family;
+		&__title {
+			font-size: 18px;
+		}
+		&__time {
+			margin-bottom: 10px;
+		}
+		&__adres {
+			margin-bottom: 10px;
+		}
+		&__phone {
+			margin-bottom: 10px;
+		}
+		&__mail {
+			margin-bottom: 10px;
+		}
+	}
+
+	.product-block {
+		&__time {
+			top: 10px;
+			left: 10px;
+			background-position: 10px 50%;
+			background-size: auto 16px;
+			padding: 15px 20px 15px 40px;
+			font: 14px $family;
+		}
+		&__wrap {
+			padding: 2rem 3rem;
+		}
+		&__title {
+			font: $title-h1;
+			margin-bottom: 5px;
+		}
+		&__text {
+			font: 16px $family;
+			margin-bottom: 15px;
+		}
+		&__date {
+			font: 1.2rem/20px $family;
+			strong {
+				font: 800 1.4rem/20px $family;
+			}
+		}
+
+		&--event {
+			.product-block__title {
+				font: 800 1.4rem $family;
+				margin-bottom: 1.5rem;
+			}
+			.product-block__text {
+				font: 1.2rem $family;
+				margin-bottom: 2.5rem;
+			}
+		}
+	}
+
+	.breadcramb {
+		font: 800 12px $family;
+	}
+
+	.nav-section {
+		padding: 10px 0;
+		&__item {
+			font: 800 12px $family;
+		}
+	}
+
+	.main-section {
+		padding: 4rem 0;
+		&--card-choice {
+			padding: 4rem 0;
+		}
+	}
+
+	.card-choice {
+		&__title {
+			margin-bottom: 3rem;
+		}
+		&__subtitle {
+			margin-bottom: 3.5rem;
+		}
+		&__info-text {
+			font: 12px $family;
+			margin-bottom: 3.5rem;
+			span {
+				padding-top: 1rem;
+			}
+		}
+		&__seo-text {
+			margin: 4rem auto 0;
+			max-width: 620px;
+		}
+	}
+
+	.card-block {
+		padding: 4rem 3.5rem;
+		&__img {
+			@include flex-items(0 0 245px);
+			margin-right: 4.5rem;
+		}
+		&__title {
+			font: 3.6rem $family;
+		}
+		&__text {
+			font: 1.8rem $family;
+		}
+	}
+
+	.blog-item {
+		max-width: 280px;
+		&__img {
+			margin-bottom: 2rem;
+		}
+		&__title {
+			font: 800 14px/18px $family;
+		}
+	}
+
+	.article-blog {
+		&__title {
+			margin-bottom: 3.5rem;
+		}
+		&__pagination {
+			padding-top: 5rem;
+		}
+		&__list {
+			margin-bottom: -3.5rem;
+		}
+		&__item {
+			margin-bottom: 3.5rem;
+		}
+	}
+
+	.careers-page {
+		.container {
+			max-width: 650px;
+		}
+		&__title {
+			margin-bottom: 2rem;
+		}
+		&__desc {
+			max-width: 650px;
+			margin: 0 auto 3rem;
+		}
+		&__subtitle {
+			margin-bottom: 3rem;
+		}
+		&__date {
+			font: 12px $family;
+			margin-bottom: 1.5rem;
+			strong {
+				font-size: 14px;
+			}
+		}
+	}
+
+	.article-page {
+		&__labels {
+			margin-bottom: 2.5rem;
+		}
+		&__date {
+			font: 12px $family;
+			margin-bottom: 1.5rem;
+			strong {
+				font-size: 14px;
+			}
+		}
+	}
+
+	.upload-box {
+		&__desc {
+			font: 12px $family;
+		}
+		&__result {
+			font: 800 14px $family;
+		}
+	}
+
+	.contacts-page {
+		&__title {
+			margin-bottom: 2.5rem;
+		}
+		&__info {
+			padding: 3rem 4rem;
+		}
+	}
+
+	.team-blog {
+		&__filter {
+			padding: 25px 15px;
+			margin: 0 -15px 4rem;
+			background: $grey;
+		}
+		&__title {
+			margin-bottom: 2.5rem;
+		}
+		&__row,
+		&__list {
+			margin-bottom: -3.5rem;
+		}
+		&__item {
+			margin-bottom: 3.5rem;
+		}
+
+		&--doposle {
+			.team-blog__title {
+				margin-bottom: 3.5rem;
+			}
+		}
+	}
+
+	.team-item {
+		max-width: 280px;
+		margin: 0 auto;
+		&__img {
+			margin-bottom: 15px;
+		}
+		&__title {
+			margin-bottom: 7px;
+		}
+
+		&--doposle {
+			.team-item__img {
+				margin-bottom: 1.5rem;
+			}
+			.team-item__title {
+				font: 800 1.6rem $family;
+				margin-bottom: 5px;
+			}
+			.team-item__text {
+				font: 1.2rem $family;
+			}
+		}
+	}
+
+	.team-page {
+		&__back {
+			top: 0;
+		}
+		&__title {
+			margin-bottom: 5px;
+		}
+		&__position {
+			margin-bottom: 1.5rem;
+			font: 800 1.4rem $family;
+		}
+		&__date {
+			font: 12px $family;
+			margin-bottom: 2rem;
+		}
+		&__button {
+			margin-top: 3rem;
+		}
+
+		.group-text {
+			margin-bottom: 1rem;
+		}
+
+		&--doposle {
+			.team-page__info {
+				margin-bottom: 3.5rem;
+				padding: 0 1.5rem;
+			}
+			.team-page__row {
+				margin-left: -1.5rem;
+				margin-right: -1.5rem;
+			}
+			.team-page__photo {
+				padding: 0 1.5rem;
+			}
+		}
+		&--personal {
+			.team-page__title {
+				margin-bottom: 2.5rem;
+			}
+			.team-page__info {
+				margin-bottom: 3.5rem;
+				padding: 0 1.5rem;
+			}
+			.team-page__row {
+				margin-left: -1.5rem;
+				margin-right: -1.5rem;
+			}
+			.team-page__photo {
+				padding: 0 1.5rem;
+			}
+		}
+	}
+
+	.share-blog {
+		&__title {
+			margin-bottom: 2rem;
+		}
+		&__desc {
+			margin-bottom: 3.5rem;
+		}
+		&__row {
+			margin: 0 -1.5rem -3rem;
+		}
+		&__item {
+			padding: 0 1.5rem;
+			margin-bottom: 3rem;
+		}
+	}
+
+	.share-page {
+		&__title {
+			font: 3rem $family;
+			margin: 0 auto 5px;
+			max-width: 680px;
+		}
+		&__subtitle {
+			margin-bottom: 2rem;
+		}
+		&__row {
+			margin: 0 auto;
+			max-width: 680px;
+		}
+		&__info {
+			padding: 0 !important;
+			background: transparent;
+			margin-bottom: 3rem;
+		}
+		&__button {
+			margin-top: 2rem;
+		}
+		&__soc-share {
+			margin: 10px auto 0;
+			max-width: 680px;
+		}
+	}
+
+	.soc-list {
+		&__label {
+			font: 1.4rem $family;
+		}
+	}
+
+	.vr-banner {
+		&--full {
+			.vr-banner__img {
+				min-height: 230px;
+			}
+		}
+	}
+
+	.service-blog {
+		&__title {
+			margin-bottom: 2rem;
+		}
+		&__subtitle {
+			margin-bottom: 2rem;
+		}
+		&__desc {
+			max-width: 620px;
+		}
+		&__wrap {
+			max-width: 660px;
+		}
+		&__row {
+			margin: 0 -1rem -3rem;
+		}
+		&__item {
+			padding: 0 1rem;
+			margin-bottom: 3rem;
+		}
+
+		&--group-programs {
+			.service-blog__desc {
+				margin-bottom: 3rem;
+			}
+			.service-blog__row {
+				margin: 0 -1rem -3.5rem;
+			}
+			.service-blog__item {
+				padding: 0 1rem;
+				margin-bottom: 3.5rem;
+			}
+		}
+	}
+
+	.service-block {
+		&__img {
+			margin-bottom: 2.5rem;
+		}
+		&__title {
+			margin-bottom: 1.5rem;
+		}
+	}
+
+	.other-services {
+		padding: 3.5rem 0;
+		&__title {
+			margin-bottom: 2.5rem;
+		}
+		&__row {
+			margin: 0 -1rem -3rem;
+		}
+		&__item {
+			padding: 0 1rem;
+			margin-bottom: 3rem;
+		}
+		&__buttons {
+			margin-top: 4rem;
+		}
+
+		&--group-program {
+			.other-services__row {
+				margin: 0 -1.5rem -3.5rem;
+			}
+			.other-services__item {
+				padding: 0 1.5rem;
+				margin-bottom: 3.5rem;
+			}
+		}
+
+		&--events {
+			.other-services__row {
+				margin: 0 auto -3rem;
+				max-width: 620px;
+			}
+			.other-services__item {
+				padding: 0;
+				margin-bottom: 3rem;
+			}
+		}
+	}
+
+	.service-info {
+		padding: 2.5rem 2rem 0;
+		&__title {
+			margin-bottom: 1.5rem;
+		}
+	}
+
+	.other-teams {
+		padding: 3.5rem 0;
+		&__title {
+			margin-bottom: 2.5rem;
+		}
+		&__row,
+		&__list {
+			margin-bottom: -3.5rem;
+		}
+		&__item {
+			margin-bottom: 3.5rem;
+		}
+		&__buttons {
+			margin-top: 3.5rem;
+		}
+	}
+
+	.news-blog {
+		&__title {
+			margin-bottom: 3rem;
+		}
+		&__list {
+			max-width: 620px;
+			margin: 0 auto -3rem;
+		}
+		&__item {
+			margin-bottom: 3rem;
+		}
+	}
+
+	.news-block {
+		display: block;
+		&__date {
+			margin-bottom: 10px;
+			br {
+				display: none;
+			}
+		}
+		&__text {
+			margin-bottom: 2rem;
+		}
+	}
+
+	.group-program-page {
+		&__title {
+			margin-bottom: 2.5rem;
+		}
+		&__desc {
+			margin-bottom: 3rem;
+		}
+		&__subtitle {
+			margin-bottom: 1.5rem;
+		}
+		&__group {
+			margin-bottom: 3.5rem;
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+		&__text {
+			margin-bottom: 2rem;
+		}
+		&__info {
+			margin-bottom: 2rem;
+			.btn {
+				padding: 5px 2rem;
+			}
+		}
+	}
+
+	.events-blog {
+		&__title {
+			margin-bottom: 3.5rem;
+		}
+	}
+
+	.old-event {
+		&__img {
+			@include flex-items(0 0 280px);
+			max-width: 280px;
+			margin-right: 4rem;
+			&:before {
+				display: none;
+			}
+			img {
+				width: 100%;
+				height: 100px;
+				object-fit: cover;
+			}
+		}
+		&__title {
+			font: 800 1.4rem $family;
+		}
+		&__date {
+			font: 1.2rem $family;
+			margin-bottom: 1.5rem;
+			strong {
+				font-size: 1.4rem;
+			}
+			span {
+				font-size: 1.4rem;
+			}
+		}
+	}
+
+	.gallery-row {
+		margin-bottom: 1rem;
+		&__item {
+			margin-bottom: 2rem;
+		}
+	}
+
+	.about-page {
+		&__title {
+			margin-bottom: 2rem;
+		}
+		&__desc {
+			margin: 0 auto 2.5rem;
+			max-width: 620px;
+		}
+		&__row {
+			margin-bottom: 2rem;
+		}
+		&__contacts-row {
+			margin: 0 auto;
+			max-width: 500px;
+		}
+		&__contacts-item {
+			padding: 0 5rem;
+			&:first-child {
+				padding-left: 0;
+			}
+			&:last-child {
+				padding-right: 0;
+			}
+		}
+		&__contacts-title {
+			font: 800 1.4rem $family;
+		}
+
+		&__gallery {
+			margin-bottom: 3.5rem;
+		}
+		&__params {
+			max-width: 620px;
+			&__title {
+				margin-bottom: 3rem;
+			}
+			&__row {
+				margin-bottom: 1.5rem;
+			}
+			&__item {
+				margin-bottom: 2rem;
+			}
+		}
+	}
+
+	.param-block {
+		&__num {
+			font: 800 3.6rem $family;
+		}
+	}
+
+	.schedule-list {
+		&__row {
+			margin: 0 -1rem 4rem;
+			.day-col {
+				@include flex-items(0 0 25%);
+			}
+		}
+	}
+
+	.time-box {
+		padding: 2.5rem 1rem 3rem 2rem;
+		font: 12px $family;
+		&__head {
+			margin-bottom: 2.5rem;
+		}
+		&__time {
+			font: 800 14px $family;
+		}
+		&__zal {
+			font: 12px $family;
+		}
+		&__name {
+			font: 800 16px $family;
+			min-height: 38px;
+		}
+		&__trener {
+			font: 12px $family;
+		}
+	}
+
+	.list-day {
+		padding: 15px 5px 15px 1.5rem;
+		font-size: 14px;
+	}
+	.list-day__date strong {
+		font-size: 20px;
+	}
+
+	.time-box-hint {
+		position: fixed;
+		width: 100%;
+		height: 100vh;
+		overflow: auto;
+		padding: 100px 15px;
+		&__overflow {
+			background: rgba(#000, 0.8);
+		}
+		&__close {
+			display: block;
+		}
+		&__wrap {
+			max-width: 680px;
+			width: 100%;
+			position: relative;
+			left: auto !important;
+			right: auto !important;
+			top: auto !important;
+			z-index: 9999;
+		}
+		&__person {
+			font: 900 18px $family;
+		}
+	}
+}
+
+@media (max-width: 750px) and (orientation: landscape) {
+	// mobile горизонт
+}
+@media (max-width: 750px) {
+	// mobile
+
+	$title-h1: 2rem $family;
+
+	.hidden-xs,
+	.hidden-750 {
+		display: none;
+	}
+	.visible-xs,
+	.visible-750 {
+		display: block;
+	}
+	.visible-xs-inline,
+	.visible-750-inline {
+		display: inline-block;
+	}
+
+	.xs-mb0 {
+		margin-bottom: 0px !important;
+	}
+	.xs-mb5 {
+		margin-bottom: 5px !important;
+	}
+	.xs-mb10 {
+		margin-bottom: 10px !important;
+	}
+	.xs-mb15 {
+		margin-bottom: 15px !important;
+	}
+	.xs-mb20 {
+		margin-bottom: 20px !important;
+	}
+	.xs-mb25 {
+		margin-bottom: 25px !important;
+	}
+	.xs-mb30 {
+		margin-bottom: 30px !important;
+	}
+	.xs-mb35 {
+		margin-bottom: 35px !important;
+	}
+	.xs-mb40 {
+		margin-bottom: 40px !important;
+	}
+	.xs-mb45 {
+		margin-bottom: 45px !important;
+	}
+	.xs-mb50 {
+		margin-bottom: 50px !important;
+	}
+
+	.xs-text-left {
+		text-align: left;
+	}
+	.xs-text-right {
+		text-align: right;
+	}
+	.xs-text-center {
+		text-align: center;
+	}
+
+	body {
+		font-size: 12px;
+	}
+
+	h1,
+	.title-h1 {
+		font-size: 20px;
+		margin-bottom: 2rem;
+	}
+	h2,
+	.title-h2 {
+		font-size: 20px;
+		margin-bottom: 2rem;
+	}
+	h3,
+	.title-h3 {
+		font-size: 18px;
+		margin-bottom: 2rem;
+	}
+	h4,
+	.title-h4 {
+		font-size: 18px;
+		margin-bottom: 2rem;
+	}
+	h5,
+	.title-h5 {
+		font-size: 16px;
+		margin-bottom: 2rem;
+	}
+
+	.header {
+		&__top {
+			&__show-menu {
+				display: block;
+			}
+		}
+		&__contacts {
+			display: none;
+		}
+		&__adres {
+			padding-left: 20px;
+			font-size: 12px;
+			height: 16px;
+			span {
+				display: none;
+			}
+			a {
+				padding-right: 15px;
+				margin-left: 0px;
+				max-width: 250px;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+		}
+		&__show-menu {
+			display: none;
+		}
+		&__logo {
+			@include flex-items(1 1 100%);
+			text-align: center;
+			max-width: none;
+			img {
+				margin: 0 auto;
+			}
+		}
+	}
+
+	.mod-phone-line {
+		display: block;
+		position: static;
+		top: 0;
+		left: 0;
+		width: 100%;
+		z-index: 500;
+		background: rgba($orang, 0.9);
+		padding: 10px 0;
+		text-align: center;
+		color: $black;
+		font: bold 12px $family;
+
+		&.fixed {
+			position: fixed;
+			top: 0;
+		}
+	}
+
+	.slideshow-wrapper {
+		&__container {
+			position: static;
+		}
+		&__wrap {
+			padding: 2rem 0rem;
+			display: block;
+		}
+		&__link {
+			padding: 0 0 6rem;
+			background-position: 0% 100%;
+			background-size: 42px auto;
+		}
+		&__title {
+			font: 2.4rem $family;
+			margin: 0 0 1rem;
+		}
+		&__subtitle {
+			font: 2rem $family;
+		}
+
+		&--index {
+			.slick-slide {
+				& > img {
+					height: 200px;
+					min-height: 200px;
+				}
+			}
+			.slideshow-wrapper__nav {
+				display: none;
+			}
+			.slideshow-wrapper__video {
+				height: 200px;
+				min-height: 200px;
+			}
+		}
+	}
+
+	.about-section {
+		padding: 2rem 0 0;
+		.container {
+			padding: 0;
+		}
+		&__title {
+			display: none;
+		}
+		&__text {
+			background: $grey;
+			padding: 2rem 2rem 4rem !important;
+			font: 1.2rem $family;
+			p {
+				margin-bottom: 2rem;
+				&:last-child {
+					margin-bottom: 0;
+				}
+			}
+		}
+	}
+
+	.btn {
+		font: 900 1.4rem/16px $family;
+		&--lg {
+			width: 100%;
+			padding-left: 15px;
+			padding-right: 15px;
+		}
+		&--xs {
+			padding: 5px 2rem;
+		}
+	}
+
+	.vr-banner {
+		min-height: 200px;
+	}
+
+	.sale-section {
+		padding: 4rem 0;
+		&__title {
+			margin-bottom: 2rem;
+		}
+		&__row {
+			margin: 0 -1.5rem 4rem;
+		}
+		&__item {
+			margin-bottom: 0;
+			padding: 0 0;
+		}
+
+		&--other {
+			.sale-section__title {
+				text-align: left;
+				margin-bottom: 2.5rem;
+			}
+		}
+	}
+
+	.product-block {
+		&__wrap {
+			padding: 2rem 2rem 4rem;
+		}
+		&__title {
+			font: $title-h1;
+		}
+		&__date {
+			top: 10px;
+			padding: 1rem 2rem;
+			font: 1.2rem/20px $family;
+			strong {
+				font: 800 1.4rem/20px $family;
+			}
+		}
+
+		&--event {
+			.product-block__img {
+				margin: 0 -1.5rem;
+			}
+			.product-block__wrap {
+				padding: 2.5rem 1.5rem 0;
+				margin: 0 -1.5rem;
+			}
+			.product-block__title {
+				font: 800 1.6rem $family;
+				margin-bottom: 1rem;
+			}
+			.product-block__text {
+				font: 1.2rem $family;
+				margin-bottom: 2.5rem;
+			}
+		}
+	}
+
+	.form-section {
+		padding: 4rem 0;
+		&__title {
+			text-align: left;
+			margin-bottom: 2.5rem;
+		}
+		&__subtitle {
+			text-align: left;
+			margin-bottom: 2.5rem;
+		}
+		&__text {
+			margin-bottom: 3rem;
+		}
+		&__row {
+			margin-left: -1.5rem;
+			margin-right: -1.5rem;
+		}
+		&__item {
+			padding: 0 1.5rem;
+			margin-bottom: 2.5rem;
+		}
+		&__soglas {
+			margin-bottom: 4rem;
+			text-align: left;
+			@include flex(flex-start);
+		}
+
+		&--zvon {
+			.form-section__title {
+				margin-bottom: 3rem;
+				font: 900 1.6rem $family;
+			}
+		}
+	}
+
+	.inputbox {
+		padding: 10px 0px;
+		font: 800 14px $family;
+		&--border {
+			padding: 0 0 10px;
+		}
+	}
+
+	.tab-nav {
+		display: block;
+		margin-bottom: 3rem;
+		&__item {
+			display: block;
+			font: 1.2rem $family;
+			text-align: left;
+			margin: 0 0 1.5rem;
+		}
+	}
+
+	.service-section {
+		padding: 4rem 0;
+		&__row {
+			margin: 0 -15px;
+		}
+		&__info {
+			padding: 3.5rem 2rem 0 !important;
+			background: transparent;
+			&__title {
+				margin-bottom: 2rem;
+				font: 900 1.8rem $family;
+			}
+		}
+		&__title {
+			margin-bottom: 2.5rem;
+		}
+		&__button {
+			margin-top: 3rem;
+		}
+	}
+
+	.inst-block {
+		&__img {
+			margin-bottom: 0;
+			img {
+				height: 140px;
+			}
+		}
+		&__text {
+			display: none;
+		}
+		&__date {
+			display: none;
+		}
+	}
+
+	.instagram-section {
+		padding: 4rem 0;
+		&__title {
+			margin-bottom: 2.5rem;
+			font: 1.4rem $family;
+		}
+		&__row {
+			margin: 0 -1px;
+		}
+		&__item {
+			margin-bottom: 2px;
+			padding: 0 1px;
+		}
+	}
+
+	.map-section {
+		padding: 0;
+		&__map {
+			position: static;
+			height: 320px;
+		}
+		&__contacts {
+			padding: 4rem 0rem;
+			font: 1.2rem/16px $family;
+		}
+		&__title {
+			font: 2rem $family;
+			margin-bottom: 2.5rem;
+		}
+		&__phone {
+			padding-left: 30px;
+			background-size: auto 13px;
+			background-position: 0 0;
+			margin-bottom: 2rem;
+		}
+		&__zvon {
+			margin: 2rem 0 0;
+			display: block;
+			font: 900 12px/16px $family;
+		}
+		&__adres {
+			padding-left: 30px;
+			background-size: auto 18px;
+			margin-bottom: 1rem;
+		}
+		&__metro {
+			padding-left: 30px;
+			background-size: 14px auto;
+			margin-bottom: 1rem;
+		}
+		&__time {
+			padding-left: 30px;
+			background-size: auto 14px;
+			margin-bottom: 1rem;
+		}
+		&__prodag {
+			padding-left: 30px;
+			background-size: auto 18px;
+			line-height: 18px;
+		}
+		&__mail {
+			padding-left: 30px;
+		}
+	}
+
+	.footer {
+		&__body {
+			padding: 4rem 0;
+		}
+		&__row {
+			display: block;
+		}
+		&__left {
+			display: block;
+			margin-bottom: 4rem;
+		}
+		&__logo {
+			margin-bottom: 3rem;
+			img {
+				max-width: 100%;
+			}
+		}
+		&__mob-links {
+			display: none;
+		}
+
+		&__contacts {
+			margin-bottom: 3rem;
+		}
+		&__right {
+			display: block;
+		}
+		&__zvon {
+			display: none;
+		}
+		&__bottom {
+			font: 12px $family;
+			padding: 25px 0;
+			text-align: center;
+			&__row {
+				display: block;
+			}
+		}
+		&__links {
+			display: block;
+			text-align: center;
+			margin-bottom: 10px;
+			p {
+				padding: 0px;
+				border: 0;
+			}
+		}
+		&__copy {
+			margin-bottom: 10px;
+		}
+	}
+
+	.popup-wrap {
+		padding: 5rem 1rem;
+	}
+
+	.popup {
+		&__logo {
+			margin-bottom: 3rem;
+		}
+		&__close {
+			top: 1rem;
+			right: 1rem;
+		}
+
+		&--club {
+			padding: 8rem 2rem;
+			.popup__text {
+				font: 900 12px $family;
+				margin-bottom: 4rem;
+			}
+		}
+
+		&--career {
+			.popup__body {
+				padding: 3rem 2rem;
+			}
+			.popup__subtitle {
+				margin-bottom: 2rem;
+			}
+			.item-page {
+				p,
+				ol,
+				ul {
+					margin-bottom: 15px;
+					&:last-child {
+						margin-bottom: 0px;
+					}
+				}
+			}
+		}
+
+		&--form {
+			padding: 5rem 2rem;
+			.popup__title {
+				margin-bottom: 2.5rem;
+				text-align: left;
+			}
+			.popup__desc {
+				margin-bottom: 2.5rem;
+				text-align: left;
+			}
+			.input-row {
+				margin-bottom: 2.5rem;
+			}
+			.popup__soglas {
+				display: block;
+				margin-bottom: 3rem;
+			}
+		}
+
+		&--finish {
+			font: 1.2rem $family;
+			padding: 7rem 4rem;
+			.popup__title {
+				margin-bottom: 2rem;
+			}
+		}
+	}
+
+	.upload-box {
+		.btn {
+			margin: 0;
+			padding-left: 1.5rem;
+			padding-right: 1.5rem;
+			width: 100%;
+		}
+		&__wrap {
+			text-align: left;
+		}
+		&__desc {
+			text-align: left;
+			font: 12px $family;
+			margin-top: 2.5rem;
+		}
+		&__result {
+			text-align: left;
+			font: 800 1.4rem $family;
+			margin-top: 5px;
+		}
+	}
+
+	.club-link {
+		a {
+			&:after {
+				width: 45px;
+				height: 45px;
+			}
+		}
+		&__title {
+			font: 900 1.4rem $family;
+		}
+		&__text {
+			font: 12px $family;
+		}
+	}
+
+	.breadcramb-section {
+		padding: 20px 0 25px;
+		&--pb0 {
+			padding-bottom: 0;
+		}
+		&--grey {
+			background: $white;
+		}
+	}
+
+	.breadcramb {
+		font: 800 12px $family;
+	}
+
+	.nav-section {
+		padding: 15px 0;
+		&__row {
+			display: none;
+		}
+		&__select {
+			display: block;
+			font-size: 12px !important;
+		}
+	}
+
+	.main-section {
+		padding: 4rem 0;
+		&--card-choice {
+			padding: 3.5rem 0;
+		}
+		&--contacts {
+			background: $white;
+			padding-bottom: 0;
+		}
+		&--share {
+			background: $white;
+		}
+	}
+
+	.card-choice {
+		&__title {
+			text-align: left;
+			margin-bottom: 2rem;
+		}
+		&__subtitle {
+			text-align: left;
+			margin-bottom: 2rem;
+		}
+		&__services {
+			margin: 0 -1rem;
+			&__item {
+				margin-bottom: 2rem;
+				padding: 0 1rem;
+				@include flex-items(0 0 50%);
+				img {
+					height: 45px;
+					margin-bottom: 1rem;
+				}
+			}
+		}
+		&__info-text {
+			text-align: left;
+			font: 12px $family;
+			margin-bottom: 3.5rem;
+		}
+		&__cards {
+			&__item {
+				margin: 0 -1.5rem;
+			}
+		}
+		&__seo-text {
+			margin: 3.5rem auto 0;
+		}
+	}
+
+	.card-block {
+		padding: 3.5rem 2rem;
+		&__bg {
+			object-position: 0% 50%;
+		}
+		&__img {
+			display: none;
+		}
+		&__wrap {
+			display: block;
+			@include flex-items(1 1 100%);
+		}
+		&__title {
+			font: 3.6rem $family;
+		}
+		&__text {
+			font: 2rem $family;
+			margin-bottom: 15px;
+		}
+		.btn {
+			width: 100%;
+			padding-left: 15px;
+			padding-right: 15px;
+		}
+	}
+
+	.article-blog {
+		&__title {
+			margin-bottom: 3.5rem;
+		}
+		&__pagination {
+			padding-top: 3.5rem;
+		}
+		&__list {
+			margin-bottom: -3rem;
+		}
+		&__item {
+			margin-bottom: 3rem;
+		}
+	}
+
+	.blog-item {
+		&__img {
+			margin-bottom: 2rem;
+		}
+	}
+
+	.pagination {
+		margin-left: -10px;
+		margin-right: -10px;
+		&__prev {
+			display: none;
+		}
+		&__next {
+			display: none;
+		}
+	}
+
+	.article-page {
+		&__back {
+			position: static;
+			margin-bottom: 2rem;
+		}
+		&__wrap {
+			margin: 0;
+		}
+		&__title {
+			margin-bottom: 2rem;
+		}
+	}
+
+	.group-text {
+		margin-bottom: 3rem;
+	}
+
+	.gallery-row {
+		margin-bottom: 1rem;
+		&__item {
+			margin-bottom: 2rem;
+			img {
+				margin: 0 auto;
+				display: block;
+			}
+		}
+	}
+
+	.careers-page {
+		&__title {
+			text-align: left;
+		}
+		&__subtitle {
+			text-align: left;
+		}
+	}
+
+	.career-item {
+		&__title {
+			padding: 1rem 2rem;
+		}
+	}
+
+	.contacts-page {
+		&__title {
+			margin-bottom: 3rem;
+		}
+		&__row {
+			margin: 0 -1.5rem;
+		}
+		&__info {
+			padding: 0 1.5rem;
+			margin-bottom: 3.5rem;
+		}
+		&__map {
+			height: 320px;
+		}
+	}
+
+	.form-inline {
+		margin: 0 0 -2rem -2rem;
+		&__item {
+			margin: 0 0 2rem 2rem;
+			&.xs-full {
+				@include flex-items(1 1 100%);
+			}
+		}
+	}
+
+	.team-page {
+		&__back {
+			position: static;
+			margin-bottom: 2rem;
+		}
+		&__wrap {
+			margin: 0;
+		}
+		&__title {
+			margin-bottom: 1rem;
+		}
+		&__position {
+			margin-bottom: 2.5rem;
+		}
+		&__info {
+			margin-bottom: 4rem;
+			.btn {
+				width: 100%;
+			}
+		}
+	}
+
+	.share-blog {
+		&__title {
+			text-align: left;
+		}
+		&__row {
+			margin: 0 -1.5rem 0rem;
+		}
+		&__item {
+			padding: 0 1.5rem;
+			margin-bottom: 0rem;
+		}
+	}
+
+	.share-page {
+		&__title {
+			font: 2.4rem $family;
+			margin-bottom: 10px;
+		}
+		&__subtitle {
+			margin-bottom: 2rem;
+		}
+		&__button {
+			margin-top: 3rem;
+		}
+	}
+
+	.service-blog {
+		&__title {
+			text-align: left;
+		}
+		&__subtitle {
+			text-align: left;
+		}
+		&__desc {
+			margin-bottom: 3.5rem;
+		}
+		&__wrap {
+			margin: 0 -1.5rem;
+		}
+	}
+
+	.service-block {
+		&__wrap {
+			padding: 0 15px;
+		}
+	}
+
+	.other-services {
+		&__title {
+			text-align: left;
+		}
+		&__row {
+			margin: 0 -3rem -3rem;
+		}
+		&__item {
+			padding: 0 1.5rem;
+		}
+		&__buttons {
+			margin-top: 2.5rem;
+		}
+
+		&--group-program {
+			.other-services__row {
+				margin: 0 -1.5rem -2.5rem;
+			}
+			.other-services__item {
+				padding: 0 1.5rem;
+				margin-bottom: 2.5rem;
+			}
+		}
+		&--events {
+			.other-services__row {
+				margin: 0 -1.5rem -3.5rem;
+			}
+			.other-services__item {
+				padding: 0 1.5rem;
+				margin-bottom: 3.5rem;
+			}
+		}
+	}
+
+	.service-info {
+		padding: 2.5rem 1.5rem 0;
+	}
+
+	.other-teams {
+		padding: 3.5rem 0;
+		&__title {
+			font-size: 1.8rem;
+			margin-bottom: 3.5rem;
+			text-align: left;
+		}
+	}
+
+	.news-blog {
+		&__title {
+			margin-bottom: 2.5rem;
+			text-align: left;
+		}
+	}
+
+	.news-block {
+		&__date {
+			font-size: 12px;
+			span,
+			strong {
+				font-size: 14px;
+			}
+		}
+		&__title {
+			margin-bottom: 10px;
+		}
+		&__text {
+			margin-bottom: 1.5rem;
+		}
+	}
+
+	.group-program-page {
+		&__title {
+			text-align: left;
+		}
+		&__desc {
+			margin-bottom: 2.5rem;
+		}
+		&__subtitle {
+			margin-bottom: 1rem;
+		}
+		&__group {
+			margin-bottom: 2.5rem;
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+		&__date {
+			span {
+				display: none;
+			}
+		}
+		&__info {
+			margin-bottom: 3rem;
+		}
+		&__row {
+			margin-bottom: -1rem;
+		}
+		&__item {
+			margin-bottom: 1rem;
+		}
+	}
+
+	.events-blog {
+		&__title {
+			text-align: left;
+			margin-bottom: 2.5rem;
+		}
+	}
+
+	.old-event {
+		display: block;
+		&__img {
+			max-width: 100%;
+			margin: 0 0 2rem;
+		}
+		&__title {
+			font: 800 1.4rem $family;
+		}
+		&__date {
+			margin-bottom: 1rem;
+		}
+	}
+
+	.about-page {
+		&__title {
+			text-align: left;
+			margin-bottom: 1.5rem;
+		}
+		&__desc {
+			margin: 0 auto 3.5rem;
+		}
+		&__row {
+			margin: 0 -3rem 1rem;
+		}
+		&__gallery {
+			margin: 0 -3rem 3.5rem;
+		}
+
+		&__contacts-row {
+			display: block;
+		}
+		&__contacts-item {
+			padding: 0 0 2.5rem;
+			margin-bottom: 2.5rem;
+			text-align: center;
+			border: 0;
+			border-bottom: 2px #ccc solid;
+			&:last-child {
+				border: 0;
+				margin-bottom: 0;
+				padding-bottom: 0;
+			}
+		}
+		&__contacts-title {
+			margin-bottom: 1.5rem;
+		}
+
+		&__params {
+			max-width: 620px;
+			&__title {
+				margin-bottom: 3rem;
+			}
+			&__row {
+				margin-bottom: 1.5rem;
+			}
+			&__item {
+				margin-bottom: 2rem;
+			}
+		}
+	}
+
+	.param-block {
+		&__num {
+			font: 800 3.6rem $family;
+		}
+	}
+
+	.slick-arrow {
+		width: 35px;
+		height: 35px;
+	}
+	.slideshow-wrapper--rb .slideshow-wrapper__prev,
+	.slideshow-wrapper--rb .slick-prev {
+		right: 57px;
+	}
+
+	.schedule-list {
+		&__title {
+			margin-bottom: 25px;
+			span {
+				font: 1.2rem $family;
+			}
+		}
+		&__row {
+			.day-col {
+				@include flex-items(0 0 100%);
+				margin-bottom: 15px;
+			}
+		}
+	}
+
+	.time-box {
+		height: auto;
+		padding: 2.5rem 1rem 3rem 3rem;
+		font: 14px $family;
+		&__head {
+			margin-bottom: 2rem;
+		}
+		&__time {
+			font: 800 16px $family;
+		}
+		&__zal {
+			font: 14px $family;
+		}
+		&__name {
+			font: 800 18px $family;
+			min-height: 0;
+		}
+		&__trener {
+			font: 14px $family;
+		}
+	}
+
+	.schedule-page {
+		&__title {
+			text-align: left;
+			margin-bottom: 2rem;
+		}
+		&__dates {
+			background: $orang;
+			margin: 0 0rem 3rem;
+			padding: 10px 0;
+			.col-auto {
+				display: none;
+			}
+		}
+		&__filter {
+			&__buttons {
+				margin-top: 3rem;
+			}
+		}
+
+		&__body {
+			padding-top: 4rem;
+		}
+	}
+
+	.schedule-list-days {
+		margin-left: -3px;
+		margin-right: -3px;
+		&__item {
+			padding: 0 3px;
+			-webkit-flex: 0 0 14.28%;
+			-ms-flex: 0 0 14.28%;
+			flex: 0 0 14.28%;
+		}
+	}
+
+	.list-day {
+		font-size: 14px;
+		padding: 5px 5px 10px;
+		&__day {
+			margin-bottom: 5px;
+		}
+		&__date strong {
+			font-size: 16px;
+		}
+		&__month {
+			display: none;
+		}
+	}
+
+	.time-box-hint {
+		&__wrap {
+			padding: 5rem 2rem;
+		}
+		&__title {
+			font: 900 18px $family;
+		}
+		&__person {
+			font: 900 14px $family;
+		}
+	}
+}
+@media (max-width: 600px) {
+}
+@media (max-width: 500px) {
+}
+@media (max-width: 450px) {
+}
+@media (max-width: 420px) {
+}
+@media (max-width: 320px) {
+}

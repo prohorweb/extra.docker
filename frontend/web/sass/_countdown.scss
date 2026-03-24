@@ -1,0 +1,64 @@
+/* jQuery Countdown styles 2.0.0. */
+.is-countdown {
+	 
+}
+.countdown-rtl {
+	direction: rtl;
+}
+.countdown-holding span {
+	color: #888;
+}
+.countdown-row {
+	clear: both;
+	width: 100%;
+	text-align: center;
+	@include flex(0, center);
+}
+.countdown-show1 .countdown-section {
+	max-width: 100%;
+	@include flex-items(0 0 100%);
+}
+.countdown-show2 .countdown-section {
+	max-width: 50%;
+	@include flex-items(0 0 50%);
+}
+.countdown-show3 .countdown-section {
+	max-width: 33.3%;
+	@include flex-items(0 0 33.3%);
+}
+.countdown-show4 .countdown-section {
+	max-width: 25%;
+	@include flex-items(0 0 25%);
+}
+.countdown-show5 .countdown-section {
+	max-width: 20%;
+	@include flex-items(0 0 20%);
+}
+.countdown-show6 .countdown-section {
+	max-width: 16.6%;
+	@include flex-items(0 0 16.6%);
+}
+.countdown-show7 .countdown-section {
+	max-width: 14.28%;
+	@include flex-items(0 0 14.28%);
+}
+.countdown-section {
+	 @include flex(0,center);
+	font: 24px $family2; color: #0D1455;
+	text-align: center;
+	&:after{ content: ":"; margin: 0 10px; }
+	
+	&:last-child{ 
+		&:after{ display: none; }
+	}
+}
+.countdown-amount {
+	font: bold 48px $family2; color: #0D1455; display: block;
+}
+.countdown-period {
+    display: none;
+}
+.countdown-descr {
+	display: block;
+	width: 100%;
+}

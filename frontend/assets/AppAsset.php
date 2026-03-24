@@ -19,9 +19,8 @@ class AppAsset extends AssetBundle
         // 'css/clubs.css',
         'css/utilites.css',
         'css/present-video.css',
-        // 'css/sections.css',
-        'https://site-assets.fontawesome.com/releases/v6.2.1/css/all.css',
-        'https://site-assets.fontawesome.com/releases/v6.2.1/css/sharp-solid.css'
+        'css/sections.css',
+        'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css'
     ];
     public $js = [
 

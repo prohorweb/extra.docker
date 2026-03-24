@@ -1,0 +1,109 @@
+// Container widths
+//
+// Set the container width, and override it for fixed navbars in media queries.
+
+@if $enable-grid-classes {
+  .container {
+    @include make-container();
+    @include make-container-max-widths(); 
+	
+	&--min{ max-width: 1440px; }
+  }
+}
+
+// Fluid container
+//
+// Utilizes the mixin meant for fixed width containers, but with 100% width for
+// fluid, full width layouts.
+
+@if $enable-grid-classes {
+  .container-fluid {
+    @include make-container();
+  }
+}
+
+// Row
+//
+// Rows contain and clear the floats of your columns.
+
+@if $enable-grid-classes {
+
+	.row {
+		@include make-row();
+		
+		&--pad0{margin: 0;
+			&> .col,
+			&> [class*="col-"]{padding: 0;}
+		}
+		&--pad5{margin: 0 -.5rem;
+			&> .col,
+			&> [class*="col-"]{padding: 0 .5rem;}
+		}
+		&--pad10{margin: 0 -1rem;
+			&> .col,
+			&> [class*="col-"]{padding: 0 1rem;}
+		}
+		&--pad20{margin: 0 -2.5rem;
+			&> .col,
+			&> [class*="col-"]{padding: 0 2.5rem;}
+		}
+		&--pad25{margin: 0 -2.5rem;
+			&> .col,
+			&> [class*="col-"]{padding: 0 2.5rem;}
+		}
+		&--pad30{margin: 0 -3rem;
+			&> .col,
+			&> [class*="col-"]{padding: 0 3rem;}
+		}
+		&--pad40{margin: 0 -4rem;
+			&> .col,
+			&> [class*="col-"]{padding: 0 4rem;}
+		}
+		&--pad50{margin: 0 -5rem;
+			&> .col,
+			&> [class*="col-"]{padding: 0 5rem;}
+		}
+		&--pad60{
+			&> .col,
+			&> [class*="col-"]{padding: 0 6rem;}
+		}
+		
+		&--nowrap{
+			-webkit-flex-wrap: nowrap;
+			-ms-flex-wrap: nowrap;
+			flex-wrap: nowrap;
+		}
+		&--stretch{
+			-webkit-align-content: stretch;
+			-ms-flex-line-pack: stretch;
+			align-content: stretch;
+			-webkit-align-items: stretch;
+			-ms-flex-align: stretch;
+			align-items: stretch;
+		}
+		&--between{
+			-webkit-justify-content: space-between;
+			-ms-flex-pack: justify;
+			justify-content: space-between;
+		}
+		&--middle{
+			-webkit-align-items: center;
+			-ms-flex-align: center;
+			align-items: center;
+		}
+		&--center{
+			-webkit-justify-content: center;
+			-ms-flex-pack: center;
+			justify-content: center;
+		}
+	}
+
+}
+
+// Columns
+//
+// Common styles for small and large grid columns
+
+@if $enable-grid-classes {
+  @include make-grid-columns();
+}

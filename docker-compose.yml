@@ -1,7 +1,8 @@
 services:
   php:
-    image: php:8.2-fpm
+    image: extra-php:8.2-gd
     container_name: extra_php
+    command: ["php-fpm"]
     volumes:
       - ./:/var/www/html
     depends_on:
@@ -12,7 +13,6 @@ services:
       DB_NAME: extra
       DB_USER: extra
       DB_PASS: extra123
-    command: bash -c "docker-php-ext-install pdo_mysql && docker-php-entrypoint php-fpm"
 
   composer:
     image: composer:2

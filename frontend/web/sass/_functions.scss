@@ -1,0 +1,50 @@
+// COLORS
+$black: #1a1a1a;
+$white: #fff;
+$orang: #ff6600;
+$grey: #f5f5f5;
+
+$brown: #a7917a;
+$red: #ff2a2a;
+$green: #07d67c;
+$blue: #b6e6f1;
+
+$xl: 1700px;
+$lg: 1400px;
+$md: 1100px;
+$sm: 980px;
+$xs: 750px;
+$xxs: 320px;
+
+$enable-grid-classes: true !default;
+
+$grid-columns: 12 !default;
+$grid-gutter-width: 30px;
+
+$grid-breakpoints: (
+	xxs: 0,
+	xl: 1700px,
+	lg: 1400px,
+	md: 1100px,
+	sm: 980px,
+	xs: 750px,
+) !default;
+
+$container-max-width: 1785px;
+
+//$container-max-widths: (
+//  sm: 1200px,
+//  md: 1200px,
+//  lg: 1200px,
+//  xl: 1200px
+//) !default;
+
+$family: "Montserrat", Arial, sans-serif;
+$gilroy: "Gilroy", Arial, sans-serif;
+
+//----------------------------------------------------------------------------------------
+
+//@include _assert-ascending($grid-breakpoints, "$grid-breakpoints");
+@include _assert-starts-at-zero($grid-breakpoints);
+
+//@include _assert-ascending($container-max-widths, "$container-max-widths");

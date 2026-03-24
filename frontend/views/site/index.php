@@ -32,6 +32,33 @@ if ($sub != 'piter') {
     $prefix = '_clubs';
 } 
 
+$resolveBannerImage = static function ($banner, bool $preferMobile): string {
+    $baseDir = Yii::getAlias('@frontend/web/uploads/image/banners');
+    $img1200Path = $baseDir . '/1200/' . $banner->img1200;
+    $img1440Path = $baseDir . '/1440/' . $banner->img1440;
+
+    $has1200 = !empty($banner->img1200) && is_file($img1200Path);
+    $has1440 = !empty($banner->img1440) && is_file($img1440Path);
+
+    if ($preferMobile) {
+        if ($has1440) {
+            return '/uploads/image/banners/1440/' . $banner->img1440;
+        }
+        if ($has1200) {
+            return '/uploads/image/banners/1200/' . $banner->img1200;
+        }
+        return '//placehold.it/1904x1080';
+    }
+
+    if ($has1200) {
+        return '/uploads/image/banners/1200/' . $banner->img1200;
+    }
+    if ($has1440) {
+        return '/uploads/image/banners/1440/' . $banner->img1440;
+    }
+    return '//placehold.it/1904x698';
+};
+
 ?>
 
 <header class="masthead">
@@ -73,11 +100,11 @@ if ($sub != 'piter') {
 
             <?php if(Yii::$app->devicedetect->isMobile() || Yii::$app->devicedetect->isTablet()) { ?>
             <img class="d-block w-100"
-                src="<?= $banner->img1440 ? '/uploads/image/banners/1440/'.$banner->img1440 : '//placehold.it/1904x1080' ?>"
+                src="<?= $resolveBannerImage($banner, true) ?>"
                 alt="">
             <?php } else { ?>
             <img class="d-block w-100"
-                src="<?= $banner->img1200 ? '/uploads/image/banners/1200/'.$banner->img1200 : '//placehold.it/1904x698' ?>"
+                src="<?= $resolveBannerImage($banner, false) ?>"
                 alt="">
             <?php } ?>
 
@@ -141,11 +168,11 @@ if ($sub != 'piter') {
 
             <?php if(Yii::$app->devicedetect->isMobile() || Yii::$app->devicedetect->isTablet()) { ?>
             <img class="d-block w-100"
-                src="<?= $banner->img1440 ? '/uploads/image/banners/1440/'.$banner->img1440 : '//placehold.it/1904x1080' ?>"
+                src="<?= $resolveBannerImage($banner, true) ?>"
                 alt="">
             <?php } else { ?>
             <img class="d-block w-100"
-                src="<?= $banner->img1200 ? '/uploads/image/banners/1200/'.$banner->img1200 : '//placehold.it/1904x698' ?>"
+                src="<?= $resolveBannerImage($banner, false) ?>"
                 alt="">
             <?php } ?>
 

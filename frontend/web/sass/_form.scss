@@ -1,0 +1,193 @@
+﻿.inputbox{ border: 1px $black solid; width: 100%; padding: 15px 0px; background: transparent; -webkit-border-radius: 0px; -moz-border-radius: 0px; border-radius: 0px;  box-sizing: border-box; color: $black; font: 800 16px $family; 
+	
+	&:focus{color: $black;  outline: none;}
+	&::-moz-placeholder { opacity: 1; color: #999999; }
+	&::-webkit-input-placeholder { opacity: 1; color: #999999; }
+	
+	&:disabled, &[readonly]{
+		border-color: #ececec; color: #999;
+		opacity: 1;
+	}
+	&:disabled{cursor: not-allowed;}
+	
+	&--border{ border: 0; border-bottom: 1px $black solid; padding: 0 0 15px; background: transparent; color: $black; }
+	
+	&--brown{ border-color: $brown; color: $brown; }
+	&--white{ border-color: $white; color: $white; 
+		&:focus{color: $white;  }
+		&::-moz-placeholder { color: $white; }
+		&::-webkit-input-placeholder { color: $white; }
+	}
+	
+	&--sm{ font-size: 14px; }
+	
+	&--disabled{border-color: transparent!important; background: none!important; color: $blue!important; font-size: 18px!important; line-height: 16px; padding-left: 0;}
+	&--disabled-inherit{border-color: transparent!important; background: none!important; color: inherit!important; font-size: inherit!important; line-height: inherit; padding: 0!important; min-width: 0!important; max-width: none!important; width: 100%!important; display: inline-block!important; text-align: inherit!important;}
+	
+}
+
+textarea{  border: 1px $black solid; width: 100%; padding: 15px 0px; background: transparent; -webkit-border-radius: 0px; -moz-border-radius: 0px; border-radius: 0px;  box-sizing: border-box; color: $black; font: 800 16px $family; height: 150px;
+	
+	&:focus{color: $black;  outline: none;}
+	&::-moz-placeholder { opacity: 1; color: #999999; }
+	&::-webkit-input-placeholder { opacity: 1; color: #999999; }
+}
+
+.help-block{font: 14px $family; margin-top: 5px;}
+.error-block{ font: 14px/0.71 $family; color: $red; display: none; padding-left: 1.5rem; margin-top: 1rem;}
+
+.btn{ display: inline-block; border: 2px $orang solid; background: transparent; color: $black; font: 800 1.8rem/26px $family; text-align: center; text-decoration: none; cursor: pointer; padding: 10px 3rem; @include brs(0); @include time(); text-transform: uppercase; 
+		
+	&:hover, &:focus, &.active{background: #fff; border-color: $black; outline: none; }
+	
+	&--lg{ padding: 10px 8rem; }
+	&--md{ font: 800 18px/40px $family; }
+	&--sm{ padding: 5px 7rem; font: 800 12px/16px $family; }
+	&--xs{ padding: 5px 3rem; font: 800 12px/16px $family; }
+	
+	&--product{ @include flex(center,center,center); display: inline-flex; border-color: $black;  @include time(0.2s); padding-left: 12px; padding-right: 12px; 
+		&:before{ content: ""; display: inline-block; width: 22px; height: 26px; background: url('../images/btn-icon-black.png') 0 50% no-repeat; @include time(0.1s); }
+		span{ display: inline-block; width: 0; overflow: hidden; @include time(0.2s); }
+		
+		&:hover{ width: 100%;
+			&:before{ width: 0; overflow: hidden; }
+			span{ width: 100%; }
+		}
+	}
+	
+	&--black{ border-color: $black; 
+		&:hover, &:focus{ border-color: $orang; }
+	}
+	&--black-full{ border-color: $black; background-color: $black; color: $white; 
+		&:hover, &:focus{ border-color: $orang; background-color: $orang; }
+	}
+	&--white{ color: $white; 
+		&:hover, &:focus, &.active{ color: $black; }
+	}
+	
+	&--grey-full{ color: $white; background: #666666; border-color: #666666; 
+		&:hover, &:focus, &.active{background: $orang; border-color: $orang; outline: none; }
+	}
+	
+	&--back{ border-color: #ccc; padding: 0px 2rem; font: 800 14px/21px $family; text-transform: uppercase;
+		&:before{ content: "←"; font: 800 16px $gilroy; margin-right: 7px; }
+	}
+	
+	&--disabled{ background: rgba($brown,0.3); color: $brown; }
+	&--link{background: none!important; border-color: transparent!important; color: $brown; padding-left: 0; padding-right: 0; font-size: 14px; text-transform: none; }
+}
+
+.is-btn-block{display: block; text-align: center; width: 100%; padding-left: 1rem; padding-right: 1rem; }
+
+select{
+    width: 100%;
+    height: 50px;
+	padding: 0 30px 0 15px;
+	border: 1px $black solid;
+	-webkit-border-radius: 0px; -moz-border-radius: 0px; border-radius: 0px;
+	font: 800 14px/30px $family; 
+	color: #999;
+    -webkit-appearance: none;
+    background: url('../images/select-bg.png') 100% 50% no-repeat $white;
+    /* for FF */
+    -moz-appearance: none;
+    text-overflow: '';
+    /* for IE */
+    -ms-appearance: none;
+    appearance: none!important;
+	cursor: pointer;
+	
+	&::-ms-expand {
+		display: none;
+	}
+	&:focus{ outline: none; }
+	
+	&.select--min{padding: 0 25px 0 5px;}
+	&.select--small{ height: 30px; } 
+	&.select--normal{height: 40px;}
+	&.select-border{background-color: transparent; border: 0; border-bottom: 1px $black solid; padding-left: 0; }
+	&.select-noborder-white{background: url('../images/select-bg-white.png') 100% 50% no-repeat transparent; border: 0; padding: 0 20px 0 0; color: $white; height: 16px; font: 800 14px/16px $family; display: inline-block; width: auto; 
+		option{ color: $black; }
+	}
+	
+	&.select-noborder{background: url('../images/select-bg.png') 100% 50% no-repeat transparent; border: 0; padding: 0 20px 0 0; color: $black; height: 16px; font: 800 14px/16px $family; 
+		option{ color: $black; }
+	}
+	
+	&.inblock{width: auto;}
+}
+
+.input-row{margin-bottom: 20px;
+	&.last{ margin-bottom: 0; }
+}
+
+.input-label{font: 300 16px $family; margin: 0 0 10px;
+	&.disabled{color: #999;}
+}
+
+.form-inline{ @include flex(0,center,center); margin: 0 0 -3rem -3rem; 
+	&__item{ margin: 0 0 3rem 3rem; }
+}
+     
+.upload-box{ position: relative;
+	input[type="file"]{opacity: 0; position: absolute; top: 0; left: 0; cursor: pointer; width: 100%; height: 100%;}
+	a{ pointer-events: none; cursor: pointer; }
+	.btn{ margin: 0 auto; }
+	&__wrap{ position: relative; text-align: center; }
+	&__desc{ text-align: center; font: 14px $family; margin-top: 3rem; }
+	&__result{ text-align: center; font: 800 1.6rem $family; margin-top: 1.5rem; }
+}
+
+.radiobox, .checkbox{ display: block; 
+	label {	background: none; position: relative; font: 14px/20px $family; color: $black; padding-left: 40px; display: inline-block; cursor: pointer;
+		&:before{content: ""; display: block; @include brs(20px); width: 20px; height: 20px; position: absolute; top: 0; left: 0; background: #fff; border: 1px $brown solid;}
+		a{ text-decoration: underline; }
+	}
+	input[type=checkbox], input[type=radio] { display: none; }
+	input[type=radio]:checked + label{ color: $black; 
+		&:before{background: #fff;}
+		&:after{ content: ""; display: block; width: 12px; height: 12px; background: $brown; position: absolute; top: 4px; left: 4px; @include brs(12px); }
+	}
+	
+	&--link{
+		label{padding-left: 0; background: none; text-decoration: underline; color: #666;}
+		input[type=radio]:checked + label{ background: none; color: $red; text-decoration: none; }
+	}
+}
+.checkbox{
+	label{ background: none; position: relative; font: 300 14px/24px $family; color: $black;
+		&:before{content: ""; display: block; background: rgba(#fff,0.3); @include brs(1px); width: 24px; height: 24px; position: absolute; top: 0; left: 0; @include time(); border: 1px #999 solid; }
+	}
+	input[type=checkbox]:checked + label{ color: $black;
+		&:before{ background: rgba(#fff,0.3); }
+		&:after{ content: ""; display: block; width: 24px; height: 24px; background: inline-image('../images/checkbox-on.svg') 50% 50%/15px auto no-repeat; position: absolute; top: 0px; left: 0px;}
+	} 
+	 
+	input[type=checkbox]:invalid + label{
+		&:before{ border-color: $red!important; }
+	}
+	
+	&--right{
+		label{padding-left: 0; padding-right: 40px;
+			&:before{left: auto; right: 0;}
+		}
+		input[type=checkbox]:checked + label{
+			&:after{  right: -5px; left: auto;}
+		}
+	}
+	
+	&--white{
+		label{ color: $white; 
+			&:before{  border: 1px $white solid;  }
+		}
+		input[type=checkbox]:checked + label{ color: $white; 
+			&:after{ background: inline-image('../images/checkbox-on-white.svg') 50% 50%/15px auto no-repeat; }
+		}
+	}
+}
+
+.checkbox-list, .radiobox-list{ margin-bottom: 20px; 
+	.checkbox, .radiobox{margin-bottom: 10px;
+		&:last-child{margin-bottom: 0;}
+	}
+}

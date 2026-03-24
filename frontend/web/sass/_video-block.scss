@@ -1,0 +1,28 @@
+.video-block {
+	&__img{ position: relative; padding-bottom: 52%; 
+		img{ position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+		&:after{ content: ""; display: block; width: 80px; height: 80px; background: url('../images/play.png') 50% 50%/76px auto no-repeat; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); z-index: 5; pointer-events: none; @include time();  }
+	}
+	&__title{ background: #F5F5F5; color: #000; font: bold 16px $family; padding: 16px 30px 18px; white-space: nowrap; overflow: hidden; @include time(); text-overflow: ellipsis; }
+
+	&:hover &{
+		&__img{
+			&:after{ background: url('../images/play-hover.png') 50% 50%/76px auto no-repeat; }
+		}
+		&__title{ background: #FF6600; }
+	}
+
+	@include media($md){
+		&__img{ 
+			&:after{ background-size: 50px auto; }
+		}
+	}
+
+	@include media($xs){
+		&__img{ padding-bottom: 62%; }
+		&__title{
+			white-space: normal; padding: 16px 20px 18px; 
+		}
+	}
+}
+ 
