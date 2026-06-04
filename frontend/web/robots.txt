@@ -1,0 +1,24 @@
+User-agent: *
+Allow: /
+Disallow: /core/
+Disallow: /connectors/
+Disallow: /manager/
+Disallow: /form-send
+Disallow: /oshibka-404
+Disallow: /index.php
+Disallow: /?id=
+Disallow: /?page=
+
+User-Agent: Yandex
+Allow: /
+Disallow: /core/
+Disallow: /connectors/
+Disallow: /manager/
+Disallow: /form-send
+Disallow: /oshibka-404
+Disallow: /index.php
+Disallow: /?id=
+Disallow: /?page=
+
+Host: http://extra.local
+Sitemap: http://extra.local/sitemap.xml

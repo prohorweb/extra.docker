@@ -32,33 +32,6 @@ if ($sub != 'piter') {
     $prefix = '_clubs';
 } 
 
-$resolveBannerImage = static function ($banner, bool $preferMobile): string {
-    $baseDir = Yii::getAlias('@frontend/web/uploads/image/banners');
-    $img1200Path = $baseDir . '/1200/' . $banner->img1200;
-    $img1440Path = $baseDir . '/1440/' . $banner->img1440;
-
-    $has1200 = !empty($banner->img1200) && is_file($img1200Path);
-    $has1440 = !empty($banner->img1440) && is_file($img1440Path);
-
-    if ($preferMobile) {
-        if ($has1440) {
-            return '/uploads/image/banners/1440/' . $banner->img1440;
-        }
-        if ($has1200) {
-            return '/uploads/image/banners/1200/' . $banner->img1200;
-        }
-        return '//placehold.it/1904x1080';
-    }
-
-    if ($has1200) {
-        return '/uploads/image/banners/1200/' . $banner->img1200;
-    }
-    if ($has1440) {
-        return '/uploads/image/banners/1440/' . $banner->img1440;
-    }
-    return '//placehold.it/1904x698';
-};
-
 ?>
 
 <header class="masthead">
@@ -82,7 +55,7 @@ $resolveBannerImage = static function ($banner, bool $preferMobile): string {
         </div>
         <?php foreach($banners_club as $banner) { ?>
         <div class="carousel-item" data-bs-interval=400000 >
-            <div class="d-block d-sm-none">
+            <div class="d-block">
                 <div
                     class="masthead-heading text-uppercase d-flex flex-column align-items-center justify-content-center title p-0">
                     <?= $banner->title2 ?>
@@ -100,11 +73,11 @@ $resolveBannerImage = static function ($banner, bool $preferMobile): string {
 
             <?php if(Yii::$app->devicedetect->isMobile() || Yii::$app->devicedetect->isTablet()) { ?>
             <img class="d-block w-100"
-                src="<?= $resolveBannerImage($banner, true) ?>"
+                src="<?= $banner->img1440 ? '/uploads/image/banners/1440/'.$banner->img1440 : '//placehold.it/1904x1080' ?>"
                 alt="">
             <?php } else { ?>
             <img class="d-block w-100"
-                src="<?= $resolveBannerImage($banner, false) ?>"
+                src="<?= $banner->img1200 ? '/uploads/image/banners/1200/'.$banner->img1200 : '//placehold.it/1904x698' ?>"
                 alt="">
             <?php } ?>
 
@@ -168,11 +141,11 @@ $resolveBannerImage = static function ($banner, bool $preferMobile): string {
 
             <?php if(Yii::$app->devicedetect->isMobile() || Yii::$app->devicedetect->isTablet()) { ?>
             <img class="d-block w-100"
-                src="<?= $resolveBannerImage($banner, true) ?>"
+                src="<?= $banner->img1440 ? '/uploads/image/banners/1440/'.$banner->img1440 : '//placehold.it/1904x1080' ?>"
                 alt="">
             <?php } else { ?>
             <img class="d-block w-100"
-                src="<?= $resolveBannerImage($banner, false) ?>"
+                src="<?= $banner->img1200 ? '/uploads/image/banners/1200/'.$banner->img1200 : '//placehold.it/1904x698' ?>"
                 alt="">
             <?php } ?>
 

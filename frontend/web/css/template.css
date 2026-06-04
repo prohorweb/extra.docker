@@ -3610,148 +3610,6 @@ li.fancybox-thumbs-loading { background: rgba(0, 0, 0, 0.1); }
 
 
 
-.btn-type { display: block; width: 50px; height: 50px; border: 2px #ccc solid; }
-
-.btn-type.active { border-color: #ff6600; }
-
-.btn-type--block { background: url("../images/tab-block.png") 50% 50% no-repeat; }
-
-.btn-type--block.active { background: url("../images/tab-block-active.png") 50% 50% no-repeat #ff6600; }
-
-.btn-type--list { background: url("../images/tab-list.png") 50% 50% no-repeat; }
-
-.btn-type--list.active { background: url("../images/tab-list-active.png") 50% 50% no-repeat #ff6600; }
-
-
-
-.schedule-page__title { text-align: center; margin-bottom: 5rem; }
-
-.schedule-page__dates { margin-bottom: 3rem; }
-
-.schedule-page__dates .col-auto { margin-bottom: 3rem; }
-
-.schedule-page__dates a { border: 2px #f5f5f5 solid; display: inline-block; padding: 10px 5rem; font: 800 1.6rem/22px "Montserrat", Arial, sans-serif; text-transform: uppercase; color: #ccc; }
-
-.schedule-page__dates a.active { color: #fff; background: #ff6600; border-color: #ff6600; }
-
-.schedule-page__filter { background: #f5f5f5; padding: 25px 0; }
-
-.schedule-page__filter__buttons { display: -webkit-box; display: -moz-box; display: -ms-flexbox; display: -webkit-flex; display: flex; -webkit-flex-direction: row; -ms-flex-direction: row; flex-direction: row; -webkit-flex-wrap: wrap; -ms-flex-wrap: wrap; flex-wrap: wrap; -webkit-align-items: center; -ms-flex-align: center; align-items: center; -webkit-align-content: center; -ms-flex-line-pack: center; align-content: center; }
-
-.schedule-page__filter__buttons .btn { margin-right: 3rem; }
-
-.schedule-page__filter__buttons .btn:last-child { margin-right: 0; }
-
-.schedule-page__filter__type { display: -webkit-box; display: -moz-box; display: -ms-flexbox; display: -webkit-flex; display: flex; -webkit-flex-direction: row; -ms-flex-direction: row; flex-direction: row; -webkit-flex-wrap: wrap; -ms-flex-wrap: wrap; flex-wrap: wrap; -webkit-justify-content: flex-end; -ms-flex-pack: flex-end; justify-content: flex-end; -webkit-align-items: center; -ms-flex-align: center; align-items: center; -webkit-align-content: center; -ms-flex-line-pack: center; align-content: center; }
-
-.schedule-page__filter__type .btn-type { margin-left: 3rem; }
-
-.schedule-page__filter__type .btn-type:first-child { margin-left: 0; }
-
-.schedule-page__body { padding-top: 5.5rem; }
-
-
-
-.schedule-list__title { margin-bottom: 20px; }
-
-.schedule-list__title span { font: 2.2rem "Montserrat", Arial, sans-serif; }
-
-.schedule-list__row { display: -webkit-box; display: -moz-box; display: -ms-flexbox; display: -webkit-flex; display: flex; -webkit-flex-direction: row; -ms-flex-direction: row; flex-direction: row; -webkit-flex-wrap: wrap; -ms-flex-wrap: wrap; flex-wrap: wrap; -webkit-justify-content: flex-start; -ms-flex-pack: flex-start; justify-content: flex-start; -webkit-align-items: stretch; -ms-flex-align: stretch; align-items: stretch; -webkit-align-content: stretch; -ms-flex-line-pack: stretch; align-content: stretch; margin: 0 -1.5rem 5rem; }
-
-.schedule-list__row .day-col { padding: 0 1.5rem; -webkit-flex: 0 0 16.66667%; -ms-flex: 0 0 16.66667%; flex: 0 0 16.66667%; margin-bottom: 20px; }
-
-
-
-.time-box { height: 100%; background: #fff; -moz-box-shadow: 0 5px 10px rgba(26, 26, 26, 0.05); -webkit-box-shadow: 0 5px 10px rgba(26, 26, 26, 0.05); box-shadow: 0 5px 10px rgba(26, 26, 26, 0.05); border-top: 5px #fff solid; padding: 2.5rem 1rem 3rem 3rem; font: 14px "Montserrat", Arial, sans-serif; position: relative; overflow: hidden; }
-
-.time-box:empty { background: #f5f5f5; -moz-box-shadow: 0 5px 10px rgba(26, 26, 26, 0); -webkit-box-shadow: 0 5px 10px rgba(26, 26, 26, 0); box-shadow: 0 5px 10px rgba(26, 26, 26, 0); }
-
-.time-box__link { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: block; z-index: 5; }
-
-.time-box__label { position: absolute; bottom: 0; right: 0; z-index: 0; pointer-events: none; display: block; }
-
-.time-box__head { margin-bottom: 3rem; }
-
-.time-box__time { font: 800 16px "Montserrat", Arial, sans-serif; margin-bottom: 5px; }
-
-.time-box__buttons { display: -webkit-box; display: -moz-box; display: -ms-flexbox; display: -webkit-flex; display: flex; -webkit-flex-direction: row; -ms-flex-direction: row; flex-direction: row; -webkit-flex-wrap: wrap; -ms-flex-wrap: wrap; flex-wrap: wrap; -webkit-justify-content: flex-end; -ms-flex-pack: flex-end; justify-content: flex-end; -webkit-align-items: center; -ms-flex-align: center; align-items: center; -webkit-align-content: flex-start; -ms-flex-line-pack: flex-start; align-content: flex-start; list-style: none; position: absolute; top: 8px; right: 8px; }
-
-.time-box__buttons li { margin-left: 5px; }
-
-.time-box__buttons li:first-child { margin-left: 0; }
-
-.time-box__zal { font: 14px "Montserrat", Arial, sans-serif; }
-
-.time-box__name { margin-bottom: 10px; font: 800 18px "Montserrat", Arial, sans-serif; text-transform: uppercase; min-height: 44px; }
-
-.time-box__trener { font: 14px "Montserrat", Arial, sans-serif; }
-
-.time-box__trener a { text-decoration: none; }
-
-
-
-.time-box-hint { position: absolute; z-index: 9999; display: none; top: 0; left: 0; width: 100%; height: 100%; }
-
-.time-box-hint__overflow { position: fixed; z-index: 9998; display: block; top: 0; left: 0; width: 100%; height: 100%; }
-
-.time-box-hint__wrap { border-top: 7px #ff6600 solid; padding: 5rem 6rem; background: #fff; margin: 0 auto; max-width: 680px; width: 100%; position: absolute; -moz-box-shadow: 0 5px 10px rgba(26, 26, 26, 0.3); -webkit-box-shadow: 0 5px 10px rgba(26, 26, 26, 0.3); box-shadow: 0 5px 10px rgba(26, 26, 26, 0.3); }
-
-.time-box-hint__close { display: none; position: absolute; top: 1rem; right: 1rem; width: 30px; height: 30px; cursor: pointer; -webkit-transition: all 0.35s ease; -moz-transition: all 0.35s ease; -o-transition: all 0.35s ease; transition: all 0.35s ease; -moz-transform: rotate(45deg); -ms-transform: rotate(45deg); -webkit-transform: rotate(45deg); transform: rotate(45deg); }
-
-.time-box-hint__close:after { content: ""; display: block; width: 100%; height: 2px; position: absolute; top: 50%; left: 0; margin-top: -1px; background: #ff6600; }
-
-.time-box-hint__close:before { content: ""; display: block; height: 100%; width: 2px; position: absolute; left: 50%; top: 0; margin-left: -1px; background: #ff6600; }
-
-.time-box-hint__title { font: 900 2.4rem "Montserrat", Arial, sans-serif; text-transform: uppercase; color: #1a1a1a; margin-right: 2rem; }
-
-.time-box-hint__label { display: inline-block; background: #ff6600; color: #fff; text-transform: uppercase; font: 900 14px "Montserrat", Arial, sans-serif; padding: 5px 10px; }
-
-.time-box-hint__head { display: -webkit-box; display: -moz-box; display: -ms-flexbox; display: -webkit-flex; display: flex; -webkit-flex-direction: row; -ms-flex-direction: row; flex-direction: row; -webkit-flex-wrap: wrap; -ms-flex-wrap: wrap; flex-wrap: wrap; -webkit-justify-content: flex-start; -ms-flex-pack: flex-start; justify-content: flex-start; -webkit-align-items: center; -ms-flex-align: center; align-items: center; -webkit-align-content: flex-start; -ms-flex-line-pack: flex-start; align-content: flex-start; margin-bottom: 3rem; }
-
-.time-box-hint__text { margin-bottom: 25px; }
-
-.time-box-hint__time { margin-bottom: 25px; }
-
-.time-box-hint__person { font: 900 18px "Montserrat", Arial, sans-serif; }
-
-
-
-.schedule-table__head { display: -webkit-box; display: -moz-box; display: -ms-flexbox; display: -webkit-flex; display: flex; -webkit-flex-direction: row; -ms-flex-direction: row; flex-direction: row; -webkit-flex-wrap: wrap; -ms-flex-wrap: wrap; flex-wrap: wrap; -webkit-justify-content: space-between; -ms-flex-pack: space-between; justify-content: space-between; -webkit-align-items: stretch; -ms-flex-align: stretch; align-items: stretch; -webkit-align-content: flex-start; -ms-flex-line-pack: flex-start; align-content: flex-start; margin: 0 -1.5rem 5rem; }
-
-.schedule-table__head .day-col { -webkit-flex: 0 0 14.28%; -ms-flex: 0 0 14.28%; flex: 0 0 14.28%; max-width: 14.28%; padding: 0 1.5rem; font: 800 18px "Montserrat", Arial, sans-serif; color: #1a1a1a; text-transform: uppercase; }
-
-.schedule-table__head .day-col span { font: 1.6rem "Montserrat", Arial, sans-serif; }
-
-.schedule-table__line { display: -webkit-box; display: -moz-box; display: -ms-flexbox; display: -webkit-flex; display: flex; -webkit-flex-direction: row; -ms-flex-direction: row; flex-direction: row; -webkit-flex-wrap: wrap; -ms-flex-wrap: wrap; flex-wrap: wrap; -webkit-justify-content: space-between; -ms-flex-pack: space-between; justify-content: space-between; -webkit-align-items: stretch; -ms-flex-align: stretch; align-items: stretch; -webkit-align-content: flex-start; -ms-flex-line-pack: flex-start; align-content: flex-start; margin: 0 -1.5rem 20px; }
-
-.schedule-table__time { -webkit-flex: 0 1 9.5rem; -ms-flex: 0 1 9.5rem; flex: 0 1 9.5rem; max-width: 9.5%; padding: 0 1.5rem; }
-
-.schedule-table__time span { display: block; height: 100%; text-align: center; font: 800 16px "Montserrat", Arial, sans-serif; display: -webkit-box; display: -moz-box; display: -ms-flexbox; display: -webkit-flex; display: flex; -webkit-justify-content: center; -ms-flex-pack: center; justify-content: center; -webkit-align-items: center; -ms-flex-align: center; align-items: center; }
-
-.schedule-table__rows { display: -webkit-box; display: -moz-box; display: -ms-flexbox; display: -webkit-flex; display: flex; -webkit-flex-direction: row; -ms-flex-direction: row; flex-direction: row; -webkit-flex-wrap: wrap; -ms-flex-wrap: wrap; flex-wrap: wrap; -webkit-justify-content: space-between; -ms-flex-pack: space-between; justify-content: space-between; -webkit-align-items: stretch; -ms-flex-align: stretch; align-items: stretch; -webkit-align-content: flex-start; -ms-flex-line-pack: flex-start; align-content: flex-start; -webkit-flex: 1 1 auto; -ms-flex: 1 1 auto; flex: 1 1 auto; }
-
-.schedule-table__rows .day-col { -webkit-flex: 0 0 14.28%; -ms-flex: 0 0 14.28%; flex: 0 0 14.28%; max-width: 14.28%; padding: 0 1.5rem; }
-
-
-
-.schedule-list-days { display: -ms-flexbox; display: -webkit-flex; display: flex; -webkit-flex-direction: row; -ms-flex-direction: row; flex-direction: row; -webkit-flex-wrap: nowrap; -ms-flex-wrap: nowrap; flex-wrap: nowrap; -webkit-justify-content: space-between; -ms-flex-pack: justify; justify-content: space-between; -webkit-align-content: stretch; -ms-flex-line-pack: stretch; align-content: stretch; -webkit-align-items: stretch; -ms-flex-align: stretch; align-items: stretch; margin: 0 -6px 5.5rem; }
-
-.schedule-list-days__item { padding: 0 6px; -webkit-flex: 1 1 auto; -ms-flex: 1 1 auto; flex: 1 1 auto; }
-
-
-
-.list-day { border: 1px #1a1a1a solid; padding: 15px 15px 15px 3rem; color: #1a1a1a; font-size: 16px; font-weight: 300; position: relative; }
-
-.list-day:hover { color: #ff6600; border-color: #ff6600; }
-
-.list-day__link { position: absolute; top: 0; left: 0; display: block; width: 100%; height: 100%; }
-
-.list-day__day { margin-bottom: 10px; }
-
-.list-day__date strong { display: block; font-size: 24px; font-weight: 800; line-height: 16px; }
-
-
-
 .videos-section { padding: 80px 0; }
 
 .videos-section__title { text-transform: uppercase; text-align: center; margin-bottom: 40px; }
@@ -4408,17 +4266,11 @@ li.fancybox-thumbs-loading { background: rgba(0, 0, 0, 0.1); }
 
   .about-page__params__row { margin-bottom: 1rem; }
 
-  .about-page__params__item { margin-bottom: 3rem; }
-
-  .time-box-hint__wrap { max-width: 620px; }
-
-  .time-box-hint__person { font: 900 16px "Montserrat", Arial, sans-serif; } }
+  .about-page__params__item { margin-bottom: 3rem; } }
 
 @media (max-width: 1300px) { .team-page__wrap, .article-page__wrap { margin: 0 40px; }
 
-  .team-page__back, .article-page__back { top: 2px; }
-
-  .schedule-page__filter__type { display: none; } }
+  .team-page__back, .article-page__back { top: 2px; } }
 
 @media (max-width: 1200px) { .footer__contacts { margin-right: 0; }
 
@@ -4468,31 +4320,7 @@ li.fancybox-thumbs-loading { background: rgba(0, 0, 0, 0.1); }
 
   .card-choice__services__item { margin-bottom: 25px; padding: 0 2.5rem; -webkit-flex: 0 1 33.33%; -ms-flex: 0 1 33.33%; flex: 0 1 33.33%; }
 
-  .card-choice__services__item img { height: 50px; }
-
-  .schedule-list__row { margin: 0 -1rem 5rem; }
-
-  .schedule-list__row .day-col { padding: 0 1rem; -webkit-flex: 0 0 20%; -ms-flex: 0 0 20%; flex: 0 0 20%; }
-
-  .schedule-page__title { margin-bottom: 2.5rem; }
-
-  .schedule-page__dates { margin-bottom: 2rem; }
-
-  .schedule-page__dates .col-auto { margin-bottom: 1rem; }
-
-  .schedule-page__dates a { display: inline-block; padding: 5px 2.5rem; font: 800 1.2rem/22px "Montserrat", Arial, sans-serif; }
-
-  .schedule-page__filter__buttons { display: -webkit-box; display: -moz-box; display: -ms-flexbox; display: -webkit-flex; display: flex; -webkit-flex-direction: row; -ms-flex-direction: row; flex-direction: row; -webkit-flex-wrap: wrap; -ms-flex-wrap: wrap; flex-wrap: wrap; -webkit-justify-content: center; -ms-flex-pack: center; justify-content: center; -webkit-align-items: center; -ms-flex-align: center; align-items: center; -webkit-align-content: center; -ms-flex-line-pack: center; align-content: center; -webkit-flex: 1 1 100%; -ms-flex: 1 1 100%; flex: 1 1 100%; margin-top: 2rem; }
-
-  .schedule-page__filter__buttons .btn { margin: 0 1.5rem; }
-
-  .schedule-page__filter__buttons .btn:first-child { margin-left: 0; }
-
-  .schedule-page__filter__buttons .btn:last-child { margin-right: 0; }
-
-  .schedule-page__filter__type { display: none; }
-
-  .schedule-page__body { padding-top: 4rem; } }
+  .card-choice__services__item img { height: 50px; } }
 
 @media (max-width: 980px) { body { font-size: 12px; line-height: normal; }
 
@@ -4994,35 +4822,7 @@ li.fancybox-thumbs-loading { background: rgba(0, 0, 0, 0.1); }
 
   .param-block__num { font: 800 3.6rem "Montserrat", Arial, sans-serif; }
 
-  .schedule-list__row { margin: 0 -1rem 4rem; }
-
-  .schedule-list__row .day-col { -webkit-flex: 0 0 25%; -ms-flex: 0 0 25%; flex: 0 0 25%; }
-
-  .time-box { padding: 2.5rem 1rem 3rem 2rem; font: 12px "Montserrat", Arial, sans-serif; }
-
-  .time-box__head { margin-bottom: 2.5rem; }
-
-  .time-box__time { font: 800 14px "Montserrat", Arial, sans-serif; }
-
-  .time-box__zal { font: 12px "Montserrat", Arial, sans-serif; }
-
-  .time-box__name { font: 800 16px "Montserrat", Arial, sans-serif; min-height: 38px; }
-
-  .time-box__trener { font: 12px "Montserrat", Arial, sans-serif; }
-
-  .list-day { padding: 15px 5px 15px 1.5rem; font-size: 14px; }
-
-  .list-day__date strong { font-size: 20px; }
-
-  .time-box-hint { position: fixed; width: 100%; height: 100vh; overflow: auto; padding: 100px 15px; }
-
-  .time-box-hint__overflow { background: rgba(0, 0, 0, 0.8); }
-
-  .time-box-hint__close { display: block; }
-
-  .time-box-hint__wrap { max-width: 680px; width: 100%; position: relative; left: auto !important; right: auto !important; top: auto !important; z-index: 9999; }
-
-  .time-box-hint__person { font: 900 18px "Montserrat", Arial, sans-serif; } }
+}
 
 @media (max-width: 750px) { .hidden-xs, .hidden-750 { display: none; }
 
@@ -5526,51 +5326,7 @@ li.fancybox-thumbs-loading { background: rgba(0, 0, 0, 0.1); }
 
   .slideshow-wrapper--rb .slideshow-wrapper__prev, .slideshow-wrapper--rb .slick-prev { right: 57px; }
 
-  .schedule-list__title { margin-bottom: 25px; }
-
-  .schedule-list__title span { font: 1.2rem "Montserrat", Arial, sans-serif; }
-
-  .schedule-list__row .day-col { -webkit-flex: 0 0 100%; -ms-flex: 0 0 100%; flex: 0 0 100%; margin-bottom: 15px; }
-
-  .time-box { height: auto; padding: 2.5rem 1rem 3rem 3rem; font: 14px "Montserrat", Arial, sans-serif; }
-
-  .time-box__head { margin-bottom: 2rem; }
-
-  .time-box__time { font: 800 16px "Montserrat", Arial, sans-serif; }
-
-  .time-box__zal { font: 14px "Montserrat", Arial, sans-serif; }
-
-  .time-box__name { font: 800 18px "Montserrat", Arial, sans-serif; min-height: 0; }
-
-  .time-box__trener { font: 14px "Montserrat", Arial, sans-serif; }
-
-  .schedule-page__title { text-align: left; margin-bottom: 2rem; }
-
-  .schedule-page__dates { background: #ff6600; margin: 0 0rem 3rem; padding: 10px 0; }
-
-  .schedule-page__dates .col-auto { display: none; }
-
-  .schedule-page__filter__buttons { margin-top: 3rem; }
-
-  .schedule-page__body { padding-top: 4rem; }
-
-  .schedule-list-days { margin-left: -3px; margin-right: -3px; }
-
-  .schedule-list-days__item { padding: 0 3px; -webkit-flex: 0 0 14.28%; -ms-flex: 0 0 14.28%; flex: 0 0 14.28%; }
-
-  .list-day { font-size: 14px; padding: 5px 5px 10px; }
-
-  .list-day__day { margin-bottom: 5px; }
-
-  .list-day__date strong { font-size: 16px; }
-
-  .list-day__month { display: none; }
-
-  .time-box-hint__wrap { padding: 5rem 2rem; }
-
-  .time-box-hint__title { font: 900 18px "Montserrat", Arial, sans-serif; }
-
-  .time-box-hint__person { font: 900 14px "Montserrat", Arial, sans-serif; } }
+}
 
 
 

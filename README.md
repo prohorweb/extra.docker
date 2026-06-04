@@ -1,93 +1,82 @@
 # extra.docker
 
-Yii2 проект в Docker: `nginx` + `php-fpm` + `mariadb` + `phpmyadmin`.
+Полноценное Docker-окружение для мультидоменного проекта на Yii2 Advanced. 
+Проект настроен для локальной работы по адресам:
+* Основной сайт: **http://extra.local/**
+* Региональный поддомен: **http://piter.extra.local/**
 
-## Текущая схема
+Окружение полностью совместимо с Windows (включая WSL2) и macOS (Intel и Apple Silicon M1/M2/M3).
 
-- `Dockerfile` не используется.
-- PHP работает из локального образа `extra-php:8.2-gd`.
-- В образ уже включены нужные расширения (`gd`, `pdo_mysql`, `mbstring`, `zip` и т.д.).
+## Архитектура окружения
+* **Nginx** (контейнер `extra_nginx`) — веб-сервер, порт `80` (с поддержкой поддоменов)
+* **PHP-FPM 8.2** (контейнер `extra_php`) — с расширениями `gd`, `pdo_mysql`, `zip` и встроенным **Composer 2**
+* **MariaDB 11** (контейнер `extra_mariadb`) — база данных, порт `3306`
+* **phpMyAdmin** (контейнер `extra_phpmyadmin`) — веб-интерфейс БД, порт `8081`
 
-## Сервисы
+---
 
-- `php` -> `extra-php:8.2-gd`
-- `nginx` -> `nginx:latest` (порт `8080`)
-- `db` -> `mariadb:11`
-- `phpmyadmin` -> `phpmyadmin/phpmyadmin` (порт `8081`)
-- `composer` -> `composer:2` (одноразовый сервис)
+## Быстрый запуск (Развертывание на новом устройстве / MacBook)
 
-## Быстрый запуск
+### Шаг 1. Настройка локальных доменов на хосте (Обязательно)
+Чтобы ваш браузер знал, куда перенаправлять запросы `extra.local`, добавьте домены в системный файл `hosts`.
 
+* **На macOS (в терминале Mac):**
+  ```bash
+  sudo nano /etc/hosts
+  ```
+* **На Windows (запустить Блокнот от Администратора):**
+  Открыть файл: `C:\Windows\System32\drivers\etc\hosts`
+
+Добавьте в самый конец файла следующие строки и сохраните:
+```text
+127.0.0.1 extra.local
+127.0.0.1 piter.extra.local
+```
+
+### Шаг 2. Клонирование и сборка контейнеров
 ```bash
-docker compose up -d
+git clone https://github.com
+cd extra.docker
+
+# Запуск сборки под архитектуру вашего процессора (Intel или Apple Silicon)
+docker compose up -d --build
 ```
 
-Проверка:
-
+### Шаг 3. Инициализация Yii2 окружения
+Запустите скрипт инициализации внутри PHP-контейнера. Выберите вариант `0` (Development) и подтвердите действие (`yes`):
 ```bash
-docker compose ps
-docker compose exec php php -m
-curl -I http://127.0.0.1:8080/
+docker compose exec php php init
 ```
 
-## Доступ
-
-- Сайт: `http://<server-ip>:8080`
-- phpMyAdmin: `http://<server-ip>:8081`
-
-## Composer
-
+### Шаг 4. Установка PHP-пакетов
+Установка всех зависимостей проекта выполняется напрямую внутри PHP-контейнера:
 ```bash
-docker compose run --rm composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction
+docker compose exec php composer update
 ```
 
-## Пересоздать только web-часть
-
+### Шаг 5. Применение миграций базы данных
 ```bash
-docker compose up -d --force-recreate php nginx
+docker compose exec php php yii migrate
 ```
 
-## Если снова нужно пересобрать PHP-образ
+---
 
-1. Временно запустить `php:8.2-fpm` с установкой расширений.
-2. Зафиксировать контейнер в образ:
+## Доступ к сервисам проекта
 
-```bash
-docker commit extra_php extra-php:8.2-gd
-```
+* **Основной сайт:** [http://extra.local/](http://extra.local/)
+* **Региональный сайт (Питер):** [http://piter.extra.local/](http://piter.extra.local/)
+* **phpMyAdmin:** [http://localhost:8081](http://localhost:8081)
+  * **Логин:** `root`
+  * **Пароль:** `root123`
 
-3. Убедиться, что в `docker-compose.yml` у `php`:
+---
 
-```yaml
-image: extra-php:8.2-gd
-command: ["php-fpm"]
-```
+## Полезные команды
 
-4. Перезапустить сервис:
+* **Остановка проекта:** `docker compose down`
+* **Остановка с полной очисткой БД (удаление volume):** `docker compose down -v`
+* **Установка пакета через Composer:** 
+  ```bash
+  docker compose exec php composer require vendor/package-name
+  ```
 
-```bash
-docker compose up -d --force-recreate php nginx
-```
-
-## Очистка старых образов
-
-Удалить все неиспользуемые образы:
-
-```bash
-docker image prune -a -f
-```
-
-Показать оставшиеся:
-
-```bash
-docker images
-```
-
-## База данных
-
-Полный сброс БД и повторная инициализация из `db/`:
-
-```bash
-docker compose down -v
-docker compose up -d
-```

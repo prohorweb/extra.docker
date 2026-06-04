@@ -93,7 +93,9 @@ class SiteController extends Controller
      * @return mixed
      */
     public function actionIndex()
-    {
+      {
+
+        // Если зашли на piter.extra.local — отдаем главную страницу Питера
         return $this->render('index', [
             'shares' => Shares::find()->where(['status' => 10])->orderBy(['position' => SORT_ASC])->limit(3)->all(),
             'club' => Club::findOne(1),
@@ -103,6 +105,7 @@ class SiteController extends Controller
             'banners' => ArrayHelper::index(Banners::find()->where('service_id > 0')->all(), null, 'service_id'),
         ]);
     }
+    
 
 
     /**

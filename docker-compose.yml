@@ -1,5 +1,8 @@
 services:
   php:
+    build:
+      context: .
+      dockerfile: Dockerfile
     image: extra-php:8.2-gd
     container_name: extra_php
     command: ["php-fpm"]
@@ -13,23 +16,13 @@ services:
       DB_NAME: extra
       DB_USER: extra
       DB_PASS: extra123
-
-  composer:
-    image: composer:2
-    container_name: extra_composer
-    working_dir: /app
-    volumes:
-      - ./:/app
-    depends_on:
-      - php
-    restart: "no"
-    command: ['install', '--no-dev', '--prefer-dist', '--optimize-autoloader', '--no-interaction']
+      COMPOSER_HOME: /tmp/.composer  # 1. Защита от ошибок прав кэша Composer
 
   nginx:
     image: nginx:latest
     container_name: extra_nginx
     ports:
-      - "8080:80"
+      - "80:80" 
     depends_on:
       - php
     volumes:
@@ -39,6 +32,8 @@ services:
   db:
     image: mariadb:11
     container_name: extra_mariadb
+    # 2. Платформа linux/amd64 гарантирует стабильную работу MariaDB на Apple Silicon Mac
+    platform: linux/amd64  
     restart: always
     environment:
       MARIADB_ROOT_PASSWORD: root123
@@ -65,3 +60,4 @@ services:
 
 volumes:
   db_data:
+
