@@ -1,82 +1,157 @@
 # extra.docker
 
-Полноценное Docker-окружение для мультидоменного проекта на Yii2 Advanced. 
-Проект настроен для локальной работы по адресам:
-* Основной сайт: **http://extra.local/**
-* Региональный поддомен: **http://piter.extra.local/**
+Docker-окружение для миграции фитнес-клуба **ExtraSport** с Yii2 Advanced на Laravel 11 по паттерну **Strangler Fig**.
 
-Окружение полностью совместимо с Windows (включая WSL2) и macOS (Intel и Apple Silicon M1/M2/M3).
+Проект позволяет постепенно заменять страницы Yii2 на Laravel без простоя: nginx маршрутизирует уже готовые маршруты на Laravel, а всё остальное — на legacy-приложение.
 
-## Архитектура окружения
-* **Nginx** (контейнер `extra_nginx`) — веб-сервер, порт `80` (с поддержкой поддоменов)
-* **PHP-FPM 8.2** (контейнер `extra_php`) — с расширениями `gd`, `pdo_mysql`, `zip` и встроенным **Composer 2**
-* **MariaDB 11** (контейнер `extra_mariadb`) — база данных, порт `3306`
-* **phpMyAdmin** (контейнер `extra_phpmyadmin`) — веб-интерфейс БД, порт `8081`
+## Архитектура
 
----
+```
+┌─────────────────────────────────────────────────────────┐
+│                    Nginx (порт 80/443)                  │
+│         HTTPS через mkcert (локально доверенный)        │
+├─────────────────────────────────────────────────────────┤
+│                                                         │
+│   / (главная)  ──────►  Laravel 11 (extra_laravel)     │
+│   /services    ──────►  Laravel 11 (по готовности)     │
+│   /shares      ──────►  Laravel 11 (по готовности)     │
+│                                                         │
+│   /admin/*     ──────►  Yii2 Backend (extra_php)       │
+│   всё остальное ────►  Yii2 Frontend (extra_php)       │
+│                                                         │
+└─────────────────────────────────────────────────────────┘
+              │                        │
+              ▼                        ▼
+         MariaDB 11               MariaDB 11
+        (extra_new)               (extra)
+```
 
-## Быстрый запуск (Развертывание на новом устройстве / MacBook)
+## Домены (локальная разработка)
 
-### Шаг 1. Настройка локальных доменов на хосте (Обязательно)
-Чтобы ваш браузер знал, куда перенаправлять запросы `extra.local`, добавьте домены в системный файл `hosts`.
+| Домен | Назначение | Обработчик |
+|-------|-----------|------------|
+| `https://extra.new` | Главная — выбор клуба | **Laravel** |
+| `https://piter.extra.new` | Клуб Piter | **Laravel** |
+| `https://matros.extra.new` | Клуб Matros | **Laravel** |
+| `https://de-vision.new` | Клуб De-Vision | **Laravel** |
+| `https://extra.new/admin` | Админка Yii2 | Yii2 Backend |
+| `http://localhost:8090` | Прямой доступ к Laravel (dev) | Laravel |
+| `http://localhost:8081` | phpMyAdmin | phpMyAdmin |
 
-* **На macOS (в терминале Mac):**
-  ```bash
-  sudo nano /etc/hosts
-  ```
-* **На Windows (запустить Блокнот от Администратора):**
-  Открыть файл: `C:\Windows\System32\drivers\etc\hosts`
+## Сервисы
 
-Добавьте в самый конец файла следующие строки и сохраните:
+| Контейнер | Образ | Порт |
+|-----------|-------|------|
+| `extra_nginx` | nginx:latest | 80, 443, 8090 |
+| `extra_php` | extra-php:8.2-gd | 9000 (Yii2) |
+| `extra_laravel` | extra-php:8.2-gd | 9000 (Laravel) |
+| `extra_mariadb` | mariadb:11 | 3306 |
+| `extra_phpmyadmin` | phpmyadmin/phpmyadmin | 8081 |
+
+## Базы данных
+
+- **`extra`** — legacy-база Yii2 (не трогаем до финального импорта)
+- **`extra_new`** — новая база Laravel (разрабатываем здесь)
+
+Перед финальным переключением на Laravel данные из `extra` будут импортированы в `extra_new` через artisan-команду.
+
+## Быстрый старт
+
+### 1. Домены в `/etc/hosts`
+
+**macOS / Linux:**
+```bash
+sudo nano /etc/hosts
+```
+
+**Windows (Блокнот от администратора):**
+Открыть `C:\Windows\System32\drivers\etc\hosts`
+
+Добавить:
 ```text
-127.0.0.1 extra.local
-127.0.0.1 piter.extra.local
+127.0.0.1 extra.new
+127.0.0.1 piter.extra.new
+127.0.0.1 matros.extra.new
+127.0.0.1 de-vision.new
 ```
 
-### Шаг 2. Клонирование и сборка контейнеров
-```bash
-git clone https://github.com
-cd extra.docker
+### 2. HTTPS-сертификаты (один раз на машину)
 
-# Запуск сборки под архитектуру вашего процессора (Intel или Apple Silicon)
-docker compose up -d --build
+Домены `.new` требуют обязательного HTTPS. См. [docs/HTTPS_SETUP.md](docs/HTTPS_SETUP.md).
+
+### 3. Запуск контейнеров
+
+```bash
+docker compose up -d
 ```
 
-### Шаг 3. Инициализация Yii2 окружения
-Запустите скрипт инициализации внутри PHP-контейнера. Выберите вариант `0` (Development) и подтвердите действие (`yes`):
+### 4. Инициализация Laravel
+
 ```bash
-docker compose exec php php init
+docker compose exec laravel composer install
+docker compose exec laravel cp .env.example .env
+docker compose exec laravel php artisan key:generate
+docker compose exec laravel php artisan migrate
 ```
 
-### Шаг 4. Установка PHP-пакетов
-Установка всех зависимостей проекта выполняется напрямую внутри PHP-контейнера:
+### 5. Инициализация Yii2 (если нужно)
+
 ```bash
+docker compose exec php php init          # выбрать 0 (Development)
 docker compose exec php composer update
-```
-
-### Шаг 5. Применение миграций базы данных
-```bash
 docker compose exec php php yii migrate
 ```
 
----
-
-## Доступ к сервисам проекта
-
-* **Основной сайт:** [http://extra.local/](http://extra.local/)
-* **Региональный сайт (Питер):** [http://piter.extra.local/](http://piter.extra.local/)
-* **phpMyAdmin:** [http://localhost:8081](http://localhost:8081)
-  * **Логин:** `root`
-  * **Пароль:** `root123`
-
----
-
 ## Полезные команды
 
-* **Остановка проекта:** `docker compose down`
-* **Остановка с полной очисткой БД (удаление volume):** `docker compose down -v`
-* **Установка пакета через Composer:** 
-  ```bash
-  docker compose exec php composer require vendor/package-name
-  ```
+### Laravel
+```bash
+docker compose exec laravel php artisan route:list
+docker compose exec laravel php artisan make:controller NameController
+docker compose exec laravel php artisan make:model ModelName -m
+docker compose exec laravel php artisan migrate
+docker compose exec laravel php artisan migrate:fresh --seed
+docker compose exec laravel php artisan tinker
+```
 
+### Yii2
+```bash
+docker compose exec php php yii migrate
+docker compose exec php composer require vendor/package
+```
+
+### Общие
+```bash
+docker compose ps
+docker compose logs -f nginx
+docker compose logs -f laravel
+docker compose restart nginx
+docker compose down
+docker compose down -v   # ⚠️ удалит БД!
+```
+
+## Доступы
+
+- **phpMyAdmin:** http://localhost:8081
+  - Логин: `root` / Пароль: `root123`
+  - Логин: `extra` / Пароль: `extra123`
+- **БД (внешний доступ):** `127.0.0.1:3306`
+
+## Статус миграции (Strangler Fig)
+
+- [x] **Фаза 0:** Параллельный запуск Yii2 + Laravel в одном Docker
+- [x] **Фаза 1.1:** Перехват главной `/` на Laravel
+- [x] **Фаза 1.2:** HTTPS через mkcert
+- [x] **Фаза 1.3:** Мультидоменность (extra.new + субдомены)
+- [ ] **Фаза 2:** Модели, миграции, сиды для клубов/услуг/акций
+- [ ] **Фаза 3:** Filament-админка
+- [ ] **Фаза 4:** Перехват остальных маршрутов (/services, /shares, ...)
+- [ ] **Фаза 5:** Финальный импорт данных из `extra` → `extra_new` + переключение
+
+## Стек
+
+- **Laravel 11** + Filament 3 + Blade + Alpine.js + GSAP + Lenis + Vite + Tailwind
+- **Yii2 Advanced** (legacy, постепенно заменяется)
+- **MariaDB 11** + **Redis**
+- **Docker** + **nginx** (Strangler Fig routing)
+- **HTTPS** через mkcert (локально доверенные сертификаты)

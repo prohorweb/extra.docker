@@ -69,3 +69,15 @@ frontend/web/uploads/*
 
 # Системное имя Windows
 nul
+
+# SSL-сертификаты (генерируются локально через mkcert)
+docker/nginx/ssl/
+
+# Laravel
+laravel/vendor/
+laravel/node_modules/
+laravel/.env
+laravel/storage/logs/*.log
+laravel/storage/framework/cache/data/*
+laravel/storage/framework/sessions/*
+laravel/storage/framework/views/*
