@@ -73,11 +73,11 @@ if ($sub != 'piter') {
 
             <?php if(Yii::$app->devicedetect->isMobile() || Yii::$app->devicedetect->isTablet()) { ?>
             <img class="d-block w-100"
-                src="<?= $banner->img1440 ? '/uploads/image/banners/1440/'.$banner->img1440 : '//placehold.it/1904x1080' ?>"
+                src="<?= $banner->img1440 ? '/uploads/banners/1440/'.$banner->img1440 : '//placehold.it/1904x1080' ?>"
                 alt="">
             <?php } else { ?>
             <img class="d-block w-100"
-                src="<?= $banner->img1200 ? '/uploads/image/banners/1200/'.$banner->img1200 : '//placehold.it/1904x698' ?>"
+                src="<?= $banner->img1200 ? '/uploads/banners/1200/'.$banner->img1200 : '//placehold.it/1904x698' ?>"
                 alt="">
             <?php } ?>
 
@@ -141,11 +141,11 @@ if ($sub != 'piter') {
 
             <?php if(Yii::$app->devicedetect->isMobile() || Yii::$app->devicedetect->isTablet()) { ?>
             <img class="d-block w-100"
-                src="<?= $banner->img1440 ? '/uploads/image/banners/1440/'.$banner->img1440 : '//placehold.it/1904x1080' ?>"
+                src="<?= $banner->img1440 ? '/uploads/banners/1440/'.$banner->img1440 : '//placehold.it/1904x1080' ?>"
                 alt="">
             <?php } else { ?>
             <img class="d-block w-100"
-                src="<?= $banner->img1200 ? '/uploads/image/banners/1200/'.$banner->img1200 : '//placehold.it/1904x698' ?>"
+                src="<?= $banner->img1200 ? '/uploads/banners/1200/'.$banner->img1200 : '//placehold.it/1904x698' ?>"
                 alt="">
             <?php } ?>
 
@@ -204,7 +204,7 @@ if ($sub != 'piter') {
                     <div class="date-action"><?= $share->title2 ?></div>
                     <?php } ?>
                     <img class="card-img-top"
-                        src="<?= $share->img ? '/uploads/image/share/' . $share->img : '//placehold.it/876x680' ?>"
+                        src="<?= $share->img ? '/uploads/share/' . $share->img : '//placehold.it/876x680' ?>"
                         alt="...">
                     <div class="card-body p-0">
                         <div class="d-flex">

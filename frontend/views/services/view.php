@@ -27,7 +27,7 @@ $this->registerMetaTag(['name' => 'description', 'content' => $model->meta_descr
         <h2 class="section-heading"><?= Html::encode($model->title) ?></h2>
         <p><?php foreach ($banners as $banner) break; { ?>
             <img class="w-100"
-                src="<?= $banner->img1440 ? '/uploads/image/banners/1440/' . $banner->img1440 : '//placehold.it/1904x698' ?>"
+                src="<?= $banner->img1440 ? '/uploads/banners/1440/' . $banner->img1440 : '//placehold.it/1904x698' ?>"
                 alt="" />
             <?php } ?>
         </p>
@@ -44,7 +44,7 @@ $this->registerMetaTag(['name' => 'description', 'content' => $model->meta_descr
             <div class="col-lg-4 col-md-6">
                 <a class="card" href="<?= Url::to(['/services/' . $service->alias]) ?>">
                     <img class="card-img-top"
-                        src="<?= $service->img ? '/uploads/image/services/' . $service->img : '//placehold.it/646x400' ?>"
+                        src="<?= $service->img ? '/uploads/services/' . $service->img : '//placehold.it/646x400' ?>"
                         alt="...">
                     <div class="card-body">
                         <div class="d-flex">

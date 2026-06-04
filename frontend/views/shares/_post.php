@@ -11,7 +11,7 @@ use yii\helpers\Url;
 
     <a class="card" href="<?= Url::to(['/card/shares/' . $model->alias]) ?>">
         <div class="date-action"><?= $model->title2 ?></div>
-        <img class="card-img-top" src="<?= $model->img ? '/uploads/image/share/' . $model->img : '//placehold.it/876x680' ?>" alt="...">
+        <img class="card-img-top" src="<?= $model->img ? '/uploads/share/' . $model->img : '//placehold.it/876x680' ?>" alt="...">
         <div class="card-body">
             <div class="d-flex">
                 <div class="card-body_wrapper">

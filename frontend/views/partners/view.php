@@ -44,7 +44,7 @@ $this->registerMetaTag(['name' => 'description', 'content' => $model->meta_descr
 
                 </div>
                 <div class="col-4 hidden-sm">
-                    <img src="<?= $model->img ? '/uploads/image/partners/'.$model->img : '//placehold.it/330x240' ?>" alt=""/>
+                    <img src="<?= $model->img ? '/uploads/partners/'.$model->img : '//placehold.it/330x240' ?>" alt=""/>
                 </div>
             </div>
 

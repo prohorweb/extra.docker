@@ -62,7 +62,7 @@ if ($sub != 'piter') {
         <?php $i = 0;
         foreach ($banners as $banner) {  ?>
             <div class="carousel-item  <?php if ($i == 0) { ?>active<?php } ?>" data-bs-interval=3000>
-                <img class="w-100" src="<?= $banner->img ? '/uploads/image/banners/' . $banner->img : '//placehold.it/900x300' ?>" alt="" />
+                <img class="w-100" src="<?= $banner->img ? '/uploads/banners/' . $banner->img : '//placehold.it/900x300' ?>" alt="" />
             </div>
         <?php $i++;
         } ?>

@@ -51,7 +51,7 @@ setlocale(LC_TIME, "ru-RU");
                         <div class="slick" data-slick='{"autoplay": true, "adaptiveHeight": false, "centerPadding": "0px", "infinite": true, "slidesToShow": 1, "dots": false, "arrows": true}'>
                             <?php foreach ($banners as $banner) { ?>
                                 <div class="slick-slide">
-                                    <img src="<?= $banner->img1440 ? '/uploads/image/banners/1440/' . $banner->img1440 : 'http://placehold.it/645x460' ?>" alt="" />
+                                    <img src="<?= $banner->img1440 ? '/uploads/banners/1440/' . $banner->img1440 : 'http://placehold.it/645x460' ?>" alt="" />
                                 </div>
                             <?php } ?>
                         </div>

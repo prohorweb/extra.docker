@@ -33,7 +33,7 @@ $this->registerMetaTag(['name' => 'description', 'content' => $model->meta_descr
             </div>
             <div class="col-lg-6">
                 <?php foreach ($banners as $banner) break; { ?>
-                    <img class="w-100" src="<?= $banner->img1440 ? '/uploads/image/banners/1440/' . $banner->img1440 : 'http://placehold.it/645x450' ?>" alt="" />
+                    <img class="w-100" src="<?= $banner->img1440 ? '/uploads/banners/1440/' . $banner->img1440 : 'http://placehold.it/645x450' ?>" alt="" />
                 <?php } ?>
             </div>
         </div>

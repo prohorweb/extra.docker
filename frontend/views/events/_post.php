@@ -13,7 +13,7 @@ Yii::$app->formatter->locale = 'ru-RU';
     <div class="row">
         <div class="event__img col-lg-6 mb-3">
             <a href="<?= Url::to(['/es/events/' . $model['alias']]) ?>">
-                <img class="w-100" src="<?= $model['img'] ? '/uploads/image/event/' . $model['img'] : '//placehold.it/450x300' ?>" alt="" />
+                <img class="w-100" src="<?= $model['img'] ? '/uploads/event/' . $model['img'] : '//placehold.it/450x300' ?>" alt="" />
             </a>
         </div>
         <div class="event-blog__item col-lg-6">

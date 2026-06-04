@@ -84,7 +84,7 @@ $this->registerMetaTag(['name' => 'description', 'content' => $params->meta_desc
             <?php foreach($models as $key => $model) { ?>
             <div class="card-choice__cards__item">
                 <div class="card-block">
-                    <img src="<?= $model->img ? '/uploads/image/club_cards/' . $model->img : '//placehold.it/1752x390' ?>" alt="" class="card-block__bg" />
+                    <img src="<?= $model->img ? '/uploads/club_cards/' . $model->img : '//placehold.it/1752x390' ?>" alt="" class="card-block__bg" />
                     <div class="card-block__img"><img src="/images/card-img.png" alt="" /></div>
                     <div class="card-block__wrap">
                         <div class="card-block__title"><?= Html::encode($model->title) ?></div>

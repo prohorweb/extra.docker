@@ -38,7 +38,7 @@ if ($model->only_url) {
                     <div class="date-action"><?= $model->title2 ?></div>
                     <?php } ?>
                     <img class="w-100 card-img-top "
-                        src="<?= $model->img ? '/uploads/image/share/' . $model->img : '//placehold.it/876x680' ?>"
+                        src="<?= $model->img ? '/uploads/share/' . $model->img : '//placehold.it/876x680' ?>"
                         alt="" />
                 </div>
                 <div class="d-flex justify-content-between  align-items-center">

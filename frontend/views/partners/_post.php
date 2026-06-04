@@ -8,7 +8,7 @@ use lajax\translatemanager\helpers\Language;
 
 ?>
 <div class="partner-box">
-    <div class="partner-box__img"><img src="<?= $model->img ? '/uploads/image/partners/'.$model->img : '//placehold.it/330x330' ?>" alt=""/></div>
+    <div class="partner-box__img"><img src="<?= $model->img ? '/uploads/partners/'.$model->img : '//placehold.it/330x330' ?>" alt=""/></div>
     <?php if(!empty($model->discount)) { ?>
         <div class="partner-box__stiker stiker"><?= $model->discount ?></div>
     <?php } elseif($model->is_gift == 1) { ?>

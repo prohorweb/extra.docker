@@ -18,7 +18,7 @@ $this->registerMetaTag(['name' => 'description', 'content' => $params->meta_desc
 <div class="service-header">
     <div class="d-flex align-items-center justify-content-center title">групповые программы</div>
     <div class="overlay"></div>
-    <img class="w-100" src="/uploads/image/banners/1440/Fitness_Dumbbells_479959_1920x1200-1649859427.jpg" alt="">
+    <img class="w-100" src="/uploads/banners/1440/Fitness_Dumbbells_479959_1920x1200-1649859427.jpg" alt="">
 </div>
 
 <section class="page-item actions" id="actions">

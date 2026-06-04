@@ -31,7 +31,7 @@ use yii\widgets\MaskedInput;
     </section -->
 
     <main class="main-section main-section--lending-page lending-page">
-        <div class="lending-page__banner"><img src="<?= $model->img ? '/uploads/image/promo/' . $model->img : '//placehold.it/1904x643' ?>" alt=""></div>
+        <div class="lending-page__banner"><img src="<?= $model->img ? '/uploads/promo/' . $model->img : '//placehold.it/1904x643' ?>" alt=""></div>
         <div class="container container--min">
             <div class="lending-page__well">
                 <?= $model->text ?>
@@ -68,7 +68,7 @@ use yii\widgets\MaskedInput;
                 </tr>
 
                 <tr class="lending-page__row">
-                    <td class="lending-page__cell"><img src="<?= $model->img ? '/uploads/image/promo/' . $model->icon1 : '//placehold.it/73x74' ?>" alt=""></td>
+                    <td class="lending-page__cell"><img src="<?= $model->img ? '/uploads/promo/' . $model->icon1 : '//placehold.it/73x74' ?>" alt=""></td>
                     <td class="lending-page__cell">
                         <p class="lending-price">
                             <a class="popup-to" href="#zvon-popup" data-month="1 месяц" data-club="0"><?= $model->price1_piter ?> <span>₽</span></a>
@@ -100,7 +100,7 @@ use yii\widgets\MaskedInput;
                 </tr>
 
                 <tr class="lending-page__row">
-                    <td class="lending-page__cell"><img src="<?= $model->img ? '/uploads/image/promo/' . $model->icon3 : '//placehold.it/73x74' ?>" alt=""></td>
+                    <td class="lending-page__cell"><img src="<?= $model->img ? '/uploads/promo/' . $model->icon3 : '//placehold.it/73x74' ?>" alt=""></td>
                     <td class="lending-page__cell">
                         <p class="lending-price">
                             <a class="popup-to" href="#zvon-popup" data-month="3 месяца" data-club="0"><?= $model->price3_piter ?> <span>₽</span></a>
@@ -132,7 +132,7 @@ use yii\widgets\MaskedInput;
                 </tr>
 
                 <tr class="lending-page__row">
-                    <td class="lending-page__cell"><img src="<?= $model->img ? '/uploads/image/promo/' . $model->icon6 : '//placehold.it/73x74' ?>" alt=""></td>
+                    <td class="lending-page__cell"><img src="<?= $model->img ? '/uploads/promo/' . $model->icon6 : '//placehold.it/73x74' ?>" alt=""></td>
                     <td class="lending-page__cell">
                         <p class="lending-price">
                             <a class="popup-to" href="#zvon-popup" data-month="6 месяцев" data-club="0"><?= $model->price6_piter ?> <span>₽</span></a>
@@ -164,7 +164,7 @@ use yii\widgets\MaskedInput;
                 </tr>
 
                 <tr class="lending-page__row">
-                    <td class="lending-page__cell"><img src="<?= $model->img ? '/uploads/image/promo/' . $model->icon12 : '//placehold.it/73x74' ?>" alt=""></td>
+                    <td class="lending-page__cell"><img src="<?= $model->img ? '/uploads/promo/' . $model->icon12 : '//placehold.it/73x74' ?>" alt=""></td>
                     <td class="lending-page__cell">
                         <p class="lending-price">
                             <a class="popup-to" href="#zvon-popup" data-month="12 месяцев" data-club="0"><?= $model->price12_piter ?> <span>₽</span></a>
@@ -206,25 +206,25 @@ use yii\widgets\MaskedInput;
                         </div>
                         <div class="lending-price-block__row row">
                             <div class="lending-price-block__item col-3">
-                                <img src="<?= $model->img ? '/uploads/image/promo/' . $model->icon1 : '//placehold.it/73x74' ?>" alt="">
+                                <img src="<?= $model->img ? '/uploads/promo/' . $model->icon1 : '//placehold.it/73x74' ?>" alt="">
                                 <p class="lending-price">
                                     <a class="popup-to" href="#zvon-popup" data-month="1 месяц" data-club="0"><?= $model->price1_piter ?> <span>₽</span></a>
                                 </p>
                             </div>
                             <div class="lending-price-block__item col-3">
-                                <img src="<?= $model->img ? '/uploads/image/promo/' . $model->icon3 : '//placehold.it/73x74' ?>" alt="">
+                                <img src="<?= $model->img ? '/uploads/promo/' . $model->icon3 : '//placehold.it/73x74' ?>" alt="">
                                 <p class="lending-price">
                                     <a class="popup-to" href="#zvon-popup" data-month="3 месяца" data-club="0"><?= $model->price3_piter ?> <span>₽</span></a>
                                 </p>
                             </div>
                             <div class="lending-price-block__item col-3">
-                                <img src="<?= $model->img ? '/uploads/image/promo/' . $model->icon6 : '//placehold.it/73x74' ?>" alt="">
+                                <img src="<?= $model->img ? '/uploads/promo/' . $model->icon6 : '//placehold.it/73x74' ?>" alt="">
                                 <p class="lending-price">
                                     <a class="popup-to" href="#zvon-popup" data-month="6 месяцев" data-club="0"><?= $model->price6_piter ?> <span>₽</span></a>
                                 </p>
                             </div>
                             <div class="lending-price-block__item col-3">
-                                <img src="<?= $model->img ? '/uploads/image/promo/' . $model->icon12 : '//placehold.it/73x74' ?>" alt="">
+                                <img src="<?= $model->img ? '/uploads/promo/' . $model->icon12 : '//placehold.it/73x74' ?>" alt="">
                                 <p class="lending-price">
                                     <a class="popup-to" href="#zvon-popup" data-month="12 месяцев" data-club="0"><?= $model->price12_piter ?> <span>₽</span></a>
                                 </p>
@@ -242,25 +242,25 @@ use yii\widgets\MaskedInput;
                         </div>
                         <div class="lending-price-block__row row">
                             <div class="lending-price-block__item col-3">
-                                <img src="<?= $model->img ? '/uploads/image/promo/' . $model->icon1 : '//placehold.it/73x74' ?>" alt="">
+                                <img src="<?= $model->img ? '/uploads/promo/' . $model->icon1 : '//placehold.it/73x74' ?>" alt="">
                                 <p class="lending-price">
                                     <a class="popup-to" href="#zvon-popup" data-month="1 месяц" data-club="1"><?= $model->price1_rodeo ?> <span>₽</span></a>
                                 </p>
                             </div>
                             <div class="lending-price-block__item col-3">
-                                <img src="<?= $model->img ? '/uploads/image/promo/' . $model->icon3 : '//placehold.it/73x74' ?>" alt="">
+                                <img src="<?= $model->img ? '/uploads/promo/' . $model->icon3 : '//placehold.it/73x74' ?>" alt="">
                                 <p class="lending-price">
                                     <a class="popup-to" href="#zvon-popup" data-month="3 месяца" data-club="1"><?= $model->price3_rodeo ?> <span>₽</span></a>
                                 </p>
                             </div>
                             <div class="lending-price-block__item col-3">
-                                <img src="<?= $model->img ? '/uploads/image/promo/' . $model->icon6 : '//placehold.it/73x74' ?>" alt="">
+                                <img src="<?= $model->img ? '/uploads/promo/' . $model->icon6 : '//placehold.it/73x74' ?>" alt="">
                                 <p class="lending-price">
                                     <a class="popup-to" href="#zvon-popup" data-month="6 месяцев" data-club="1"><?= $model->price6_rodeo ?> <span>₽</span></a>
                                 </p>
                             </div>
                             <div class="lending-price-block__item col-3">
-                                <img src="<?= $model->img ? '/uploads/image/promo/' . $model->icon12 : '//placehold.it/73x74' ?>" alt="">
+                                <img src="<?= $model->img ? '/uploads/promo/' . $model->icon12 : '//placehold.it/73x74' ?>" alt="">
                                 <p class="lending-price">
                                     <a class="popup-to" href="#zvon-popup" data-month="12 месяцев" data-club="1"><?= $model->price12_rodeo ?> <span>₽</span></a>
                                 </p>
@@ -275,25 +275,25 @@ use yii\widgets\MaskedInput;
                         <div class="lending-price-block__desc">Санкт-Петербург, <br>Индустриальный пр., 24</div>
                         <div class="lending-price-block__row row">
                             <div class="lending-price-block__item col-3">
-                                <img src="<?= $model->img ? '/uploads/image/promo/' . $model->icon1 : '//placehold.it/73x74' ?>" alt="">
+                                <img src="<?= $model->img ? '/uploads/promo/' . $model->icon1 : '//placehold.it/73x74' ?>" alt="">
                                 <p class="lending-price">
                                     <a class="popup-to" href="#zvon-popup" data-month="1 месяц" data-club="2"><?= $model->price1_june ?> <span>₽</span></a>
                                 </p>
                             </div>
                             <div class="lending-price-block__item col-3">
-                                <img src="<?= $model->img ? '/uploads/image/promo/' . $model->icon3 : '//placehold.it/73x74' ?>" alt="">
+                                <img src="<?= $model->img ? '/uploads/promo/' . $model->icon3 : '//placehold.it/73x74' ?>" alt="">
                                 <p class="lending-price">
                                     <a class="popup-to" href="#zvon-popup" data-month="3 месяца" data-club="2"><?= $model->price3_june ?> <span>₽</span></a>
                                 </p>
                             </div>
                             <div class="lending-price-block__item col-3">
-                                <img src="<?= $model->img ? '/uploads/image/promo/' . $model->icon6 : '//placehold.it/73x74' ?>" alt="">
+                                <img src="<?= $model->img ? '/uploads/promo/' . $model->icon6 : '//placehold.it/73x74' ?>" alt="">
                                 <p class="lending-price">
                                     <a class="popup-to" href="#zvon-popup" data-month="6 месяцев" data-club="2"><?= $model->price6_june ?> <span>₽</span></a>
                                 </p>
                             </div>
                             <div class="lending-price-block__item col-3">
-                                <img src="<?= $model->img ? '/uploads/image/promo/' . $model->icon12 : '//placehold.it/73x74' ?>" alt="">
+                                <img src="<?= $model->img ? '/uploads/promo/' . $model->icon12 : '//placehold.it/73x74' ?>" alt="">
                                 <p class="lending-price">
                                     <a class="popup-to" href="#zvon-popup" data-month="12 месяцев" data-club="2"><?= $model->price12_june ?> <span>₽</span></a>
                                 </p>
@@ -308,25 +308,25 @@ use yii\widgets\MaskedInput;
                         <div class="lending-price-block__desc">Санкт-Петербург, <br>Пражская ул., 48/50</div>
                         <div class="lending-price-block__row row">
                             <div class="lending-price-block__item col-3">
-                                <img src="<?= $model->img ? '/uploads/image/promo/' . $model->icon1 : '//placehold.it/73x74' ?>" alt="">
+                                <img src="<?= $model->img ? '/uploads/promo/' . $model->icon1 : '//placehold.it/73x74' ?>" alt="">
                                 <p class="lending-price">
                                     <a class="popup-to" href="#zvon-popup" data-month="1 месяц" data-club="3"><?= $model->price1_polis ?> <span>₽</span></a>
                                 </p>
                             </div>
                             <div class="lending-price-block__item col-3">
-                                <img src="<?= $model->img ? '/uploads/image/promo/' . $model->icon3 : '//placehold.it/73x74' ?>" alt="">
+                                <img src="<?= $model->img ? '/uploads/promo/' . $model->icon3 : '//placehold.it/73x74' ?>" alt="">
                                 <p class="lending-price">
                                     <a class="popup-to" href="#zvon-popup" data-month="3 месяца" data-club="3"><?= $model->price3_polis ?> <span>₽</span></a>
                                 </p>
                             </div>
                             <div class="lending-price-block__item col-3">
-                                <img src="<?= $model->img ? '/uploads/image/promo/' . $model->icon6 : '//placehold.it/73x74' ?>" alt="">
+                                <img src="<?= $model->img ? '/uploads/promo/' . $model->icon6 : '//placehold.it/73x74' ?>" alt="">
                                 <p class="lending-price">
                                     <a class="popup-to" href="#zvon-popup" data-month="6 месяцев" data-club="3"><?= $model->price6_polis ?> <span>₽</span></a>
                                 </p>
                             </div>
                             <div class="lending-price-block__item col-3">
-                                <img src="<?= $model->img ? '/uploads/image/promo/' . $model->icon12 : '//placehold.it/73x74' ?>" alt="">
+                                <img src="<?= $model->img ? '/uploads/promo/' . $model->icon12 : '//placehold.it/73x74' ?>" alt="">
                                 <p class="lending-price">
                                     <a class="popup-to" href="#zvon-popup" data-month="12 месяцев" data-club="3"><?= $model->price12_polis ?> <span>₽</span></a>
                                 </p>
@@ -341,25 +341,25 @@ use yii\widgets\MaskedInput;
                         <div class="lending-price-block__desc">ул. Матроса Железняка, 57 А</div>
                         <div class="lending-price-block__row row">
                             <div class="lending-price-block__item col-3">
-                                <img src="<?= $model->img ? '/uploads/image/promo/' . $model->icon1 : '//placehold.it/73x74' ?>" alt="">
+                                <img src="<?= $model->img ? '/uploads/promo/' . $model->icon1 : '//placehold.it/73x74' ?>" alt="">
                                 <p class="lending-price">
                                     <a class="popup-to" href="#zvon-popup" data-month="1 месяц" data-club="4"><?= $model->price1_matros ?> <span>₽</span></a>
                                 </p>
                             </div>
                             <div class="lending-price-block__item col-3">
-                                <img src="<?= $model->img ? '/uploads/image/promo/' . $model->icon3 : '//placehold.it/73x74' ?>" alt="">
+                                <img src="<?= $model->img ? '/uploads/promo/' . $model->icon3 : '//placehold.it/73x74' ?>" alt="">
                                 <p class="lending-price">
                                     <a class="popup-to" href="#zvon-popup" data-month="3 месяца" data-club="4"><?= $model->price3_matros ?> <span>₽</span></a>
                                 </p>
                             </div>
                             <div class="lending-price-block__item col-3">
-                                <img src="<?= $model->img ? '/uploads/image/promo/' . $model->icon6 : '//placehold.it/73x74' ?>" alt="">
+                                <img src="<?= $model->img ? '/uploads/promo/' . $model->icon6 : '//placehold.it/73x74' ?>" alt="">
                                 <p class="lending-price">
                                     <a class="popup-to" href="#zvon-popup" data-month="6 месяцев" data-club="4"><?= $model->price6_matros ?> <span>₽</span></a>
                                 </p>
                             </div>
                             <div class="lending-price-block__item col-3">
-                                <img src="<?= $model->img ? '/uploads/image/promo/' . $model->icon12 : '//placehold.it/73x74' ?>" alt="">
+                                <img src="<?= $model->img ? '/uploads/promo/' . $model->icon12 : '//placehold.it/73x74' ?>" alt="">
                                 <p class="lending-price">
                                     <a class="popup-to" href="#zvon-popup" data-month="12 месяцев" data-club="4"><?= $model->price12_matros ?> <span>₽</span></a>
                                 </p>

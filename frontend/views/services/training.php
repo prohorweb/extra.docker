@@ -19,7 +19,7 @@ $this->registerMetaTag(['name' => 'description', 'content' => $model->meta_descr
 <div class="service-header">
     <div class="d-flex align-items-center justify-content-center title"><?= Html::encode($model->title) ?></div>
     <div class="overlay"></div>
-    <img class="w-100" src="/uploads/image/banners/1440/banner_site-1556301986.jpg" alt="">
+    <img class="w-100" src="/uploads/banners/1440/banner_site-1556301986.jpg" alt="">
 </div>
 
 <section class="page-item actions"  id="actions">

@@ -43,7 +43,7 @@ $this->registerMetaTag(['name' => 'description', 'content' => $model->meta_descr
             <div class="col-lg-4 col-md-6">
                 <a class="card" href="<?= Url::to(['/services/programs/' . $groupProgram->alias]) ?>/">
                     <img class="card-img-top"
-                        src="<?= $groupProgram->img ? '/uploads/image/group_programs/' . $groupProgram->img : '//placehold.it/646x400' ?>"
+                        src="<?= $groupProgram->img ? '/uploads/group_programs/' . $groupProgram->img : '//placehold.it/646x400' ?>"
                         alt="...">
                     <div class="card-body">
                         <div class="d-flex">

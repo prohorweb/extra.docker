@@ -9,7 +9,7 @@ use yii\helpers\Url;
 ?>
 <div class="col-md-6">
     <a class="card" href="<?= Url::to(['/services/' . $model->alias]) ?>">
-        <img class="card-img-top" src="<?= $model->img ? '/uploads/image/services/' . $model->img : '//placehold.it/644x400' ?>" alt="...">
+        <img class="card-img-top" src="<?= $model->img ? '/uploads/services/' . $model->img : '//placehold.it/644x400' ?>" alt="...">
         <div class="card-body">
             <div class="d-flex">
                 <div class="card-body_wrapper">
