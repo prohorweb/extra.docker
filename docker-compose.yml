@@ -16,28 +16,47 @@ services:
       DB_NAME: extra
       DB_USER: extra
       DB_PASS: extra123
-      COMPOSER_HOME: /tmp/.composer  # 1. Защита от ошибок прав кэша Composer
+      COMPOSER_HOME: /tmp/.composer
+
+  laravel:
+    image: extra-php:8.2-gd
+    container_name: extra_laravel
+    command: ["php-fpm"]
+    volumes:
+      - ./laravel:/var/www/html/laravel   # ← было /var/www/laravel
+    working_dir: /var/www/html/laravel    # ← было /var/www/laravel
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: extra_new
+      DB_USERNAME: extra
+      DB_PASSWORD: extra123
 
   nginx:
     image: nginx:latest
     container_name: extra_nginx
     ports:
-      - "80:80" 
+      - "80:80"
+      - "443:443"
+      - "8090:8090"
     depends_on:
       - php
+      - laravel
     volumes:
       - ./:/var/www/html:ro
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./docker/nginx/ssl:/etc/nginx/ssl:ro
 
   db:
     image: mariadb:11
     container_name: extra_mariadb
-    # 2. Платформа linux/amd64 гарантирует стабильную работу MariaDB на Apple Silicon Mac
     platform: linux/amd64  
     restart: always
     environment:
       MARIADB_ROOT_PASSWORD: root123
-      MARIADB_DATABASE: extra
+      MARIADB_DATABASE: extra_new
       MARIADB_USER: extra
       MARIADB_PASSWORD: extra123
     volumes:
@@ -60,4 +79,3 @@ services:
 
 volumes:
   db_data:
-
