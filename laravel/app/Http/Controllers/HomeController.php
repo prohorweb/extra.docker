@@ -10,17 +10,14 @@ class HomeController extends Controller
     {
         $host = $request->getHost();
 
-        // extra.new — главная страница с выбором клуба
         if (in_array($host, ['extra.new', 'www.extra.new'])) {
-            return view('extra.home');
+            return view('pages.welcome');
         }
 
-        // de-vision.new и субдомены (.extra.new) — страница выбранного клуба
         if (in_array($host, ['de-vision.new', 'www.de-vision.new']) || str_contains($host, '.extra.new')) {
-            $club = explode('.', $host)[0]; 
-            return view('subdomain.home', compact('club'));
+            return view('pages.home');
         }
 
-        return view('welcome');
+        return view('pages.welcome');
     }
 }

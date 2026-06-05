@@ -1,6 +1,6 @@
 FROM php:8.2-fpm
 
-# Устанавливаем системные зависимости
+# Устанавливаем системные зависимости + curl для Node.js
 RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
@@ -8,6 +8,8 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     zip \
     unzip \
+    git \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
 # Настраиваем и устанавливаем расширения PHP
@@ -18,4 +20,3 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
-
