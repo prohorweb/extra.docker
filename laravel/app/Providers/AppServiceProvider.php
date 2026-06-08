@@ -19,6 +19,21 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        if (!function_exists('vite_asset')) {
+            function vite_asset(string $entry): string
+            {
+                static $manifest = null;
+                if ($manifest === null) {
+                    $manifestPath = public_path('build/manifest.json');
+                    if (file_exists($manifestPath)) {
+                        $manifest = json_decode(file_get_contents($manifestPath), true);
+                    } else {
+                        return '';
+                    }
+                }
+
+                return asset('build/' . ($manifest[$entry]['file'] ?? ''));
+            }
+        }
     }
 }
