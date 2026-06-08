@@ -3,18 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Extra Fitness</title>
+    <x-seo.meta :data="$seo ?? null" />
+    @if(isset($theme) && is_array($theme))
+        <style>
+            :root {
+                @foreach($theme as $key => $value)
+                    {{ $key }}: {{ $value }};
+                @endforeach
+            }
+        </style>
+    @endif
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @stack('head')
 </head>
 <body class="bg-black text-white antialiased">
     
-    @include('components.header')
-    
+    @include('components.layouts.parts.header')
+
     <main>
         @yield('content')
     </main>
 
-    @include('components.footer')
+    @include('components.layouts.parts.footer')
 
+    <x-modals.callback />
+    <x-modals.club-select />
+
+    @stack('scripts')
 </body>
 </html>
