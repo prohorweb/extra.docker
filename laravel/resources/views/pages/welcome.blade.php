@@ -11,7 +11,9 @@
 
     <x-sections.clubs-carousel.desktop :clubs="$clubs ?? []" target="clubs" />
     <x-sections.clubs-carousel.mobile :clubs="$clubs ?? []" target="clubs-mobile" />
-
+   
+    {{-- Карта --}}
     <x-sections.map :placemarks="$placemarks ?? []" />
+
 @endsection
 

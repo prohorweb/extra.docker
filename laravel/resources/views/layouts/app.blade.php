@@ -16,15 +16,15 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('head')
 </head>
-<body class="bg-black text-white antialiased">
+<body class="bg-black text-white antialiased font-body">
     
-    @include('components.layouts.parts.header')
+
 
     <main>
         @yield('content')
     </main>
 
-    @include('components.layouts.parts.footer')
+    @include('layouts.parts.footer')
 
     <x-modals.callback />
     <x-modals.club-select />

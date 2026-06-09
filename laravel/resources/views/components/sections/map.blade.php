@@ -1,46 +1,57 @@
-{{--
-@component x-sections.map
-@prop array $placemarks — массив меток [{lat, lng, hint, icon}] + [{url}]
-@prop string $apiKey — ключ Яндекс.Карт (опционально)
---}}
+@props(['placemarks' => []])
 
-<section class="map-section welcome hieght-100">
-    <div class="map-section__map" id="map"></div>
+
+
+<section class="relative z-10 w-full h-[85vh]">
+  <div id="map" class="w-full h-full opacity-[0.85]"></div>
 </section>
 
 @push('scripts')
-<script src="http://api-maps.yandex.ru/2.1/?lang=ru_RU"></script>
+<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&apikey={{ config('services.yandex_maps.key') }}" type="text/javascript"></script>
 <script>
-    ymaps.ready(init);
-    function init () {
+document.addEventListener('DOMContentLoaded', function () {
+    if (typeof ymaps === 'undefined') return;
+    if (!document.getElementById('map')) return;
+
+    ymaps.ready(function () {
         var host = window.location.hostname;
 
         var myMap = new ymaps.Map('map', {
-            center: [{{ $placemarks[0]['lat'] ?? 0 }}, {{ $placemarks[0]['lng'] ?? 0 }}],
+            center: [{{ !empty($placemarks) ? $placemarks[0]['coordinates'] : '59.9343, 30.3351' }}],
             zoom: 11,
             controls: []
-        }, { suppressMapOpenBlock: true });
+        }, 
+        { suppressMapOpenBlock: true });
 
         myMap.behaviors.disable('scrollZoom');
 
-        @foreach($placemarks as $pm)
-        var placemark{{ $loop->index }} = new ymaps.Placemark(
-            [{{ $pm['lat'] }}, {{ $pm['lng'] }}],
-            { hintContent: '{{ $pm['hint'] ?? '' }}' },
-            {
-                iconLayout: 'default#image',
-                iconImageHref: '{{ $pm['icon'] ?? '/images/marker.png' }}',
-                iconImageSize: [57, 80],
+        setTimeout(function () {
+            var groundPane = document.querySelector('[class*="ground-pane"]');
+            if (groundPane) groundPane.style.filter = 'invert(1) hue-rotate(-180deg)';
+        }, 500);
+
+        @foreach($placemarks as $placemark)
+        (function (coords, hint, icon, url) {
+            var pm = new ymaps.Placemark(coords, { hintContent: hint }, {
+                iconLayout:      'default#image',
+                iconImageHref:   icon,
+                iconImageSize:   [57, 80],
                 iconImageOffset: [-28, -80]
-            }
+            });
+            pm.events.add('click', function () { window.location.href = url; });
+            myMap.geoObjects.add(pm);
+        })(
+            [{{ $placemark['coordinates'] }}],
+            '{{ $placemark['hint'] ?? '' }}',
+            '{{ asset($placemark['icon']) }}',
+            '{{ $placemark['url'] ?? '#' }}'
         );
-        myMap.geoObjects.add(placemark{{ $loop->index }});
-        @if(isset($pm['url']))
-        placemark{{ $loop->index }}.events.add('click', function (e) { window.location.href = '{{ $pm['url'] }}'; });
-        @endif
         @endforeach
 
-        myMap.setBounds(myMap.geoObjects.getBounds());
-    }
+        if (myMap.geoObjects.getLength() > 0) {
+            myMap.setBounds(myMap.geoObjects.getBounds(), { checkZoomRange: true });
+        }
+    });
+});
 </script>
 @endpush

@@ -6,6 +6,8 @@
         :poster="$hero['poster'] ?? ''"
         :logo="$hero['logo'] ?? asset('img/logo.svg')"
         :heading="$hero['heading'] ?? $club['name'] ?? 'Фитнес клуб'"
+        :subheading="$hero['subheading'] ?? null"
+        :show-logo="$hero['showLogo'] ?? false"
         :cta="$hero['cta'] ?? ['text' => 'Записаться', 'url' => '#callback']"
     />
 

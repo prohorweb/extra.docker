@@ -10,7 +10,7 @@ class HomeController extends Controller
     {
         $host = $request->getHost();
 
-        $demoClubs = [
+        $itemClubs = [
             [
                 'name' => 'ТРЦ «Питер»',
                 'address' => 'Санкт-Петербург, ул. Типанова, 21',
@@ -31,29 +31,27 @@ class HomeController extends Controller
             ],
         ];
 
-        $demoPlacemarks = [
+       $placemarks = [
             [
-                'lat' => 59.8499,
-                'lng' => 30.2953,
-                'hint' => 'EХTRASPORT Питер',
-                'icon' => '/images/marker.png',
-                'url' => 'http://piter.' . $host,
+                'coordinates' => '59.8499, 30.2953',
+                'hint'        => 'EXTRASPORT Питер',
+                'icon'        => 'uploads/layout/icones/marker.png',
+                'url'         => 'http://piter.' . $host,
             ],
             [
-                'lat' => 59.9880,
-                'lng' => 30.3605,
-                'hint' => 'EХTRASPORT Матроса Железняка',
-                'icon' => '/images/marker.png',
-                'url' => 'http://matros.' . $host,
+                'coordinates' => '59.9880, 30.3605',
+                'hint'        => 'EXTRASPORT Матроса Железняка',
+                'icon'        => 'uploads/layout/icones/marker.png',
+                'url'         => 'http://matros.' . $host,
             ],
             [
-                'lat' => 60.0335,
-                'lng' => 30.3683,
-                'hint' => 'De-vision',
-                'icon' => '/images/marker2.png',
-                'url' => 'http://de-vision.ru',
+                'coordinates' => '60.0335, 30.3683',
+                'hint'        => 'De-vision',
+                'icon'        => 'uploads/layout/icones/marker2.png',
+                'url'         => 'http://de-vision.new',
             ],
         ];
+
 
         if (in_array($host, ['extra.new', 'www.extra.new'])) {
             return view('pages.welcome', [
@@ -67,18 +65,26 @@ class HomeController extends Controller
                         'url-mobile' => '#clubs-mobile',
                     ],
                 ],
-                'clubs' => $demoClubs,
-                'placemarks' => $demoPlacemarks,
+                'clubs' => $itemClubs,
+                'placemarks' => $placemarks,
                 'seo' => null,
             ]);
         }
 
         if (in_array($host, ['de-vision.new', 'www.de-vision.new']) || str_contains($host, '.extra.new')) {
-            $clubName = ucfirst(explode('.', $host)[0] ?? 'Club');
+            $subdomain = explode('.', $host)[0] ?? 'club';
+            $clubTitles = [
+                'piter' => 'EXTRASPORT ТК «ПИТЕР»',
+                'matros' => 'EXTRASPORT ул. Матроса Железняка',
+            ];
+            $clubTitle = $clubTitles[$subdomain] ?? 'EXTRASPORT ' . ucfirst($subdomain);
+
             return view('pages.home', [
-                'club' => ['name' => $clubName],
+                'club' => ['name' => $clubTitle],
                 'hero' => [
-                    'heading' => $clubName,
+                    'heading' => 'Сеть фитнес клубов на результат!',
+                    'subheading' => 'Ваш клуб - ' . $clubTitle,
+                    'showLogo' => false,
                 ],
                 'services' => [
                     ['title' => 'Тренажерный зал', 'description' => 'Современное оборудование для любых целей'],
@@ -91,8 +97,8 @@ class HomeController extends Controller
         }
 
         return view('pages.welcome', [
-            'clubs' => $demoClubs,
-            'placemarks' => $demoPlacemarks,
+            'clubs' => $itemClubs,
+            'placemarks' => $placemarks,
             'seo' => null,
         ]);
     }
