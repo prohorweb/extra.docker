@@ -12,14 +12,32 @@ It defines execution rules, context order, and safety constraints.
 
 Before doing anything, ALWAYS read in this exact order:
 
-1. docs/journal/SUMMARY.md  
-   → CURRENT REALITY (highest priority truth)
+1. SYSTEM_OVERVIEW.md (current state & priorities)
+2. migration/README.md (planned strategy)
+3. journal/SUMMARY.md (history & decisions)
+4. ai/README.md (AI reasoning rules)
+5. runtime/CONTEXT.md
 
-2. docs/migration/README.md  
-   → PLANNED ROADMAP
+## System Layers
 
-3. docs/ai/README.md (or AI_SYSTEM_OVERVIEW.md)  
-   → RULES + ARCHITECTURE + MINDSET
+This system consists of 3 conceptual layers:
+
+1. Documentation Layer (docs/)
+   - bootstrap.md
+   - SYSTEM_OVERVIEW.md
+   - migration/
+   - journal/
+
+2. AI Knowledge Layer (docs/ai/)
+   - reasoning rules
+   - domain models
+   - interpretation guides
+
+3. Runtime Layer (docs/runtime/)
+   - execution rules
+   - agent behavior constraints
+   - task routing
+   - state synchronization
 
 ---
 
