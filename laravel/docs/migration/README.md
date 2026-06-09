@@ -1,5 +1,5 @@
 # Migration Documentation
-**Yii2 → Laravel 11 (Full Stack)** — Extra Fitness
+**Yii2 → Laravel 12 (Full Stack)** — Extra Fitness
 
 Центральная документация по миграции фронтенда и бэкенда.
 
@@ -8,7 +8,7 @@
 ## Версионирование
 | Поле | Значение |
 |------|----------|
-| **Версия** | 1.0.0 |
+| **Версия** | 1.0.① |
 | **Последнее обновление** | 2025-01-XX |
 | **Статус** | Active |
 | **Ответственный** | @lead-dev |
@@ -20,7 +20,7 @@
 | Слой | Технологии |
 |------|------------|
 | **Frontend** | Tailwind CSS v4 + Blade Components + Alpine.js |
-| **Backend** | Laravel 11 + Eloquent + DTO + Services + Form Requests |
+| **Backend** | Laravel 12 + Eloquent + DTO + Services + Form Requests |
 | **Admin Panel** | FilamentPHP v3 |
 | **Notifications** | Laravel Mail + Queue (Redis/Database) |
 | **Media** | Spatie Laravel Media Library |
@@ -97,7 +97,7 @@
 
 ## Полезные ссылки
 
-- [Laravel 11 Documentation](https://laravel.com/docs/11.x)
+- [Laravel 12 Documentation](https://laravel.com/docs/12.x)
 - [Tailwind CSS v4](https://tailwindcss.com/docs)
 - [Alpine.js](https://alpinejs.dev/)
 - [FilamentPHP v3](https://filamentphp.com/docs/3.x)
