@@ -1,39 +1,42 @@
-# Current State — Yii2 → Laravel 12 Migration
+# Current State
 
-## Infrastructure
+## Last updated: June 9, 2026
 
-| Component | Status | Notes |
-|-----------|--------|-------|
-| **Docker** | ✅ Running | `docker-compose.yml` with Yii2 and Laravel 12 containers |
-| **Laravel 12** | 🟡 Active | Port 8080, Strangler Fig proxy active |
-| **Yii2** | ✅ Active | Port 80, main production server |
-| **Nginx** | ✅ Configured | Routes `/home`, `/services` → Laravel; rest → Yii2 |
-| **Database** | ✅ Shared | Both apps connect to same MySQL 8 database |
-| **Redis** | ✅ Active | Queue, cache (shared between apps) |
+## Migration Status
 
-## Active Migration Focus
+**Project**: Yii2 → Laravel 12 (Strangler Fig Pattern)
 
-**Current domain:** Home (Phase 1 of 10)
-**Status:** BLOCKED — waiting on `MenuData` DTO migration
-**Next step:** Complete `HomepageData` SEO integration
-**Human responsible:** @lead-dev
+**Current Focus**: Migration of the homepage (`frontend/views/site/index.php` → Laravel `home.blade.php`)
+### Completed
+- Fully rebuilt the Map component (`map.blade.php`) using Tailwind v4 and Blade Components
+- Consolidated two separate `ai/` documentation folders into `laravel/docs/ai/`
+- Cleaned and standardized all core migration documentation in English
+### In Progress
+- **Homepage Migration** (Analysis & Planning Phase)
+### Domain Status
+| Domain     | Status       | Priority | Notes                          |
+|------------|--------------|----------|--------------------------------|
+| Map        | ✅ Completed | High     | Fully migrated to Laravel      |
+| Home       | 🔄 In Progress | **High** | Most complex page on the site  |
+| User       | Not Started  | Medium   | —                              |
 
-## Known Risks
+### Next 3 Days Plan
 
-| Risk | Severity | Mitigation |
-|------|----------|------------|
-| Yii2 ActiveRecord `behaviors` (TimestampBehavior, BlameableBehavior) | HIGH | Must be replaced with Eloquent events/traits |
-| `Yii::$app->user->id` used in 43 controllers | HIGH | Needs middleware or service injection |
-| `rules()` methods contain business logic mixed with validation | MEDIUM | Extract to FormRequest + Service |
-| Yii2 `CActiveDataProvider` pagination in views | MEDIUM | Replace with Laravel paginator |
-| Tight coupling between `Controller` and `ActiveRecord` in Yii2 | HIGH | Services layer not present |
+**June 10 (Day 1)** — Analysis & Setup
+- Deep analysis of `frontend/views/site/index.php`
+- Create `HomeController` and base route
+- Define component architecture (`navigation`, `hero`, `actions`, `subscribe`, etc.)
 
-## Current Workflow Steps
+**June 11 (Day 2)** — Component Development
+- Build major Blade components with Tailwind CSS
+- Connect data from Eloquent models (`Club`, `ClubBanner`, `Share`, `Metro`)
 
-1. [x] Audit Home feature (controllers, views, models)
-2. [x] Create `HomepageData` DTO
-3. [x] Create Blade components (`x-ui.hero`, `x-ui.card`)
-4. [ ] Map Yii2 `User` behaviors to Eloquent
-5. [ ] Complete SEO data integration
-6. [ ] Deploy Home slice via Strangler Fig
-7. [ ] Validate with live traffic
+**June 12 (Day 3)** — Integration
+- Assemble final `home.blade.php`
+- Implement Strangler Fig routing (Yii2 → Laravel)
+- Testing and refinement
+## Strategy
+- Migrate **section by section**
+- Keep changes small and reversible
+- Maintain Yii2 as the live production system until Laravel fully replaces each feature
+

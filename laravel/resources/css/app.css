@@ -1,83 +1,11 @@
 @import "tailwindcss";
-@import "../fonts/Oswald.css";
-@import "../fonts/Roboto.css";
-@import "./fontawesome.min.css";
-@import "./fontawesome-solid.min.css";
-@import "./fontawesome-brands.css";
+@import "../fonts/Oswald/Oswald.css";
+@import "../fonts/Roboto/Roboto.css";
+@import "../fonts/fontawesome.min.css";
+@import "../fonts/fontawesome-solid.min.css";
+@import "./global.css";
 
-@theme {
-    /* === Brand Colors === */
-    --color-primary:              #fed136;
-    --color-primary-hover:        #fec810;
-    --color-primary-dark:         #e6b300;
-    --color-accent:               #ff6600;
-    --color-accent-hover:         #d95700;
-    --color-accent-border-hover:  #cc5200;
-    --color-azure:                azure;
-    --color-secondary:            #333333;
-    --color-surface-body:         #141416;
-    --color-card-overlay:         rgb(0 0 0 / 0.44);
 
-    /* === Gray Scale === */
-    --color-gray-light:           #f7f7f7;
-    --color-gray-border:          #e9e9e9;
-    --color-gray-muted:           #6c757d;
-
-    /* === Typography === */
-    --font-heading: "Oswald", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-                    "Helvetica Neue", Arial, sans-serif,
-                    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-
-    --font-body:    "Roboto Slab", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-                    "Helvetica Neue", Arial, serif,
-                    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-
-    --font-mono:    "Courier New", monospace;
-
-    --text-hero:    5vmax;
-    --text-subhero: 3vmax;
-
-    /* === Spacing === */
-    --spacing-section: 120px;
-
-    /* === Radius === */
-    --radius-card:       0.5rem;
-    --radius-button:     0.25rem;
-    --radius-club-card:  10px;
-
-    /* === Shadows === */
-    --shadow-card:         0 2px 8px rgba(0, 0, 0, 0.08);
-    --shadow-card-hover:   0 8px 24px rgba(0, 0, 0, 0.12);
-    --shadow-hero-heading: 3px 3px 0px rgba(0, 0, 0, 0.6);
-
-    /* === Z-Index === */
-    --z-header:  1000;
-    --z-modal:   1100;
-    --z-tooltip: 1200;
-
-    /* === Animation === */
-    --animate-fade-in: fadeIn 2s ease forwards;
-}
-
-/* === Глобальные стили === */
-body {
-    font-family: var(--font-body);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    background-color: var(--color-surface-body);
-    color: var(--color-azure);
-    overflow-x: hidden;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-heading);
-    text-transform: uppercase;
-}
-
-@keyframes fadeIn {
-    0%   { opacity: 0; }
-    100% { opacity: 1; }
-}
 
 /* === 3D-карусель клубов === */
 .clubs-carousel {

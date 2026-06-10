@@ -1,37 +1,40 @@
-# Current Engineering Tasks
+# Tasks
 
-## Domain Analysis (Analyst)
+## Last updated: June 9, 2026
 
-| ID | Task | Status | Priority |
-|----|------|--------|----------|
-| DA-01 | Audit Home feature: controllers, views, models, routes | ✅ DONE | HIGH |
-| DA-02 | Map Yii2 `User` behaviors to Eloquent equivalents | 🟡 IN PROGRESS | HIGH |
-| DA-03 | Identify all `Yii::$app->user->id` usages in controllers | 🔴 BLOCKED | MEDIUM |
-| DA-04 | Audit Service feature (dependencies, DB queries) | ⏳ PENDING | MEDIUM |
-| DA-05 | Audit News feature (relations, SEO structure) | ⏳ PENDING | LOW |
+## Completed
+- [x] Consolidated two separate `ai/` documentation systems into `laravel/docs/ai/`
+- [x] Fully rebuilt Map component using Tailwind v4 and Blade Components
+- [x] Cleaned and standardized all core migration documentation in English
+## In Progress
+- [ ] Migration of the Homepage (`frontend/views/site/index.php` → Laravel)
 
-## Migration Steps (Executor)
+## Planned — Next 3 Days
 
-| ID | Task | Status | Dependencies |
-|----|------|--------|--------------|
-| MS-01 | Create `HomepageData` DTO | ✅ DONE | DA-01 |
-| MS-02 | Create Blade components (`x-ui.hero`, `x-ui.card`) | ✅ DONE | DA-01 |
-| MS-03 | Create `User` Eloquent model with mapped behaviors | 🟡 IN PROGRESS | DA-02 |
-| MS-04 | Migrate HomeController to Laravel | ⏳ PENDING | MS-01, MS-02, MS-03 |
-| MS-05 | Create SEO data integration for Home | ⏳ PENDING | MS-04 |
-| MS-06 | Deploy Home via Strangler Fig | ⏳ PENDING | MS-05 |
+### June 10, 2026 (Day 1 — Analysis & Foundation)
+- [ ] Deep analysis of `frontend/views/site/index.php` (all sections, variables, logic, and JavaScript)
+- [ ] Update `domains/home.md` with detailed component plan
+- [ ] Create `HomeController` and base route for `/`
 
-## Pending Refactors (Non-Blocking)
+### June 11, 2026 (Day 2 — Component Development)
+- [ ] Create key Blade components:
+  - `x-layout.navigation`
+  - `x-sections.hero` (with video + banner support)
+  - `x-sections.actions` (promotions)
+  - `x-sections.subscribe`
+- [ ] Connect data from Laravel models (`Club`, `ClubBanner`, `Share`, `Metro`, `Settings`)
 
-| ID | Refactor | Impact | Status |
-|----|----------|--------|--------|
-| RF-01 | Extract validation from `Service.rules()` to FormRequest | LOW | ⏳ PENDING |
-| RF-02 | Replace `CActiveDataProvider` with Laravel paginator | MEDIUM | ⏳ PENDING |
-| RF-03 | Replace Yii2 widgets with Blade components (top menu) | LOW | ⏳ PENDING |
+### June 12, 2026 (Day 3 — Integration)
+- [ ] Assemble complete `home.blade.php` from new components
+- [ ] Implement Strangler Fig routing (gradual replacement of Yii2 homepage)
+- [ ] Test and refine the new homepage
+- [ ] Update documentation
 
-## Blocked Areas
+## Rules
+- Work section by section
+- Keep changes small, incremental, and reversible
+- Always update `CURRENT_STATE.md` and `TASKS.md` after completing work
+- Read `CURRENT_STATE.md` and relevant domain file before starting a task
 
-| Area | Blocking | Reason |
-|------|----------|--------|
-| User migrations (Phase 1) | MS-03 | Waiting on behavior mapping analysis (DA-02) |
-| Service feature (Phase 2) | DA-04 | Not yet audited |
+**Focus**: Complete a clean, maintainable migration of the homepage.
+
