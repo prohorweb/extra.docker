@@ -1,3 +1,8 @@
+@import "../fonts/Oswald/Oswald.css";
+@import "../fonts/Roboto/Roboto.css";
+@import "../fonts/fontawesome.min.css";
+@import "../fonts/fontawesome-solid.min.css";
+
 @theme {
     /* === Brand Colors === */
     --color-primary:              #fed136;
