@@ -1,7 +1,89 @@
-# Режим работы для локальной модели Qwen 7B
-- ВСЕГДА используй формат Markdown для инструментов.
-- НЕ оборачивай весь ответ в один гигантский JSON.
-- Если нужно вызвать инструмент, пиши так:
-  [tool_use: read_file({ "path": "filename" })]
-- Пиши кратко. Сначала делай действие (инструмент), потом пояснение.
-- Твой стек: PHP 8.3, Yii 2, Docker.
+# ============================================
+# Local Model Operating Rules (Qwen 7B / Qwopus 9B)
+# ============================================
+
+## Response Format
+- ALWAYS use Markdown format for tool calls
+- DO NOT wrap entire response in a single giant JSON
+- To call a tool, write: [tool_use: read_file({ "path": "filename" })]
+- Be concise. Do action first (tool), then explanation
+
+## Technology Stack
+- PHP 8.3
+- Yii 2 (legacy)
+- Laravel 12 (target)
+- Docker
+- Blade components
+- Tailwind CSS v4
+
+# ============================================
+# Memory Bank — Three Main Commands
+# ============================================
+
+## 1. Command "Start work" (morning)
+
+Execute:
+1. Read `laravel/docs/ai/CURRENT_STATE.md`
+2. Read `laravel/docs/ai/TASKS.md`
+3. Read `memory-bank/activeContext.md`
+4. Reply: "✅ Ready. We are at [status]. Next task: [task]"
+
+## 2. Command "Update memory bank" (evening)
+
+Execute:
+1. Analyze `git log` for today
+2. Update `memory-bank/progress.md`
+3. Update `memory-bank/activeContext.md`
+4. Create or update `laravel/docs/sessions/YYYY-MM-DD.md`
+5. Create commit in format (see below)
+
+## 3. Command "Add decision" (manual)
+
+Add entry to `laravel/docs/ai/DECISION_LOG.md` in successful or rejected decisions block
+
+# ============================================
+# Rules for Meaningful Commits
+# ============================================
+
+## Commit Format
+
+<type>(<scope>): <short description>
+
+What was done:
+- specific action 1
+- specific action 2
+
+Status:
+- Map: ✅ completed / 🔄 X% / ⏳ not started
+- Home: ✅ completed / 🔄 X% / ⏳ not started
+- User: ✅ completed / 🔄 X% / ⏳ not started
+
+Related tasks: TASK-XXX, TASK-YYY
+
+## Commit Types
+- `feat(migration)`: new component migration
+- `fix(migration)`: bug fix in migrated code
+- `docs(ai)`: AI documentation changes
+- `feat(memory)`: Memory Bank setup
+- `chore(rules)`: .clinerules changes
+
+## Forbidden Phrases
+❌ "update files", "fix bugs", "improve code"
+✅ "migrated Hero component to Blade", "added DTO for Home page"
+
+## Good Commit Example
+
+feat(migration): completed Hero component for homepage
+
+What was done:
+- Created HomeController with index() method
+- Added HeroDTO for data transfer
+- Implemented Blade component x-sections.hero
+- Connected styles from legacy Yii2
+
+Status:
+- Map: ✅ completed
+- Home: 🔄 70% (Hero ✅, Footer ⏳)
+- User: ⏳ not started
+
+Related tasks: TASK-006, TASK-007

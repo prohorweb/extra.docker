@@ -80,7 +80,7 @@ It contains:
 
 ---
 
-### 3. Runtime State Layer (`docs/journal/`)
+### 3. Runtime State Layer (`docs/sessions/`)
 
 This layer reflects **the real current state of the system**.
 
@@ -163,7 +163,7 @@ Read `docs/ai/` to understand constraints and architecture.
 Read `docs/migration/` to understand priorities and roadmap.
 
 ### Step 3 — Understand Reality
-Read `docs/journal/SUMMARY.md` to understand current system state.
+Read `docs/sessions/SUMMARY.md` to understand current system state.
 
 ---
 
@@ -203,13 +203,13 @@ Rules:
 
 Priority order of truth:
 
-1. `journal/` → actual system state (highest priority)
+1. `sessions/` → actual system state (highest priority)
 2. `migration/` → planned future state
 3. `ai/` → rules and constraints (execution logic)
 
 If conflict exists:
 
-> journal overrides everything except explicit human instruction
+> sessions overrides everything except explicit human instruction
 
 ---
 
@@ -217,7 +217,7 @@ If conflict exists:
 
 When giving this system to an AI model, instruct it:
 
-> "Use this documentation as the single source of truth for reasoning about Yii2 → Laravel migration. Always follow the AI operational rules, respect migration order, and verify against journal state before suggesting changes."
+> "Use this documentation as the single source of truth for reasoning about Yii2 → Laravel migration. Always follow the AI operational rules, respect migration order, and verify against sessions state before suggesting changes."
 
 ---
 
@@ -263,4 +263,4 @@ Order of initialization:
 1. bootstrap.md (execution rules)
 2. AI_SYSTEM_OVERVIEW.md (system architecture)
 3. migration/README.md (roadmap)
-4. journal/SUMMARY.md (current state)
+4. sessions/SUMMARY.md (current state)

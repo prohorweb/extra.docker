@@ -1,13 +1,22 @@
-# Tasks
+# Tasks — Yii2 → Laravel Migration
 
-## Last updated: June 9, 2026
+## Last updated: June 10, 2026
 
 ## Completed
 - [x] Consolidated two separate `ai/` documentation systems into `laravel/docs/ai/`
 - [x] Fully rebuilt Map component using Tailwind v4 and Blade Components
 - [x] Cleaned and standardized all core migration documentation in English
+
 ## In Progress
 - [ ] Migration of the Homepage (`frontend/views/site/index.php` → Laravel)
+  - [ ] Deep analysis of `frontend/views/site/index.php` (all sections, variables, logic, and JavaScript)
+  - [ ] Update `domains/home.md` with detailed component plan
+  - [ ] Create `HomeController` and base route for `/`
+  - [ ] Build major Blade components: navigation, hero, actions, subscribe, metro, clubs
+  - [ ] Connect data from Laravel models (`Club`, `ClubBanner`, `Share`, `Metro`, `Settings`)
+  - [ ] Assemble final `home.blade.php`
+  - [ ] Implement Strangler Fig routing (Yii2 → Laravel)
+  - [ ] Test and refine the new homepage
 
 ## Planned — Next 3 Days
 
@@ -37,4 +46,3 @@
 - Read `CURRENT_STATE.md` and relevant domain file before starting a task
 
 **Focus**: Complete a clean, maintainable migration of the homepage.
-

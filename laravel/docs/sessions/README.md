@@ -1,4 +1,4 @@
-# Journal
+# sessions
 
 This folder contains chronological records of all changes made during migration.
 Each entry describes:

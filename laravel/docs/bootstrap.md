@@ -8,7 +8,7 @@ It defines execution rules, context order, and safety constraints.
 Before doing anything, ALWAYS read in this exact order:
 1. `SYSTEM_OVERVIEW.md` (current state & priorities)
 2. `migration/README.md` (planned strategy)
-3. `journal/SUMMARY.md` (history & decisions)
+3. `sessions/SUMMARY.md` (history & decisions)
 4. `ai/README.md` (AI reasoning rules)
 5. `runtime/CONTEXT.md`
 
@@ -19,7 +19,7 @@ This system consists of 3 conceptual layers:
 - bootstrap.md
 - SYSTEM_OVERVIEW.md
 - migration/
-- journal/
+- sessions/
 
 ### AI Knowledge Layer (docs/ai/)
 - reasoning rules
@@ -34,13 +34,13 @@ This system consists of 3 conceptual layers:
 
 ## SOURCE OF TRUTH HIERARCHY
 If any conflict exists:
-- **journal/** → REAL SYSTEM STATE (ABSOLUTE TRUTH)
+- **sessions/** → REAL SYSTEM STATE (ABSOLUTE TRUTH)
 - **migration/** → INTENDED PLAN (FALLBACK)
 - **ai/** → RULES & CONSTRAINTS (INTERPRETATION LAYER)
 
 **AI MUST NEVER:**
 - assume missing state
-- override journal with assumptions
+- override sessions with assumptions
 - treat migration plan as reality
 
 ## CORE MISSION
@@ -77,7 +77,7 @@ You are an AI assistant helping migrate a legacy Yii2 system into Laravel 12 usi
 
 ## CRITICAL SAFETY RULES
 **AI MUST STOP IF:**
-- journal and migration plan conflict
+- sessions and migration plan conflict
 - required context is missing
 - change affects >3 files
 - database schema modification is involved
@@ -99,11 +99,11 @@ AI responses must include:
 - clear reasoning
 - explicit risk level
 - minimal change plan (if EXECUTOR)
-- dependency awareness from journal state
+- dependency awareness from sessions state
 
 ## IMPORTANT RULE
 This system is NOT documentation.
 It is a live engineering control system.
-Failure to follow journal state = incorrect behavior.
+Failure to follow sessions state = incorrect behavior.
 
 END OF BOOTSTRAP

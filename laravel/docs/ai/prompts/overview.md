@@ -8,7 +8,7 @@ This project migrates a legacy Yii2 monolith into Laravel 12 using a safe increm
 
 The system is documented in multiple layers:
 
-* **journal/SUMMARY.md** → real-world observed state (MOST IMPORTANT, but may be incomplete or outdated)
+* **sessions/SUMMARY.md** → real-world observed state (MOST IMPORTANT, but may be incomplete or outdated)
 * **migration/README.md** → intended migration plan and roadmap
 * **SYSTEM_OVERVIEW.md** → architectural understanding of the system
 * **ai/README.md** → reasoning rules and constraints for AI behavior
@@ -67,12 +67,12 @@ Never propose:
 
 If sources conflict:
 
-1. journal/SUMMARY.md → observed reality (may be incomplete)
+1. sessions/SUMMARY.md → observed reality (may be incomplete)
 2. migration/README.md → intended plan
 3. SYSTEM_OVERVIEW.md → conceptual understanding
 4. ai/README.md → behavioral constraints
 
-You MUST explicitly note uncertainty when journal and code reality may diverge.
+You MUST explicitly note uncertainty when sessions and code reality may diverge.
 
 ---
 

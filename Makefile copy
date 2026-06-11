@@ -1,0 +1,17 @@
+LLM_PORT ?= 8200
+LLM_MODEL ?= /Users/prohor/LLM/models/qwen2.5.gguf
+
+.PHONY: llm llm-stop llm-status
+
+llm: llm-stop
+	@echo "🚀 Starting LLM server..."
+	@llama-server \
+		--model $(LLM_MODEL) \
+		--host 127.0.0.1 \
+		--port $(LLM_PORT) \
+
+llm-stop:
+	@pkill -f llama-server || true
+
+llm-status:
+	@pgrep -f llama-server && echo "RUNNING" || echo "STOPPED"

@@ -1,4 +1,4 @@
-# Migration Journal — Summary
+# Migration sessions — Summary
 
 | Date       | Topic |
 |------------|-------|
@@ -16,7 +16,7 @@
 - Fixed multiple bugs (`$slot`, `$href`, `render()` errors)
 - Successfully launched all three domains (`extra.new`, `piter.extra.new`, `de-vision.new`)
 - Created extensive documentation in `docs/migration/` (18 documents)
-- Initiated `docs/journal/` as the official migration diary
+- Initiated `docs/sessions/` as the official migration diary
 
 **Status**: Foundation phase completed successfully.
 
@@ -26,7 +26,7 @@
 
 - Merged two separate `ai/` documentation folders into a single unified location at `laravel/docs/ai/`
 - Completely rewrote all core migration documentation (`README.md`, `CURRENT_STATE.md`, `TASKS.md`, `domains/*.md`) in clear, professional English
-- Removed the `journal/` folder from inside `ai/` to keep documentation structure clean
+- Removed the `sessions/` folder from inside `ai/` to keep documentation structure clean
 - Updated `domains/home.md` and `domains/map.md` to reflect current migration state
 - Prepared detailed 3-day plan for migrating the homepage from Yii2 (`frontend/views/site/index.php`)
 - Standardized migration tracking and documentation practices
@@ -39,4 +39,6 @@
 
 **Overall Progress**: Foundation + Documentation phases completed.
 **Next Phase**: Real technical migration of the homepage begins on June 10, 2026.
+
+
 
