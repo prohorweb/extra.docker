@@ -14,19 +14,19 @@ class HomeController extends Controller
             [
                 'name' => 'ТРЦ «Питер»',
                 'address' => 'Санкт-Петербург, ул. Типанова, 21',
-                'image' => '/img/clubs/welcom-block-img-2.jpg',
+                'image' => asset('uploads/layout/icones/welcom-block-img-2.jpg'),
                 'url' => 'http://piter.' . $host,
             ],
             [
                 'name' => '«Матроса железняка»',
                 'address' => 'Санкт-Петербург, ул. Матроса Железняка, 57А',
-                'image' => '/img/clubs/welcom-block-img-4.jpg',
+                'image' => asset('uploads/layout/icones/welcom-block-img-4.jpg'),
                 'url' => 'http://matros.' . $host,
             ],
             [
                 'name' => 'De-Vision',
                 'address' => 'Санкт-Петербург, пр. Культуры, 1',
-                'image' => '/img/clubs/welcom-block-img-5.jpg',
+                'image' => asset('uploads/layout/icones/welcom-block-img-5.jpg'),
                 'url' => 'http://de-vision.new',
             ],
         ];
@@ -56,8 +56,8 @@ class HomeController extends Controller
         if (in_array($host, ['extra.new', 'www.extra.new'])) {
             return view('pages.welcome', [
                 'hero' => [
-                    'video' => '/video/bg_moution.mp4',
-                    'logo' => asset('img/logo.svg'),
+                    'video' => asset('uploads/layout/video/bg_moution.mp4'),
+                    'logo' => asset('uploads/layout/icones/logo.svg'),
                     'heading' => 'Сеть фитнес клубов на результат!',
                     'cta' => [
                         'text' => 'Выберите клуб',
@@ -68,6 +68,7 @@ class HomeController extends Controller
                 'clubs' => $itemClubs,
                 'placemarks' => $placemarks,
                 'seo' => null,
+                'showHeader' => false,
             ]);
         }
 
@@ -100,6 +101,7 @@ class HomeController extends Controller
             'clubs' => $itemClubs,
             'placemarks' => $placemarks,
             'seo' => null,
+            'showHeader' => false,
         ]);
     }
 }

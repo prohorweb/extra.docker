@@ -1,5 +1,40 @@
 # Current State — Yii2 → Laravel Migration
 
+## Last updated: June 12, 2026
+# Current State — Yii2 → Laravel Migration
+
+## Last updated: June 10, 2026
+
+## Migration Status
+**Project**: Yii2 → Laravel 12 (Strangler Fig Pattern)
+
+### Completed
+- [x] Map component fully migrated to Laravel + Tailwind v4
+- [x] Consolidated documentation from two `ai/` folders into `laravel/docs/ai/`
+- [x] Cleaned and standardized all core migration documentation in English
+- [x] Nginx dual-host configuration: `extra.loc` (Yii2) + `extra.new` (Laravel)
+- [x] Added Oswald & Roboto fonts (variable + all static weights)
+- [x] Created domain specs: `home.md`, `map.md`
+- [x] Updated memory bank files (`activeContext.md`, `progress.md`) with June 12 session
+# Current State — Yii2 → Laravel Migration
+
+## Last updated: June 10, 2026
+
+## Migration Status
+**Project**: Yii2 → Laravel 12 (Strangler Fig Pattern)
+
+### Completed
+- [x] Map component fully migrated to Laravel + Tailwind v4
+- [x] Consolidated documentation from two `ai/` folders into `laravel/docs/ai/`
+- [x] Cleaned and standardized all core migration documentation in English
+- [x] Nginx dual-host configuration: `extra.loc` (Yii2) + `extra.new` (Laravel)
+- [x] Added Oswald & Roboto fonts (variable + all static weights)
+- [x] Created domain specs: `home.md`, `map.md`
+
+### In Progress
+**Homepage Migration** (Analysis & Foundation Phase)
+# Current State — Yii2 → Laravel Migration
+
 ## Last updated: June 10, 2026
 
 ## Migration Status
@@ -26,22 +61,4 @@
 
 ### Domain Status
 | Domain     | Status       | Priority | Notes                          |
-|------------|--------------|----------|--------------------------------|
-| Map        | ✅ Completed | High     | Fully migrated to Laravel      |
-| Home       | 🔄 In Progress | **High** | Components being built         |
-| User       | Not Started  | Medium   | —                              |
-
----
-
-## Process Health
-| Metric                    | Target    | Status |
-|---------------------------|-----------|--------|
-| Divergence ai/* vs git    | 0%        | ✅     |
-| Avg. commit size (files)  | ≤3        | ✅     |
-| Domain files updated      | 100%      | ✅     |
-
----
-
-*Last updated: June 10, 2026*
-+++++++
-REPLACE
+|

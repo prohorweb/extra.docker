@@ -1,0 +1,13 @@
+<?php
+
+namespace App\Http\Controllers;
+
+class NewsController extends Controller
+{
+    public function index()
+    {
+        return view('pages.news.index', [
+            'seo' => null,
+        ]);
+    }
+}

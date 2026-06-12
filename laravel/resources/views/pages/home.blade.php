@@ -2,9 +2,9 @@
 
 @section('content')
     <x-sections.hero
-        :video="$hero['video'] ?? '/video/bg_moution.mp4'"
+        :video="$hero['video'] ?? asset('uploads/layout/video/bg_moution.mp4')"
         :poster="$hero['poster'] ?? ''"
-        :logo="$hero['logo'] ?? asset('img/logo.svg')"
+        :logo="$hero['logo'] ?? asset('uploads/layout/icones/logo.svg')"
         :heading="$hero['heading'] ?? $club['name'] ?? 'Фитнес клуб'"
         :subheading="$hero['subheading'] ?? null"
         :show-logo="$hero['showLogo'] ?? false"

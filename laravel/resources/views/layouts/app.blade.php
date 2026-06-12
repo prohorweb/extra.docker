@@ -17,8 +17,9 @@
     @stack('head')
 </head>
 <body class="bg-black text-white antialiased font-body">
-    
-
+    @if($showHeader ?? true)
+        @include('layouts.parts.header')
+    @endif
 
     <main>
         @yield('content')

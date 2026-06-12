@@ -1,4 +1,4 @@
-<footer class="bg-neutral-900 text-[var(--color-accent)]">
+<footer id="contacts" class="bg-neutral-900 text-[var(--color-accent)]">
 
     <div class="py-5">
         <div class="max-w-7xl mx-auto px-4">
