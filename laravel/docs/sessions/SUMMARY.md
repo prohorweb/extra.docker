@@ -4,6 +4,7 @@
 |------------|-------|
 | 2026-06-08 | **Blade Architecture & Domain Launch** |
 | 2026-06-09 | **Documentation Consolidation & English Migration** |
+| 2026-06-12 | **Homepage migration: Hero component, HomeController, DTOs** |
 
 ---
 
@@ -37,8 +38,15 @@
 
 ---
 
-**Overall Progress**: Foundation + Documentation phases completed.
-**Next Phase**: Real technical migration of the homepage begins on June 10, 2026.
+### 2026-06-12 — Homepage migration: Hero component, HomeController, DTOs
 
+- Created `HomeController` with `index()` method
+- Implemented `HeroDTO` for data transfer between controller and view
+- Built Blade component `x-sections/hero.blade.php`
+- Connected legacy Yii2 styles to new Laravel layout
 
+**Status**: Hero section migrated successfully.
 
+---
+
+**Overall Progress**: Foundation + Documentation phases completed. Homepage migration in progress (1 of ~6 sections done).

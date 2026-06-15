@@ -6,7 +6,11 @@ import fs from 'fs';
 export default defineConfig({
     plugins: [
         laravel({
-            input: ['resources/css/app.css', 'resources/js/app.js'],
+            input: [
+                'resources/css/app.css',
+                'resources/js/app.js',
+                'resources/js/pages/home-slider.js',
+            ],
             refresh: true,
         }),
         tailwindcss(),
@@ -14,6 +18,11 @@ export default defineConfig({
     server: {
         host: '0.0.0.0',
         port: 5173,
+        // Allow cross-origin requests from any *.extra.new subdomain (dev only)
+        cors: {
+            origin: /https?:\/\/([a-z0-9-]+\.)?extra\.new(:\d+)?$/,
+            credentials: true,
+        },
         https: {
             key: fs.readFileSync('/etc/nginx/ssl/key.pem'),
             cert: fs.readFileSync('/etc/nginx/ssl/cert.pem'),

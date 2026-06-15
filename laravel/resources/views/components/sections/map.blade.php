@@ -1,9 +1,13 @@
 @props(['placemarks' => []])
 
+<section class="map-section relative w-full h-[85vh]" id="contacts">
 
+    {{-- Full-bleed map --}}
+    <div id="map" class="absolute inset-0 w-full h-full opacity-85"></div>
 
-<section class="relative z-10 w-full h-[85vh]">
-  <div id="map" class="w-full h-full opacity-[0.85]"></div>
+    {{-- Contacts overlay --}}
+    {{ $slot ?? '' }}
+
 </section>
 
 @push('scripts')
@@ -14,14 +18,11 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!document.getElementById('map')) return;
 
     ymaps.ready(function () {
-        var host = window.location.hostname;
-
         var myMap = new ymaps.Map('map', {
             center: [{{ !empty($placemarks) ? $placemarks[0]['coordinates'] : '59.9343, 30.3351' }}],
-            zoom: 11,
+            zoom: 12,
             controls: []
-        }, 
-        { suppressMapOpenBlock: true });
+        }, { suppressMapOpenBlock: true });
 
         myMap.behaviors.disable('scrollZoom');
 
@@ -38,18 +39,22 @@ document.addEventListener('DOMContentLoaded', function () {
                 iconImageSize:   [57, 80],
                 iconImageOffset: [-28, -80]
             });
-            pm.events.add('click', function () { window.location.href = url; });
+            pm.events.add('click', function () { if (url !== '#') window.location.href = url; });
             myMap.geoObjects.add(pm);
         })(
             [{{ $placemark['coordinates'] }}],
             '{{ $placemark['hint'] ?? '' }}',
-            '{{ asset($placemark['icon']) }}',
+            '{{ $placemark['icon'] ?? '' }}',
             '{{ $placemark['url'] ?? '#' }}'
         );
         @endforeach
 
-        if (myMap.geoObjects.getLength() > 0) {
-            myMap.setBounds(myMap.geoObjects.getBounds(), { checkZoomRange: true });
+        // Only auto-fit when multiple markers — single marker uses the fixed zoom above
+        if (myMap.geoObjects.getLength() > 1) {
+            myMap.setBounds(myMap.geoObjects.getBounds(), {
+                checkZoomRange: true,
+                zoomMargin: 80
+            });
         }
     });
 });

@@ -17,64 +17,106 @@
 - Tailwind CSS v4
 
 # ============================================
-# Memory Bank — Main Commands
+# Memory Bank — Three Main Commands
 # ============================================
 
-## 1. Command "Start work" (morning)
+## 1. Command "Start session" (morning)
 
-Execute:
-1. Read `laravel/docs/ai/CURRENT_STATE.md`
-2. Read `laravel/docs/ai/TASKS.md`
-3. Read `memory-bank/activeContext.md`
-4. Reply: "✅ Ready. We are at [status]. Next task: [task]"
+**Purpose:** Load all relevant context from previous sessions and current state.
 
-## 2. Command "Update memory bank" (evening) — DEPRECATED, use Log session + Commit day
-For backward compatibility, execute:
-1. Run `Log session`
-2. Run `Commit day`
+Execute in this order:
+
+1. Read `laravel/docs/ai/CURRENT_STATE.md` – get current domain statuses (Map, Home, User).
+2. Read `laravel/docs/ai/TASKS.md` – see planned tasks and their completion status.
+3. Read `memory-bank/activeContext.md` – restore last known session activity.
+4. **Find the most recent session file** in `laravel/docs/sessions/` (look for `YYYY-MM-DD.md` with the latest date).
+   - If found, read it to understand what was done on the last working day.
+   - If none exists, skip this step.
+5. **Check `laravel/docs/sessions/SUMMARY.md`** – review the last few entries for broader context.
+6. Based on all gathered information, determine:
+   - Current status of each domain.
+   - The next uncompleted task from `TASKS.md` (priority order).
+   - Any blockers or decisions from the last session that might affect today's work.
+7. Reply in the following format:
+ Ready.
+Status:
+
+Map: <status>
+Home: <status>
+User: <status>
+Last session: <date> – <summary of last work>
+Next task: <task description from TASKS.md>
+
+
+**Always reply with the full status block, even if some files are missing (report what's missing).**
+
+
+## 2. Command "Log session" (end of day)
+
+Execute the following steps in order:
+
+1. Run `git log --since="today" --oneline`
+2. Update `memory-bank/progress.md` – add entry for today (or "No code changes")
+3. Update `memory-bank/activeContext.md` – session header to today's date, update last_action/next_planned
+4. **Update `laravel/docs/ai/TASKS.md` – mark tasks completed today as `[x]` (if any)**
+5. Create or update `laravel/docs/sessions/YYYY-MM-DD.md` with:
+   - Date
+   - Completed tasks (from TASKS.md or git log)
+   - Decisions (if any)
+   - Blockers (if any)
+6. Update `laravel/docs/sessions/SUMMARY.md` – add a new row with today's date and summary
+7. Read `laravel/docs/ai/CURRENT_STATE.md` to get domain statuses (Map, Home, User)
+
+Always execute all steps, even if no code changes. If git log is empty, use "No code changes — Memory Bank maintenance".
+After finishing, report: "✅ Session logged. TASKS.md updated."
 
 ## 3. Command "Add decision" (manual)
+
 Add entry to `laravel/docs/ai/DECISION_LOG.md` in successful or rejected decisions block
 
 # ============================================
-# Granular Session & Commit Commands
+# Rules for Meaningful Commits
 # ============================================
 
-## 4. Command "Log session" (end of day)
+## Commit Format
 
-**CRITICAL:** Execute ALL steps below, even if no code changes today.
+<type>(<scope>): <short description>
 
-1. **ALWAYS** create or update `laravel/docs/sessions/YYYY-MM-DD.md`:
-   - Today's date
-   - Summary of completed tasks (or "No code changes — Memory Bank maintenance")
-   - Any decisions or blockers (or "None")
-2. **ALWAYS** update `laravel/docs/sessions/SUMMARY.md`:
-   - Append a new row: `| YYYY-MM-DD | <summary> | <notes> |`
-   - Keep all existing rows. Create file with header if missing.
-3. **ALWAYS** update `laravel/docs/ai/CURRENT_STATE.md`:
-   - Update "Last updated" to today's date.
-   - If tasks completed, update domain statuses (Map/Home/User) and percentages.
-   - If no tasks, add a line: "No progress today — session closed".
-4. **ALWAYS** update `laravel/docs/ai/TASKS.md`:
-   - Mark completed tasks as `[x]` (if any)
-   - If no progress, leave unchanged.
+What was done:
+- specific action 1
+- specific action 2
 
-After finishing, report: "✅ Session logged. Ready for 'Commit day'."
+Status:
+- Map: ✅ completed / 🔄 X% / ⏳ not started
+- Home: ✅ completed / 🔄 X% / ⏳ not started
+- User: ✅ completed / 🔄 X% / ⏳ not started
 
-## 5. Command "Commit day" (manual confirmation required)
+Related tasks: TASK-XXX, TASK-YYY
 
-**Purpose:** Propose a meaningful commit based on today's session log and current state, but do NOT execute automatically.
+## Commit Types
+- `feat(migration)`: new component migration
+- `fix(migration)`: bug fix in migrated code
+- `docs(ai)`: AI documentation changes
+- `feat(memory)`: Memory Bank setup
+- `chore(rules)`: .clinerules changes
 
-Execute:
-1. Read `laravel/docs/ai/CURRENT_STATE.md` to get current status.
-2. Read `laravel/docs/sessions/YYYY-MM-DD.md` to get today's summary.
-3. Generate a commit message according to the **Commit Format** section below.
-4. **Show the user the proposed command**:
-   ```bash
-   git add . && git commit -m "..."
+## Forbidden Phrases
+❌ "update files", "fix bugs", "improve code"
+✅ "migrated Hero component to Blade", "added DTO for Home page"
 
-## 6. Command "End day"
+## Good Commit Example
 
-Execute:
-1. Run `Log session`
-2. Run `Commit day`
+feat(migration): completed Hero component for homepage
+
+What was done:
+- Created HomeController with index() method
+- Added HeroDTO for data transfer
+- Implemented Blade component x-sections.hero
+- Connected styles from legacy Yii2
+
+Status:
+- Map: ✅ completed
+- Home: 🔄 70% (Hero ✅, Footer ⏳)
+- User: ⏳ not started
+
+Related tasks: TASK-006, TASK-007

@@ -12,7 +12,7 @@ let currentIndex = 0;
 <section class="hidden md:block">
     <div
         class="flex justify-center items-center overflow-hidden m-0 h-[90vh] bg-cover bg-center bg-no-repeat bg-blend-overlay"
-        style="background-image: url('{{ asset('uploads/layout/img/actions-bg.jpg') }}'); background-color: rgb(0 0 0 / 0.6);"
+        style="background-image: url('{{ asset('img/actions-bg.jpg') }}'); background-color: rgb(0 0 0 / 0.6);"
     >
         <div class="relative w-[600px] h-[400px] clubs-carousel" id="{{ $target ?? 'clubs' }}">
             <div class="carousel_clubs absolute inset-0 flex justify-center items-center transition-transform duration-500 ease-in-out clubs-carousel__track">

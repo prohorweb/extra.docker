@@ -2,12 +2,13 @@
 @import "../fonts/Roboto/Roboto.css";
 @import "../fonts/fontawesome.min.css";
 @import "../fonts/fontawesome-solid.min.css";
+@import "../fonts/fontawesome-regular.min.css";
 
 @theme {
     /* === Brand Colors === */
-    --color-primary:              #fed136;
-    --color-primary-hover:        #fec810;
-    --color-primary-dark:         #e6b300;
+    --color-primary:              #ff6600;
+    --color-primary-hover:        #ff7a1a;
+    --color-primary-dark:         #e55a00;
     --color-accent:               #ff6600;
     --color-accent-hover:         #d95700;
     --color-accent-border-hover:  #cc5200;
