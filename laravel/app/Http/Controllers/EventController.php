@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Piter\Event;
+
 class EventController extends Controller
 {
     public function index()
     {
-        return view('pages.events.index', [
-            'seo' => null,
-        ]);
+        $events = Event::active()->upcoming()->get();
+        $eventsPast = Event::active()->past()->paginate(10);
+        return view('pages.events.index', compact('events', 'eventsPast'));
     }
 }

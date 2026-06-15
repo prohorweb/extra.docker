@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Piter\MainBanner;
+
 class ClubController extends Controller
 {
     public function index()
     {
-        return view('pages.club.index', [
-            'seo' => null,
-        ]);
+        $banners = MainBanner::active()->get();
+        return view('pages.club.index', compact('banners'));
     }
 }

@@ -1,12 +1,38 @@
 @extends('layouts.app')
+@section('title', 'Новости клуба ' . ($club->title ?? 'EXTRASPORT'))
 
 @section('content')
-    <section class="max-w-7xl mx-auto px-4 py-16 pt-24">
-        <h1 class="text-3xl font-heading font-bold uppercase mb-6">Новости</h1>
-        <div class="text-gray-300 space-y-4 max-w-3xl">
-            <p>На этой странице публикуются новости клуба: открытие новых зон, обновление оборудования, специальные мероприятия для членов клуба и анонсы сезонных программ.</p>
-            <p>Следите за обновлениями, чтобы не пропустить важные события, акции и возможности для участия в жизни фитнес-сообщества EXTRASPORT.</p>
-            <p>Мы регулярно делимся полезной информацией о тренировках, питании и здоровом образе жизни — всё, что помогает нашим гостям достигать лучших результатов.</p>
-        </div>
-    </section>
+
+@include('layouts.parts.breadcrumbs', [
+    'items' => [
+        ['label' => $club->title ?? 'EXTRASPORT', 'url' => route('home')],
+        ['label' => 'Новости'],
+    ]
+])
+
+@php
+$months = ['01'=>'января','02'=>'февраля','03'=>'марта','04'=>'апреля','05'=>'мая','06'=>'июня',
+           '07'=>'июля','08'=>'августа','09'=>'сентября','10'=>'октября','11'=>'ноября','12'=>'декабря'];
+@endphp
+
+<section class="max-w-7xl mx-auto px-4 pt-10 pb-16">
+
+    <header class="mb-10">
+        <h1 class="font-heading font-bold text-4xl md:text-5xl uppercase tracking-tight text-white">Новости</h1>
+        <p class="mt-2 text-white/40 text-sm font-heading uppercase tracking-widest">{{ $club->title ?? 'EXTRASPORT' }}</p>
+    </header>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-12">
+        @forelse($news as $item)
+            <x-ui.card.news :item="$item" :months="$months" />
+        @empty
+            <p class="text-white/40 col-span-2 text-center py-20 font-heading uppercase tracking-widest">Новостей не найдено</p>
+        @endforelse
+    </div>
+
+    <x-ui.pagination :paginator="$news" />
+
+</section>
+
+@include('layouts.parts.subscribe')
 @endsection

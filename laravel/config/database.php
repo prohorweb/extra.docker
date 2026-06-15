@@ -64,6 +64,22 @@ return [
             ]) : [],
         ],
 
+        'piter' => [
+            'driver' => 'mysql',
+            'host' => env('DB_PITER_HOST', '127.0.0.1'),
+            'port' => env('DB_PITER_PORT', '3306'),
+            'database' => env('DB_PITER_DATABASE', 'extra_piter'),
+            'username' => env('DB_PITER_USERNAME', 'extra'),
+            'password' => env('DB_PITER_PASSWORD', ''),
+            'unix_socket' => '',
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => false,
+            'engine' => null,
+        ],
+
         'mariadb' => [
             'driver' => 'mariadb',
             'url' => env('DB_URL'),

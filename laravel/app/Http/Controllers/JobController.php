@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Piter\Job;
+
 class JobController extends Controller
 {
     public function index()
     {
-        return view('pages.jobs.index', [
-            'seo' => null,
-        ]);
+        $jobs = Job::active()->get();
+        return view('pages.jobs.index', compact('jobs'));
     }
 }
