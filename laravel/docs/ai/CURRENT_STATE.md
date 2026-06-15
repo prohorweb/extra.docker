@@ -1,64 +1,102 @@
-# Current State — Yii2 → Laravel Migration
+# Текущее состояние — Миграция Yii2 → Laravel
 
-## Last updated: June 12, 2026
-# Current State — Yii2 → Laravel Migration
+## Обновлено: 15 июня 2026
 
-## Last updated: June 10, 2026
+## Статус миграции
+**Проект**: Extra Fitness — Yii2 → Laravel 12 (Strangler Fig Pattern)
+**Активная фаза**: Phase 2/4/5 — Подключение данных
 
-## Migration Status
-**Project**: Yii2 → Laravel 12 (Strangler Fig Pattern)
+---
 
-### Completed
-- [x] Map component fully migrated to Laravel + Tailwind v4
-- [x] Consolidated documentation from two `ai/` folders into `laravel/docs/ai/`
-- [x] Cleaned and standardized all core migration documentation in English
-- [x] Nginx dual-host configuration: `extra.loc` (Yii2) + `extra.new` (Laravel)
-- [x] Added Oswald & Roboto fonts (variable + all static weights)
-- [x] Created domain specs: `home.md`, `map.md`
-- [x] Updated memory bank files (`activeContext.md`, `progress.md`) with June 12 session
-# Current State — Yii2 → Laravel Migration
+## Выполнено
 
-## Last updated: June 10, 2026
+### Инфраструктура ✅
+- [x] Docker: PHP 8.3, Nginx, MySQL, Node/Vite
+- [x] Два хоста: `extra.loc` (Yii2) + `extra.new` (Laravel 12)
+- [x] AI-документация в `laravel/docs/ai/`
 
-## Migration Status
-**Project**: Yii2 → Laravel 12 (Strangler Fig Pattern)
+### Phase 1 — Фронтенд-фундамент ✅
+- [x] Tailwind CSS v4 с `@theme` design tokens
+- [x] Blade-компоненты: `x-ui.*`, `x-sections.*`, `x-layout.*`
+- [x] Alpine.js stores: navigation, modals
+- [x] Шрифты Oswald + Roboto (self-hosted, variable)
+- [x] Компонент Map (Яндекс.Карты API 2.1)
 
-### Completed
-- [x] Map component fully migrated to Laravel + Tailwind v4
-- [x] Consolidated documentation from two `ai/` folders into `laravel/docs/ai/`
-- [x] Cleaned and standardized all core migration documentation in English
-- [x] Nginx dual-host configuration: `extra.loc` (Yii2) + `extra.new` (Laravel)
-- [x] Added Oswald & Roboto fonts (variable + all static weights)
-- [x] Created domain specs: `home.md`, `map.md`
+### Phase 2 — Главная страница (частично) 🔄
+- [x] `HomeController@index`
+- [x] `HeroDTO`
+- [x] `x-sections.hero` Blade-компонент
+- [ ] Остальные секции (Actions, Subscribe, Contacts)
 
-### In Progress
-**Homepage Migration** (Analysis & Foundation Phase)
-# Current State — Yii2 → Laravel Migration
+### Phase 4/5 — Маршруты и шаблоны ✅
+- [x] Все контроллеры созданы (Home, Club, Trainer, News, Event, Job, Share, Service, CardType)
+- [x] Все маршруты зарегистрированы в `routes/web.php`
+- [x] Все Blade-шаблоны созданы (`pages/*/index.blade.php`, `show.blade.php`)
 
-## Last updated: June 10, 2026
+---
 
-## Migration Status
-**Project**: Yii2 → Laravel 12 (Strangler Fig Pattern)
+## В работе
 
-### Completed
-- [x] Map component fully migrated to Laravel + Tailwind v4
-- [x] Consolidated documentation from two `ai/` folders into `laravel/docs/ai/`
-- [x] Cleaned and standardized all core migration documentation in English
-- [x] Nginx dual-host configuration: `extra.loc` (Yii2) + `extra.new` (Laravel)
-- [x] Added Oswald & Roboto fonts (variable + all static weights)
-- [x] Created domain specs: `home.md`, `map.md`
+**Слой данных** — подключение Eloquent-моделей → DTO → Service для каждого раздела
 
-### In Progress
-**Homepage Migration** (Component Development Phase)
-- [ ] Deep analysis of `frontend/views/site/index.php` (all sections, variables, logic, and JavaScript)
-- [ ] Update `domains/home.md` with detailed component plan
-- [ ] Create `HomeController` and base route for `/`
-- [ ] Build major Blade components: navigation, hero, actions, subscribe, metro, clubs
-- [ ] Connect data from Eloquent models (`Club`, `ClubBanner`, `Share`, `Metro`, `Settings`)
-- [ ] Assemble final `home.blade.php`
-- [ ] Implement Strangler Fig routing (Yii2 → Laravel)
-- [ ] Test and refine the new homepage
+| Раздел | Модель | DTO | Service | Статус |
+|--------|--------|-----|---------|--------|
+| Главная | Club, Share, Banner, Metro | HomepageData, HeroDTO | HomepageService | 🔄 Частично |
+| Услуги | Service | ServiceCardData, ServiceDetailData | ServiceService | ⏳ |
+| Новости | News | NewsCardData, NewsDetailData | NewsService | ⏳ |
+| Акции | Share | ShareCardData, ShareDetailData | ShareService | ⏳ |
+| Тренеры | Trainer | TrainerCardData, TrainerDetailData | TrainerService | ⏳ |
+| События | Event | EventCardData | EventService | ⏳ |
+| Вакансии | Job | JobCardData | JobService | ⏳ |
+| Клуб | Club, Metro | ClubData | ClubService | ⏳ |
+| Типы карт | CardType | CardTypeData | — | ⏳ |
 
-### Domain Status
-| Domain     | Status       | Priority | Notes                          |
-|
+---
+
+## Блокеры
+
+- Нет.
+
+---
+
+## Следующие шаги (план по дням)
+
+### 16 июня — Главная страница (завершение Phase 2)
+1. `x-sections.actions` + `ShareCardData` DTO
+2. `x-sections.subscribe`
+3. `x-sections.contacts` (карта + Metro)
+4. Сборка `home.blade.php` из компонентов
+5. `HomepageService` + `HomepageData` (агрегация данных)
+
+### 17 июня — Слой данных: Услуги + Новости
+1. Eloquent-модели `Service`, `News` (проверить/создать)
+2. Миграции + seeders
+3. DTOs: `ServiceCardData`, `ServiceDetailData`, `NewsCardData`, `NewsDetailData`
+4. `ServiceService`, `NewsService`
+5. Подключить данные в `ServiceController`, `NewsController`
+
+### 18 июня — Слой данных: Акции + Тренеры
+1. Модели `Share`, `Trainer`
+2. DTOs + Services для обоих разделов
+3. Подключить в контроллеры
+
+### 19 июня — Слой данных: Events + Jobs + Club
+1. Модели, DTOs, Services для оставшихся разделов
+2. Подключить в контроллеры
+
+---
+
+## Статус доменов
+
+| Домен | Фаза | Статус | Приоритет |
+|-------|------|--------|-----------|
+| Map | 1 | ✅ Готово | — |
+| Home | 2 | 🔄 В работе | ВЫСОКИЙ |
+| Static pages (каркас) | 4/5 | ✅ Каркас готов | — |
+| Данные для страниц | 5 | ⏳ Следующий шаг | ВЫСОКИЙ |
+| Auth (Breeze) | 3 | ⏳ Запланировано | СРЕДНИЙ |
+| Формы обратной связи | 6a | ⏳ Запланировано | НИЗКИЙ |
+| Админка (Filament) | 6b | ⏳ Запланировано | НИЗКИЙ |
+| Media Library | 7 | ⏳ Запланировано | НИЗКИЙ |
+| SEO + Performance | 8 | ⏳ Запланировано | НИЗКИЙ |
+| Strangler Fig → Прод | 9 | ⏳ Запланировано | НИЗКИЙ |

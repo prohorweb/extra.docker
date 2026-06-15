@@ -1,66 +1,55 @@
-# Migration Roadmap
-**Extra Fitness** — Yii2 → Laravel 11 (Full Stack)
+# Roadmap миграции
+**Extra Fitness — Yii2 → Laravel 12**
+
+Последнее обновление: **15 июня 2026**
 
 ---
 
-## Версионирование
-| Поле | Значение |
-|------|----------|
-| **Версия** | 1.0.0 |
-| **Последнее обновление** | 2025-01-XX |
-| **Статус** | Active |
-| **Ответственный** | @lead-dev |
+## Прогресс
+
+| Фаза | Название | Статус | Коммиты |
+|------|----------|--------|---------|
+| **Phase 1** | Frontend Foundation (Tailwind, Components, Alpine) | ✅ Готово | `55b3ffa`, `edb5422` |
+| **Phase 2** | Homepage + Core Backend | 🔄 В работе | `40db57e`, `5ca4fc7` |
+| **Phase 3** | Аутентификация (Breeze) | ⏳ Запланировано | — |
+| **Phase 4** | Статические страницы + Формы | 🔄 Каркас готов | `5ca4fc7` |
+| **Phase 5** | Feature Modules (Services, News, Shares, Trainers…) | 🔄 Каркас готов | `5ca4fc7` |
+| **Phase 6a** | Формы обратной связи (Callback, Contact) | ⏳ Запланировано | — |
+| **Phase 6b** | Админка (Filament v3) | ⏳ Запланировано | — |
+| **Phase 7** | Media Library (Spatie) | ⏳ Запланировано | — |
+| **Phase 8** | SEO + Performance | ⏳ Запланировано | — |
+| **Phase 9** | Strangler Fig → Продакшн | ⏳ Запланировано | — |
 
 ---
 
-## Прогресс миграции
+## Strangler Fig — план переключения маршрутов
 
-| Фаза | Название | Статус | Зависимости | PR / Коммит |
-|------|----------|--------|-------------|-------------|
-| **Phase 1** | Foundation (Frontend) | ✅ Done | — | `#1` |
-| **Phase 2** | Homepage + Core Backend | 🔄 In Progress | Phase 1 | `#2` |
-| **Phase 3** | Authentication (Breeze) | ⏳ Planned | Phase 2 | — |
-| **Phase 4** | Static Pages + Contact Forms | ⏳ Planned | Phase 2 | — |
-| **Phase 5** | Feature Modules (Public) | ⏳ Planned | Phase 2 | — |
-| **Phase 6a** | Public Forms (Callback, Contact) | ⏳ Planned | Phase 4 | — |
-| **Phase 6b** | Admin Panel (Filament v3) | ⏳ Planned | Phase 6a | — |
-| **Phase 7** | Media + File Uploads | ⏳ Planned | Phase 5 | — |
-| **Phase 8** | SEO + Performance | ⏳ Planned | Phase 5 | — |
-| **Phase 9** | Strangler Fig + Production | ⏳ Planned | All | — |
-
----
-
-## Ключевые принципы
-
-| Принцип | Реализация |
-|---------|------------|
-| **Vertical Slice Migration** | Каждая фаза = полноценная фича: Controller + DTO + Service + Blade + SEO + Tests |
-| **Strangler Fig** | Nginx маршрутизирует `/` → Laravel, остальное → Yii2; по фазам переключаем |
-| **Design System First** | Tailwind v4 `@theme` в `resources/css/app.css` — Single Source of Truth |
-| **DTO-first** | Blade получает только `Data` классы из `app/Data/` |
-| **Zero Legacy** | Нет Bootstrap, jQuery, `@apply` > 3 строк |
-| **Filament v3 Only** | Админка исключительно на Filament |
-| **Mail + Queue** | Все уведомления через Laravel Mail + Redis/Database queue |
-| **No Subscribe** | Подписка на рассылку **не реализуется** |
+| Маршрут | Цель | Фаза |
+|---------|------|------|
+| `/` | Laravel | Phase 2 |
+| `/services/*` | Laravel | Phase 5 |
+| `/es/news/*` | Laravel | Phase 5 |
+| `/card/shares/*` | Laravel | Phase 5 |
+| `/es/command/*` | Laravel | Phase 5 |
+| `/es/events/*` | Laravel | Phase 5 |
+| `/es/job/*` | Laravel | Phase 5 |
+| `/card/type` | Laravel | Phase 5 |
+| `/es/club` | Laravel | Phase 4 |
+| `/admin/*` | Laravel (Filament) | Phase 6b |
+| `/*` | Yii2 (legacy) | до завершения |
 
 ---
 
-## Формы обратной связи (в scope)
+## Текущий фокус (июнь 2026)
 
-| Форма | Поля | Backend | Admin |
-|-------|------|---------|-------|
-| **Callback** (обратный звонок) | name, phone, club_id, consent, honeypot | `CallbackController` + `CallbackRequest` + `CallbackNotification` (Mail) | `CallbackResource` (view, export) |
-| **Contact** (контактная форма) | name, email, phone, subject, message, consent, honeypot | `ContactController` + `ContactRequest` + `ContactNotification` (Mail) | `ContactResource` (view, reply, export) |
+1. **Завершить Homepage** — секции Actions, Subscribe, Contacts → сборка `home.blade.php`
+2. **Слой данных** — подключить Eloquent-модели + DTOs + Services для всех внутренних страниц
+3. После этого → Phase 3 (Auth) или Phase 6b (Filament Admin)
 
 ---
 
 ## Навигация
 
-- [← README](./README.md)
-- [Phases Detail →](./phases.md)
-- [Foundation →](./foundation.md)
-- [Data Layer →](./data-layer.md)
-- [Components →](./components.md)
-- [Admin Panel →](./admin-panel.md)
-- [Deployment →](./deployment.md)
-- [Checklist →](./checklist.md)
+- [phases.md](./phases.md) — детальные exit criteria
+- [data-layer.md](./data-layer.md) — DTO/Service паттерны
+- [checklist.md](./checklist.md) — прогресс-трекер

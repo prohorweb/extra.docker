@@ -5,6 +5,7 @@
 | 2026-06-08 | **Blade Architecture & Domain Launch** |
 | 2026-06-09 | **Documentation Consolidation & English Migration** |
 | 2026-06-12 | **Homepage migration: Hero component, HomeController, DTOs** |
+| 2026-06-15 | **Внутренние страницы: контроллеры, маршруты, Blade-шаблоны для всех разделов** |
 
 ---
 
@@ -49,4 +50,17 @@
 
 ---
 
-**Overall Progress**: Foundation + Documentation phases completed. Homepage migration in progress (1 of ~6 sections done).
+---
+
+### 2026-06-15 — Внутренние страницы
+
+- Созданы контроллеры для всех разделов: Home, Club, Trainer, News, Event, Job, Share, Service, CardType
+- Зарегистрированы все маршруты в `routes/web.php` с именованными именами
+- Созданы Blade-шаблоны для всех страниц (index + show где нужно)
+- Структура готова к подключению данных (Eloquent → DTOs → Service layer)
+
+**Статус**: Каркас всех страниц готов. Следующий шаг — слой данных.
+
+---
+
+**Общий прогресс**: Фундамент + Документация + Все маршруты и шаблоны готовы. Следующий этап — подключение реальных данных.

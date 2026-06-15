@@ -1,71 +1,66 @@
-# Engineering Decisions — AI Migration Layer
+# Журнал архитектурных решений
+
+Операционные решения (как работает AI-система миграции).
+Технические решения по стеку — см. [migration/adr.md](../migration/adr.md).
 
 ---
 
-## ADR-001: Local MLX Models for AI Assistance
+## ADR-001: Файловая память вместо векторной БД
 
-**Decision:** Use local MLX models (e.g., Qwen 2.5, CodeQwen) instead of cloud APIs.
+**Решение:** Markdown-файлы в `docs/ai/` вместо vector database.
 
-**Reason:**
-- No data leakage of proprietary business logic.
-- Predictable latency (no API rate limits).
-- Full control over context window and behavior.
-- Reproducible results across sessions.
-
----
-
-## ADR-002: Single-Model Execution
-
-**Decision:** One model per session. No mixture of specialists.
-
-**Reason:**
-- Reduces context fragmentation.
-- More consistent behavior across analyst and executor roles.
-- Simpler to maintain system prompts and memory files.
+**Причина:**
+- Нет инфраструктурной зависимости
+- Файлы читаемы человеком и версионируются в git
+- Работает с любой AI-моделью без интеграции
 
 ---
 
-## ADR-003: Human-Controlled Migration
+## ADR-002: Человек утверждает, AI предлагает
 
-**Decision:** AI proposes → human approves and executes. No autonomous commits.
+**Решение:** AI предлагает → человек утверждает и выполняет. Без автономных коммитов.
 
-**Reason:**
-- AI lacks understanding of business context and priorities.
-- Yii2 → Laravel migration requires domain knowledge AI cannot acquire.
-- Human maintains engineering responsibility for production systems.
-
----
-
-## ADR-004: File-Based AI Memory (Not Vector DB)
-
-**Decision:** Use markdown files in `ai/` folder instead of a vector database.
-
-**Reason:**
-- Zero infrastructure dependency.
-- Files are human-readable and version-controlled.
-- No embedding/similarity search overhead.
-- Works with any AI model without integration.
+**Причина:**
+- AI не знает бизнес-контекст и приоритеты
+- Миграция Yii2 → Laravel требует доменных знаний
+- Ответственность за продакшн остаётся за инженером
 
 ---
 
-## ADR-005: Vertical Slice over Horizontal Layer Migration
+## ADR-003: Одна модель на сессию
 
-**Decision:** Migrate entire features (Home → Services → News) instead of layers (models → controllers → views).
+**Решение:** Один AI-агент на сессию. Без смешения специалистов.
 
-**Reason:**
-- Each slice is independently testable and deployable.
-- Reduces risk of "dangling" half-migrated code.
-- Strangler Fig can route entire feature to Laravel at once.
-- Provides immediate user-facing value with each slice.
+**Причина:**
+- Снижает фрагментацию контекста
+- Более стабильное поведение между ролями Analyst/Executor
+- Проще поддерживать системные промпты
 
 ---
 
-## ADR-006: DTO-First View Layer
+## ADR-004: Vertical Slice вместо горизонтальных слоёв
 
-**Decision:** Blade views receive only DTOs, never Eloquent models.
+**Решение:** Мигрировать целыми фичами (Home → Services → News), а не слоями (models → controllers → views).
 
-**Reason:**
-- Prevents lazy loading access in views (N+1 problem).
-- Enforces separation of concerns.
-- Makes view data explicit and testable.
-- Simplifies migration — view contract is just a DTO signature.
+**Причина:**
+- Каждый slice независимо тестируем и деплоится
+- Исключает «висящий» полумигрированный код
+- Strangler Fig может переключить целую фичу на Laravel сразу
+- Каждый slice даёт немедленную пользователю ценность
+
+---
+
+## ADR-005: DTO-first во вьюхах
+
+**Решение:** Blade-шаблоны получают только DTO (`readonly class`), никогда сырые Eloquent-модели.
+
+**Причина:**
+- Предотвращает lazy loading в шаблонах (N+1)
+- Явный контракт данных между контроллером и вьюхой
+- Упрощает тестирование (DTO не зависит от БД)
+
+---
+
+## Mistakes & Lessons
+
+*(сюда добавляются ошибки при выполнении задач)*
