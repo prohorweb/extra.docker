@@ -2,20 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Piter\Service;
+use App\Services\PostService;
 
 class ServiceController extends Controller
 {
+    public function __construct(private PostService $postService) {}
+
     public function index()
     {
-        $services = Service::active()->get();
+        $club = current_club();
+        $services = $this->postService->getServices($club);
+
         return view('pages.services.index', compact('services'));
     }
 
     public function show(string $alias)
     {
-        $service = Service::where('alias', $alias)->where('status', 10)->firstOrFail();
-        $services = Service::active()->get();
-        return view('pages.services.show', compact('service', 'services'));
+        $service = $this->postService->getServiceBySlug($alias);
+        $seo = $service->seo;
+
+        return view('pages.services.show', compact('service', 'seo'));
     }
 }

@@ -2,22 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Piter\Trainer;
-use App\Models\Piter\TrainerOption;
+use App\Models\Taxonomy;
+use App\Services\PostService;
+use Illuminate\Http\Request;
 
 class TrainerController extends Controller
 {
-    public function index()
+    public function __construct(private PostService $postService) {}
+
+    public function index(Request $request)
     {
-        $trainerOptions = TrainerOption::active()->get();
-        $trainers = Trainer::active()->get();
-        return view('pages.trainers.index', compact('trainers', 'trainerOptions'));
+        $club = current_club();
+        $specializationId = $request->integer('specialization') ?: null;
+        $trainers = $this->postService->getTrainers($club, $specializationId);
+        $specializations = Taxonomy::specialization()->active()->ordered()->get();
+        $trainerOptions = $specializations;
+
+        return view('pages.trainers.index', compact('trainers', 'specializations', 'specializationId', 'trainerOptions'));
     }
 
     public function show(string $alias)
     {
-        $trainer = Trainer::where('alias', $alias)->where('status', 10)->firstOrFail();
-        $others = Trainer::active()->where('id', '!=', $trainer->id)->take(5)->get();
-        return view('pages.trainers.show', compact('trainer', 'others'));
+        $trainer = $this->postService->getTrainerBySlug($alias);
+        $seo = $trainer->seo;
+
+        return view('pages.trainers.show', compact('trainer', 'seo'));
     }
 }

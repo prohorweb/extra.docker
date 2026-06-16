@@ -2,20 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Piter\Share;
+use App\Services\PostService;
 
 class ShareController extends Controller
 {
+    public function __construct(private PostService $postService) {}
+
     public function index()
     {
-        $shares = Share::active()->paginate(12);
+        $club = current_club();
+        $shares = $this->postService->getShares($club);
+
         return view('pages.shares.index', compact('shares'));
     }
 
     public function show(string $alias)
     {
-        $share = Share::where('alias', $alias)->where('status', 10)->firstOrFail();
-        $related = Share::active()->where('id', '!=', $share->id)->take(4)->get();
-        return view('pages.shares.show', compact('share', 'related'));
+        $share = $this->postService->getShareBySlug($alias);
+        $seo = $share->seo;
+
+        return view('pages.shares.show', compact('share', 'seo'));
     }
 }
