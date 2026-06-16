@@ -1,10 +1,10 @@
 # Текущее состояние — Миграция Yii2 → Laravel
 
-## Обновлено: 15 июня 2026
+## Обновлено: 16 июня 2026
 
 ## Статус миграции
 **Проект**: Extra Fitness — Yii2 → Laravel 12 (Strangler Fig Pattern)
-**Активная фаза**: Phase 2/4/5 — Подключение данных
+**Активная фаза**: Phase 2 — Завершение главной страницы
 
 ---
 
@@ -33,23 +33,29 @@
 - [x] Все маршруты зарегистрированы в `routes/web.php`
 - [x] Все Blade-шаблоны созданы (`pages/*/index.blade.php`, `show.blade.php`)
 
+### Слой данных — DB + Filament + Controllers ✅ (16 июня)
+- [x] Миграции: taxonomies, posts, post_term, seo, settings, job_queue
+- [x] Модели: Post (scopes + relations), Taxonomy, Seo, Setting
+- [x] Middleware ResolveClub (subdomain → current_club)
+- [x] Filament v3: AdminPanelProvider, ClubResource (4 вкладки, 4 RelationManagers)
+- [x] Filament: PostResource (conditional fields, 7 nav items), TaxonomyResource, SettingsPage, SeoRelationManager
+- [x] PostService: все методы для всех разделов
+- [x] Все контроллеры переписаны на Post/Taxonomy/Setting модели
+- [x] ClubComposer обновлён на новые модели
+
 ---
 
 ## В работе
 
-**Слой данных** — подключение Eloquent-моделей → DTO → Service для каждого раздела
+### Главная страница (Phase 2) — остаток
 
-| Раздел | Модель | DTO | Service | Статус |
-|--------|--------|-----|---------|--------|
-| Главная | Club, Share, Banner, Metro | HomepageData, HeroDTO | HomepageService | 🔄 Частично |
-| Услуги | Service | ServiceCardData, ServiceDetailData | ServiceService | ⏳ |
-| Новости | News | NewsCardData, NewsDetailData | NewsService | ⏳ |
-| Акции | Share | ShareCardData, ShareDetailData | ShareService | ⏳ |
-| Тренеры | Trainer | TrainerCardData, TrainerDetailData | TrainerService | ⏳ |
-| События | Event | EventCardData | EventService | ⏳ |
-| Вакансии | Job | JobCardData | JobService | ⏳ |
-| Клуб | Club, Metro | ClubData | ClubService | ⏳ |
-| Типы карт | CardType | CardTypeData | — | ⏳ |
+| Секция | Компонент | Статус |
+|--------|-----------|--------|
+| Hero (баннер/слайдер) | `x-sections.hero` | ✅ |
+| Акции | `x-sections.actions` | ⏳ |
+| Подписка | `x-sections.subscribe` | ⏳ |
+| Контакты | `x-sections.contacts` | ⏳ |
+| Сборка `home.blade.php` | — | ⏳ |
 
 ---
 
@@ -61,28 +67,16 @@
 
 ## Следующие шаги (план по дням)
 
-### 16 июня — Главная страница (завершение Phase 2)
-1. `x-sections.actions` + `ShareCardData` DTO
-2. `x-sections.subscribe`
-3. `x-sections.contacts` (карта + Metro)
-4. Сборка `home.blade.php` из компонентов
-5. `HomepageService` + `HomepageData` (агрегация данных)
+### Следующая сессия — Завершение главной страницы
+1. `x-sections.actions` — сетка карточек акций (данные из `PostService::getShares()`)
+2. `x-sections.subscribe` — статичный блок (без логики)
+3. `x-sections.contacts` — карта + контакты из `settingPost` клуба
+4. Сборка `home.blade.php` из готовых компонентов
 
-### 17 июня — Слой данных: Услуги + Новости
-1. Eloquent-модели `Service`, `News` (проверить/создать)
-2. Миграции + seeders
-3. DTOs: `ServiceCardData`, `ServiceDetailData`, `NewsCardData`, `NewsDetailData`
-4. `ServiceService`, `NewsService`
-5. Подключить данные в `ServiceController`, `NewsController`
-
-### 18 июня — Слой данных: Акции + Тренеры
-1. Модели `Share`, `Trainer`
-2. DTOs + Services для обоих разделов
-3. Подключить в контроллеры
-
-### 19 июня — Слой данных: Events + Jobs + Club
-1. Модели, DTOs, Services для оставшихся разделов
-2. Подключить в контроллеры
+### Потом — Контент-наполнение и SEO
+- Настройки сайта через SettingsPage
+- SEO для основных страниц
+- Формы обратной связи (FormRequest → Mail)
 
 ---
 
@@ -93,10 +87,10 @@
 | Map | 1 | ✅ Готово | — |
 | Home | 2 | 🔄 В работе | ВЫСОКИЙ |
 | Static pages (каркас) | 4/5 | ✅ Каркас готов | — |
-| Данные для страниц | 5 | ⏳ Следующий шаг | ВЫСОКИЙ |
+| Данные для страниц | 5 | ✅ PostService + все контроллеры | — |
 | Auth (Breeze) | 3 | ⏳ Запланировано | СРЕДНИЙ |
 | Формы обратной связи | 6a | ⏳ Запланировано | НИЗКИЙ |
-| Админка (Filament) | 6b | ⏳ Запланировано | НИЗКИЙ |
+| Админка (Filament) | 6b | ✅ Filament v3 настроен | — |
 | Media Library | 7 | ⏳ Запланировано | НИЗКИЙ |
 | SEO + Performance | 8 | ⏳ Запланировано | НИЗКИЙ |
 | Strangler Fig → Прод | 9 | ⏳ Запланировано | НИЗКИЙ |
