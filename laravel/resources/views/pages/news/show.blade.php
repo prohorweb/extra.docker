@@ -1,10 +1,10 @@
 @extends('layouts.app')
-@section('title', ($article->meta_title ?: $article->title) . ' — ' . ($club->title ?? 'EXTRASPORT'))
+@section('title', ($seo?->meta_title ?: $post->title) . ' — ' . ($club->title ?? 'EXTRASPORT'))
 
 @php
 $months = ['01'=>'января','02'=>'февраля','03'=>'марта','04'=>'апреля','05'=>'мая','06'=>'июня',
            '07'=>'июля','08'=>'августа','09'=>'сентября','10'=>'октября','11'=>'ноября','12'=>'декабря'];
-$dt = \Carbon\Carbon::parse($article->date);
+$dt = \Carbon\Carbon::parse($post->date);
 @endphp
 
 @section('content')
@@ -14,8 +14,8 @@ $dt = \Carbon\Carbon::parse($article->date);
 
     {{-- Left: image or date block --}}
     <div class="relative overflow-hidden bg-gray-950" style="min-height:50vw;max-height:90vh">
-        @if($article->img)
-            <img src="/uploads/news/{{ $article->img }}" alt="{{ $article->title }}"
+        @if($post->img)
+            <img src="/uploads/news/{{ $post->img }}" alt="{{ $post->title }}"
                  class="absolute inset-0 w-full h-full object-cover">
             <div class="absolute inset-0 bg-gradient-to-r from-transparent to-black/50 hidden lg:block"></div>
             <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
@@ -57,33 +57,33 @@ $dt = \Carbon\Carbon::parse($article->date);
             <span>/</span>
             <a href="{{ route('news.index') }}" class="hover:text-[var(--color-primary)] transition-colors">Новости</a>
             <span>/</span>
-            <span class="text-white/50 line-clamp-1">{{ $article->title }}</span>
+            <span class="text-white/50 line-clamp-1">{{ $post->title }}</span>
         </div>
 
         {{-- Title --}}
         <div>
             <p class="text-xs font-heading uppercase tracking-[0.3em] text-[var(--color-primary)] mb-3">Новости клуба</p>
             <h1 class="font-heading font-bold text-3xl md:text-4xl uppercase tracking-tight text-white leading-tight">
-                {{ $article->title }}
+                {{ $post->title }}
             </h1>
         </div>
 
         <div class="w-10 h-px bg-[var(--color-primary)]"></div>
 
         {{-- Intro --}}
-        @if($article->intro)
-        <p class="text-lg text-white/60 leading-relaxed">{{ $article->intro }}</p>
+        @if($post->intro)
+        <p class="text-lg text-white/60 leading-relaxed">{{ $post->intro }}</p>
         @endif
 
         {{-- Content --}}
-        @if($article->content)
+        @if($post->content)
         <div class="prose prose-invert max-w-none
             text-white/70 leading-relaxed
             [&_p]:mb-3 [&_strong]:text-white
             [&_h2]:font-heading [&_h2]:uppercase [&_h2]:tracking-wide [&_h2]:text-white [&_h2]:text-xl [&_h2]:mt-6 [&_h2]:mb-3
             [&_ul]:space-y-2 [&_li]:text-white/65
             [&_a]:text-[var(--color-primary)] [&_a]:no-underline hover:[&_a]:underline">
-            {!! $article->content !!}
+            {!! $post->content !!}
         </div>
         @endif
 
@@ -149,7 +149,7 @@ $dt = \Carbon\Carbon::parse($article->date);
                     class="w-full bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-black font-heading font-bold uppercase text-sm tracking-widest py-3.5 transition-colors">
                 Отправить
             </button>
-            <input type="hidden" name="title" value="Новость: {{ $article->title }}">
+            <input type="hidden" name="title" value="Новость: {{ $post->title }}">
             <input type="hidden" name="url" value="{{ request()->url() }}">
         </form>
     </div>

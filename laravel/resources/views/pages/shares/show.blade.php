@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', ($share->meta_title ?: $share->title) . ' — ' . ($club->title ?? 'EXTRASPORT'))
+@section('title', ($seo?->meta_title ?: $share->title) . ' — ' . ($club->title ?? 'EXTRASPORT'))
 
 @section('content')
 
@@ -87,9 +87,9 @@
                 @endif
 
                 {{-- Badge --}}
-                @if($share->title2)
+                @if($share->subtitle)
                 <span class="absolute top-4 left-0 bg-[var(--color-primary)] text-black text-sm font-heading font-bold uppercase px-5 py-1.5 tracking-widest">
-                    {{ $share->title2 }}
+                    {{ $share->subtitle }}
                 </span>
                 @endif
 
@@ -158,7 +158,7 @@
 </div>
 
 {{-- Related shares --}}
-@if($related->isNotEmpty())
+@if(isset($related) && $related->isNotEmpty())
 <section class="border-t border-white/8 py-14" style="background:rgba(3,7,18,0.5)">
     <div class="max-w-7xl mx-auto px-4">
         <h2 class="font-heading font-bold text-xs uppercase tracking-[0.3em] text-white/30 mb-8">Другие акции</h2>

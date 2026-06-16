@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', ($trainer->meta_title ?: $trainer->title) . ' — ' . ($club->title ?? 'EXTRASPORT'))
+@section('title', ($seo?->meta_title ?: $trainer->title) . ' — ' . ($club->title ?? 'EXTRASPORT'))
 
 @push('head')
 <style>
@@ -68,8 +68,8 @@
             <h1 class="font-heading font-bold text-4xl md:text-6xl uppercase tracking-tight text-white leading-tight">
                 {{ $trainer->title }}
             </h1>
-            @if($trainer->post)
-            <p class="mt-3 text-base text-white/45 font-heading uppercase tracking-widest">{{ $trainer->post }}</p>
+            @if($trainer->subtitle)
+            <p class="mt-3 text-base text-white/45 font-heading uppercase tracking-widest">{{ $trainer->subtitle }}</p>
             @endif
         </div>
 
@@ -122,7 +122,7 @@
 </div>
 
 {{-- Other trainers --}}
-@if($others->isNotEmpty())
+@if(isset($others) && $others->isNotEmpty())
 <div class="max-w-7xl mx-auto px-4 py-14 border-t border-white/8">
     <h2 class="font-heading font-bold text-xs uppercase tracking-[0.3em] text-white/30 mb-8">Другие тренеры</h2>
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', ($service->meta_title ?: $service->title) . ' — ' . ($club->title ?? 'EXTRASPORT'))
+@section('title', ($seo?->meta_title ?: $service->title) . ' — ' . ($club->title ?? 'EXTRASPORT'))
 
 @section('content')
 
@@ -59,7 +59,7 @@
     <aside>
         <h2 class="font-heading font-bold text-xs uppercase tracking-[0.25em] text-white/30 mb-5">Другие услуги</h2>
         <nav class="flex flex-col gap-1">
-            @foreach($services as $s)
+            @foreach($services ?? [] as $s)
             <a href="{{ route('services.show', $s->alias) }}"
                class="group flex items-center gap-3 p-3 border-l-2 transition-all duration-200
                       {{ $s->id === $service->id
