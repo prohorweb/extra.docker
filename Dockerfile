@@ -6,6 +6,7 @@ RUN apt-get update && apt-get install -y \
     libjpeg-dev \
     libfreetype6-dev \
     libzip-dev \
+    libicu-dev \
     zip \
     unzip \
     git \
@@ -14,7 +15,7 @@ RUN apt-get update && apt-get install -y \
 
 # Настраиваем и устанавливаем расширения PHP
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install gd pdo_mysql zip
+    && docker-php-ext-install gd pdo_mysql zip exif intl
 
 # Копируем Composer из официального Docker-образа
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
