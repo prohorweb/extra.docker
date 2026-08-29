@@ -11,7 +11,7 @@
 get_header();
 ?>
 
-<main id="main" class="site-main">
+<div class="page-content">
     <div class="container">
         <?php
         if ( have_posts() ) {
@@ -25,7 +25,7 @@ get_header();
         }
         ?>
     </div>
-</main>
+</div>
 
 <?php
 get_footer();

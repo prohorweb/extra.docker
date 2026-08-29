@@ -8,7 +8,7 @@
 get_header();
 ?>
 
-<main id="main" class="site-main single-service-main">
+<div class="page-content single-service-main">
     <div class="container">
         <article id="post-<?php the_ID(); ?>" <?php post_class( 'service-content' ); ?>>
             <header class="entry-header">
@@ -82,7 +82,7 @@ get_header();
             ?>
         </article><!-- #post-<?php the_ID(); ?> -->
     </div>
-</main>
+</div>
 
 <?php
 get_footer();

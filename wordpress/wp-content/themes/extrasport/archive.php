@@ -8,7 +8,7 @@
 get_header();
 ?>
 
-<main id="main" class="site-main archive-main">
+<div class="page-content archive-main">
     <div class="container">
         <header class="archive-header">
             <h1 class="archive-title"><?php the_archive_title(); ?></h1>
@@ -29,7 +29,7 @@ get_header();
             ?>
         </div>
     </div>
-</main>
+</div>
 
 <?php
 get_footer();

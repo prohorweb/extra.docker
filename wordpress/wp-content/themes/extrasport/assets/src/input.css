@@ -1,5 +1,5 @@
-@import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap');
+@import "tailwindcss";
 
 @theme {
 	--font-oswald: "Oswald", sans-serif;
@@ -10,10 +10,135 @@
 
 @layer base {
 	body {
-		@apply font-roboto text-white bg-brand-dark;
+		@apply font-roboto text-white bg-brand-dark antialiased;
+	}
+
+	body.overflow-hidden {
+		@apply overflow-hidden;
+	}
+
+	a {
+		@apply transition-colors;
 	}
 }
 
 @layer components {
-	/* Custom components will be added in Phase 3–4 */
+	.font-oswald {
+		font-family: var(--font-oswald);
+	}
+
+	.btn-primary {
+		@apply inline-flex items-center rounded-md bg-brand-primary px-5 py-2.5 text-sm font-semibold uppercase tracking-wide text-white transition hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-offset-2 focus:ring-offset-brand-dark;
+	}
+
+	.btn-primary.btn-lg {
+		@apply px-6 py-3 text-base;
+	}
+
+	.btn-primary.btn-sm {
+		@apply px-3 py-1.5 text-xs;
+	}
+
+	.form-input {
+		@apply w-full rounded-md border border-white/20 bg-white/5 px-4 py-3 text-white placeholder:text-white/40 focus:border-brand-primary focus:outline-none focus:ring-1 focus:ring-brand-primary;
+	}
+
+	/* Modals */
+	.modal {
+		@apply fixed inset-0 z-50 hidden items-center justify-center p-4;
+	}
+
+	.modal.is-open {
+		@apply flex;
+	}
+
+	.modal__backdrop {
+		@apply absolute inset-0 bg-black/70 backdrop-blur-sm;
+	}
+
+	.modal__panel {
+		@apply relative z-10 w-full max-w-lg rounded-xl border border-white/10 bg-brand-dark p-6 shadow-2xl;
+	}
+
+	.modal__panel--sm {
+		@apply max-w-md;
+	}
+
+	.modal__panel--lg {
+		@apply max-w-2xl;
+	}
+
+	.modal__panel--md {
+		@apply max-w-xl;
+	}
+
+	.modal__close {
+		@apply absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-full text-white/70 transition hover:bg-white/10 hover:text-white;
+	}
+
+	.modal__scroll {
+		scrollbar-width: thin;
+		scrollbar-color: rgba(255 255 255 / 0.2) transparent;
+	}
+
+	/* Mobile nav */
+	.mobile-nav.hidden {
+		@apply hidden;
+	}
+
+	.mobile-nav:not(.hidden) .mobile-nav__panel {
+		animation: slideInRight 0.25s ease-out;
+	}
+
+	@keyframes slideInRight {
+		from { transform: translateX(100%); }
+		to { transform: translateX(0); }
+	}
+
+	/* Chat widget */
+	.chat-24__button.hidden {
+		@apply hidden;
+	}
+
+	.chat-24__content.hidden {
+		@apply hidden;
+	}
+
+	/* Present video */
+	.present-video.hidden {
+		@apply hidden;
+	}
+
+	.sr-only {
+		@apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0;
+		clip: rect(0, 0, 0, 0);
+	}
+
+	/* Carousel */
+	.carousel-track {
+		@apply relative h-full w-full;
+	}
+
+	.carousel-slide {
+		@apply absolute inset-0 opacity-0 transition-opacity duration-700 ease-in-out pointer-events-none;
+	}
+
+	.carousel-slide.is-active {
+		@apply opacity-100 z-10 pointer-events-auto;
+	}
+
+	.carousel-dot.is-active {
+		@apply bg-white scale-125;
+	}
+
+	.carousel-arrow {
+		@apply flex h-10 w-10 items-center justify-center rounded-full bg-black/40 text-white transition hover:bg-brand-primary;
+	}
+
+	/* Map section layout on large screens */
+	@media (min-width: 1024px) {
+		.map-section {
+			@apply min-h-[480px];
+		}
+	}
 }

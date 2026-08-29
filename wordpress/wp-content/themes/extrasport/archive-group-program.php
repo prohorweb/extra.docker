@@ -8,7 +8,7 @@
 get_header();
 ?>
 
-<main id="main" class="site-main archive-program-main">
+<div class="page-content archive-program-main">
     <div class="container">
         <header class="archive-header programs-header">
             <h1 class="archive-title"><?php esc_html_e( 'Our Programs', 'extrasport' ); ?></h1>
@@ -49,7 +49,7 @@ get_header();
             ?>
         </div>
     </div>
-</main>
+</div>
 
 <?php
 get_footer();
