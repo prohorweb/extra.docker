@@ -93,6 +93,10 @@ services:
       MARIADB_DATABASE: extra_new
       MARIADB_USER: extra
       MARIADB_PASSWORD: extra123
+      # WordPress database (Multisite)
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress123
     volumes:
       - db_data:/var/lib/mysql
       - ./db:/docker-entrypoint-initdb.d
