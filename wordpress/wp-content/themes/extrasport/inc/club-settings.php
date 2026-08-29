@@ -32,6 +32,11 @@ function extrasport_get_club() {
 		'legal_url'          => home_url( '/legal/' ),
 		'privacy_url'        => home_url( '/privacy/' ),
 		'metro'              => 'м. Площадь Мужества, м. Политехническая',
+		'present_video_embed'=> '',
+		'timer_enabled'      => false,
+		'timer_title'        => 'Специальное предложение',
+		'timer_intro'        => 'Оставьте заявку до окончания акции',
+		'timer_end'          => '',
 	);
 }
 

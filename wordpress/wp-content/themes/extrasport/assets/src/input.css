@@ -4,8 +4,9 @@
 @theme {
 	--font-oswald: "Oswald", sans-serif;
 	--font-roboto: "Roboto", sans-serif;
-	--color-brand-primary: #e11d48;
+	--color-brand-primary: #ff6600;
 	--color-brand-dark: #141416;
+	--color-brand-accent: #dc5800;
 }
 
 @layer base {
@@ -28,7 +29,7 @@
 	}
 
 	.btn-primary {
-		@apply inline-flex items-center rounded-md bg-brand-primary px-5 py-2.5 text-sm font-semibold uppercase tracking-wide text-white transition hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-offset-2 focus:ring-offset-brand-dark;
+		@apply inline-flex items-center rounded-md bg-brand-primary px-5 py-2.5 text-sm font-semibold uppercase tracking-wide text-white transition hover:bg-brand-accent focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-offset-2 focus:ring-offset-brand-dark;
 	}
 
 	.btn-primary.btn-lg {
@@ -107,6 +108,92 @@
 	/* Present video */
 	.present-video.hidden {
 		@apply hidden;
+	}
+
+	.present-video.is-show {
+		@apply block;
+	}
+
+	.present-video.is-minimize {
+		@apply w-48;
+	}
+
+	.present-video.is-minimize .present-video__minimize,
+	.present-video.is-minimize .present-video__volume {
+		@apply hidden;
+	}
+
+	.present-video.is-minimize .present-video__play {
+		@apply pointer-events-none;
+	}
+
+	.present-video.is-minimize .present-video__play-btn {
+		@apply h-10 w-10;
+	}
+
+	.present-video.is-pause .present-video__pause {
+		@apply hidden;
+	}
+
+	.present-video.is-pause .present-video__play {
+		@apply flex;
+	}
+
+	.present-video:not(.is-pause) .present-video__play {
+		@apply hidden;
+	}
+
+	.present-video.is-mute .present-video__volume {
+		@apply hidden;
+	}
+
+	.present-video.is-mute .present-video__mute {
+		@apply flex;
+	}
+
+	.present-video__embed iframe,
+	.present-video__embed video {
+		@apply h-full w-full object-cover;
+	}
+
+	/* Cookie consent banner */
+	.cookie-banner {
+		@apply fixed inset-x-0 bottom-0 z-[9001] border-t border-white/10 bg-black p-4 text-white shadow-2xl;
+		animation: slideUpBanner 0.8s ease-out;
+	}
+
+	.cookie-banner__inner {
+		@apply mx-auto flex max-w-7xl flex-col items-stretch gap-4 sm:flex-row sm:items-center;
+	}
+
+	.cookie-banner__message {
+		@apply flex-1 text-sm leading-relaxed text-white/90;
+	}
+
+	.cookie-banner__link {
+		@apply text-brand-primary underline hover:text-white;
+	}
+
+	.cookie-banner__btn {
+		@apply shrink-0 rounded-md border-2 border-brand-primary bg-black px-5 py-2 text-sm font-semibold uppercase text-brand-primary transition hover:border-white hover:text-white;
+	}
+
+	@keyframes slideUpBanner {
+		from { transform: translateY(100%); }
+		to { transform: translateY(0); }
+	}
+
+	/* Timer units */
+	.timer-unit {
+		@apply flex flex-col items-center min-w-[3rem];
+	}
+
+	.timer-value {
+		@apply tabular-nums;
+	}
+
+	.timer-label {
+		@apply text-xs uppercase text-white/50;
 	}
 
 	.sr-only {

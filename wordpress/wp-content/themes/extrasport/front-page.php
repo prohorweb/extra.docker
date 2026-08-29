@@ -237,7 +237,8 @@ function extrasport_render_carousel_slides( $banner_posts, $site_name, $uri ) {
 	</section>
 
 	<!-- Contacts + Map -->
-	<section id="contacts" class="map-section relative bg-brand-dark">
+	<section id="contacts" class="map-section relative bg-brand-dark bg-cover bg-center bg-no-repeat" style="background-image: url('<?php echo esc_url( $uri . '/assets/img/bg_contact.jpeg' ); ?>')">
+		<div class="pointer-events-none absolute inset-0 bg-brand-dark/75" aria-hidden="true"></div>
 		<div class="relative z-10 mx-auto max-w-7xl px-4 py-12 lg:px-6 lg:py-16">
 			<div class="max-w-md">
 				<h2 class="font-oswald mb-8 text-3xl uppercase"><?php esc_html_e( 'Контакты', 'extrasport' ); ?></h2>

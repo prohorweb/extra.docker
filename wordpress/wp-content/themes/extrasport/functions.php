@@ -74,6 +74,23 @@ function extrasport_enqueue_scripts() {
             filemtime( $js_dist_path ),
             true
         );
+
+        $club = extrasport_get_club();
+        wp_localize_script(
+            'extrasport-main',
+            'extrasportConfig',
+            array(
+                'cookieConsent' => array(
+                    'message'     => sprintf(
+                        /* translators: %s: privacy policy URL */
+                        __( 'Мы используем файлы cookie и сходные технологии для предоставления вам персонализированной информации, подбора подходящей рекламы, в статических и исследовательских целях, а также для улучшения работы сайта. <a href="%s" target="_blank">Подробнее...</a>', 'extrasport' ),
+                        esc_url( $club['privacy_url'] )
+                    ),
+                    'dismiss'     => __( 'Принять', 'extrasport' ),
+                    'privacyUrl'  => esc_url( $club['privacy_url'] ),
+                ),
+            )
+        );
     }
 
     // Font Awesome (free CDN — site-assets.fontawesome.com returns 403 without Pro kit)

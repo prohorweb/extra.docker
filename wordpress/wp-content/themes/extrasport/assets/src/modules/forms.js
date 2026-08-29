@@ -76,4 +76,32 @@ export function initForms() {
 			window.extrasportOpenModal?.('finish-popup');
 		});
 	}
+
+	const timerForm = document.getElementById('popup-timer-form');
+	if (timerForm) {
+		timerForm.addEventListener('submit', (e) => {
+			e.preventDefault();
+			const name = timerForm.querySelector('[name="name"]');
+			const tel = timerForm.querySelector('[name="tel"]');
+			const errors = [];
+
+			if (!name?.value.trim()) {
+				errors.push('Поле имя не может быть пустым');
+			} else if (/[^а-яё ]+/gi.test(name.value)) {
+				errors.push('Поле имя должно содержать только буквы кириллицы');
+			}
+
+			if (!tel?.value.trim()) {
+				errors.push('Поле телефон не может быть пустым');
+			}
+
+			if (errors.length) {
+				alert(errors[0]);
+				return;
+			}
+
+			window.extrasportCloseModal?.(document.getElementById('popup-timer'));
+			window.extrasportOpenModal?.('finish-popup');
+		});
+	}
 }
