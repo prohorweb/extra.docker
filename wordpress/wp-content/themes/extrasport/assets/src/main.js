@@ -9,6 +9,8 @@ import { initMap } from './modules/map.js';
 import { initCookieConsent } from './modules/cookie-consent.js';
 import { initPresentVideo } from './modules/present-video.js';
 import { initTimer } from './modules/timer.js';
+import { initRules } from './modules/rules.js';
+import { initAnalytics } from './modules/analytics.js';
 
 document.addEventListener('DOMContentLoaded', () => {
 	initModals();
@@ -17,7 +19,9 @@ document.addEventListener('DOMContentLoaded', () => {
 	initForms();
 	initCarousels();
 	initMap();
+	initAnalytics();
 	initCookieConsent();
 	initPresentVideo();
 	initTimer();
+	initRules();
 });

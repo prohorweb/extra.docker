@@ -10,6 +10,7 @@ export default defineConfig( {
 	build: {
 		outDir: 'assets/dist',
 		emptyOutDir: true,
+		sourcemap: false,
 		rollupOptions: {
 			input: {
 				main: path.resolve( __dirname, 'assets/src/main.js' ),

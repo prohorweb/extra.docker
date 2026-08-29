@@ -254,4 +254,15 @@
 			@apply min-h-[480px];
 		}
 	}
+
+	/* Honeypot anti-spam field — hidden from users, visible to bots */
+	.hp-field {
+		position: absolute;
+		left: -9999px;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		opacity: 0;
+		pointer-events: none;
+	}
 }

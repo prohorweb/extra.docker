@@ -76,22 +76,29 @@ function extrasport_enqueue_scripts() {
         );
 
         $club = extrasport_get_club();
+        $config = array(
+            'restUrl'   => rest_url( 'extrasport/v1/' ),
+            'isLoggedIn'=> is_user_logged_in(),
+            'analytics' => extrasport_get_analytics_snippets(),
+            'cookieConsent' => array(
+                'message'     => sprintf(
+                    /* translators: %s: privacy policy URL */
+                    __( 'Мы используем файлы cookie и сходные технологии для предоставления вам персонализированной информации, подбора подходящей рекламы, в статических и исследовательских целях, а также для улучшения работы сайта. <a href="%s" target="_blank">Подробнее...</a>', 'extrasport' ),
+                    esc_url( $club['privacy_url'] )
+                ),
+                'dismiss'     => __( 'Принять', 'extrasport' ),
+                'privacyUrl'  => esc_url( $club['privacy_url'] ),
+            ),
+        );
+
+        if ( is_user_logged_in() ) {
+            $config['restNonce'] = wp_create_nonce( 'wp_rest' );
+        }
+
         wp_localize_script(
             'extrasport-main',
             'extrasportConfig',
-            array(
-                'ajaxUrl'       => admin_url( 'admin-ajax.php' ),
-                'nonce'         => wp_create_nonce( 'extrasport_forms' ),
-                'cookieConsent' => array(
-                    'message'     => sprintf(
-                        /* translators: %s: privacy policy URL */
-                        __( 'Мы используем файлы cookie и сходные технологии для предоставления вам персонализированной информации, подбора подходящей рекламы, в статических и исследовательских целях, а также для улучшения работы сайта. <a href="%s" target="_blank">Подробнее...</a>', 'extrasport' ),
-                        esc_url( $club['privacy_url'] )
-                    ),
-                    'dismiss'     => __( 'Принять', 'extrasport' ),
-                    'privacyUrl'  => esc_url( $club['privacy_url'] ),
-                ),
-            )
+            $config
         );
     }
 
@@ -109,12 +116,14 @@ add_action( 'wp_enqueue_scripts', 'extrasport_enqueue_scripts' );
  * Load Theme Includes
  */
 require_once EXTRASPORT_DIR . '/inc/post-types.php';
+require_once EXTRASPORT_DIR . '/inc/redirects.php';
 require_once EXTRASPORT_DIR . '/inc/taxonomies.php';
 require_once EXTRASPORT_DIR . '/inc/multisite.php';
 require_once EXTRASPORT_DIR . '/inc/club-settings.php';
 require_once EXTRASPORT_DIR . '/inc/theme-settings.php';
 require_once EXTRASPORT_DIR . '/inc/rules.php';
 require_once EXTRASPORT_DIR . '/inc/form-handlers.php';
+require_once EXTRASPORT_DIR . '/inc/rest-api.php';
 
 /**
  * Custom logo support

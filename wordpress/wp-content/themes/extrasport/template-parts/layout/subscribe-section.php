@@ -18,7 +18,8 @@ $uri  = EXTRASPORT_URI;
 	</video>
 	<div class="relative z-10 mx-auto max-w-xl px-4">
 		<h2 class="font-oswald mb-6 text-center text-3xl uppercase"><?php esc_html_e( 'Запишитесь на пробную тренировку', 'extrasport' ); ?></h2>
-		<form id="subscribe" class="space-y-4 rounded-xl border border-white/10 bg-black/60 p-6 backdrop-blur" action="#" method="post" novalidate>
+		<form id="subscribe" class="space-y-4 rounded-xl border border-white/10 bg-black/60 p-6 backdrop-blur" action="#" method="post" novalidate data-form-type="subscribe">
+			<?php get_template_part( 'template-parts/layout/form', 'honeypot', array( 'form_id' => 'subscribe-inner' ) ); ?>
 			<input type="text" name="name" class="form-input" placeholder="<?php esc_attr_e( 'Ваше имя *', 'extrasport' ); ?>" autocomplete="name">
 			<input type="tel" name="tel" class="form-input" placeholder="<?php esc_attr_e( 'Ваш телефон *', 'extrasport' ); ?>" autocomplete="tel">
 			<div class="flex items-start gap-2 text-sm">

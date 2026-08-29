@@ -1,29 +1,38 @@
 /**
- * Shared AJAX form submit helper
+ * Shared REST form submit helper
  */
-async function submitExtrasportForm(action, formData) {
+async function submitExtrasportLead(type, formData) {
 	const config = window.extrasportConfig ?? {};
-	const body = new FormData();
-	body.append('action', action);
-	body.append('nonce', config.nonce ?? '');
+	const headers = {
+		'Content-Type': 'application/json',
+	};
 
-	Object.entries(formData).forEach(([key, value]) => {
-		body.append(key, value);
-	});
+	if (config.isLoggedIn && config.restNonce) {
+		headers['X-WP-Nonce'] = config.restNonce;
+	}
 
-	const response = await fetch(config.ajaxUrl ?? '/wp-admin/admin-ajax.php', {
+	const response = await fetch(`${config.restUrl ?? '/wp-json/extrasport/v1/'}lead`, {
 		method: 'POST',
-		body,
+		headers,
+		body: JSON.stringify({
+			type,
+			...formData,
+		}),
 		credentials: 'same-origin',
 	});
 
-	const data = await response.json();
+	let data = {};
+	try {
+		data = await response.json();
+	} catch {
+		data = {};
+	}
 
-	if (!response.ok || !data.success) {
-		throw new Error(data.data?.message ?? 'Ошибка отправки формы');
+	if (!response.ok) {
+		throw new Error(data.message ?? 'Ошибка отправки формы');
 	}
 
 	return data;
 }
 
-export { submitExtrasportForm };
+export { submitExtrasportLead };

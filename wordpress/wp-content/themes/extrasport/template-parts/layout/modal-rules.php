@@ -26,8 +26,11 @@ $rules_url  = file_exists( $rules_doc ) ? EXTRASPORT_URI . '/assets/docs/rules-'
 			);
 			?>
 		</h2>
-		<div class="modal__scroll prose prose-invert max-w-none text-sm text-white/80 space-y-3 max-h-[60vh] overflow-y-auto pe-2">
-			<?php extrasport_render_rules_content(); ?>
+		<div
+			class="modal__scroll prose prose-invert max-w-none text-sm text-white/80 space-y-3 max-h-[60vh] overflow-y-auto pe-2"
+			data-rules-content
+		>
+			<p class="text-white/50"><?php esc_html_e( 'Загрузка…', 'extrasport' ); ?></p>
 		</div>
 		<div class="mt-6 pt-4 border-t border-white/10">
 			<?php if ( $rules_url ) : ?>

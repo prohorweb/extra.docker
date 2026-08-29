@@ -5,6 +5,7 @@ import { getCookie, setCookie } from './cookies.js';
 
 export function initCookieConsent() {
 	if (getCookie('cookieconsent_dismissed')) {
+		document.dispatchEvent(new CustomEvent('extrasport:cookie-accepted'));
 		return;
 	}
 
@@ -28,5 +29,6 @@ export function initCookieConsent() {
 	banner.querySelector('.cookie-banner__btn')?.addEventListener('click', () => {
 		setCookie('cookieconsent_dismissed', '1', 365);
 		banner.remove();
+		document.dispatchEvent(new CustomEvent('extrasport:cookie-accepted'));
 	});
 }

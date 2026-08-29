@@ -18,9 +18,9 @@ $about_links = array(
 );
 
 $nav_links = array(
-	array( 'label' => 'Акции', 'url' => home_url( '/shares/' ) ),
-	array( 'label' => 'Услуги', 'url' => home_url( '/services/' ) ),
-	array( 'label' => 'Абонементы и цены', 'url' => home_url( '/programs/' ) ),
+	array( 'label' => 'Акции', 'url' => get_post_type_archive_link( 'share' ) ?: home_url( '/card/shares/' ) ),
+	array( 'label' => 'Услуги', 'url' => get_post_type_archive_link( 'service' ) ?: home_url( '/services/' ) ),
+	array( 'label' => 'Абонементы и цены', 'url' => get_post_type_archive_link( 'group_program' ) ?: home_url( '/services/programs/' ) ),
 	array( 'label' => 'Контакты', 'url' => home_url( '/#contacts' ) ),
 );
 ?>

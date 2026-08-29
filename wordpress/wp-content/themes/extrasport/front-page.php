@@ -187,7 +187,7 @@ function extrasport_render_carousel_slides( $banner_posts, $site_name, $uri ) {
 			<?php endif; ?>
 
 			<div class="mt-10 text-center">
-				<a href="<?php echo esc_url( home_url( '/shares/' ) ); ?>" class="btn-primary btn-lg">
+				<a href="<?php echo esc_url( get_post_type_archive_link( 'share' ) ?: home_url( '/card/shares/' ) ); ?>" class="btn-primary btn-lg">
 					<?php esc_html_e( 'Все акции', 'extrasport' ); ?>
 				</a>
 			</div>
@@ -213,7 +213,8 @@ function extrasport_render_carousel_slides( $banner_posts, $site_name, $uri ) {
 					<p><?php esc_html_e( 'Хотите больше узнать о нашем клубе? Оставьте заявку, и наши менеджеры проведут для вас подробную экскурсию.', 'extrasport' ); ?></p>
 					<p><?php esc_html_e( 'Для тех, кому экскурсии мало, мы предлагаем услугу «фитнес тест-драйв» — безлимитную неделю фитнеса!', 'extrasport' ); ?></p>
 				</div>
-				<form id="subscribe" class="mx-auto w-full max-w-md space-y-4" action="#" method="post" novalidate>
+				<form id="subscribe" class="mx-auto w-full max-w-md space-y-4" action="#" method="post" novalidate data-form-type="subscribe">
+					<?php get_template_part( 'template-parts/layout/form', 'honeypot', array( 'form_id' => 'subscribe-front' ) ); ?>
 					<input type="text" name="name" class="form-input" placeholder="<?php esc_attr_e( 'Ваше имя *', 'extrasport' ); ?>" autocomplete="name">
 					<input type="tel" name="tel" class="form-input" placeholder="<?php esc_attr_e( 'Ваш телефон *', 'extrasport' ); ?>" autocomplete="tel">
 					<div class="flex items-start gap-2 text-sm">
