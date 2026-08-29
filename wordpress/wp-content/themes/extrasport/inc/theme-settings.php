@@ -1,6 +1,9 @@
 <?php
 /**
- * Theme settings — head/body snippets and analytics
+ * Theme settings — network vs site options
+ *
+ * Network (get_site_option): shared analytics snippets, default mail from.
+ * Site (get_option): per-club email routing overrides.
  *
  * @package ExtraSport
  */
@@ -9,34 +12,65 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+define( 'EXTRASPORT_NETWORK_OPTION', 'extrasport_network_settings' );
+
 /**
- * Theme-level settings (replace with ACF/options page later).
+ * Network-wide theme settings.
+ *
+ * @return array<string, string>
+ */
+function extrasport_get_network_settings() {
+	$defaults = array(
+		'code_head'        => '',
+		'code_body'        => '',
+		'yandex_metrica'   => '',
+		'google_analytics' => '',
+		'email_from'       => get_site_option( 'admin_email', get_option( 'admin_email' ) ),
+	);
+
+	$saved = get_site_option( EXTRASPORT_NETWORK_OPTION, array() );
+	if ( ! is_array( $saved ) ) {
+		$saved = array();
+	}
+
+	return apply_filters( 'extrasport_network_settings', wp_parse_args( $saved, $defaults ) );
+}
+
+/**
+ * Per-site form email settings (blog option, falls back to admin_email).
  *
  * @return array<string, string>
  */
 function extrasport_get_theme_settings() {
-	return apply_filters(
-		'extrasport_theme_settings',
-		array(
-			'code_head'         => '',
-			'code_body'         => '',
-			'yandex_metrica'    => '',
-			'google_analytics'  => '',
-			'email_from'        => get_option( 'admin_email' ),
-			'email_feedback'    => get_option( 'admin_email' ),
-			'email_subscribe'   => get_option( 'admin_email' ),
-			'email_timer'       => get_option( 'admin_email' ),
-		)
+	$network = extrasport_get_network_settings();
+	$admin   = get_option( 'admin_email' );
+
+	$defaults = array(
+		'code_head'         => $network['code_head'],
+		'code_body'         => $network['code_body'],
+		'yandex_metrica'    => $network['yandex_metrica'],
+		'google_analytics'  => $network['google_analytics'],
+		'email_from'        => $network['email_from'] ?: $admin,
+		'email_feedback'    => $admin,
+		'email_subscribe'   => $admin,
+		'email_timer'       => $admin,
 	);
+
+	$saved = get_option( 'extrasport_site_settings', array() );
+	if ( ! is_array( $saved ) ) {
+		$saved = array();
+	}
+
+	return apply_filters( 'extrasport_theme_settings', wp_parse_args( $saved, $defaults ) );
 }
 
 /**
- * Output trusted head snippets from settings.
+ * Output trusted head snippets from network settings.
  *
  * @return void
  */
 function extrasport_output_code_head() {
-	$settings = extrasport_get_theme_settings();
+	$settings = extrasport_get_network_settings();
 	if ( ! empty( $settings['code_head'] ) ) {
 		echo $settings['code_head']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
@@ -44,12 +78,12 @@ function extrasport_output_code_head() {
 add_action( 'wp_head', 'extrasport_output_code_head', 20 );
 
 /**
- * Output trusted body-open snippets from settings.
+ * Output trusted body-open snippets from network settings.
  *
  * @return void
  */
 function extrasport_output_code_body() {
-	$settings = extrasport_get_theme_settings();
+	$settings = extrasport_get_network_settings();
 	if ( ! empty( $settings['code_body'] ) ) {
 		echo $settings['code_body']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
@@ -62,7 +96,7 @@ add_action( 'wp_body_open', 'extrasport_output_code_body', 5 );
  * @return void
  */
 function extrasport_output_analytics() {
-	$settings = extrasport_get_theme_settings();
+	$settings = extrasport_get_network_settings();
 
 	if ( ! empty( $settings['yandex_metrica'] ) ) {
 		echo $settings['yandex_metrica']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -75,7 +109,7 @@ function extrasport_output_analytics() {
 add_action( 'wp_footer', 'extrasport_output_analytics', 99 );
 
 /**
- * Enqueue smartbanner assets when app store links are configured.
+ * Enqueue smartbanner assets when app store links are configured on this site.
  *
  * @return void
  */
@@ -104,7 +138,7 @@ function extrasport_enqueue_smartbanner() {
 add_action( 'wp_enqueue_scripts', 'extrasport_enqueue_smartbanner' );
 
 /**
- * Output smartbanner meta tags.
+ * Output smartbanner meta tags for the current site's club profile.
  *
  * @return void
  */

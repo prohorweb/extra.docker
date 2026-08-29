@@ -1,8 +1,6 @@
 <?php
 /**
- * Club settings helper — deprecated entry point.
- *
- * Logic moved to inc/multisite.php for domain-based resolution.
+ * Club settings helper — per-site options live in inc/multisite.php
  *
  * @package ExtraSport
  */
@@ -11,4 +9,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-// Functions extrasport_get_club() and extrasport_get_clubs() live in inc/multisite.php.
+// extrasport_get_club(), extrasport_update_club(), extrasport_get_clubs()
+// use get_option( 'extrasport_club' ) on each network site.
