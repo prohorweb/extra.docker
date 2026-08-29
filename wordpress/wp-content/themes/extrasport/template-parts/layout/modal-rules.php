@@ -4,6 +4,11 @@
  *
  * @package ExtraSport
  */
+
+$club       = extrasport_get_club();
+$rules_slug = extrasport_get_rules_slug();
+$rules_doc  = EXTRASPORT_DIR . '/assets/docs/rules-' . $rules_slug . '.docx';
+$rules_url  = file_exists( $rules_doc ) ? EXTRASPORT_URI . '/assets/docs/rules-' . $rules_slug . '.docx' : '';
 ?>
 
 <div id="rules" class="modal" aria-hidden="true" role="dialog" aria-labelledby="rulesModalTitle">
@@ -13,15 +18,23 @@
 			<i class="fa-solid fa-xmark" aria-hidden="true"></i>
 		</button>
 		<h2 id="rulesModalTitle" class="font-oswald text-xl uppercase mb-4 pr-8">
-			<?php esc_html_e( 'Правила спортивного клуба «Экстра Спорт»', 'extrasport' ); ?>
+			<?php
+			printf(
+				/* translators: %s: club title suffix */
+				esc_html__( 'Правила спортивного клуба «Экстра Спорт» %s', 'extrasport' ),
+				esc_html( $club['rules_title_suffix'] ?? '' )
+			);
+			?>
 		</h2>
 		<div class="modal__scroll prose prose-invert max-w-none text-sm text-white/80 space-y-3 max-h-[60vh] overflow-y-auto pe-2">
-			<p><?php esc_html_e( 'Настоящие Правила и техника безопасности фитнес-клуба «Экстра спорт» являются обязательными для выполнения всеми членами клуба.', 'extrasport' ); ?></p>
-			<p><?php esc_html_e( 'Часы работы Клуба устанавливаются с 7.00 до 23.00 (вход в Клуб до 22.00). В праздничные и выходные дни с 09.00 до 22.00.', 'extrasport' ); ?></p>
-			<p><?php esc_html_e( 'Пропуском в Клуб является клубная карта, которая оформляется только по предъявлению паспорта и после подписания договора с Клубом.', 'extrasport' ); ?></p>
-			<p><?php esc_html_e( 'Членство в Клубе является персональным и не может быть передано или использовано другими лицами без переоформления клубной карты.', 'extrasport' ); ?></p>
-			<p><?php esc_html_e( 'При первом посещении Клуба, Члену Клуба настоятельно рекомендуется пройти фитнес-тестирование и следовать рекомендациям инструкторов.', 'extrasport' ); ?></p>
-			<p class="text-white/50 italic"><?php esc_html_e( 'Полный текст правил будет перенесён из legacy-системы на следующем этапе.', 'extrasport' ); ?></p>
+			<?php extrasport_render_rules_content(); ?>
+		</div>
+		<div class="mt-6 pt-4 border-t border-white/10">
+			<?php if ( $rules_url ) : ?>
+			<a class="btn-primary btn-lg" href="<?php echo esc_url( $rules_url ); ?>" target="_blank" rel="noopener noreferrer">
+				<?php esc_html_e( 'Скачать', 'extrasport' ); ?>
+			</a>
+			<?php endif; ?>
 		</div>
 	</div>
 </div>

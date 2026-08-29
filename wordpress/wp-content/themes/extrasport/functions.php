@@ -80,6 +80,8 @@ function extrasport_enqueue_scripts() {
             'extrasport-main',
             'extrasportConfig',
             array(
+                'ajaxUrl'       => admin_url( 'admin-ajax.php' ),
+                'nonce'         => wp_create_nonce( 'extrasport_forms' ),
                 'cookieConsent' => array(
                     'message'     => sprintf(
                         /* translators: %s: privacy policy URL */
@@ -108,7 +110,11 @@ add_action( 'wp_enqueue_scripts', 'extrasport_enqueue_scripts' );
  */
 require_once EXTRASPORT_DIR . '/inc/post-types.php';
 require_once EXTRASPORT_DIR . '/inc/taxonomies.php';
+require_once EXTRASPORT_DIR . '/inc/multisite.php';
 require_once EXTRASPORT_DIR . '/inc/club-settings.php';
+require_once EXTRASPORT_DIR . '/inc/theme-settings.php';
+require_once EXTRASPORT_DIR . '/inc/rules.php';
+require_once EXTRASPORT_DIR . '/inc/form-handlers.php';
 
 /**
  * Custom logo support

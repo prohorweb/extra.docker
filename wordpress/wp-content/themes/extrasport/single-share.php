@@ -1,6 +1,6 @@
 <?php
 /**
- * Single Service Template
+ * Single Share Template
  *
  * @package ExtraSport
  */
@@ -25,8 +25,8 @@ $club = extrasport_get_club();
 							'url'   => home_url( '/' ),
 						),
 						array(
-							'label' => __( 'Услуги', 'extrasport' ),
-							'url'   => get_post_type_archive_link( 'service' ),
+							'label' => __( 'Акции', 'extrasport' ),
+							'url'   => get_post_type_archive_link( 'share' ),
 						),
 						array(
 							'label' => get_the_title(),
@@ -48,13 +48,10 @@ $club = extrasport_get_club();
 					<?php the_content(); ?>
 				</div>
 
-				<div class="mt-8 flex flex-wrap gap-4">
+				<div class="mt-8">
 					<button type="button" class="btn-primary btn-lg" data-modal-open="callModal">
-						<?php esc_html_e( 'Заказать звонок', 'extrasport' ); ?>
+						<?php esc_html_e( 'Узнать подробности', 'extrasport' ); ?>
 					</button>
-					<a href="<?php echo esc_url( get_post_type_archive_link( 'service' ) ); ?>" class="btn-primary btn-lg bg-transparent border border-white/30 hover:bg-white/10">
-						<?php esc_html_e( 'Все услуги', 'extrasport' ); ?>
-					</a>
 				</div>
 			</article>
 			<?php

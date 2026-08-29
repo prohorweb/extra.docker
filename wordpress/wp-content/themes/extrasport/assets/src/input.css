@@ -196,6 +196,32 @@
 		@apply text-xs uppercase text-white/50;
 	}
 
+	/* Inner pages */
+	.filter-chip {
+		@apply inline-flex rounded-full border border-white/20 px-4 py-2 text-sm text-white/80 transition hover:border-brand-primary hover:text-brand-primary;
+	}
+
+	.filter-chip.is-active {
+		@apply border-brand-primary bg-brand-primary text-white;
+	}
+
+	.prose-invert a {
+		@apply text-brand-primary underline hover:text-white;
+	}
+
+	.page-content .nav-links {
+		@apply flex flex-wrap items-center justify-center gap-2 text-sm;
+	}
+
+	.page-content .nav-links a,
+	.page-content .nav-links span {
+		@apply rounded-md border border-white/20 px-3 py-1.5 text-white/80 transition hover:border-brand-primary hover:text-brand-primary;
+	}
+
+	.page-content .nav-links .current {
+		@apply border-brand-primary bg-brand-primary text-white;
+	}
+
 	.sr-only {
 		@apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0;
 		clip: rect(0, 0, 0, 0);

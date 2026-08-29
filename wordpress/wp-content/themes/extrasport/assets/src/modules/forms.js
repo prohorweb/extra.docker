@@ -1,10 +1,12 @@
 /**
- * Form validation — native JS replacement for jQuery validators
+ * Form validation and AJAX submit — native JS replacement for jQuery validators
  */
+import { submitExtrasportForm } from './ajax.js';
+
 export function initForms() {
 	const callbackForm = document.getElementById('callback');
 	if (callbackForm) {
-		callbackForm.addEventListener('submit', (e) => {
+		callbackForm.addEventListener('submit', async (e) => {
 			e.preventDefault();
 			const errorEl = callbackForm.querySelector('.form-error');
 			const name = callbackForm.querySelector('[name="name"]');
@@ -36,15 +38,26 @@ export function initForms() {
 
 			if (errorEl) errorEl.classList.add('hidden');
 
-			// Placeholder: server handler in future phase
-			window.extrasportCloseModal?.(document.getElementById('callModal'));
-			window.extrasportOpenModal?.('finish-popup');
+			try {
+				await submitExtrasportForm('extrasport_submit_callback', {
+					name: name.value.trim(),
+					tel: tel.value.trim(),
+					accept: accept?.checked ? '1' : '',
+				});
+				window.extrasportCloseModal?.(document.getElementById('callModal'));
+				window.extrasportOpenModal?.('finish-popup');
+			} catch (err) {
+				if (errorEl) {
+					errorEl.textContent = err.message;
+					errorEl.classList.remove('hidden');
+				}
+			}
 		});
 	}
 
 	const subscribeForm = document.getElementById('subscribe');
 	if (subscribeForm) {
-		subscribeForm.addEventListener('submit', (e) => {
+		subscribeForm.addEventListener('submit', async (e) => {
 			e.preventDefault();
 			const errorEl = subscribeForm.querySelector('.form-error');
 			const name = subscribeForm.querySelector('[name="name"]');
@@ -73,13 +86,27 @@ export function initForms() {
 			}
 
 			if (errorEl) errorEl.classList.add('hidden');
-			window.extrasportOpenModal?.('finish-popup');
+
+			try {
+				await submitExtrasportForm('extrasport_submit_subscribe', {
+					name: name.value.trim(),
+					tel: tel.value.trim(),
+					accept: accept?.checked ? '1' : '',
+					form_type: 'subscribe',
+				});
+				window.extrasportOpenModal?.('finish-popup');
+			} catch (err) {
+				if (errorEl) {
+					errorEl.textContent = err.message;
+					errorEl.classList.remove('hidden');
+				}
+			}
 		});
 	}
 
 	const timerForm = document.getElementById('popup-timer-form');
 	if (timerForm) {
-		timerForm.addEventListener('submit', (e) => {
+		timerForm.addEventListener('submit', async (e) => {
 			e.preventDefault();
 			const name = timerForm.querySelector('[name="name"]');
 			const tel = timerForm.querySelector('[name="tel"]');
@@ -100,8 +127,16 @@ export function initForms() {
 				return;
 			}
 
-			window.extrasportCloseModal?.(document.getElementById('popup-timer'));
-			window.extrasportOpenModal?.('finish-popup');
+			try {
+				await submitExtrasportForm('extrasport_submit_timer', {
+					name: name.value.trim(),
+					tel: tel.value.trim(),
+				});
+				window.extrasportCloseModal?.(document.getElementById('popup-timer'));
+				window.extrasportOpenModal?.('finish-popup');
+			} catch (err) {
+				alert(err.message);
+			}
 		});
 	}
 }

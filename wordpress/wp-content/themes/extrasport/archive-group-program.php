@@ -6,50 +6,60 @@
  */
 
 get_header();
+
+$club = extrasport_get_club();
 ?>
 
-<div class="page-content archive-program-main">
-    <div class="container">
-        <header class="archive-header programs-header">
-            <h1 class="archive-title"><?php esc_html_e( 'Our Programs', 'extrasport' ); ?></h1>
-            <p class="archive-description"><?php esc_html_e( 'Choose from our diverse range of fitness and training programs.', 'extrasport' ); ?></p>
-        </header><!-- .archive-header -->
-
-        <div class="programs-filter">
-            <?php
-            $terms = get_terms( array(
-                'taxonomy'   => 'program_type',
-                'hide_empty' => false,
-            ) );
-
-            if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
-                echo '<div class="filter-buttons">';
-                echo '<a href="' . esc_url( get_post_type_archive_link( 'group_program' ) ) . '" class="filter-btn active">' . esc_html__( 'All Programs', 'extrasport' ) . '</a>';
-                foreach ( $terms as $term ) {
-                    echo '<a href="' . esc_url( get_term_link( $term ) ) . '" class="filter-btn">' . esc_html( $term->name ) . '</a>';
-                }
-                echo '</div>';
-            }
-            ?>
-        </div>
-
-        <div class="programs-grid">
-            <?php
-            if ( have_posts() ) {
-                while ( have_posts() ) {
-                    the_post();
-                    get_template_part( 'template-parts/content', 'group_program' );
-                }
-                the_posts_pagination( array(
-                    'mid_size' => 2,
-                ) );
-            } else {
-                get_template_part( 'template-parts/content', 'none' );
-            }
-            ?>
-        </div>
-    </div>
+<div class="page-hero-image relative flex min-h-[280px] items-center justify-center bg-brand-dark md:min-h-[360px]">
+	<div class="absolute inset-0 bg-gradient-to-b from-black/40 to-brand-dark" aria-hidden="true"></div>
+	<h1 class="font-oswald relative z-10 text-3xl uppercase tracking-wide text-white md:text-5xl"><?php esc_html_e( 'Групповые программы', 'extrasport' ); ?></h1>
 </div>
+
+<div class="page-content bg-brand-dark py-12 md:py-16">
+	<div class="mx-auto max-w-7xl px-4 lg:px-6">
+		<?php
+		get_template_part(
+			'template-parts/layout/breadcrumbs',
+			null,
+			array(
+				'items' => array(
+					array(
+						'label' => $club['title'],
+						'url'   => home_url( '/' ),
+					),
+					array(
+						'label' => __( 'Услуги', 'extrasport' ),
+						'url'   => get_post_type_archive_link( 'service' ),
+					),
+					array(
+						'label' => __( 'Групповые программы', 'extrasport' ),
+					),
+				),
+			)
+		);
+		?>
+
+		<h2 class="font-oswald mb-6 text-center text-2xl uppercase md:text-3xl"><?php esc_html_e( 'Направления групповых программ', 'extrasport' ); ?></h2>
+
+		<?php if ( have_posts() ) : ?>
+			<div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+				<?php
+				while ( have_posts() ) {
+					the_post();
+					get_template_part( 'template-parts/content', 'group_program' );
+				}
+				?>
+			</div>
+			<div class="mt-10">
+				<?php the_posts_pagination( array( 'mid_size' => 2 ) ); ?>
+			</div>
+		<?php else : ?>
+			<?php get_template_part( 'template-parts/content', 'none' ); ?>
+		<?php endif; ?>
+	</div>
+</div>
+
+<?php get_template_part( 'template-parts/layout/subscribe', 'section' ); ?>
 
 <?php
 get_footer();

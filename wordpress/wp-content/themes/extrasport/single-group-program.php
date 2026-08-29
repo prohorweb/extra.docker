@@ -6,87 +6,55 @@
  */
 
 get_header();
+
+$club = extrasport_get_club();
 ?>
 
-<div class="page-content single-program-main">
-    <div class="container">
-        <article id="post-<?php the_ID(); ?>" <?php post_class( 'program-content' ); ?>>
-            <header class="entry-header">
-                <h1 class="entry-title"><?php the_title(); ?></h1>
-            </header><!-- .entry-header -->
+<div class="page-content bg-brand-dark py-12 md:py-16">
+	<div class="mx-auto max-w-4xl px-4 lg:px-6">
+		<?php
+		while ( have_posts() ) {
+			the_post();
+			get_template_part(
+				'template-parts/layout/breadcrumbs',
+				null,
+				array(
+					'items' => array(
+						array(
+							'label' => $club['title'],
+							'url'   => home_url( '/' ),
+						),
+						array(
+							'label' => __( 'Групповые программы', 'extrasport' ),
+							'url'   => get_post_type_archive_link( 'group_program' ),
+						),
+						array(
+							'label' => get_the_title(),
+						),
+					),
+				)
+			);
+			?>
+			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+				<h1 class="font-oswald mb-6 text-3xl uppercase md:text-4xl"><?php the_title(); ?></h1>
 
-            <?php
-            if ( has_post_thumbnail() ) {
-                ?>
-                <figure class="featured-image program-image">
-                    <?php the_post_thumbnail( 'large' ); ?>
-                </figure>
-                <?php
-            }
-            ?>
+				<?php if ( has_post_thumbnail() ) : ?>
+					<figure class="mb-8 overflow-hidden rounded-xl">
+						<?php the_post_thumbnail( 'large', array( 'class' => 'w-full' ) ); ?>
+					</figure>
+				<?php endif; ?>
 
-            <div class="entry-content program-description">
-                <?php the_content(); ?>
-            </div><!-- .entry-content -->
-
-            <div class="program-meta">
-                <?php
-                // Display program meta information
-                $level = get_post_meta( get_the_ID(), '_program_level', true );
-                $schedule = get_post_meta( get_the_ID(), '_program_schedule', true );
-                $price = get_post_meta( get_the_ID(), '_program_price', true );
-                
-                if ( $level ) {
-                    echo '<div class="program-level"><strong>' . esc_html__( 'Level:', 'extrasport' ) . '</strong> ' . esc_html( $level ) . '</div>';
-                }
-                if ( $schedule ) {
-                    echo '<div class="program-schedule"><strong>' . esc_html__( 'Schedule:', 'extrasport' ) . '</strong> ' . esc_html( $schedule ) . '</div>';
-                }
-                if ( $price ) {
-                    echo '<div class="program-price"><strong>' . esc_html__( 'Price:', 'extrasport' ) . '</strong> ' . esc_html( $price ) . '</div>';
-                }
-                ?>
-            </div>
-
-            <div class="program-cta">
-                <a href="<?php echo esc_url( home_url( '/signup' ) ); ?>" class="btn btn-primary btn-large">
-                    <?php esc_html_e( 'Enroll Now', 'extrasport' ); ?>
-                </a>
-            </div>
-
-            <?php
-            // Related programs
-            $related = get_posts( array(
-                'post_type'      => 'group_program',
-                'posts_per_page' => 3,
-                'exclude'        => get_the_ID(),
-                'orderby'        => 'rand',
-            ) );
-
-            if ( $related ) {
-                ?>
-                <section class="related-programs">
-                    <h2><?php esc_html_e( 'Related Programs', 'extrasport' ); ?></h2>
-                    <div class="related-grid">
-                        <?php
-                        foreach ( $related as $post_item ) {
-                            setup_postdata( $post_item );
-                            get_template_part( 'template-parts/content', 'group_program' );
-                        }
-                        wp_reset_postdata();
-                        ?>
-                    </div>
-                </section>
-                <?php
-            }
-
-            if ( comments_open() || get_comments_number() ) {
-                comments_template();
-            }
-            ?>
-        </article><!-- #post-<?php the_ID(); ?> -->
-    </div>
+				<div class="prose prose-invert max-w-none entry-content text-white/85">
+					<?php the_content(); ?>
+				</div>
+			</article>
+			<?php
+		}
+		?>
+	</div>
 </div>
+
+<?php get_template_part( 'template-parts/layout/subscribe', 'section' ); ?>
 
 <?php
 get_footer();
