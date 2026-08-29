@@ -1,0 +1,47 @@
+{
+  "name": "extrasport",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "vite build --watch",
+    "build": "vite build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "autoprefixer": "^10.5.4",
+    "postcss": "^8.5.26",
+    "tailwindcss": "^4.3.3",
+    "vite": "^8.2.2"
+  },
+  "dependencies": {
+    "baseline-browser-mapping": "^2.11.20",
+    "browserslist": "^4.28.8",
+    "caniuse-lite": "^1.0.30001810",
+    "detect-libc": "^2.1.2",
+    "electron-to-chromium": "^1.5.416",
+    "enhanced-resolve": "^5.24.5",
+    "escalade": "^3.2.0",
+    "fdir": "^6.5.0",
+    "fraction.js": "^5.3.4",
+    "graceful-fs": "^4.2.11",
+    "jiti": "^2.7.0",
+    "lightningcss": "^1.32.0",
+    "lightningcss-darwin-arm64": "^1.32.0",
+    "magic-string": "^0.30.21",
+    "nanoid": "^3.3.18",
+    "node-releases": "^2.0.54",
+    "picocolors": "^1.1.1",
+    "picomatch": "^4.0.7",
+    "postcss-value-parser": "^4.2.0",
+    "rolldown": "^1.2.6",
+    "source-map-js": "^1.2.1",
+    "tapable": "^2.3.3",
+    "tinyglobby": "^0.2.17",
+    "update-browserslist-db": "^1.3.2"
+  },
+  "private": true
+}
