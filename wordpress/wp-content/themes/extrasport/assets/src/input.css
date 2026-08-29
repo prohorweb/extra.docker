@@ -40,6 +40,253 @@
 		@apply px-3 py-1.5 text-xs;
 	}
 
+	.btn-outline-primary {
+		@apply inline-flex items-center rounded-md border-2 border-brand-primary bg-transparent px-5 py-2.5 text-sm font-semibold uppercase tracking-wide text-brand-primary transition hover:border-white hover:text-white focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-offset-2 focus:ring-offset-brand-dark;
+	}
+
+	.btn-outline-primary.btn-lg {
+		@apply px-6 py-3 text-base;
+	}
+
+	/* Site header (Yii2 navbar port) */
+	.site-header {
+		@apply z-40 w-full border-0;
+		background-color: rgb(0 0 0 / 72%);
+	}
+
+	.site-header--overlay {
+		@apply fixed inset-x-0 top-0;
+		z-index: 100;
+	}
+
+	.site-header--fixed {
+		@apply fixed inset-x-0 top-0;
+		z-index: 100;
+		background-color: rgb(0 0 0 / 87%);
+	}
+
+	.site-header--fixed .site-header__club-info {
+		@apply hidden;
+	}
+
+	.site-header--fixed .site-header__main {
+		@apply py-2;
+	}
+
+	.site-header--static {
+		@apply relative;
+		background-color: rgb(0 0 0 / 85%);
+	}
+
+	.site-header__main {
+		@apply mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-2.5 lg:grid lg:grid-cols-[13.5rem_1fr_13.5rem] lg:px-6 lg:py-3;
+	}
+
+	.site-header__nav-center {
+		@apply flex-col items-center justify-center gap-2;
+	}
+
+	.site-header__club-info {
+		@apply flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-sm leading-snug;
+	}
+
+	.site-header__club-label {
+		@apply text-white/90;
+	}
+
+	.site-header__club-link,
+	.site-header__club-phone {
+		@apply text-brand-primary transition hover:text-white;
+	}
+
+	.site-header__club-phone {
+		@apply ms-1;
+	}
+
+	.site-header__logo {
+		@apply block shrink-0 max-w-[13.5rem];
+	}
+
+	.site-header__logo img,
+	.site-header__logo svg {
+		@apply h-auto w-full max-h-14;
+	}
+
+	body.club-devision .site-header__logo img,
+	body.club-devision .site-header__logo svg {
+		@apply w-auto max-h-[3.25rem];
+	}
+
+	.site-header__nav {
+		@apply flex flex-wrap items-center justify-center gap-3 lg:gap-5 xl:gap-7;
+	}
+
+	.site-header__nav-link {
+		@apply font-oswald text-lg uppercase tracking-wider text-white transition hover:text-brand-primary lg:text-xl xl:text-[1.35rem] xl:leading-none;
+	}
+
+	.site-header__dropdown {
+		@apply rounded-md border border-white/10 bg-black/95 shadow-xl;
+	}
+
+	.site-header__dropdown-link {
+		@apply block px-4 py-2 font-roboto text-sm normal-case text-white/90 transition hover:bg-white/5 hover:text-brand-primary;
+	}
+
+	.site-header__burger {
+		@apply text-white;
+	}
+
+	.site-header__actions {
+		@apply shrink-0 justify-end lg:w-full lg:max-w-[13.5rem] lg:justify-self-end;
+	}
+
+	.site-header__actions .btn-outline-primary {
+		@apply w-full justify-center whitespace-nowrap px-4;
+	}
+
+	/* Front page — full viewport sections (Yii2 .page-item port) */
+	.page-section {
+		@apply relative w-full overflow-hidden;
+		min-height: 100vh;
+		min-height: 100svh;
+	}
+
+	.page-section--centered {
+		@apply flex flex-col items-center justify-center;
+	}
+
+	.page-section--media video {
+		@apply absolute inset-0 h-full w-full object-cover;
+	}
+
+	.page-section--actions {
+		background-color: rgb(0 0 0 / 58%);
+		background-blend-mode: overlay;
+		background-repeat: no-repeat;
+		background-position: center center;
+		background-size: contain;
+	}
+
+	.section-heading {
+		@apply font-oswald text-center uppercase;
+	}
+
+	.page-section--actions .section-heading {
+		@apply py-8 text-2xl md:text-3xl lg:text-4xl;
+	}
+
+	/* Share cards (Yii2 .card port) */
+	.share-card {
+		@apply relative mb-6 block border-0 bg-black/45 text-center text-white no-underline transition;
+	}
+
+	.share-card .date-action {
+		@apply absolute left-0 top-0 z-10 bg-brand-primary px-2 py-2 text-left font-oswald uppercase leading-tight;
+	}
+
+	.share-card .card-img-top {
+		@apply block w-full object-cover opacity-75 transition-opacity;
+		height: 50vh;
+		max-height: 28rem;
+	}
+
+	.share-card:hover .card-img-top {
+		@apply opacity-100;
+	}
+
+	.share-card:hover .date-action {
+		@apply bg-black;
+	}
+
+	.share-card .card-body {
+		@apply p-0;
+	}
+
+	.share-card .card-body__row {
+		@apply flex;
+	}
+
+	.share-card .card-body_wrapper {
+		@apply w-full p-4 text-left;
+	}
+
+	.share-card:hover .card-body {
+		@apply bg-brand-primary text-white;
+	}
+
+	.share-card .card-title {
+		@apply font-oswald text-base uppercase md:text-lg;
+	}
+
+	.share-card .card-text {
+		@apply mt-1 text-sm normal-case;
+	}
+
+	.share-card .btn-arrow {
+		@apply flex shrink-0 items-center bg-brand-primary px-4 text-4xl text-brand-dark transition;
+	}
+
+	.share-card:hover .btn-arrow {
+		@apply text-white;
+	}
+
+	.btn-xl {
+		@apply inline-flex items-center border-2 border-brand-primary bg-transparent px-4 py-2 font-oswald text-lg font-bold uppercase tracking-wide text-brand-primary transition hover:border-white hover:text-white;
+	}
+
+	.page-section--test-drive video {
+		@apply opacity-30;
+	}
+
+	.page-section__inner {
+		@apply relative z-10 mx-auto w-full max-w-7xl px-4 lg:px-6;
+	}
+
+	/* Hero / masthead */
+	.masthead {
+		@apply relative w-full overflow-hidden text-center;
+		height: 100vh;
+		height: 100svh;
+	}
+
+	.carousel--hero {
+		@apply relative h-full w-full overflow-hidden;
+		height: 100vh;
+		height: 100svh;
+	}
+
+	.carousel--hero .carousel-track {
+		@apply relative h-full w-full;
+		height: 100vh;
+		height: 100svh;
+	}
+
+	.carousel-slide__media {
+		@apply absolute inset-0 h-full w-full object-cover object-top;
+	}
+
+	.masthead__content {
+		@apply absolute inset-0 z-10 flex flex-col items-center justify-center px-4;
+	}
+
+	.carousel-arrow--hero {
+		@apply h-auto w-auto rounded-none bg-transparent text-4xl text-white/90 transition hover:bg-transparent hover:text-brand-primary md:text-5xl;
+	}
+
+	.masthead-heading {
+		@apply font-oswald font-bold uppercase text-brand-primary;
+		font-size: clamp(2rem, 5vmax, 4.5rem);
+		line-height: 1.1;
+		text-shadow: 3px 3px 0 rgb(0 0 0 / 60%);
+	}
+
+	.masthead-subheading {
+		@apply mt-4 font-oswald font-light uppercase text-white;
+		font-size: clamp(1.1rem, 3vmax, 2.5rem);
+		line-height: 1.2;
+	}
+
 	.form-input {
 		@apply w-full rounded-md border border-white/20 bg-white/5 px-4 py-3 text-white placeholder:text-white/40 focus:border-brand-primary focus:outline-none focus:ring-1 focus:ring-brand-primary;
 	}
@@ -249,9 +496,22 @@
 	}
 
 	/* Map section layout on large screens */
+	.map-section__map {
+		opacity: 0.85;
+	}
+
+	/* Yandex Maps dark/inverted tiles (Yii2 styles.css port) — map only, not contacts */
+	.map-section__map [class*='ymaps'][class*='-ground-pane'] {
+		filter: invert(1) hue-rotate(-180deg);
+	}
+
 	@media (min-width: 1024px) {
 		.map-section {
-			@apply min-h-[480px];
+			@apply min-h-[100svh];
+		}
+
+		.map-section__content {
+			@apply flex min-h-[100svh] items-center;
 		}
 	}
 

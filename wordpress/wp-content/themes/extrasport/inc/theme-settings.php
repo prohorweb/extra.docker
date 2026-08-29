@@ -15,6 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 define( 'EXTRASPORT_NETWORK_OPTION', 'extrasport_network_settings' );
+define( 'EXTRASPORT_SITE_SETTINGS_OPTION', 'extrasport_site_settings' );
 
 /**
  * Network-wide theme settings.
@@ -47,21 +48,43 @@ function extrasport_get_network_settings() {
  */
 function extrasport_get_theme_settings() {
 	$network = extrasport_get_network_settings();
+	$club    = extrasport_get_club();
 	$admin   = get_option( 'admin_email' );
+	$club_email = ! empty( $club['email'] ) ? $club['email'] : $admin;
 
 	$defaults = array(
-		'email_from'      => $network['email_from'] ?: $admin,
-		'email_feedback'  => $admin,
-		'email_subscribe' => $admin,
-		'email_timer'     => $admin,
+		'email_from'      => $network['email_from'] ?: $club_email,
+		'email_feedback'  => $club_email,
+		'email_subscribe' => $club_email,
+		'email_timer'     => $club_email,
 	);
 
-	$saved = get_option( 'extrasport_site_settings', array() );
+	$saved = get_option( EXTRASPORT_SITE_SETTINGS_OPTION, array() );
 	if ( ! is_array( $saved ) ) {
 		$saved = array();
 	}
 
 	return apply_filters( 'extrasport_theme_settings', wp_parse_args( $saved, $defaults ) );
+}
+
+/**
+ * Persist per-site form email routing.
+ *
+ * @param array<string, string> $input Settings payload.
+ * @return bool
+ */
+function extrasport_update_site_email_settings( array $input ) {
+	if ( ! current_user_can( 'manage_options' ) ) {
+		return false;
+	}
+
+	$current = extrasport_get_theme_settings();
+
+	return update_option(
+		EXTRASPORT_SITE_SETTINGS_OPTION,
+		wp_parse_args( $input, $current ),
+		false
+	);
 }
 
 /**

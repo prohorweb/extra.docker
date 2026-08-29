@@ -1,9 +1,15 @@
 /**
  * Mobile navigation — offcanvas replacement
  */
+import { updateSiteHeaderState } from './scroll-state.js';
+
 export function initNav() {
 	const toggle = document.getElementById('navToggle');
 	const mobileNav = document.getElementById('mobileNav');
+
+	updateSiteHeaderState();
+	window.addEventListener('scroll', updateSiteHeaderState, { passive: true });
+
 	if (!toggle || !mobileNav) return;
 
 	const openNav = () => {

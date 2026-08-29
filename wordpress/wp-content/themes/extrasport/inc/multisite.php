@@ -13,6 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 define( 'EXTRASPORT_CLUB_OPTION', 'extrasport_club' );
+define( 'EXTRASPORT_CLUB_DATA_VERSION', 2 );
 
 /**
  * Default club profiles keyed by site slug (used when seeding a new blog).
@@ -26,13 +27,14 @@ function extrasport_get_club_defaults_registry() {
 			'title'               => 'EXTRASPORT ТК «ПИТЕР»',
 			'rules_slug'          => 'piter',
 			'rules_title_suffix'  => 'ТК «ПИТЕР»',
-			'tel'                 => '+7 (812) 123-45-67',
-			'email'               => 'info@extrasport.local',
-			'address'             => 'Санкт-Петербург, ул. Типанова, 21',
+			'tel'                 => '+7 812 565 52 49',
+			'email'               => 'piter@extrasport.ru',
+			'address'             => 'Санкт-Петербург, ул. Типанова, 21, ТК «Питер»',
 			'coordinates'         => '59.8533,30.3497',
-			'metro'               => 'м. Площадь Мужества, м. Политехническая',
-			'start_work'          => '06:00 – 23:00',
-			'start_work_weekend'  => '08:00 – 22:00',
+			'metro'               => 'м. Проспект Славы, м. Московская',
+			'start_work'          => 'с 8:00 до 22:00',
+			'start_work_weekend'  => 'с 9:00 до 22:00',
+			'sales_work'          => 'с 10:00 до 22:00',
 			'url_appstore'        => '',
 			'url_googleplay'      => '',
 			'vk'                  => 'http://vk.com/extrasport_ru',
@@ -47,16 +49,17 @@ function extrasport_get_club_defaults_registry() {
 		),
 		'devision' => array(
 			'slug'                => 'devision',
-			'title'               => 'De-vision ТРК «РОДЕО ДРАЙВ»',
+			'title'               => 'De-vision ТРЦ «Родео Драйв»',
 			'rules_slug'          => 'matros',
 			'rules_title_suffix'  => 'De-vision',
-			'tel'                 => '+7 (812) 000-00-00',
-			'email'               => 'info@devision.local',
-			'address'             => 'Санкт-Петербург, пр. Культуры, 1',
+			'tel'                 => '+7 (812) 565-49-86',
+			'email'               => 'rodeo_manager@de-vision.ru',
+			'address'             => 'СПб, пр. Культуры, д. 1, ТРЦ «Родео Драйв»',
 			'coordinates'         => '59.984,30.368',
-			'metro'               => '',
-			'start_work'          => '07:00 – 23:00',
-			'start_work_weekend'  => '09:00 – 22:00',
+			'metro'               => 'м. Озерки, м. Академическая, м. Проспект Просвещения',
+			'start_work'          => 'с 8:00 до 23:00',
+			'start_work_weekend'  => 'с 9:00 до 22:00',
+			'sales_work'          => 'с 10:00 до 22:00',
 			'url_appstore'        => '',
 			'url_googleplay'      => '',
 			'vk'                  => '',
@@ -71,6 +74,137 @@ function extrasport_get_club_defaults_registry() {
 		),
 	);
 }
+
+/**
+ * Per-club visual identity (logo, map marker, accent colors).
+ *
+ * @return array<string, array<string, mixed>>
+ */
+function extrasport_get_brand_registry() {
+	return array(
+		'piter'    => array(
+			'logo'        => 'logo.svg',
+			'logo_inline' => true,
+			'logo_width'  => 216,
+			'logo_height' => 86,
+			'marker'      => 'marker.png',
+			'primary'     => '#ff6600',
+			'accent'      => '#dc5800',
+		),
+		'devision' => array(
+			'logo'        => 'logo-devision.svg',
+			'logo_inline' => true,
+			'logo_width'  => 300,
+			'logo_height' => 73,
+			'marker'      => 'marker2.png',
+			'primary'     => '#74b72e',
+			'accent'      => '#5a9424',
+		),
+	);
+}
+
+/**
+ * Brand assets and colors for the current site.
+ *
+ * @return array<string, mixed>
+ */
+function extrasport_get_brand() {
+	static $cache = array();
+
+	$slug = extrasport_get_current_club_slug();
+
+	if ( isset( $cache[ $slug ] ) ) {
+		return $cache[ $slug ];
+	}
+
+	$registry = extrasport_get_brand_registry();
+	$defaults = $registry[ $slug ] ?? $registry['piter'];
+
+	$cache[ $slug ] = apply_filters(
+		'extrasport_brand',
+		array(
+			'slug'        => $slug,
+			'logo'        => $defaults['logo'],
+			'logo_url'    => EXTRASPORT_URI . '/assets/img/' . $defaults['logo'],
+			'logo_path'   => EXTRASPORT_DIR . '/assets/img/' . $defaults['logo'],
+			'logo_inline' => ! empty( $defaults['logo_inline'] ),
+			'marker_url'  => EXTRASPORT_URI . '/assets/img/' . $defaults['marker'],
+			'primary'     => $defaults['primary'],
+			'accent'      => $defaults['accent'],
+			'logo_width'  => (int) $defaults['logo_width'],
+			'logo_height' => (int) $defaults['logo_height'],
+		)
+	);
+
+	return $cache[ $slug ];
+}
+
+/**
+ * Render club logo markup (inline SVG when animation is required).
+ *
+ * @param array<string, mixed> $attrs Optional HTML attributes.
+ * @return string
+ */
+function extrasport_render_brand_logo( array $attrs = array() ) {
+	$brand = extrasport_get_brand();
+	$alt   = isset( $attrs['alt'] ) ? (string) $attrs['alt'] : get_bloginfo( 'name' );
+	unset( $attrs['alt'] );
+
+	$class = isset( $attrs['class'] ) ? (string) $attrs['class'] : 'site-header__logo-image';
+	unset( $attrs['class'] );
+
+	if ( ! empty( $brand['logo_inline'] ) && ! empty( $brand['logo_path'] ) && is_readable( $brand['logo_path'] ) ) {
+		$svg = file_get_contents( $brand['logo_path'] );
+
+		if ( false !== $svg && str_contains( $svg, '<svg' ) ) {
+			$attr_string = '';
+			foreach ( $attrs as $key => $value ) {
+				$attr_string .= sprintf( ' %s="%s"', esc_attr( $key ), esc_attr( (string) $value ) );
+			}
+
+			$svg = preg_replace(
+				'/<svg\b/',
+				sprintf(
+					'<svg class="%s" role="img" aria-label="%s"%s',
+					esc_attr( $class ),
+					esc_attr( $alt ),
+					$attr_string
+				),
+				$svg,
+				1
+			);
+
+			return $svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted theme asset.
+		}
+	}
+
+	$attr_string = '';
+	foreach ( $attrs as $key => $value ) {
+		$attr_string .= sprintf( ' %s="%s"', esc_attr( $key ), esc_attr( (string) $value ) );
+	}
+
+	return sprintf(
+		'<img src="%1$s" alt="%2$s" class="%3$s" width="%4$d" height="%5$d"%6$s>',
+		esc_url( $brand['logo_url'] ),
+		esc_attr( $alt ),
+		esc_attr( $class ),
+		(int) $brand['logo_width'],
+		(int) $brand['logo_height'],
+		$attr_string
+	);
+}
+
+/**
+ * Add club slug to body classes for theme overrides.
+ *
+ * @param string[] $classes Body classes.
+ * @return string[]
+ */
+function extrasport_body_class( $classes ) {
+	$classes[] = 'club-' . extrasport_get_current_club_slug();
+	return $classes;
+}
+add_filter( 'body_class', 'extrasport_body_class' );
 
 /**
  * Resolve default profile slug for the current blog.
@@ -120,10 +254,12 @@ function extrasport_get_request_host() {
  * @return array<string, mixed>
  */
 function extrasport_get_club() {
-	static $club = null;
+	static $cache = array();
 
-	if ( null !== $club ) {
-		return $club;
+	$blog_id = get_current_blog_id();
+
+	if ( isset( $cache[ $blog_id ] ) ) {
+		return $cache[ $blog_id ];
 	}
 
 	$registry = extrasport_get_club_defaults_registry();
@@ -138,7 +274,9 @@ function extrasport_get_club() {
 	$club = wp_parse_args( $saved, $defaults );
 	$club['domain'] = extrasport_get_request_host();
 
-	return apply_filters( 'extrasport_club', $club );
+	$cache[ $blog_id ] = apply_filters( 'extrasport_club', $club );
+
+	return $cache[ $blog_id ];
 }
 
 /**
@@ -225,3 +363,23 @@ function extrasport_maybe_seed_current_club() {
 	}
 }
 add_action( 'after_setup_theme', 'extrasport_maybe_seed_current_club', 20 );
+
+/**
+ * Apply canonical club contact data when defaults are updated.
+ *
+ * @return void
+ */
+function extrasport_maybe_sync_club_defaults() {
+	$version = (int) get_option( 'extrasport_club_data_version', 0 );
+	if ( $version >= EXTRASPORT_CLUB_DATA_VERSION ) {
+		return;
+	}
+
+	$registry = extrasport_get_club_defaults_registry();
+	$slug     = extrasport_get_current_club_slug();
+	$defaults = $registry[ $slug ] ?? $registry['piter'];
+
+	update_option( EXTRASPORT_CLUB_OPTION, $defaults, false );
+	update_option( 'extrasport_club_data_version', EXTRASPORT_CLUB_DATA_VERSION, false );
+}
+add_action( 'after_setup_theme', 'extrasport_maybe_sync_club_defaults', 25 );

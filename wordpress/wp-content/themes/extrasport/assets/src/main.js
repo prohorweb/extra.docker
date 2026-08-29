@@ -11,6 +11,7 @@ import { initPresentVideo } from './modules/present-video.js';
 import { initTimer } from './modules/timer.js';
 import { initRules } from './modules/rules.js';
 import { initAnalytics } from './modules/analytics.js';
+import { initParallax } from './modules/parallax.js';
 
 document.addEventListener('DOMContentLoaded', () => {
 	initModals();
@@ -24,4 +25,5 @@ document.addEventListener('DOMContentLoaded', () => {
 	initPresentVideo();
 	initTimer();
 	initRules();
+	initParallax();
 });

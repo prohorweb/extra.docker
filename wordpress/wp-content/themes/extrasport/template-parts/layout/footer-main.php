@@ -43,7 +43,7 @@ $tel  = preg_replace( '/\s+/', '', $club['tel'] );
 						<i class="fa-solid fa-user-tie text-brand-primary mt-1" aria-hidden="true"></i>
 						<div>
 							<?php esc_html_e( 'Отдел продаж:', 'extrasport' ); ?><br>
-							<?php esc_html_e( 'пн-вс: 10:00 до 22:00', 'extrasport' ); ?>
+							<?php esc_html_e( 'пн-вс:', 'extrasport' ); ?> <?php echo esc_html( $club['sales_work'] ); ?>
 						</div>
 					</li>
 				</ul>

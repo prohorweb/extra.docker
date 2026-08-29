@@ -120,10 +120,13 @@ require_once EXTRASPORT_DIR . '/inc/redirects.php';
 require_once EXTRASPORT_DIR . '/inc/taxonomies.php';
 require_once EXTRASPORT_DIR . '/inc/multisite.php';
 require_once EXTRASPORT_DIR . '/inc/club-settings.php';
+require_once EXTRASPORT_DIR . '/inc/admin-branding.php';
 require_once EXTRASPORT_DIR . '/inc/theme-settings.php';
+require_once EXTRASPORT_DIR . '/inc/admin-club-settings.php';
 require_once EXTRASPORT_DIR . '/inc/rules.php';
 require_once EXTRASPORT_DIR . '/inc/form-handlers.php';
 require_once EXTRASPORT_DIR . '/inc/rest-api.php';
+require_once EXTRASPORT_DIR . '/inc/front-page-placeholders.php';
 
 /**
  * Custom logo support

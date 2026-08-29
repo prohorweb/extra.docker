@@ -1,13 +1,14 @@
 <?php
 /**
- * Primary navigation — Tailwind port of layouts/header.php
+ * Primary navigation — Yii2 header layout port
  *
  * @package ExtraSport
  */
 
-$club     = extrasport_get_club();
-$nav_pos  = is_front_page() ? 'absolute top-0 left-0' : 'relative';
-$logo_uri = EXTRASPORT_URI . '/assets/img/logo.svg';
+$club        = extrasport_get_club();
+$is_home     = is_front_page();
+$header_pos  = $is_home ? 'site-header--overlay' : 'site-header--static';
+$tel_clean   = preg_replace( '/\s+/', '', $club['tel'] );
 
 $about_links = array(
 	array( 'label' => 'Обзор клуба', 'url' => home_url( '/club/' ) ),
@@ -25,44 +26,57 @@ $nav_links = array(
 );
 ?>
 
-<nav id="mainNav" class="main-nav <?php echo esc_attr( $nav_pos ); ?> z-40 w-full bg-black/80 backdrop-blur-sm" aria-label="<?php esc_attr_e( 'Main navigation', 'extrasport' ); ?>">
-	<div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 lg:px-6">
-
-		<!-- Logo -->
-		<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="shrink-0">
-			<img src="<?php echo esc_url( $logo_uri ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>" class="h-10 w-auto lg:h-12">
+<header id="mainNav" class="site-header <?php echo esc_attr( $header_pos ); ?>" aria-label="<?php esc_attr_e( 'Site header', 'extrasport' ); ?>">
+	<div class="site-header__main">
+		<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="site-header__logo shrink-0">
+			<?php echo extrasport_render_brand_logo(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 		</a>
 
-		<!-- Desktop: club info bar -->
-		<div class="hidden lg:flex flex-1 items-center justify-center gap-6 text-sm text-white/90">
-			<div class="flex items-center gap-1">
+		<div class="site-header__nav-center hidden lg:flex">
+			<div class="site-header__club-info">
 				<i class="fa-solid fa-location-dot text-brand-primary" aria-hidden="true"></i>
-				<span class="hidden xl:inline"><?php esc_html_e( 'Ваш клуб:', 'extrasport' ); ?></span>
-				<button type="button" class="hover:text-brand-primary underline-offset-2 hover:underline" data-modal-open="clubModal">
+				<span class="site-header__club-label"><?php esc_html_e( 'Ваш клуб:', 'extrasport' ); ?></span>
+				<button type="button" class="site-header__club-link" data-modal-open="clubModal">
 					<?php echo esc_html( $club['address'] ); ?>
 					<i class="fa-solid fa-chevron-down ms-1 text-xs" aria-hidden="true"></i>
 				</button>
+				<a href="tel:<?php echo esc_attr( $tel_clean ); ?>" class="site-header__club-phone">
+					<?php echo esc_html( $club['tel'] ); ?>
+				</a>
 			</div>
-			<a href="tel:<?php echo esc_attr( preg_replace( '/\s+/', '', $club['tel'] ) ); ?>" class="hover:text-brand-primary">
-				<?php echo esc_html( $club['tel'] ); ?>
-			</a>
+
+			<nav class="site-header__nav" aria-label="<?php esc_attr_e( 'Main navigation', 'extrasport' ); ?>">
+				<div class="site-header__nav-item group relative">
+					<button type="button" class="site-header__nav-link flex items-center gap-1">
+						<?php esc_html_e( 'О клубе', 'extrasport' ); ?>
+						<i class="fa-solid fa-chevron-down text-[0.65rem]" aria-hidden="true"></i>
+					</button>
+					<ul class="site-header__dropdown absolute left-0 top-full z-50 hidden min-w-[220px] py-2 group-hover:block">
+						<?php foreach ( $about_links as $link ) : ?>
+							<li>
+								<a href="<?php echo esc_url( $link['url'] ); ?>" class="site-header__dropdown-link">
+									<?php echo esc_html( $link['label'] ); ?>
+								</a>
+							</li>
+						<?php endforeach; ?>
+					</ul>
+				</div>
+				<?php foreach ( $nav_links as $link ) : ?>
+					<a href="<?php echo esc_url( $link['url'] ); ?>" class="site-header__nav-link">
+						<?php echo esc_html( $link['label'] ); ?>
+					</a>
+				<?php endforeach; ?>
+			</nav>
 		</div>
 
-		<!-- Tablet call button -->
-		<button type="button" class="btn-primary hidden md:inline-flex lg:hidden" data-modal-open="callModal">
-			<i class="fa-solid fa-phone-volume me-2" aria-hidden="true"></i>
-			<?php esc_html_e( 'Обратный звонок', 'extrasport' ); ?>
-		</button>
-
-		<!-- Mobile: call + burger -->
-		<div class="flex items-center gap-2 md:hidden">
-			<button type="button" class="btn-primary btn-sm" data-modal-open="callModal">
-				<i class="fa-solid fa-phone-volume me-1" aria-hidden="true"></i>
-				<span class="sr-only"><?php esc_html_e( 'Обратный звонок', 'extrasport' ); ?></span>
-				<span aria-hidden="true"><?php esc_html_e( 'Звонок', 'extrasport' ); ?></span>
+		<div class="site-header__actions flex items-center gap-2">
+			<button type="button" class="btn-outline-primary hidden md:inline-flex" data-modal-open="callModal">
+				<i class="fa-solid fa-phone-volume me-2" aria-hidden="true"></i>
+				<?php esc_html_e( 'Обратный звонок', 'extrasport' ); ?>
 			</button>
-			<button type="button" id="navToggle" class="flex items-center gap-2 uppercase text-sm font-oswald tracking-wider text-white" aria-expanded="false" aria-controls="mobileNav">
-				<?php esc_html_e( 'Меню', 'extrasport' ); ?>
+
+			<button type="button" id="navToggle" class="site-header__burger flex items-center gap-2 lg:hidden" aria-expanded="false" aria-controls="mobileNav">
+				<span class="font-oswald text-sm uppercase tracking-wider"><?php esc_html_e( 'Меню', 'extrasport' ); ?></span>
 				<span class="flex flex-col gap-1" aria-hidden="true">
 					<span class="block h-0.5 w-5 bg-white"></span>
 					<span class="block h-0.5 w-5 bg-white"></span>
@@ -70,14 +84,8 @@ $nav_links = array(
 				</span>
 			</button>
 		</div>
-
-		<!-- Desktop call button -->
-		<button type="button" class="btn-primary hidden lg:inline-flex" data-modal-open="callModal">
-			<i class="fa-solid fa-phone-volume me-2" aria-hidden="true"></i>
-			<?php esc_html_e( 'Обратный звонок', 'extrasport' ); ?>
-		</button>
 	</div>
-</nav>
+</header>
 
 <!-- Mobile / offcanvas menu -->
 <div id="mobileNav" class="mobile-nav fixed inset-0 z-50 hidden" aria-hidden="true">
@@ -94,12 +102,12 @@ $nav_links = array(
 		</div>
 
 		<div class="border-b border-white/10 px-4 py-3 text-sm lg:hidden">
-			<button type="button" class="flex items-center gap-2 text-white/90 hover:text-brand-primary" data-modal-open="clubModal">
+			<button type="button" class="flex items-center gap-2 text-brand-primary hover:text-white" data-modal-open="clubModal">
 				<i class="fa-solid fa-location-dot" aria-hidden="true"></i>
 				<?php echo esc_html( $club['address'] ); ?>
 				<i class="fa-solid fa-chevron-down text-xs" aria-hidden="true"></i>
 			</button>
-			<a href="tel:<?php echo esc_attr( preg_replace( '/\s+/', '', $club['tel'] ) ); ?>" class="mt-2 block text-white/90 hover:text-brand-primary">
+			<a href="tel:<?php echo esc_attr( $tel_clean ); ?>" class="mt-2 block text-brand-primary hover:text-white">
 				<?php echo esc_html( $club['tel'] ); ?>
 			</a>
 		</div>
@@ -128,31 +136,11 @@ $nav_links = array(
 				</li>
 			<?php endforeach; ?>
 			<li class="mt-4 md:hidden">
-				<button type="button" class="btn-primary w-full justify-center" data-modal-open="callModal">
+				<button type="button" class="btn-outline-primary w-full justify-center" data-modal-open="callModal">
 					<i class="fa-solid fa-phone-volume me-2" aria-hidden="true"></i>
 					<?php esc_html_e( 'Обратный звонок', 'extrasport' ); ?>
 				</button>
 			</li>
 		</ul>
-	</div>
-</div>
-
-<!-- Desktop horizontal menu (large screens) -->
-<div class="hidden lg:block border-b border-white/10 bg-black/90">
-	<div class="mx-auto flex max-w-7xl justify-center gap-8 px-6 py-2 font-oswald text-sm uppercase tracking-wide">
-		<div class="relative group">
-			<button type="button" class="py-2 text-white hover:text-brand-primary flex items-center gap-1">
-				<?php esc_html_e( 'О клубе', 'extrasport' ); ?>
-				<i class="fa-solid fa-chevron-down text-xs" aria-hidden="true"></i>
-			</button>
-			<ul class="absolute left-0 top-full z-50 hidden min-w-[220px] rounded-md bg-brand-dark py-2 shadow-xl group-hover:block border border-white/10">
-				<?php foreach ( $about_links as $link ) : ?>
-					<li><a href="<?php echo esc_url( $link['url'] ); ?>" class="block px-4 py-2 text-white/90 hover:bg-white/5 hover:text-brand-primary normal-case font-roboto"><?php echo esc_html( $link['label'] ); ?></a></li>
-				<?php endforeach; ?>
-			</ul>
-		</div>
-		<?php foreach ( $nav_links as $link ) : ?>
-			<a href="<?php echo esc_url( $link['url'] ); ?>" class="py-2 text-white hover:text-brand-primary"><?php echo esc_html( $link['label'] ); ?></a>
-		<?php endforeach; ?>
 	</div>
 </div>

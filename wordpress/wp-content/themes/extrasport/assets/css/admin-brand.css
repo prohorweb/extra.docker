@@ -1,0 +1,138 @@
+/**
+ * Per-site admin branding — CSS variables are injected via PHP inline styles.
+ */
+
+:root {
+	--extrasport-brand-primary: #ff6600;
+	--extrasport-brand-accent: #dc5800;
+}
+
+/* Admin bar */
+#wpadminbar {
+	background: var(--extrasport-brand-accent) !important;
+}
+
+#wpadminbar .ab-item,
+#wpadminbar a.ab-item,
+#wpadminbar > #wp-toolbar span.ab-label,
+#wpadminbar > #wp-toolbar span.noticon {
+	color: #fff !important;
+}
+
+#wpadminbar .ab-top-menu > li.hover > .ab-item,
+#wpadminbar.nojq .quicklinks .ab-top-menu > li > .ab-item:focus,
+#wpadminbar:not(.mobile) .ab-top-menu > li:hover > .ab-item,
+#wpadminbar:not(.mobile) .ab-top-menu > li > .ab-item:focus {
+	background: var(--extrasport-brand-primary) !important;
+	color: #fff !important;
+}
+
+#wpadminbar .quicklinks .ab-sub-wrapper .menupop.hover > a,
+#wpadminbar .quicklinks .ab-sub-wrapper .menupop.hover > a:focus {
+	background: var(--extrasport-brand-primary) !important;
+}
+
+/* Left admin menu — current item */
+#adminmenu .wp-has-current-submenu .wp-submenu .wp-submenu-head,
+#adminmenu .wp-menu-arrow,
+#adminmenu .wp-has-current-submenu .wp-submenu,
+#adminmenu a.current,
+#adminmenu li.current a.menu-top,
+#adminmenu li.wp-has-current-submenu a.wp-has-current-submenu {
+	background: var(--extrasport-brand-primary) !important;
+}
+
+#adminmenu li.menu-top:hover,
+#adminmenu li.opensub > a.menu-top,
+#adminmenu li > a.menu-top:focus {
+	background: var(--extrasport-brand-accent) !important;
+	color: #fff !important;
+}
+
+#adminmenu .wp-submenu a:hover,
+#adminmenu .wp-submenu a:focus,
+#adminmenu a:hover,
+#adminmenu a:focus,
+.folded #adminmenu .wp-submenu-head:hover {
+	color: var(--extrasport-brand-primary) !important;
+}
+
+#adminmenu .awaiting-mod,
+#adminmenu .update-plugins {
+	background: var(--extrasport-brand-primary) !important;
+}
+
+/* Primary buttons */
+.wp-core-ui .button-primary {
+	background: var(--extrasport-brand-primary) !important;
+	border-color: var(--extrasport-brand-accent) !important;
+	color: #fff !important;
+}
+
+.wp-core-ui .button-primary:hover,
+.wp-core-ui .button-primary:focus {
+	background: var(--extrasport-brand-accent) !important;
+	border-color: var(--extrasport-brand-accent) !important;
+	color: #fff !important;
+}
+
+.wp-core-ui .button-primary.focus,
+.wp-core-ui .button-primary:focus {
+	box-shadow: 0 0 0 1px #fff, 0 0 0 3px var(--extrasport-brand-primary) !important;
+}
+
+/* Links & form focus */
+.wrap a,
+.subsubsub a.current {
+	color: var(--extrasport-brand-accent) !important;
+}
+
+input[type="checkbox"]:checked::before,
+input[type="radio"]:checked::before {
+	background: var(--extrasport-brand-primary) !important;
+}
+
+/* Login screen */
+body.login {
+	background: #141416;
+}
+
+body.login #loginform,
+body.login #nav,
+body.login #backtoblog,
+body.login .message,
+body.login .success {
+	border-color: rgb(255 255 255 / 12%);
+}
+
+body.login #loginform {
+	box-shadow: 0 12px 40px rgb(0 0 0 / 35%);
+}
+
+body.login form .submit .button-primary {
+	background: var(--extrasport-brand-primary) !important;
+	border-color: var(--extrasport-brand-accent) !important;
+	text-shadow: none;
+	box-shadow: none;
+}
+
+body.login form .submit .button-primary:hover,
+body.login form .submit .button-primary:focus {
+	background: var(--extrasport-brand-accent) !important;
+	border-color: var(--extrasport-brand-accent) !important;
+}
+
+body.login #nav a,
+body.login #backtoblog a {
+	color: var(--extrasport-brand-primary) !important;
+}
+
+body.login #nav a:hover,
+body.login #backtoblog a:hover {
+	color: #fff !important;
+}
+
+body.login .message,
+body.login .success {
+	border-left-color: var(--extrasport-brand-primary) !important;
+}

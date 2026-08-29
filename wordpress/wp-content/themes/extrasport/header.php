@@ -7,10 +7,11 @@
  * @package ExtraSport
  */
 
-$club = extrasport_get_club();
+$club  = extrasport_get_club();
+$brand = extrasport_get_brand();
 ?>
 <!DOCTYPE html>
-<html <?php language_attributes(); ?>>
+<html <?php language_attributes(); ?> style="--color-brand-primary: <?php echo esc_attr( $brand['primary'] ); ?>; --color-brand-accent: <?php echo esc_attr( $brand['accent'] ); ?>;">
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
