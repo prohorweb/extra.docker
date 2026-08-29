@@ -89,17 +89,7 @@ function extrasport_sanitize_club_settings_input( array $input ) {
 		'youtube'            => esc_url_raw( (string) ( $input['club_youtube'] ?? $current['youtube'] ) ),
 		'whatsapp'           => esc_url_raw( (string) ( $input['club_whatsapp'] ?? $current['whatsapp'] ) ),
 		'telegram'           => esc_url_raw( (string) ( $input['club_telegram'] ?? $current['telegram'] ) ),
-		'timer_enabled'      => ! empty( $input['club_timer_enabled'] ),
-		'timer_title'        => sanitize_text_field( (string) ( $input['club_timer_title'] ?? $current['timer_title'] ) ),
-		'timer_intro'        => sanitize_text_field( (string) ( $input['club_timer_intro'] ?? $current['timer_intro'] ) ),
-		'timer_end'          => sanitize_text_field( (string) ( $input['club_timer_end'] ?? $current['timer_end'] ) ),
 	);
-
-	if ( current_user_can( 'unfiltered_html' ) ) {
-		$sanitized['present_video_embed'] = (string) ( $input['club_present_video_embed'] ?? $current['present_video_embed'] );
-	} else {
-		$sanitized['present_video_embed'] = wp_kses_post( (string) ( $input['club_present_video_embed'] ?? $current['present_video_embed'] ) );
-	}
 
 	return $sanitized;
 }
@@ -115,9 +105,8 @@ function extrasport_sanitize_site_email_settings_input( array $input ) {
 
 	return array(
 		'email_from'      => sanitize_email( (string) ( $input['email_from'] ?? $current['email_from'] ) ),
-		'email_feedback'  => sanitize_email( (string) ( $input['email_feedback'] ?? $current['email_feedback'] ) ),
-		'email_subscribe' => sanitize_email( (string) ( $input['email_subscribe'] ?? $current['email_subscribe'] ) ),
-		'email_timer'     => sanitize_email( (string) ( $input['email_timer'] ?? $current['email_timer'] ) ),
+		'email_feedback'  => extrasport_sanitize_email_list( (string) ( $input['email_feedback'] ?? $current['email_feedback'] ) ),
+		'email_subscribe' => extrasport_sanitize_email_list( (string) ( $input['email_subscribe'] ?? $current['email_subscribe'] ) ),
 	);
 }
 
@@ -205,6 +194,7 @@ function extrasport_render_club_settings_page() {
 			</table>
 
 			<h2 class="title"><?php esc_html_e( 'Почта для заявок', 'extrasport' ); ?></h2>
+			<p class="description"><?php esc_html_e( 'Можно указать несколько адресов через запятую.', 'extrasport' ); ?></p>
 			<table class="form-table" role="presentation">
 				<tr>
 					<th scope="row"><label for="email_from"><?php esc_html_e( 'Отправитель', 'extrasport' ); ?></label></th>
@@ -212,15 +202,15 @@ function extrasport_render_club_settings_page() {
 				</tr>
 				<tr>
 					<th scope="row"><label for="email_feedback"><?php esc_html_e( 'Обратный звонок', 'extrasport' ); ?></label></th>
-					<td><input name="email_feedback" type="email" id="email_feedback" value="<?php echo esc_attr( $emails['email_feedback'] ); ?>" class="regular-text"></td>
+					<td>
+						<input name="email_feedback" type="text" id="email_feedback" value="<?php echo esc_attr( extrasport_format_email_list( $emails['email_feedback'] ) ); ?>" class="large-text" placeholder="sales@club.ru, manager@club.ru">
+					</td>
 				</tr>
 				<tr>
 					<th scope="row"><label for="email_subscribe"><?php esc_html_e( 'Test-drive / подписка', 'extrasport' ); ?></label></th>
-					<td><input name="email_subscribe" type="email" id="email_subscribe" value="<?php echo esc_attr( $emails['email_subscribe'] ); ?>" class="regular-text"></td>
-				</tr>
-				<tr>
-					<th scope="row"><label for="email_timer"><?php esc_html_e( 'Таймер-акция', 'extrasport' ); ?></label></th>
-					<td><input name="email_timer" type="email" id="email_timer" value="<?php echo esc_attr( $emails['email_timer'] ); ?>" class="regular-text"></td>
+					<td>
+						<input name="email_subscribe" type="text" id="email_subscribe" value="<?php echo esc_attr( extrasport_format_email_list( $emails['email_subscribe'] ) ); ?>" class="large-text" placeholder="sales@club.ru, manager@club.ru">
+					</td>
 				</tr>
 			</table>
 
@@ -252,43 +242,9 @@ function extrasport_render_club_settings_page() {
 				</tr>
 			</table>
 
-			<h2 class="title"><?php esc_html_e( 'Таймер-акция', 'extrasport' ); ?></h2>
-			<table class="form-table" role="presentation">
-				<tr>
-					<th scope="row"><?php esc_html_e( 'Включить', 'extrasport' ); ?></th>
-					<td>
-						<label for="club_timer_enabled">
-							<input name="club_timer_enabled" type="checkbox" id="club_timer_enabled" value="1" <?php checked( ! empty( $club['timer_enabled'] ) ); ?>>
-							<?php esc_html_e( 'Показывать popup с таймером', 'extrasport' ); ?>
-						</label>
-					</td>
-				</tr>
-				<tr>
-					<th scope="row"><label for="club_timer_title"><?php esc_html_e( 'Заголовок', 'extrasport' ); ?></label></th>
-					<td><input name="club_timer_title" type="text" id="club_timer_title" value="<?php echo esc_attr( $club['timer_title'] ); ?>" class="regular-text"></td>
-				</tr>
-				<tr>
-					<th scope="row"><label for="club_timer_intro"><?php esc_html_e( 'Текст', 'extrasport' ); ?></label></th>
-					<td><input name="club_timer_intro" type="text" id="club_timer_intro" value="<?php echo esc_attr( $club['timer_intro'] ); ?>" class="large-text"></td>
-				</tr>
-				<tr>
-					<th scope="row"><label for="club_timer_end"><?php esc_html_e( 'Дата окончания', 'extrasport' ); ?></label></th>
-					<td>
-						<input name="club_timer_end" type="text" id="club_timer_end" value="<?php echo esc_attr( $club['timer_end'] ); ?>" class="regular-text" placeholder="2026-12-31 23:59:59">
-						<p class="description"><?php esc_html_e( 'Формат: ГГГГ-ММ-ДД ЧЧ:ММ:СС', 'extrasport' ); ?></p>
-					</td>
-				</tr>
-			</table>
-
-			<h2 class="title"><?php esc_html_e( 'Present video', 'extrasport' ); ?></h2>
-			<table class="form-table" role="presentation">
-				<tr>
-					<th scope="row"><label for="club_present_video_embed"><?php esc_html_e( 'Embed-код', 'extrasport' ); ?></label></th>
-					<td>
-						<textarea name="club_present_video_embed" id="club_present_video_embed" rows="5" class="large-text code"><?php echo esc_textarea( $club['present_video_embed'] ); ?></textarea>
-					</td>
-				</tr>
-			</table>
+			<p class="description">
+				<?php esc_html_e( 'Настройки таймер-акции и видео-клуб popup будут добавлены в финальной фазе проекта.', 'extrasport' ); ?>
+			</p>
 
 			<p class="description">
 				<?php

@@ -1,6 +1,8 @@
 <?php
 /**
- * Club rules content — Matros
+ * Club rules content — De-vision ТРЦ «Родео Драйв» (devision.local)
+ *
+ * Migrated from Yii2 footer rules (matros variant).
  *
  * @package ExtraSport
  */
@@ -8,6 +10,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+?>
 <p>1. Настоящие Правила и техника безопасности фитнес-клуба &laquo;Экстра спорт&raquo; (далее &ndash;
 Правила) являются обязательными для выполнения всеми членами клуба. В случае отказа Члена Клуба от
 ознакомления настоящих Правил и/или от прохождения инструктажа о технике безопасности Член Клуба

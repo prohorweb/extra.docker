@@ -5,7 +5,6 @@
  * @package ExtraSport
  */
 
-$club       = extrasport_get_club();
 $rules_slug = extrasport_get_rules_slug();
 $rules_doc  = EXTRASPORT_DIR . '/assets/docs/rules-' . $rules_slug . '.docx';
 $rules_url  = file_exists( $rules_doc ) ? EXTRASPORT_URI . '/assets/docs/rules-' . $rules_slug . '.docx' : '';
@@ -18,13 +17,7 @@ $rules_url  = file_exists( $rules_doc ) ? EXTRASPORT_URI . '/assets/docs/rules-'
 			<i class="fa-solid fa-xmark" aria-hidden="true"></i>
 		</button>
 		<h2 id="rulesModalTitle" class="font-oswald text-xl uppercase mb-4 pr-8">
-			<?php
-			printf(
-				/* translators: %s: club title suffix */
-				esc_html__( 'Правила спортивного клуба «Экстра Спорт» %s', 'extrasport' ),
-				esc_html( $club['rules_title_suffix'] ?? '' )
-			);
-			?>
+			<?php echo esc_html( extrasport_get_rules_modal_title() ); ?>
 		</h2>
 		<div
 			class="modal__scroll prose prose-invert max-w-none text-sm text-white/80 space-y-3 max-h-[60vh] overflow-y-auto pe-2"

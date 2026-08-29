@@ -179,7 +179,9 @@ function extrasport_rest_submit_lead( WP_REST_Request $request ) {
 function extrasport_rest_get_rules() {
 	return new WP_REST_Response(
 		array(
-			'html' => extrasport_get_rules_html(),
+			'title' => extrasport_get_rules_modal_title(),
+			'html'  => extrasport_get_rules_html(),
+			'slug'  => extrasport_get_rules_slug(),
 		),
 		200
 	);

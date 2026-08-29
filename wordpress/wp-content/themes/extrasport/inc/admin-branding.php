@@ -135,7 +135,7 @@ function extrasport_register_admin_color_schemes() {
 	$registry = extrasport_get_brand_registry();
 
 	foreach ( $registry as $slug => $brand ) {
-		$label = 'piter' === $slug ? 'ExtraSport' : 'De-vision';
+		$label = 'extrasport' === $slug ? 'ExtraSport' : 'De-vision';
 
 		wp_admin_css_color(
 			'extrasport-' . $slug,

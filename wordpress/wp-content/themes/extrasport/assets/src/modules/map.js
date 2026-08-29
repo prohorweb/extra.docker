@@ -65,6 +65,8 @@ export function initMap() {
 
 	const coords = (mapEl.dataset.coords || '59.8533,30.3497').split(',').map(Number);
 	const markerIcon = mapEl.dataset.marker || '';
+	const hintContent = mapEl.dataset.hint || mapEl.dataset.title || 'ExtraSport';
+	const balloonContent = mapEl.dataset.balloon || hintContent;
 	const offset = window.innerWidth >= 768 ? 200 : 0;
 	const mobileQuery = window.matchMedia('(max-width: 767px)');
 
@@ -103,7 +105,14 @@ export function initMap() {
 			: {};
 
 		map.geoObjects.add(
-			new ymaps.Placemark(coords, { hintContent: 'ExtraSport' }, placemarkOptions)
+			new ymaps.Placemark(
+				coords,
+				{
+					hintContent,
+					balloonContent,
+				},
+				placemarkOptions
+			)
 		);
 
 		const applyFooter = () => tuneMapFooter(mapEl);

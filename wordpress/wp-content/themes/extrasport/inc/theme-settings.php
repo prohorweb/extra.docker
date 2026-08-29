@@ -68,6 +68,54 @@ function extrasport_get_theme_settings() {
 }
 
 /**
+ * Parse a comma/semicolon/newline-separated recipient list.
+ *
+ * @param string|array<int, string> $value Raw recipient field.
+ * @return string[]
+ */
+function extrasport_parse_email_list( $value ) {
+	if ( is_array( $value ) ) {
+		$parts = $value;
+	} else {
+		$normalized = str_replace( array( ';', "\n", "\r" ), ',', (string) $value );
+		$parts      = explode( ',', $normalized );
+	}
+
+	$emails = array();
+
+	foreach ( $parts as $part ) {
+		$email = sanitize_email( trim( (string) $part ) );
+		if ( '' !== $email ) {
+			$emails[] = $email;
+		}
+	}
+
+	return array_values( array_unique( $emails ) );
+}
+
+/**
+ * Normalize recipient list for storage.
+ *
+ * @param string|array<int, string> $value Raw recipient field.
+ * @return string Comma-separated emails.
+ */
+function extrasport_sanitize_email_list( $value ) {
+	return implode( ',', extrasport_parse_email_list( $value ) );
+}
+
+/**
+ * Format recipient list for admin inputs.
+ *
+ * @param string|array<int, string> $value Raw recipient field.
+ * @return string
+ */
+function extrasport_format_email_list( $value ) {
+	$emails = extrasport_parse_email_list( $value );
+
+	return implode( ', ', $emails );
+}
+
+/**
  * Persist per-site form email routing.
  *
  * @param array<string, string> $input Settings payload.

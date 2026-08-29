@@ -10,34 +10,57 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Get rules slug for current club.
+ * Get rules slug for current club (extrasport|devision).
  *
  * @return string
  */
 function extrasport_get_rules_slug() {
 	$club = extrasport_get_club();
-	return ! empty( $club['rules_slug'] ) ? $club['rules_slug'] : 'piter';
+	$slug = ! empty( $club['rules_slug'] ) ? (string) $club['rules_slug'] : extrasport_get_current_club_slug();
+
+	return extrasport_normalize_club_slug( $slug );
 }
 
 /**
- * Render club rules HTML content from legacy PHP partials.
+ * Modal heading for club rules.
+ *
+ * @return string
+ */
+function extrasport_get_rules_modal_title() {
+	$club = extrasport_get_club();
+
+	if ( ! empty( $club['rules_modal_title'] ) ) {
+		return (string) $club['rules_modal_title'];
+	}
+
+	if ( 'devision' === extrasport_get_current_club_slug() ) {
+		return 'ПРАВИЛА СПОРТИВНОГО КЛУБА DE-VISION';
+	}
+
+	$suffix = ! empty( $club['rules_title_suffix'] ) ? $club['rules_title_suffix'] : 'ТК «ПИТЕР»';
+
+	return sprintf( 'ПРАВИЛА СПОРТИВНОГО КЛУБА «ЭКСТРА СПОРТ» %s', $suffix );
+}
+
+/**
+ * Render club rules HTML content from theme partials.
  *
  * @param string|null $slug Rules variant slug.
  * @return void
  */
 function extrasport_render_rules_content( $slug = null ) {
-	$slug = $slug ?: extrasport_get_rules_slug();
+	$slug = extrasport_normalize_club_slug( $slug ?: extrasport_get_rules_slug() );
 	$file = EXTRASPORT_DIR . '/inc/rules/' . sanitize_file_name( $slug ) . '.php';
 
 	if ( ! file_exists( $file ) ) {
-		$file = EXTRASPORT_DIR . '/inc/rules/piter.php';
+		$file = EXTRASPORT_DIR . '/inc/rules/extrasport.php';
 	}
 
 	include $file;
 }
 
 /**
- * Resolve rules HTML: WP page first, legacy PHP partial as fallback.
+ * Resolve rules HTML: WP page first, theme partial as fallback.
  *
  * @return string
  */

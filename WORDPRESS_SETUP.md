@@ -73,13 +73,13 @@
 - CPT: `service`, `group_program`, `share`, `banner`, `event`
 - Архивы/синглы CPT на Tailwind: `/services/`, `/programs/`, `/shares/`
 - AJAX-обработчики форм: `inc/form-handlers.php` → `wp_mail`
-- Полный текст правил: `inc/rules/piter.php`, `inc/rules/matros.php`
+- Полный текст правил: `inc/rules/extrasport.php`, `inc/rules/devision.php`
 - WordPress Multisite активирован, blog #2 = `devision.local`
 
 ### Не переносим
 
 - Bootstrap CSS/JS, jQuery
-- `site/welcome` (выбор клуба) и поддомены piter/matros
+- Yii2 поддомены (`piter`, `matros`, `june`, `polus`) — в WP только **extrasport** и **devision**
 - reCAPTCHA (placeholder)
 - Legacy `assets/css/styles.css` enqueue
 
@@ -313,4 +313,5 @@ UPDATE wp_blogs SET domain='devision.local', path='/' WHERE blog_id=2;
 
 - Yii2 референс: `frontend/views/layouts/`, `frontend/views/site/index.php`
 - Docker: `docker-compose.yml`, `nginx.conf`
+- **Обновление WordPress (7.1.x, Docker):** [docs/WORDPRESS_UPDATE.md](docs/WORDPRESS_UPDATE.md)
 - Общий README репозитория: [README.md](README.md)

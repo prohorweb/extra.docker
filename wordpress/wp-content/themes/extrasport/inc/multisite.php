@@ -2,6 +2,10 @@
 /**
  * Multisite and per-site club settings
  *
+ * Network sites:
+ * - extrasport.local → club slug `extrasport` (EXTRASPORT ТК «ПИТЕР»)
+ * - devision.local   → club slug `devision` (De-vision ТРЦ «Родео Драйв»)
+ *
  * Site options (get_option) — club-specific data on each blog.
  * Network options (get_site_option) — shared infrastructure via theme-settings.php.
  *
@@ -13,7 +17,32 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 define( 'EXTRASPORT_CLUB_OPTION', 'extrasport_club' );
-define( 'EXTRASPORT_CLUB_DATA_VERSION', 2 );
+define( 'EXTRASPORT_CLUB_DATA_VERSION', 4 );
+
+/**
+ * Legacy Yii2 subdomain slugs mapped to current club slugs.
+ *
+ * @return array<string, string>
+ */
+function extrasport_get_legacy_club_slug_map() {
+	return array(
+		'piter'  => 'extrasport',
+		'matros' => 'devision',
+	);
+}
+
+/**
+ * Normalize legacy club or rules slug.
+ *
+ * @param string $slug Raw slug.
+ * @return string
+ */
+function extrasport_normalize_club_slug( $slug ) {
+	$slug = sanitize_key( (string) $slug );
+	$map  = extrasport_get_legacy_club_slug_map();
+
+	return $map[ $slug ] ?? $slug;
+}
 
 /**
  * Default club profiles keyed by site slug (used when seeding a new blog).
@@ -22,11 +51,12 @@ define( 'EXTRASPORT_CLUB_DATA_VERSION', 2 );
  */
 function extrasport_get_club_defaults_registry() {
 	return array(
-		'piter'    => array(
-			'slug'                => 'piter',
+		'extrasport' => array(
+			'slug'                => 'extrasport',
 			'title'               => 'EXTRASPORT ТК «ПИТЕР»',
-			'rules_slug'          => 'piter',
+			'rules_slug'          => 'extrasport',
 			'rules_title_suffix'  => 'ТК «ПИТЕР»',
+			'rules_modal_title'   => 'ПРАВИЛА СПОРТИВНОГО КЛУБА «ЭКСТРА СПОРТ» ТК «ПИТЕР»',
 			'tel'                 => '+7 812 565 52 49',
 			'email'               => 'piter@extrasport.ru',
 			'address'             => 'Санкт-Петербург, ул. Типанова, 21, ТК «Питер»',
@@ -47,11 +77,12 @@ function extrasport_get_club_defaults_registry() {
 			'timer_intro'         => 'Оставьте заявку до окончания акции',
 			'timer_end'           => '',
 		),
-		'devision' => array(
+		'devision'   => array(
 			'slug'                => 'devision',
 			'title'               => 'De-vision ТРЦ «Родео Драйв»',
-			'rules_slug'          => 'matros',
+			'rules_slug'          => 'devision',
 			'rules_title_suffix'  => 'De-vision',
+			'rules_modal_title'   => 'ПРАВИЛА СПОРТИВНОГО КЛУБА DE-VISION',
 			'tel'                 => '+7 (812) 565-49-86',
 			'email'               => 'rodeo_manager@de-vision.ru',
 			'address'             => 'СПб, пр. Культуры, д. 1, ТРЦ «Родео Драйв»',
@@ -82,7 +113,7 @@ function extrasport_get_club_defaults_registry() {
  */
 function extrasport_get_brand_registry() {
 	return array(
-		'piter'    => array(
+		'extrasport' => array(
 			'logo'        => 'logo.svg',
 			'logo_inline' => true,
 			'logo_width'  => 216,
@@ -91,7 +122,7 @@ function extrasport_get_brand_registry() {
 			'primary'     => '#ff6600',
 			'accent'      => '#dc5800',
 		),
-		'devision' => array(
+		'devision'   => array(
 			'logo'        => 'logo-devision.svg',
 			'logo_inline' => true,
 			'logo_width'  => 300,
@@ -118,7 +149,7 @@ function extrasport_get_brand() {
 	}
 
 	$registry = extrasport_get_brand_registry();
-	$defaults = $registry[ $slug ] ?? $registry['piter'];
+	$defaults = $registry[ $slug ] ?? $registry['extrasport'];
 
 	$cache[ $slug ] = apply_filters(
 		'extrasport_brand',
@@ -207,17 +238,27 @@ function extrasport_body_class( $classes ) {
 add_filter( 'body_class', 'extrasport_body_class' );
 
 /**
- * Resolve default profile slug for the current blog.
+ * Resolve club slug for the current blog.
  *
- * @return string
+ * @return string extrasport|devision
  */
 function extrasport_get_current_club_slug() {
 	if ( is_multisite() ) {
-		return 2 === (int) get_current_blog_id() ? 'devision' : 'piter';
+		return 2 === (int) get_current_blog_id() ? 'devision' : 'extrasport';
 	}
 
 	$host = extrasport_get_request_host();
-	return str_contains( $host, 'devision' ) ? 'devision' : 'piter';
+	return str_contains( $host, 'devision' ) ? 'devision' : 'extrasport';
+}
+
+/**
+ * Map blog ID to club slug when seeding network sites.
+ *
+ * @param int $blog_id Blog ID.
+ * @return string
+ */
+function extrasport_get_club_slug_for_blog( $blog_id ) {
+	return 2 === (int) $blog_id ? 'devision' : 'extrasport';
 }
 
 /**
@@ -228,8 +269,8 @@ function extrasport_get_current_club_slug() {
  */
 function extrasport_seed_club_option( $blog_id ) {
 	$registry = extrasport_get_club_defaults_registry();
-	$slug     = 2 === (int) $blog_id ? 'devision' : 'piter';
-	$defaults = $registry[ $slug ] ?? $registry['piter'];
+	$slug     = extrasport_get_club_slug_for_blog( $blog_id );
+	$defaults = $registry[ $slug ] ?? $registry['extrasport'];
 
 	switch_to_blog( $blog_id );
 	if ( ! get_option( EXTRASPORT_CLUB_OPTION ) ) {
@@ -249,6 +290,25 @@ function extrasport_get_request_host() {
 }
 
 /**
+ * Normalize legacy Yii2 slugs in stored club data.
+ *
+ * @param array<string, mixed> $club Club data.
+ * @return array<string, mixed>
+ */
+function extrasport_normalize_legacy_club_data( $club ) {
+	if ( ! empty( $club['slug'] ) ) {
+		$club['slug'] = extrasport_normalize_club_slug( $club['slug'] );
+	}
+
+	if ( ! empty( $club['rules_slug'] ) ) {
+		$club['rules_slug'] = extrasport_normalize_club_slug( $club['rules_slug'] );
+	}
+
+	return $club;
+}
+add_filter( 'extrasport_club', 'extrasport_normalize_legacy_club_data', 5 );
+
+/**
  * Get club data for the current site (blog options + defaults).
  *
  * @return array<string, mixed>
@@ -264,7 +324,7 @@ function extrasport_get_club() {
 
 	$registry = extrasport_get_club_defaults_registry();
 	$slug     = extrasport_get_current_club_slug();
-	$defaults = $registry[ $slug ] ?? $registry['piter'];
+	$defaults = $registry[ $slug ] ?? $registry['extrasport'];
 	$saved    = get_option( EXTRASPORT_CLUB_OPTION, array() );
 
 	if ( ! is_array( $saved ) ) {
@@ -359,7 +419,7 @@ function extrasport_maybe_seed_current_club() {
 	if ( ! get_option( EXTRASPORT_CLUB_OPTION ) ) {
 		$registry = extrasport_get_club_defaults_registry();
 		$slug     = extrasport_get_current_club_slug();
-		update_option( EXTRASPORT_CLUB_OPTION, $registry[ $slug ] ?? $registry['piter'], false );
+		update_option( EXTRASPORT_CLUB_OPTION, $registry[ $slug ] ?? $registry['extrasport'], false );
 	}
 }
 add_action( 'after_setup_theme', 'extrasport_maybe_seed_current_club', 20 );
@@ -377,7 +437,7 @@ function extrasport_maybe_sync_club_defaults() {
 
 	$registry = extrasport_get_club_defaults_registry();
 	$slug     = extrasport_get_current_club_slug();
-	$defaults = $registry[ $slug ] ?? $registry['piter'];
+	$defaults = $registry[ $slug ] ?? $registry['extrasport'];
 
 	update_option( EXTRASPORT_CLUB_OPTION, $defaults, false );
 	update_option( 'extrasport_club_data_version', EXTRASPORT_CLUB_DATA_VERSION, false );

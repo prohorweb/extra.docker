@@ -357,6 +357,9 @@ function extrasport_render_carousel_slides( $banner_posts, $club, $uri ) {
 			class="map-section__map relative min-h-[50vh] w-full lg:absolute lg:inset-y-0 lg:right-0 lg:min-h-0 lg:h-full lg:w-[55%]"
 			data-coords="<?php echo esc_attr( $club['coordinates'] ); ?>"
 			data-marker="<?php echo esc_url( $brand['marker_url'] ); ?>"
+			data-title="<?php echo esc_attr( $club['title'] ); ?>"
+			data-hint="<?php echo esc_attr( $club['title'] ); ?>"
+			data-balloon="<?php echo esc_attr( $club['address'] ); ?>"
 		></div>
 	</section>
 

@@ -106,9 +106,13 @@ function extrasport_validate_form_phone( $tel ) {
  * @return bool
  */
 function extrasport_send_form_email( $subject, $to_key, array $fields ) {
-	$settings = extrasport_get_theme_settings();
-	$from     = $settings['email_from'] ?: get_option( 'admin_email' );
-	$to       = $settings[ $to_key ] ?? get_option( 'admin_email' );
+	$settings   = extrasport_get_theme_settings();
+	$from       = $settings['email_from'] ?: get_option( 'admin_email' );
+	$recipients = extrasport_parse_email_list( $settings[ $to_key ] ?? get_option( 'admin_email' ) );
+
+	if ( empty( $recipients ) ) {
+		$recipients = array( get_option( 'admin_email' ) );
+	}
 
 	$lines = array();
 	foreach ( $fields as $label => $value ) {
@@ -117,7 +121,7 @@ function extrasport_send_form_email( $subject, $to_key, array $fields ) {
 
 	$body = implode( "\n", $lines );
 
-	return wp_mail( $to, $subject, $body, array( 'From: ' . $from ) );
+	return wp_mail( implode( ',', $recipients ), $subject, $body, array( 'From: ' . $from ) );
 }
 
 /**
