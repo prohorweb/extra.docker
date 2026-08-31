@@ -50,6 +50,13 @@ add_action( 'init', 'extrasport_register_program_post_type', 0 );
  */
 function extrasport_register_share_post_type() {
 	$args = array(
+		'labels'              => array(
+			'name'          => __( 'Акции', 'extrasport' ),
+			'singular_name' => __( 'Акция', 'extrasport' ),
+			'menu_name'     => __( 'Акции', 'extrasport' ),
+			'add_new_item'  => __( 'Добавить акцию', 'extrasport' ),
+			'edit_item'     => __( 'Редактировать акцию', 'extrasport' ),
+		),
 		'label'               => esc_html__( 'Shares & Offers', 'extrasport' ),
 		'description'         => esc_html__( 'Club shares, promotions and special offers', 'extrasport' ),
 		'public'              => true,
@@ -60,7 +67,7 @@ function extrasport_register_share_post_type() {
 		'show_in_rest'        => true,
 		'has_archive'         => 'card/shares',
 		'hierarchical'        => false,
-		'supports'            => array( 'title', 'editor', 'excerpt', 'thumbnail', 'custom-fields' ),
+		'supports'            => array( 'title', 'editor', 'excerpt', 'thumbnail', 'custom-fields', 'page-attributes' ),
 		'rewrite'             => array(
 			'slug'       => 'card/shares',
 			'with_front' => false,
@@ -156,6 +163,12 @@ add_action( 'init', 'extrasport_register_banner_post_type', 0 );
  */
 function extrasport_register_lead_post_type() {
 	$args = array(
+		'labels'              => array(
+			'name'          => __( 'Заявки', 'extrasport' ),
+			'singular_name' => __( 'Заявка', 'extrasport' ),
+			'menu_name'     => __( 'Заявки', 'extrasport' ),
+			'all_items'     => __( 'Все заявки', 'extrasport' ),
+		),
 		'label'               => esc_html__( 'Leads', 'extrasport' ),
 		'description'         => esc_html__( 'Form submissions stored before email/CRM dispatch', 'extrasport' ),
 		'public'              => false,
@@ -207,3 +220,22 @@ function extrasport_register_nested_rewrite_rules() {
 	);
 }
 add_action( 'init', 'extrasport_register_nested_rewrite_rules', 20 );
+
+/**
+ * Shares archive — show all promotions, same order as homepage.
+ *
+ * @param WP_Query $query Main query.
+ * @return void
+ */
+function extrasport_share_archive_query( $query ) {
+	if ( is_admin() || ! $query->is_main_query() ) {
+		return;
+	}
+
+	if ( $query->is_post_type_archive( 'share' ) ) {
+		$query->set( 'posts_per_page', -1 );
+		$query->set( 'orderby', 'menu_order' );
+		$query->set( 'order', 'ASC' );
+	}
+}
+add_action( 'pre_get_posts', 'extrasport_share_archive_query' );

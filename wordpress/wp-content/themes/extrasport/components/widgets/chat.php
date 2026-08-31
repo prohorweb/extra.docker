@@ -10,17 +10,17 @@ $chat = array(
 	array(
 		'url'   => $club['whatsapp'],
 		'title' => 'WhatsApp',
-		'icon'  => EXTRASPORT_URI . '/assets/images/chat/wa.png',
+		'icon'  => EXTRASPORT_URI . '/assets/img/chat/wa.png',
 	),
 	array(
 		'url'   => $club['vk'],
 		'title' => 'VK',
-		'icon'  => EXTRASPORT_URI . '/assets/images/chat/vk.png',
+		'icon'  => EXTRASPORT_URI . '/assets/img/chat/vk.png',
 	),
 	array(
 		'url'   => $club['telegram'],
 		'title' => 'Telegram',
-		'icon'  => EXTRASPORT_URI . '/assets/images/chat/tg.png',
+		'icon'  => EXTRASPORT_URI . '/assets/img/chat/tg.png',
 	),
 );
 ?>

@@ -169,14 +169,16 @@ function extrasport_store_lead( $type, $name, $tel, array $extra = array() ) {
  * @param string $name      Submitter name.
  * @param string $tel       Submitter phone.
  * @param bool   $accept    Privacy checkbox state.
- * @param string $form_type Subscribe form variant.
+ * @param string $form_type  Subscribe form variant (page context).
+ * @param string $source_url Page URL where the form was submitted.
  * @return int|WP_Error Lead post ID.
  */
-function extrasport_process_lead_submission( $type, $name, $tel, $accept, $form_type = 'subscribe' ) {
+function extrasport_process_lead_submission( $type, $name, $tel, $accept, $form_type = 'test_drive', $source_url = '' ) {
 	$club  = extrasport_get_club();
 	$extra = array(
-		'accept'    => $accept ? '1' : '0',
-		'form_type' => $form_type,
+		'accept'     => $accept ? '1' : '0',
+		'form_type'  => $form_type,
+		'source_url' => $source_url,
 	);
 
 	$lead_id = extrasport_store_lead( $type, $name, $tel, $extra );
@@ -205,9 +207,10 @@ function extrasport_process_lead_submission( $type, $name, $tel, $accept, $form_
 				: 'Запись на пробную тренировку Extra Sport';
 			$to_key  = 'email_subscribe';
 			$fields  = array(
-				'Имя'     => $name,
-				'Телефон' => $tel,
-				'Форма'   => $form_type,
+				'Имя'      => $name,
+				'Телефон'  => $tel,
+				'Форма'    => $form_type,
+				'Страница' => $source_url ?: ( wp_get_referer() ?: home_url( '/' ) ),
 			);
 			break;
 

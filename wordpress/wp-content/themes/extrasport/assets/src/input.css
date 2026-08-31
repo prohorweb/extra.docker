@@ -2,7 +2,7 @@
 @import "tailwindcss";
 
 @theme {
-	--font-oswald: "Oswald", sans-serif;
+	--font-oswald: "Oswald", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 	--font-roboto: "Roboto", sans-serif;
 	--color-brand-primary: #ff6600;
 	--color-brand-dark: #141416;
@@ -19,7 +19,14 @@
 	}
 
 	a {
-		@apply transition-colors;
+		@apply cursor-pointer transition-colors;
+	}
+
+	button:not(:disabled),
+	[type="button"]:not(:disabled),
+	[type="submit"]:not(:disabled),
+	label[for] {
+		cursor: pointer;
 	}
 }
 
@@ -29,7 +36,7 @@
 	}
 
 	.btn-primary {
-		@apply inline-flex items-center rounded-md bg-brand-primary px-5 py-2.5 text-sm font-semibold uppercase tracking-wide text-white transition hover:bg-brand-accent focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-offset-2 focus:ring-offset-brand-dark;
+		@apply inline-flex cursor-pointer items-center rounded-none border-2 border-brand-primary bg-transparent px-5 py-2.5 font-oswald text-sm font-semibold uppercase tracking-wide text-brand-primary transition hover:bg-brand-primary hover:text-white focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-offset-2 focus:ring-offset-brand-dark;
 	}
 
 	.btn-primary.btn-lg {
@@ -41,7 +48,7 @@
 	}
 
 	.btn-outline-primary {
-		@apply inline-flex items-center rounded-md border-2 border-brand-primary bg-transparent px-5 py-2.5 text-sm font-semibold uppercase tracking-wide text-brand-primary transition hover:border-white hover:text-white focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-offset-2 focus:ring-offset-brand-dark;
+		@apply inline-flex cursor-pointer items-center rounded-none border-2 border-brand-primary bg-transparent px-5 py-2.5 font-oswald text-sm font-semibold uppercase tracking-wide text-brand-primary transition hover:bg-brand-primary hover:text-white focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-offset-2 focus:ring-offset-brand-dark;
 	}
 
 	.btn-outline-primary.btn-lg {
@@ -165,7 +172,17 @@
 		background-blend-mode: overlay;
 		background-repeat: no-repeat;
 		background-position: center center;
-		background-size: contain;
+		background-size: 100% auto;
+		padding: 0;
+	}
+
+	.page-section--actions-list {
+		min-height: auto;
+	}
+
+	.page-section--h-75 {
+		min-height: 75vh;
+		min-height: 75svh;
 	}
 
 	.section-heading {
@@ -178,21 +195,29 @@
 
 	/* Share cards (Yii2 .card port) */
 	.share-card {
-		@apply relative mb-6 block border-0 bg-black/45 text-center text-white no-underline transition;
+		@apply relative mb-6 block border-0 text-center text-white no-underline transition;
+	}
+
+	.share-card__link {
+		@apply absolute inset-0 z-10 cursor-pointer;
 	}
 
 	.share-card .date-action {
 		@apply absolute left-0 top-0 z-10 bg-brand-primary px-2 py-2 text-left font-oswald uppercase leading-tight;
 	}
 
+	.share-card__media {
+		@apply overflow-hidden;
+	}
+
 	.share-card .card-img-top {
-		@apply block w-full object-cover opacity-75 transition-opacity;
+		@apply block w-full object-cover transition-transform duration-500 ease-out;
 		height: 50vh;
 		max-height: 28rem;
 	}
 
-	.share-card:hover .card-img-top {
-		@apply opacity-100;
+	.share-card:not(.share-card--static):hover .card-img-top {
+		@apply scale-105;
 	}
 
 	.share-card:hover .date-action {
@@ -208,7 +233,11 @@
 	}
 
 	.share-card .card-body_wrapper {
-		@apply w-full p-4 text-left;
+		@apply w-full bg-black/75 p-4 text-left;
+	}
+
+	.share-card:hover .card-body_wrapper {
+		@apply bg-brand-primary;
 	}
 
 	.share-card:hover .card-body {
@@ -216,7 +245,7 @@
 	}
 
 	.share-card .card-title {
-		@apply font-oswald text-base uppercase md:text-lg;
+		@apply font-oswald text-base font-bold uppercase md:text-lg;
 	}
 
 	.share-card .card-text {
@@ -231,12 +260,66 @@
 		@apply text-white;
 	}
 
+	.share-card--static {
+		@apply pointer-events-none;
+	}
+
+	.share-page__panel {
+		background-color: #00000090;
+		@apply p-6 md:p-8 lg:p-10;
+	}
+
+	.share-page__panel .share-card--static {
+		@apply mb-0 bg-transparent;
+	}
+
+	.share-page__panel .share-card--static .card-img-top {
+		height: auto;
+		max-height: none;
+	}
+
+	.share-page__subtitle {
+		@apply leading-tight text-white;
+	}
+
+	.share-page__content ul {
+		@apply list-none ps-0;
+	}
+
+	.share-page__content ul li {
+		@apply relative mb-4 ps-5;
+	}
+
+	.share-page__content ul li::before {
+		content: "•";
+		@apply absolute left-0 top-0 text-2xl leading-none text-brand-primary;
+	}
+
 	.btn-xl {
-		@apply inline-flex items-center border-2 border-brand-primary bg-transparent px-4 py-2 font-oswald text-lg font-bold uppercase tracking-wide text-brand-primary transition hover:border-white hover:text-white;
+		@apply inline-flex cursor-pointer items-center rounded-none border-2 border-brand-primary bg-transparent px-6 py-3 font-oswald text-[1.3rem] font-semibold uppercase tracking-wide text-brand-primary no-underline transition hover:bg-brand-primary hover:text-white focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-offset-2 focus:ring-offset-brand-dark;
+	}
+
+	a.btn-primary,
+	a.btn-outline-primary,
+	a.btn-xl {
+		@apply no-underline;
+	}
+
+	a.btn-primary:hover,
+	a.btn-outline-primary:hover,
+	a.btn-xl:hover,
+	a.btn-primary:focus,
+	a.btn-outline-primary:focus,
+	a.btn-xl:focus {
+		@apply text-white;
 	}
 
 	.page-section--test-drive video {
 		@apply opacity-30;
+	}
+
+	.page-section--test-drive .btn-primary.btn-lg {
+		@apply text-[1.3rem];
 	}
 
 	.page-section__inner {

@@ -1,22 +1,20 @@
 <?php
 /**
- * Archive Service Template
+ * Services archive view.
  *
  * @package ExtraSport
  */
 
-get_header();
-
 $club = extrasport_get_club();
 ?>
 
-<?php get_template_part( 'template-parts/layout/page', 'hero-video', array( 'video' => 'service_clubs' ) ); ?>
+<?php get_template_part( 'sections/page-hero-video', null, array( 'video' => 'service_clubs' ) ); ?>
 
 <div class="page-content bg-brand-dark py-12 md:py-16">
 	<div class="mx-auto max-w-7xl px-4 lg:px-6">
 		<?php
 		get_template_part(
-			'template-parts/layout/breadcrumbs',
+			'components/breadcrumbs',
 			null,
 			array(
 				'items' => array(
@@ -59,7 +57,7 @@ $club = extrasport_get_club();
 				<?php
 				while ( have_posts() ) {
 					the_post();
-					get_template_part( 'template-parts/content', 'service' );
+					get_template_part( 'components/cards/service' );
 				}
 				?>
 			</div>
@@ -67,12 +65,9 @@ $club = extrasport_get_club();
 				<?php the_posts_pagination( array( 'mid_size' => 2 ) ); ?>
 			</div>
 		<?php else : ?>
-			<?php get_template_part( 'template-parts/content', 'none' ); ?>
+			<?php get_template_part( 'components/content-none' ); ?>
 		<?php endif; ?>
 	</div>
 </div>
 
-<?php get_template_part( 'template-parts/layout/subscribe', 'section' ); ?>
-
-<?php
-get_footer();
+<?php extrasport_render_test_drive_section(); ?>

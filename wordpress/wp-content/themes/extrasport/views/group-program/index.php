@@ -1,11 +1,9 @@
 <?php
 /**
- * Archive Group Program Template
+ * Group programs archive view.
  *
  * @package ExtraSport
  */
-
-get_header();
 
 $club = extrasport_get_club();
 ?>
@@ -19,7 +17,7 @@ $club = extrasport_get_club();
 	<div class="mx-auto max-w-7xl px-4 lg:px-6">
 		<?php
 		get_template_part(
-			'template-parts/layout/breadcrumbs',
+			'components/breadcrumbs',
 			null,
 			array(
 				'items' => array(
@@ -46,7 +44,7 @@ $club = extrasport_get_club();
 				<?php
 				while ( have_posts() ) {
 					the_post();
-					get_template_part( 'template-parts/content', 'group_program' );
+					get_template_part( 'components/cards/group-program' );
 				}
 				?>
 			</div>
@@ -54,12 +52,9 @@ $club = extrasport_get_club();
 				<?php the_posts_pagination( array( 'mid_size' => 2 ) ); ?>
 			</div>
 		<?php else : ?>
-			<?php get_template_part( 'template-parts/content', 'none' ); ?>
+			<?php get_template_part( 'components/content-none' ); ?>
 		<?php endif; ?>
 	</div>
 </div>
 
-<?php get_template_part( 'template-parts/layout/subscribe', 'section' ); ?>
-
-<?php
-get_footer();
+<?php extrasport_render_test_drive_section(); ?>

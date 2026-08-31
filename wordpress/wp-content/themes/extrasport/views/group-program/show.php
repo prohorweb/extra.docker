@@ -1,11 +1,9 @@
 <?php
 /**
- * Single Share Template
+ * Single group program view.
  *
  * @package ExtraSport
  */
-
-get_header();
 
 $club = extrasport_get_club();
 ?>
@@ -16,7 +14,7 @@ $club = extrasport_get_club();
 		while ( have_posts() ) {
 			the_post();
 			get_template_part(
-				'template-parts/layout/breadcrumbs',
+				'components/breadcrumbs',
 				null,
 				array(
 					'items' => array(
@@ -25,8 +23,8 @@ $club = extrasport_get_club();
 							'url'   => home_url( '/' ),
 						),
 						array(
-							'label' => __( 'Акции', 'extrasport' ),
-							'url'   => get_post_type_archive_link( 'share' ),
+							'label' => __( 'Групповые программы', 'extrasport' ),
+							'url'   => get_post_type_archive_link( 'group_program' ),
 						),
 						array(
 							'label' => get_the_title(),
@@ -47,12 +45,6 @@ $club = extrasport_get_club();
 				<div class="prose prose-invert max-w-none entry-content text-white/85">
 					<?php the_content(); ?>
 				</div>
-
-				<div class="mt-8">
-					<button type="button" class="btn-primary btn-lg" data-modal-open="callModal">
-						<?php esc_html_e( 'Узнать подробности', 'extrasport' ); ?>
-					</button>
-				</div>
 			</article>
 			<?php
 		}
@@ -60,7 +52,4 @@ $club = extrasport_get_club();
 	</div>
 </div>
 
-<?php get_template_part( 'template-parts/layout/subscribe', 'section' ); ?>
-
-<?php
-get_footer();
+<?php extrasport_render_test_drive_section(); ?>

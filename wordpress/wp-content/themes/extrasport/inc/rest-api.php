@@ -44,6 +44,10 @@ function extrasport_register_rest_routes() {
 					'type'              => 'string',
 					'sanitize_callback' => 'sanitize_key',
 				),
+				'source_url' => array(
+					'type'              => 'string',
+					'sanitize_callback' => 'esc_url_raw',
+				),
 				'website'    => array(
 					'type'              => 'string',
 					'sanitize_callback' => 'sanitize_text_field',
@@ -156,7 +160,14 @@ function extrasport_rest_submit_lead( WP_REST_Request $request ) {
 		);
 	}
 
-	$result = extrasport_process_lead_submission( $type, $name, $tel, $accept, (string) $request['form_type'] );
+	$result = extrasport_process_lead_submission(
+		$type,
+		$name,
+		$tel,
+		$accept,
+		(string) $request['form_type'],
+		(string) $request['source_url']
+	);
 
 	if ( is_wp_error( $result ) ) {
 		return $result;

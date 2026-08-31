@@ -10,13 +10,16 @@ function getFormPayload(form) {
 	const website = form.querySelector('[name="website"]');
 	const formToken = form.querySelector('[name="form_token"]');
 
+	const sourceUrl = form.querySelector('[name="source_url"]');
+
 	return {
 		name: name?.value.trim() ?? '',
 		tel: tel?.value.trim() ?? '',
 		accept: Boolean(accept?.checked),
 		website: website?.value.trim() ?? '',
 		form_token: formToken?.value.trim() ?? '',
-		form_type: form.dataset.formVariant ?? 'subscribe',
+		form_type: form.dataset.formVariant ?? 'test_drive',
+		source_url: sourceUrl?.value.trim() ?? '',
 	};
 }
 

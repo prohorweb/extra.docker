@@ -17,7 +17,7 @@ $club = extrasport_get_club();
 		<h2 id="callModalTitle" class="font-oswald text-xl uppercase mb-6 text-center"><?php esc_html_e( 'Обратный звонок', 'extrasport' ); ?></h2>
 
 		<form id="callback" class="space-y-4" action="#" method="post" novalidate data-form-type="callback">
-			<?php get_template_part( 'template-parts/layout/form', 'honeypot', array( 'form_id' => 'callback' ) ); ?>
+			<?php get_template_part( 'components/form', 'honeypot', array( 'form_id' => 'callback' ) ); ?>
 			<div class="form-group">
 				<input type="text" name="name" class="form-input" placeholder="<?php esc_attr_e( 'Ваше имя *', 'extrasport' ); ?>" autocomplete="name">
 			</div>

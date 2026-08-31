@@ -1,11 +1,9 @@
 <?php
 /**
- * Single Service Template
+ * Single service view.
  *
  * @package ExtraSport
  */
-
-get_header();
 
 $club = extrasport_get_club();
 ?>
@@ -16,7 +14,7 @@ $club = extrasport_get_club();
 		while ( have_posts() ) {
 			the_post();
 			get_template_part(
-				'template-parts/layout/breadcrumbs',
+				'components/breadcrumbs',
 				null,
 				array(
 					'items' => array(
@@ -63,7 +61,4 @@ $club = extrasport_get_club();
 	</div>
 </div>
 
-<?php get_template_part( 'template-parts/layout/subscribe', 'section' ); ?>
-
-<?php
-get_footer();
+<?php extrasport_render_test_drive_section(); ?>

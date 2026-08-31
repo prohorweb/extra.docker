@@ -2,8 +2,6 @@
 /**
  * Theme header — document shell + navigation
  *
- * Adapted from frontend/views/layouts/main.php + header.php
- *
  * @package ExtraSport
  */
 
@@ -21,6 +19,6 @@ $brand = extrasport_get_brand();
 <body id="page-top" <?php body_class( is_front_page() ? 'is-front-page' : '' ); ?>>
 <?php wp_body_open(); ?>
 
-<?php get_template_part( 'template-parts/layout/header', 'nav' ); ?>
+<?php get_template_part( 'layouts/header' ); ?>
 
 <main id="main" class="site-main">

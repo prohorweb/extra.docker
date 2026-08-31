@@ -2,8 +2,6 @@
 /**
  * Theme footer — layout partials + document close
  *
- * Adapted from frontend/views/layouts/footer.php
- *
  * @package ExtraSport
  */
 
@@ -11,14 +9,14 @@
 </main><!-- #main -->
 
 <?php
-get_template_part( 'template-parts/layout/footer', 'main' );
-get_template_part( 'template-parts/layout/modal', 'club' );
-get_template_part( 'template-parts/layout/modal', 'callback' );
-get_template_part( 'template-parts/layout/modal', 'rules' );
-get_template_part( 'template-parts/layout/modal', 'finish' );
-get_template_part( 'template-parts/layout/modal', 'timer' );
-get_template_part( 'template-parts/layout/widget', 'chat' );
-get_template_part( 'template-parts/layout/widget', 'present-video' );
+get_template_part( 'layouts/footer' );
+get_template_part( 'components/modals/club' );
+get_template_part( 'components/modals/callback' );
+get_template_part( 'components/modals/rules' );
+get_template_part( 'components/modals/finish' );
+get_template_part( 'components/modals/timer' );
+get_template_part( 'components/widgets/chat' );
+get_template_part( 'components/widgets/present-video' );
 ?>
 
 <?php wp_footer(); ?>

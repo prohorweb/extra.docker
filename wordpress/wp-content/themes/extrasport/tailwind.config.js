@@ -3,7 +3,10 @@ export default {
 	content: [
 		'./*.php',
 		'./inc/**/*.php',
-		'./template-parts/**/*.php',
+		'./views/**/*.php',
+		'./layouts/**/*.php',
+		'./components/**/*.php',
+		'./sections/**/*.php',
 		'./assets/src/**/*.js',
 	],
 	theme: {
