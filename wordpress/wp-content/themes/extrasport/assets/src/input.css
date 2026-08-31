@@ -181,12 +181,27 @@
 	}
 
 	.page-section--actions {
+		padding: 0;
+	}
+
+	.page-section--actions::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		z-index: 1;
 		background-color: rgb(0 0 0 / 58%);
-		background-blend-mode: overlay;
+		pointer-events: none;
+	}
+
+	.page-section__parallax-bg {
+		position: absolute;
+		left: 0;
+		z-index: 0;
 		background-repeat: no-repeat;
 		background-position: center center;
-		background-size: 100% auto;
-		padding: 0;
+		background-size: 100% 100%;
+		pointer-events: none;
+		will-change: transform;
 	}
 
 	.page-section--actions-list {
@@ -429,17 +444,17 @@
 
 	/* Hero / masthead */
 	body.is-front-page .masthead {
-		margin-top: -6.5rem;
+		margin-top: -5.5rem;
 	}
 
 	@media (width >= 1024px) {
 		body.is-front-page .masthead {
-			margin-top: -7.75rem;
+			margin-top: -5.75rem;
 		}
 	}
 
 	.masthead {
-		@apply relative w-full overflow-hidden text-center;
+		@apply relative z-[-1] w-full overflow-hidden text-center;
 		height: 100vh;
 		height: 100svh;
 	}
@@ -482,7 +497,7 @@
 	}
 
 	.form-input {
-		@apply w-full rounded-md border border-white/20 bg-white/5 px-4 py-3 text-white placeholder:text-white/40 focus:border-brand-primary focus:outline-none focus:ring-1 focus:ring-brand-primary;
+		@apply w-full rounded-none border border-white/20 bg-white/5 px-4 py-3 text-white placeholder:text-white/40 focus:border-brand-primary focus:outline-none focus:ring-1 focus:ring-brand-primary;
 	}
 
 	/* Modals */
@@ -499,7 +514,7 @@
 	}
 
 	.modal__panel {
-		@apply relative z-10 w-full max-w-lg rounded-xl border border-white/10 bg-brand-dark p-6 shadow-2xl;
+		@apply relative z-10 w-full max-w-lg rounded-none border border-white/10 bg-brand-dark p-6 shadow-2xl;
 	}
 
 	.modal__panel--sm {
@@ -516,6 +531,26 @@
 
 	.modal__close {
 		@apply absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-full text-white/70 transition hover:bg-white/10 hover:text-white;
+	}
+
+	.club-card {
+		@apply flex items-center justify-between rounded-none border border-white/10 bg-white/5 p-4 transition;
+	}
+
+	.club-card:not(.is-current):hover {
+		@apply border-brand-primary bg-white/10;
+	}
+
+	.club-card:not(.is-current):hover .club-card__title {
+		@apply text-brand-primary;
+	}
+
+	.club-card:not(.is-current):hover .club-card__arrow {
+		@apply opacity-100;
+	}
+
+	.club-card.is-current {
+		@apply cursor-default border-brand-primary bg-brand-primary/10 pointer-events-none;
 	}
 
 	.modal__scroll {

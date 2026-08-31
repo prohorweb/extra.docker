@@ -6,7 +6,7 @@
  */
 
 $uri      = EXTRASPORT_URI;
-$basename = $args['video'] ?? 'service_clubs';
+$basename = $args['video'] ?? extrasport_get_service_clubs_video_basename();
 ?>
 
 <section class="relative h-[40vh] min-h-[280px] w-full overflow-hidden bg-brand-dark md:h-[50vh]">

@@ -45,7 +45,7 @@ function extrasport_is_nav_link_active( $url ) {
 	$link     = extrasport_normalize_nav_url( $url );
 
 	if ( 'contacts' === $fragment ) {
-		return is_front_page();
+		return false;
 	}
 
 	$share_link = extrasport_normalize_nav_url( get_post_type_archive_link( 'share' ) ?: home_url( '/card/shares/' ) );
@@ -71,6 +71,10 @@ function extrasport_is_nav_link_active( $url ) {
 	$link_path    = wp_parse_url( $link, PHP_URL_PATH );
 	$link_path    = untrailingslashit( (string) ( $link_path ?: '/' ) ) ?: '/';
 	$current_path = extrasport_get_request_path();
+
+	if ( '/' === $link_path ) {
+		return '/' === $current_path;
+	}
 
 	if ( $current_path === $link_path ) {
 		return true;

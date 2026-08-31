@@ -3,12 +3,66 @@
  */
 import { updateSiteHeaderState } from './scroll-state.js';
 
+function getContactsNavLinks() {
+	return [ ...document.querySelectorAll( 'a[href*="#contacts"]' ) ];
+}
+
+function setContactsNavActive( isActive ) {
+	getContactsNavLinks().forEach( ( link ) => {
+		link.classList.toggle( 'is-active', isActive );
+	} );
+}
+
+function syncContactsNavState() {
+	const section = document.getElementById( 'contacts' );
+	const onFrontPage = document.body.classList.contains( 'is-front-page' );
+
+	if ( ! onFrontPage || ! section ) {
+		setContactsNavActive( false );
+		return;
+	}
+
+	if ( window.location.hash === '#contacts' ) {
+		setContactsNavActive( true );
+		return;
+	}
+
+	setContactsNavActive( false );
+}
+
+function initContactsNavObserver() {
+	const section = document.getElementById( 'contacts' );
+
+	if ( ! section || ! document.body.classList.contains( 'is-front-page' ) ) {
+		return;
+	}
+
+	const observer = new IntersectionObserver(
+		( [ entry ] ) => {
+			if ( window.location.hash && window.location.hash !== '#contacts' ) {
+				return;
+			}
+
+			setContactsNavActive( entry.isIntersecting && entry.intersectionRatio >= 0.35 );
+		},
+		{
+			threshold: [ 0, 0.35, 0.6 ],
+		}
+	);
+
+	observer.observe( section );
+}
+
 export function initNav() {
 	const toggle = document.getElementById('navToggle');
 	const mobileNav = document.getElementById('mobileNav');
 
 	updateSiteHeaderState();
 	window.addEventListener('scroll', updateSiteHeaderState, { passive: true });
+
+	syncContactsNavState();
+	window.addEventListener( 'hashchange', syncContactsNavState );
+	initContactsNavObserver();
 
 	if (!toggle || !mobileNav) return;
 

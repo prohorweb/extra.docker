@@ -252,6 +252,15 @@ function extrasport_get_current_club_slug() {
 }
 
 /**
+ * Basename for service clubs hero/about video (service_extra | service_devision).
+ *
+ * @return string
+ */
+function extrasport_get_service_clubs_video_basename() {
+	return 'devision' === extrasport_get_current_club_slug() ? 'service_devision' : 'service_extra';
+}
+
+/**
  * Map blog ID to club slug when seeding network sites.
  *
  * @param int $blog_id Blog ID.
@@ -377,6 +386,7 @@ function extrasport_get_clubs() {
 				'title'   => $club['title'],
 				'address' => $club['address'],
 				'url'     => home_url( '/' ),
+				'slug'    => extrasport_get_current_club_slug(),
 			),
 		);
 	}
@@ -390,6 +400,7 @@ function extrasport_get_clubs() {
 			'title'   => $club['title'],
 			'address' => $club['address'],
 			'url'     => home_url( '/' ),
+			'slug'    => extrasport_get_current_club_slug(),
 		);
 		restore_current_blog();
 	}

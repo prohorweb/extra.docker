@@ -8,7 +8,7 @@
 $club = extrasport_get_club();
 ?>
 
-<?php get_template_part( 'sections/page-hero-video', null, array( 'video' => 'service_clubs' ) ); ?>
+<?php get_template_part( 'sections/page-hero-video' ); ?>
 
 <div class="page-content bg-brand-dark py-12 md:py-16">
 	<div class="mx-auto max-w-7xl px-4 lg:px-6">
