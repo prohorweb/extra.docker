@@ -11,6 +11,7 @@ function getFormPayload(form) {
 	const formToken = form.querySelector('[name="form_token"]');
 
 	const sourceUrl = form.querySelector('[name="source_url"]');
+	const planTitle = form.querySelector('[name="plan_title"]');
 
 	return {
 		name: name?.value.trim() ?? '',
@@ -20,6 +21,7 @@ function getFormPayload(form) {
 		form_token: formToken?.value.trim() ?? '',
 		form_type: form.dataset.formVariant ?? 'test_drive',
 		source_url: sourceUrl?.value.trim() ?? '',
+		plan_title: planTitle?.value.trim() ?? '',
 	};
 }
 
@@ -99,6 +101,9 @@ export function initForms() {
 		bindLeadForm(form, {
 			type: 'subscribe',
 			onSuccess: () => {
+				document.querySelectorAll('.modal.is-open').forEach((modal) => {
+					window.extrasportCloseModal?.(modal);
+				});
 				window.extrasportOpenModal?.('finish-popup');
 			},
 		});

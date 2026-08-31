@@ -44,6 +44,10 @@ function extrasport_resolve_view() {
 		return 'views/errors/404';
 	}
 
+	if ( extrasport_is_card_type_page() ) {
+		return 'views/card-type/index';
+	}
+
 	if ( is_front_page() ) {
 		return 'views/home/index';
 	}

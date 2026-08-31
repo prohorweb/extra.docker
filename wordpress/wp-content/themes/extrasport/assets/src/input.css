@@ -57,13 +57,12 @@
 
 	/* Site header (Yii2 navbar port) */
 	.site-header {
-		@apply z-40 w-full border-0;
+		@apply relative z-40 w-full border-0 p-2;
 		background-color: rgb(0 0 0 / 72%);
 	}
 
 	.site-header--overlay {
-		@apply fixed inset-x-0 top-0;
-		z-index: 100;
+		z-index: 1;
 	}
 
 	.site-header--fixed {
@@ -81,12 +80,11 @@
 	}
 
 	.site-header--static {
-		@apply relative;
 		background-color: rgb(0 0 0 / 85%);
 	}
 
 	.site-header__main {
-		@apply mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-2.5 lg:grid lg:grid-cols-[13.5rem_1fr_13.5rem] lg:px-6 lg:py-3;
+		@apply mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-2.5 xl:grid xl:grid-cols-[13.5rem_1fr_13.5rem] xl:px-6 xl:py-3;
 	}
 
 	.site-header__nav-center {
@@ -132,6 +130,21 @@
 		@apply font-oswald text-lg uppercase tracking-wider text-white transition hover:text-brand-primary lg:text-xl xl:text-[1.35rem] xl:leading-none;
 	}
 
+	.site-header__nav-link.is-active,
+	.site-header__nav-link.is-active:hover {
+		@apply text-brand-primary;
+	}
+
+	.site-header__dropdown-link.is-active,
+	.site-header__dropdown-link.is-active:hover {
+		@apply text-brand-primary;
+	}
+
+	.mobile-nav .is-active,
+	.mobile-nav .is-active:hover {
+		@apply text-brand-primary;
+	}
+
 	.site-header__dropdown {
 		@apply rounded-md border border-white/10 bg-black/95 shadow-xl;
 	}
@@ -145,11 +158,11 @@
 	}
 
 	.site-header__actions {
-		@apply shrink-0 justify-end lg:w-full lg:max-w-[13.5rem] lg:justify-self-end;
+		@apply shrink-0 justify-end xl:w-full xl:max-w-[13.5rem] xl:justify-self-end;
 	}
 
 	.site-header__actions .btn-outline-primary {
-		@apply w-full justify-center whitespace-nowrap px-4;
+		@apply me-4 w-full justify-center whitespace-nowrap px-4;
 	}
 
 	/* Front page — full viewport sections (Yii2 .page-item port) */
@@ -190,7 +203,7 @@
 	}
 
 	.page-section--actions .section-heading {
-		@apply py-8 text-2xl md:text-3xl lg:text-4xl;
+		@apply py-4 text-2xl md:text-3xl lg:text-4xl;
 	}
 
 	/* Share cards (Yii2 .card port) */
@@ -322,11 +335,109 @@
 		@apply text-[1.3rem];
 	}
 
+	/* Membership plans — /card/type/ */
+	.card-choice__subtitle {
+		@apply mb-6 text-white md:mb-10;
+	}
+
+	.card-choice__services {
+		@apply mb-5 md:mb-8;
+	}
+
+	.card-choice__service-icon {
+		@apply mx-auto mb-3 h-[3.75rem] w-full max-w-[5.5rem] object-contain md:mb-4 md:h-16;
+	}
+
+	.card-choice__note {
+		@apply mb-7 text-center text-sm text-white/70 md:mb-12 lg:mb-[4.5rem];
+	}
+
+	.card-choice__note span {
+		@apply inline-block border-t border-white/15 px-6 pt-2 md:px-10 md:pt-3;
+	}
+
+	.card-choice__plans {
+		@apply gap-4 md:gap-5;
+	}
+
+	.membership-card__box {
+		@apply bg-black/45 p-3;
+	}
+
+	.membership-card__media {
+		@apply relative flex items-center justify-center overflow-hidden;
+	}
+
+	.membership-card__header {
+		@apply absolute inset-0 z-10 flex h-full flex-col px-4 md:px-6;
+	}
+
+	.membership-card__spacer {
+		@apply flex-1;
+	}
+
+	.membership-card__row {
+		@apply flex shrink-0 items-center justify-center gap-[0.65rem] lg:gap-6;
+	}
+
+	.membership-card__cta-area {
+		@apply flex flex-1 items-center justify-center;
+	}
+
+	.membership-card__month {
+		@apply font-oswald text-[1.625rem] font-bold uppercase leading-none text-white lg:text-[2rem];
+	}
+
+	.membership-card__price {
+		@apply font-oswald text-[2.275rem] font-bold uppercase leading-none text-white lg:text-[3rem];
+	}
+
+	.membership-card__logo {
+		@apply h-[2.6rem] w-auto max-w-[2.925rem] shrink-0 opacity-85 lg:h-16 lg:max-w-[4.5rem];
+	}
+
+	.membership-card__cta {
+		@apply w-[10rem] max-w-[70%] justify-center whitespace-nowrap lg:w-[15rem] lg:max-w-none;
+		background-color: #000000bc;
+	}
+
+	.membership-card__cta.btn-lg {
+		@apply px-[0.91rem] py-[0.455rem] text-[0.8rem] lg:px-6 lg:py-3 lg:text-base;
+	}
+
+	.membership-card--12-months .membership-card__month {
+		@apply md:whitespace-nowrap md:text-[1.35rem] lg:whitespace-normal lg:text-[2rem];
+	}
+
+	.membership-card--12-months .membership-card__price {
+		@apply md:text-[1.9rem] lg:text-[3rem];
+	}
+
+	.membership-card--12-months .membership-card__row {
+		@apply md:gap-1 lg:gap-6;
+	}
+
+	.membership-card__video {
+		@apply block w-full border-2 border-brand-primary/50 object-cover;
+		border-radius: 15px;
+		aspect-ratio: 16 / 9;
+	}
+
 	.page-section__inner {
-		@apply relative z-10 mx-auto w-full max-w-7xl px-4 lg:px-6;
+		@apply relative z-10 mx-auto w-full max-w-7xl px-4 pt-3 pb-6 lg:px-6 md:pt-4 md:pb-8;
 	}
 
 	/* Hero / masthead */
+	body.is-front-page .masthead {
+		margin-top: -6.5rem;
+	}
+
+	@media (width >= 1024px) {
+		body.is-front-page .masthead {
+			margin-top: -7.75rem;
+		}
+	}
+
 	.masthead {
 		@apply relative w-full overflow-hidden text-center;
 		height: 100vh;
@@ -419,6 +530,10 @@
 
 	.mobile-nav:not(.hidden) .mobile-nav__panel {
 		animation: slideInRight 0.25s ease-out;
+	}
+
+	.mobile-nav .nav-dropdown {
+		@apply ms-3 border-s border-white/15 ps-5;
 	}
 
 	@keyframes slideInRight {

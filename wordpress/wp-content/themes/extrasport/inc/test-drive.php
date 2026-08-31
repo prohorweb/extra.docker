@@ -26,6 +26,10 @@ function extrasport_get_test_drive_form_context( array $override = array() ) {
 		$context['form_id']    = 'test-drive-home';
 		$context['form_type']    = 'test_drive';
 		$context['source_url']   = home_url( '/' );
+	} elseif ( extrasport_is_card_type_page() ) {
+		$context['form_id']    = 'test-drive-membership';
+		$context['form_type']    = 'membership_cards';
+		$context['source_url']   = extrasport_get_card_type_url();
 	} elseif ( is_singular( 'share' ) ) {
 		$context['form_id']    = 'test-drive-share';
 		$context['form_type']    = 'share';

@@ -21,9 +21,11 @@ $about_links = array(
 $nav_links = array(
 	array( 'label' => 'Акции', 'url' => get_post_type_archive_link( 'share' ) ?: home_url( '/card/shares/' ) ),
 	array( 'label' => 'Услуги', 'url' => get_post_type_archive_link( 'service' ) ?: home_url( '/services/' ) ),
-	array( 'label' => 'Абонементы и цены', 'url' => get_post_type_archive_link( 'group_program' ) ?: home_url( '/services/programs/' ) ),
+	array( 'label' => 'Абонементы и цены', 'url' => extrasport_get_card_type_url() ),
 	array( 'label' => 'Контакты', 'url' => home_url( '/#contacts' ) ),
 );
+
+$about_active = extrasport_is_about_nav_active( $about_links );
 ?>
 
 <header id="mainNav" class="site-header <?php echo esc_attr( $header_pos ); ?>" aria-label="<?php esc_attr_e( 'Site header', 'extrasport' ); ?>">
@@ -32,7 +34,7 @@ $nav_links = array(
 			<?php echo extrasport_render_brand_logo(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 		</a>
 
-		<div class="site-header__nav-center hidden lg:flex">
+		<div class="site-header__nav-center hidden xl:flex">
 			<div class="site-header__club-info">
 				<i class="fa-solid fa-location-dot text-brand-primary" aria-hidden="true"></i>
 				<span class="site-header__club-label"><?php esc_html_e( 'Ваш клуб:', 'extrasport' ); ?></span>
@@ -47,14 +49,14 @@ $nav_links = array(
 
 			<nav class="site-header__nav" aria-label="<?php esc_attr_e( 'Main navigation', 'extrasport' ); ?>">
 				<div class="site-header__nav-item group relative">
-					<button type="button" class="site-header__nav-link flex items-center gap-1">
+					<button type="button" class="site-header__nav-link flex items-center gap-1<?php echo $about_active ? ' is-active' : ''; ?>">
 						<?php esc_html_e( 'О клубе', 'extrasport' ); ?>
 						<i class="fa-solid fa-chevron-down text-[0.65rem]" aria-hidden="true"></i>
 					</button>
 					<ul class="site-header__dropdown absolute left-0 top-full z-50 hidden min-w-[220px] py-2 group-hover:block">
 						<?php foreach ( $about_links as $link ) : ?>
 							<li>
-								<a href="<?php echo esc_url( $link['url'] ); ?>" class="site-header__dropdown-link">
+								<a href="<?php echo esc_url( $link['url'] ); ?>" class="<?php echo esc_attr( extrasport_nav_item_class( 'site-header__dropdown-link', $link['url'] ) ); ?>">
 									<?php echo esc_html( $link['label'] ); ?>
 								</a>
 							</li>
@@ -62,7 +64,7 @@ $nav_links = array(
 					</ul>
 				</div>
 				<?php foreach ( $nav_links as $link ) : ?>
-					<a href="<?php echo esc_url( $link['url'] ); ?>" class="site-header__nav-link">
+					<a href="<?php echo esc_url( $link['url'] ); ?>" class="<?php echo esc_attr( extrasport_nav_item_class( 'site-header__nav-link', $link['url'] ) ); ?>">
 						<?php echo esc_html( $link['label'] ); ?>
 					</a>
 				<?php endforeach; ?>
@@ -75,7 +77,7 @@ $nav_links = array(
 				<?php esc_html_e( 'Обратный звонок', 'extrasport' ); ?>
 			</button>
 
-			<button type="button" id="navToggle" class="site-header__burger flex items-center gap-2 lg:hidden" aria-expanded="false" aria-controls="mobileNav">
+			<button type="button" id="navToggle" class="site-header__burger flex items-center gap-2 xl:hidden" aria-expanded="false" aria-controls="mobileNav">
 				<span class="font-oswald text-sm uppercase tracking-wider"><?php esc_html_e( 'Меню', 'extrasport' ); ?></span>
 				<span class="flex flex-col gap-1" aria-hidden="true">
 					<span class="block h-0.5 w-5 bg-white"></span>
@@ -101,7 +103,7 @@ $nav_links = array(
 			</button>
 		</div>
 
-		<div class="border-b border-white/10 px-4 py-3 text-sm lg:hidden">
+		<div class="border-b border-white/10 px-4 py-3 text-sm xl:hidden">
 			<button type="button" class="flex items-center gap-2 text-brand-primary hover:text-white" data-modal-open="clubModal">
 				<i class="fa-solid fa-location-dot" aria-hidden="true"></i>
 				<?php echo esc_html( $club['address'] ); ?>
@@ -114,13 +116,13 @@ $nav_links = array(
 
 		<ul class="flex-1 overflow-y-auto px-4 py-6 font-oswald uppercase tracking-wide">
 			<li class="mb-2">
-				<button type="button" class="nav-dropdown-toggle flex w-full items-center justify-between py-3 text-white hover:text-brand-primary" aria-expanded="false" data-dropdown="aboutMenu">
+				<button type="button" class="nav-dropdown-toggle flex w-full items-center justify-between py-3 text-white hover:text-brand-primary<?php echo $about_active ? ' is-active' : ''; ?>" aria-expanded="false" data-dropdown="aboutMenu">
 					<?php esc_html_e( 'О клубе', 'extrasport' ); ?>
 					<i class="fa-solid fa-chevron-down text-xs transition-transform" aria-hidden="true"></i>
 				</button>
-				<ul id="aboutMenu" class="nav-dropdown hidden ps-4 pb-2 space-y-1 normal-case font-roboto text-sm">
+				<ul id="aboutMenu" class="nav-dropdown hidden pb-2 space-y-1 normal-case font-roboto text-sm">
 					<?php foreach ( $about_links as $link ) : ?>
-						<li><a href="<?php echo esc_url( $link['url'] ); ?>" class="block py-2 text-white/80 hover:text-brand-primary"><?php echo esc_html( $link['label'] ); ?></a></li>
+						<li><a href="<?php echo esc_url( $link['url'] ); ?>" class="<?php echo esc_attr( extrasport_nav_item_class( 'block py-2 text-white/80 hover:text-brand-primary', $link['url'] ) ); ?>"><?php echo esc_html( $link['label'] ); ?></a></li>
 					<?php endforeach; ?>
 					<li class="border-t border-white/10 pt-2 mt-2">
 						<a href="<?php echo esc_url( $club['youtube'] ); ?>" target="_blank" rel="noopener noreferrer" class="block py-2 text-white/80 hover:text-brand-primary"><?php esc_html_e( 'Истории успеха', 'extrasport' ); ?></a>
@@ -132,7 +134,7 @@ $nav_links = array(
 			</li>
 			<?php foreach ( $nav_links as $link ) : ?>
 				<li>
-					<a href="<?php echo esc_url( $link['url'] ); ?>" class="block py-3 text-white hover:text-brand-primary"><?php echo esc_html( $link['label'] ); ?></a>
+					<a href="<?php echo esc_url( $link['url'] ); ?>" class="<?php echo esc_attr( extrasport_nav_item_class( 'block py-3 text-white hover:text-brand-primary', $link['url'] ) ); ?>"><?php echo esc_html( $link['label'] ); ?></a>
 				</li>
 			<?php endforeach; ?>
 			<li class="mt-4 md:hidden">

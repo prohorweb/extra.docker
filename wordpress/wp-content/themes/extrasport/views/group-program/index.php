@@ -4,8 +4,6 @@
  *
  * @package ExtraSport
  */
-
-$club = extrasport_get_club();
 ?>
 
 <div class="page-hero-image relative flex min-h-[280px] items-center justify-center bg-brand-dark md:min-h-[360px]">
@@ -15,27 +13,6 @@ $club = extrasport_get_club();
 
 <div class="page-content bg-brand-dark py-12 md:py-16">
 	<div class="mx-auto max-w-7xl px-4 lg:px-6">
-		<?php
-		get_template_part(
-			'components/breadcrumbs',
-			null,
-			array(
-				'items' => array(
-					array(
-						'label' => $club['title'],
-						'url'   => home_url( '/' ),
-					),
-					array(
-						'label' => __( 'Услуги', 'extrasport' ),
-						'url'   => get_post_type_archive_link( 'service' ),
-					),
-					array(
-						'label' => __( 'Групповые программы', 'extrasport' ),
-					),
-				),
-			)
-		);
-		?>
 
 		<h2 class="font-oswald mb-6 text-center text-2xl uppercase md:text-3xl"><?php esc_html_e( 'Направления групповых программ', 'extrasport' ); ?></h2>
 

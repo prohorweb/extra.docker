@@ -12,23 +12,6 @@ $club = extrasport_get_club();
 
 <div class="page-content bg-brand-dark py-12 md:py-16">
 	<div class="mx-auto max-w-7xl px-4 lg:px-6">
-		<?php
-		get_template_part(
-			'components/breadcrumbs',
-			null,
-			array(
-				'items' => array(
-					array(
-						'label' => $club['title'],
-						'url'   => home_url( '/' ),
-					),
-					array(
-						'label' => __( 'Услуги', 'extrasport' ),
-					),
-				),
-			)
-		);
-		?>
 
 		<h1 class="font-oswald mb-10 text-3xl uppercase md:text-4xl">
 			<?php printf( esc_html__( 'Услуги клуба %s', 'extrasport' ), esc_html( $club['title'] ) ); ?>

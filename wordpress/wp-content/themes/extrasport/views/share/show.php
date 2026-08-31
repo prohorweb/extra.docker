@@ -5,8 +5,7 @@
  * @package ExtraSport
  */
 
-$club = extrasport_get_club();
-$uri  = EXTRASPORT_URI;
+$uri = EXTRASPORT_URI;
 
 while ( have_posts() ) {
 	the_post();
@@ -22,30 +21,9 @@ while ( have_posts() ) {
 		class="page-section page-section--actions page-section--actions-list"
 		style="background-image: url('<?php echo esc_url( $uri . '/assets/img/actions-bg.jpg' ); ?>');"
 	>
-		<div class="page-section__inner mx-auto w-full max-w-7xl px-4 lg:px-6 py-12 md:py-16">
-			<?php
-			get_template_part(
-				'components/breadcrumbs',
-				null,
-				array(
-					'items' => array(
-						array(
-							'label' => $club['title'],
-							'url'   => home_url( '/' ),
-						),
-						array(
-							'label' => __( 'Акции', 'extrasport' ),
-							'url'   => get_post_type_archive_link( 'share' ),
-						),
-						array(
-							'label' => get_the_title(),
-						),
-					),
-				)
-			);
-			?>
+		<div class="page-section__inner mx-auto w-full max-w-7xl px-4 lg:px-6">
 
-			<h1 class="section-heading mb-8 md:mb-10"><?php the_title(); ?></h1>
+			<h1 class="section-heading mb-4 md:mb-5"><?php the_title(); ?></h1>
 
 			<div class="share-page__panel">
 				<div class="grid gap-8 lg:grid-cols-2 lg:gap-10">
@@ -98,8 +76,8 @@ while ( have_posts() ) {
 
 	<?php if ( ! empty( $other ) ) : ?>
 		<section class="page-section page-section--actions page-section--actions-list page-section--h-75 bg-brand-dark" style="background-image: url('<?php echo esc_url( $uri . '/assets/img/actions-bg.jpg' ); ?>');">
-			<div class="page-section__inner mx-auto w-full max-w-7xl px-4 py-12 lg:px-6 md:py-16">
-				<h2 class="section-heading mb-8 md:mb-10"><?php esc_html_e( 'Другие акции клуба', 'extrasport' ); ?></h2>
+			<div class="page-section__inner mx-auto w-full max-w-7xl px-4 lg:px-6">
+				<h2 class="section-heading mb-4 md:mb-5"><?php esc_html_e( 'Другие акции клуба', 'extrasport' ); ?></h2>
 				<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
 					<?php foreach ( $other as $item ) : ?>
 						<?php get_template_part( 'components/cards/share', null, array( 'share' => $item ) ); ?>

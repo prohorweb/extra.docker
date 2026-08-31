@@ -56,6 +56,10 @@ function extrasport_register_rest_routes() {
 					'type'              => 'string',
 					'sanitize_callback' => 'sanitize_text_field',
 				),
+				'plan_title' => array(
+					'type'              => 'string',
+					'sanitize_callback' => 'sanitize_text_field',
+				),
 			),
 		)
 	);
@@ -166,7 +170,8 @@ function extrasport_rest_submit_lead( WP_REST_Request $request ) {
 		$tel,
 		$accept,
 		(string) $request['form_type'],
-		(string) $request['source_url']
+		(string) $request['source_url'],
+		(string) $request['plan_title']
 	);
 
 	if ( is_wp_error( $result ) ) {

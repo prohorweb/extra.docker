@@ -4,8 +4,6 @@
  *
  * @package ExtraSport
  */
-
-$club = extrasport_get_club();
 ?>
 
 <div class="page-content bg-brand-dark py-12 md:py-16">
@@ -13,25 +11,6 @@ $club = extrasport_get_club();
 		<?php
 		while ( have_posts() ) {
 			the_post();
-			get_template_part(
-				'components/breadcrumbs',
-				null,
-				array(
-					'items' => array(
-						array(
-							'label' => $club['title'],
-							'url'   => home_url( '/' ),
-						),
-						array(
-							'label' => __( 'Услуги', 'extrasport' ),
-							'url'   => get_post_type_archive_link( 'service' ),
-						),
-						array(
-							'label' => get_the_title(),
-						),
-					),
-				)
-			);
 			?>
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 				<h1 class="font-oswald mb-6 text-3xl uppercase md:text-4xl"><?php the_title(); ?></h1>

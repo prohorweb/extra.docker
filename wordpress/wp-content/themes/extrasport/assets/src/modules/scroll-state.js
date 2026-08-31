@@ -13,17 +13,6 @@ export function getPageScrollY() {
 	return window.scrollY;
 }
 
-function isHeroFullyVisible() {
-	const hero = document.querySelector('.masthead');
-	if (!hero) {
-		return false;
-	}
-
-	const rect = hero.getBoundingClientRect();
-	const tolerance = 30;
-	return rect.top >= -tolerance && rect.bottom <= window.innerHeight + tolerance;
-}
-
 export function updateSiteHeaderState() {
 	const header = document.getElementById('mainNav');
 	if (!header) {
@@ -37,4 +26,15 @@ export function updateSiteHeaderState() {
 	}
 
 	header.classList.toggle('site-header--fixed', window.scrollY > 1);
+}
+
+function isHeroFullyVisible() {
+	const hero = document.querySelector('.masthead');
+	if (!hero) {
+		return false;
+	}
+
+	const rect = hero.getBoundingClientRect();
+	const tolerance = 30;
+	return rect.top >= -tolerance && rect.bottom <= window.innerHeight + tolerance;
 }

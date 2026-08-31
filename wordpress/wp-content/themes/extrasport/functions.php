@@ -119,6 +119,8 @@ require_once EXTRASPORT_DIR . '/inc/post-types.php';
 require_once EXTRASPORT_DIR . '/inc/redirects.php';
 require_once EXTRASPORT_DIR . '/inc/taxonomies.php';
 require_once EXTRASPORT_DIR . '/inc/multisite.php';
+require_once EXTRASPORT_DIR . '/inc/nav.php';
+require_once EXTRASPORT_DIR . '/inc/card-type.php';
 require_once EXTRASPORT_DIR . '/inc/admin-branding.php';
 require_once EXTRASPORT_DIR . '/inc/theme-settings.php';
 require_once EXTRASPORT_DIR . '/inc/admin-club-settings.php';

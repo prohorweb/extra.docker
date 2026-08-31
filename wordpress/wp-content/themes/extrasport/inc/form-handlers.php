@@ -171,15 +171,20 @@ function extrasport_store_lead( $type, $name, $tel, array $extra = array() ) {
  * @param bool   $accept    Privacy checkbox state.
  * @param string $form_type  Subscribe form variant (page context).
  * @param string $source_url Page URL where the form was submitted.
+ * @param string $plan_title Selected membership plan title.
  * @return int|WP_Error Lead post ID.
  */
-function extrasport_process_lead_submission( $type, $name, $tel, $accept, $form_type = 'test_drive', $source_url = '' ) {
+function extrasport_process_lead_submission( $type, $name, $tel, $accept, $form_type = 'test_drive', $source_url = '', $plan_title = '' ) {
 	$club  = extrasport_get_club();
 	$extra = array(
 		'accept'     => $accept ? '1' : '0',
 		'form_type'  => $form_type,
 		'source_url' => $source_url,
 	);
+
+	if ( $plan_title ) {
+		$extra['plan_title'] = $plan_title;
+	}
 
 	$lead_id = extrasport_store_lead( $type, $name, $tel, $extra );
 	if ( ! $lead_id ) {
@@ -204,7 +209,7 @@ function extrasport_process_lead_submission( $type, $name, $tel, $accept, $form_
 		case 'subscribe':
 			$subject = 'gift' === $form_type
 				? 'Заявка на подарочный сертификат Extra Sport'
-				: 'Запись на пробную тренировку Extra Sport';
+				: ( 'membership_card' === $form_type ? 'Приобрести клубную карту Extra Sport' : 'Запись на пробную тренировку Extra Sport' );
 			$to_key  = 'email_subscribe';
 			$fields  = array(
 				'Имя'      => $name,
@@ -212,6 +217,9 @@ function extrasport_process_lead_submission( $type, $name, $tel, $accept, $form_
 				'Форма'    => $form_type,
 				'Страница' => $source_url ?: ( wp_get_referer() ?: home_url( '/' ) ),
 			);
+			if ( $plan_title ) {
+				$fields['Абонемент'] = $plan_title;
+			}
 			break;
 
 		case 'timer':

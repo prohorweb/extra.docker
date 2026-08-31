@@ -14,26 +14,9 @@ $uri  = EXTRASPORT_URI;
 	class="page-section page-section--actions page-section--actions-list"
 	style="background-image: url('<?php echo esc_url( $uri . '/assets/img/actions-bg.jpg' ); ?>');"
 >
-	<div class="page-section__inner mx-auto w-full max-w-7xl px-4 py-12 lg:px-6 md:py-16">
-		<?php
-		get_template_part(
-			'components/breadcrumbs',
-			null,
-			array(
-				'items' => array(
-					array(
-						'label' => $club['title'],
-						'url'   => home_url( '/' ),
-					),
-					array(
-						'label' => __( 'Акции', 'extrasport' ),
-					),
-				),
-			)
-		);
-		?>
+	<div class="page-section__inner mx-auto w-full max-w-7xl px-4 lg:px-6">
 
-		<h1 class="section-heading mb-8 md:mb-10">
+		<h1 class="section-heading mb-4 md:mb-5">
 			<?php printf( esc_html__( 'Акции клуба %s', 'extrasport' ), esc_html( $club['title'] ) ); ?>
 		</h1>
 
