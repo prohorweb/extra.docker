@@ -1,15 +1,15 @@
 # Active Context — Yii2 → WordPress Migration
 
-## Current Session (August 31, 2026)
+## Current Session (September 1, 2026)
 
 ### Status
-**In Progress**: Страница абонементов, полировка навигации и inner pages на `feature/wordpress`
+**In Progress**: Тренеры, услуги, клуб — inner pages на `feature/wordpress`
 
 ### Branch & Deploy
 - **Branch:** `feature/wordpress`
-- **Last pushed commit:** `58acec4` — membership plans page + mobile nav refinements
-- **Previous:** `cd8bd8e` — theme views refactor + share pages polish
-- **Uncommitted:** только `memory-bank/` (docs)
+- **Last pushed commit:** `d5a7cd6` — trainers section, roster sync, filters, service page polish
+- **Previous:** `17bae23` — club overview page; `4eb42d0` — hierarchical services CPT
+- **Uncommitted:** `memory-bank/` (docs); untracked `wordpress/wp-content/languages/` (WP locale files, не коммитить)
 
 ### Architecture (active track)
 | Домен | Blog ID | Slug | rules_slug |
@@ -23,74 +23,97 @@
 **Theme structure (Laravel-like):**
 - Router: `index.php` → `inc/template-router.php` → `views/*`
 - Layouts: `layouts/header.php`, `layouts/footer.php`
-- Sections: `sections/*` (front page blocks)
+- Sections: `sections/*` (front page blocks, trainers block)
 - Components: `components/cards/*`, `components/modals/*`
-- Assets build: `npm run build` in theme dir → `assets/dist/` (gitignored, tracked in repo from prior commits)
+- Assets build: `npm run build` in theme dir → `assets/dist/`
 
 ---
 
 ### Last Action (this session)
-- [x] Commit + push `58acec4`: `/card/type/` membership page, plan cards, order modals, forms
-- [x] `inc/card-type.php` — rewrite `/card/type/`, demo plans, amenities helpers, `extrasport_get_card_type_url()`
-- [x] `views/card-type/index.php` — amenities grid + 2×2 plan cards + test-drive
-- [x] `components/cards/membership-plan.php` — video bg, centered row (month/logo/price), CTA below
-- [x] `components/modals/membership-order.php` — subscribe form with `plan_title`
-- [x] Assets: `assets/images/card-choice-services-*.svg`, `logo-short.svg`, `assets/video/card-bg-*.mp4`
-- [x] Nav: `inc/nav.php` active helpers; «Абонементы и цены» → `/card/type/`
-- [x] Header: mobile menu до `xl` (1280px), dropdown indent, callback `me-4`, overlay `z-index: 1`
-- [x] Header scroll: `relative` без скролла, `site-header--fixed` при прокрутке
-- [x] Breadcrumbs убраны со всех inner views
-- [x] `page-section__inner` — уменьшенные `py` / `mb`; card-type spacing polish
-- [x] Membership card responsive: compact до `lg`, md-only fix для «12 месяцев»
+- [x] Commit + push `d5a7cd6`: trainers CPT, archive `/trainers/`, singles, filters, roster sync
+- [x] `inc/trainers.php` — helpers, direction filter, thumbnail-first sort via `WP_Query` + `posts_clauses`
+- [x] `inc/sync-trainers-roster.php` v7 — 26 published trainers, production directions, orphan cleanup
+- [x] `inc/seed-trainers.php` — Yii import; `inc/admin-trainer-meta.php` — direction checkboxes
+- [x] `views/trainer/index.php`, `show.php`; `sections/trainers/block.php`, `filter.php`
+- [x] Trainer cards: `object-top`, `aspect-square`, image size `extrasport-trainer-card`
+- [x] Media: `extrasport_cleanup_orphan_trainer_attachments()`, banner/thumb dedupe on sync
+- [x] Redirects: `/es/command/` → `/trainers/`; nginx location for legacy Yii trainers list
+- [x] Personal training page embeds trainers block with filter
+- [x] Parallax: section-relative scroll in `parallax.js`; «Другие услуги» без `page-section--h-75`
+- [x] Club overview (`17bae23`), hierarchical services (`4eb42d0`)
 
 ### Previously completed (feature/wordpress)
-- [x] Theme refactor: `views/`, `sections/`, `components/` (`cd8bd8e`)
-- [x] Shares archive/single, cards, seed, admin meta
-- [x] Unified test-drive section (`sections/test-drive.php`)
-- [x] Per-club rules/slugs, map balloon, REST metadata (`f635c70`)
-- [x] Admin «Клуб», branding, carousel scroll-lock fix
+- [x] Membership `/card/type/` (`58acec4`)
+- [x] Views refactor, shares, test-drive (`cd8bd8e`)
+- [x] Per-club rules/slugs, map balloon (`f635c70`)
 - [x] Phases 1–6: Vite, layout, front page, JS modules, forms, multisite
+
+---
+
+### Trainers — production state (Piter, blog 1)
+| Filter | Count | Notes |
+|--------|-------|-------|
+| Все | 26 | `menu_order` = roster index × 10 |
+| Персональные `[1]` | 10 | only marked trainers |
+| Групповые `[2]` | 7 | only marked trainers |
+| Без отметок | 16 | only in «Все направления» |
+
+**Sort:** trainers with featured image first, then `menu_order`.
+
+**Useful commands:**
+```bash
+# Re-sync roster
+docker exec extra_wordpress php -r "
+define('WP_USE_THEMES', false);
+require '/var/www/html/wp-load.php';
+if (is_multisite()) switch_to_blog(1);
+delete_option('extrasport_trainers_roster_version');
+extrasport_sync_trainers_roster(true);
+"
+```
 
 ---
 
 ### Key Files
 | File | Role |
 |------|------|
-| `inc/template-router.php` | Single entry router → views |
-| `inc/card-type.php` | `/card/type/` route + plans/amenities |
-| `inc/nav.php` | Active nav helpers |
-| `layouts/header.php` | Desktop + mobile nav |
-| `views/card-type/index.php` | Membership plans page |
-| `components/cards/membership-plan.php` | Plan card UI |
-| `components/modals/membership-order.php` | Order modal per plan |
-| `views/share/*` | Shares archive/single |
-| `assets/src/input.css` | Tailwind components (header, cards, sections) |
-| `assets/src/modules/scroll-state.js` | Header fixed on scroll |
-| `inc/form-handlers.php` | Leads + membership form emails |
-| `inc/multisite.php` | Club registry, slugs |
+| `inc/trainers.php` | Trainers query, filter, sort, archive SEO |
+| `inc/sync-trainers-roster.php` | Production roster sync |
+| `inc/seed-trainers.php` | Yii trainer import |
+| `inc/admin-trainer-meta.php` | Direction checkboxes metabox |
+| `inc/post-types.php` | CPT `trainer` |
+| `inc/taxonomies.php` | `trainer_direction` (hidden tag UI) |
+| `inc/redirects.php` | Legacy trainer slugs + `/es/command/` |
+| `views/trainer/*` | Archive + single |
+| `sections/trainers/*` | Reusable list + filter |
+| `components/cards/trainer.php` | Trainer card |
+| `assets/src/modules/parallax.js` | Section-bound parallax |
+| `views/service/show.php` | Service single + «Другие услуги» |
+| `inc/services.php` | Service helpers, parallax bg |
+| `views/club/index.php` | Club overview |
 
 ---
 
 ### Known Issues / Deferred
-- **Membership plans** — demo data in `extrasport_get_membership_plans()`; CPT/admin not wired yet
+- **Trainer photos** — не у всех есть миниатюра (placeholder logo); часть фото 330×330
+- **Membership plans** — demo data in `extrasport_get_membership_plans()`; CPT/admin not wired
 - **DOCX правил** — `assets/docs/rules-*.docx` отсутствуют
 - **Timer-акция + present video popup** — admin UI отложен
-- **Large legacy asset dump** — старые CSS/images/JS в `assets/` (cleanup TBD)
-- **Permalinks** — после деплоя `/card/type/` может потребовать flush (Settings → Permalinks или `extrasport_maybe_flush_card_type_rewrite`)
+- **`wordpress/wp-content/languages/`** — локаль RU, не в git
 
 ---
 
 ### Next Planned (priority order)
 
 #### Сразу
-1. **Smoke-test** `/card/type/`, shares, mobile nav (768px / 1024px / 1280px)
-2. **PR** — `feature/wordpress` → main с test plan
+1. **Smoke-test** `/trainers/`, filters `?filter=1|2`, service singles, parallax «Другие услуги»
+2. **PR** — `feature/wordpress` → main
 
 #### Ближайшие задачи
-3. **Membership CPT/admin** — заменить demo plans
-4. **Контент** — импорт баннеров, акций, услуг из Yii2
-5. **DOCX правил** в `assets/docs/`
-6. **Privacy / legal / blog** inner pages при необходимости
+3. **News, Events, Jobs** — inner pages (about submenu)
+4. **Membership CPT/admin** — заменить demo plans
+5. **Контент** — оставшийся импорт из Yii2
+6. **DOCX правил** в `assets/docs/`
 
 #### Финальная фаза (отложено)
 7. Admin: timer-акция, present video popup

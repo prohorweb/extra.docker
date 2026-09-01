@@ -1,24 +1,26 @@
 # Progress — extra.docker
 
-## 2026-08-31 (Today)
+## 2026-09-01 (Today)
 
 ### Completed
-- [x] Commit + push `58acec4` — membership plans page, nav, inner page polish
-- [x] `/card/type/` — rewrite route, view, demo plans (1/3/6/12 мес)
-- [x] Membership plan cards — video bg, centered typography, CTA layout
-- [x] Membership order modals + REST/form handler (`membership_cards`, `plan_title`)
-- [x] Nav active state + link «Абонементы и цены» → `/card/type/`
-- [x] Mobile nav: dropdown indent, burger до `xl` (1280px), callback button spacing
-- [x] Header: overlay `z-index: 1`, relative + fixed-on-scroll
-- [x] Breadcrumbs removed from inner views
-- [x] Section spacing (`page-section__inner`, card-choice, membership responsive)
-- [x] Theme assets: amenity icons, logo-short, card-bg videos
+- [x] Commit + push `d5a7cd6` — trainers section, roster sync, filters, service page polish
+- [x] CPT `trainer` — archive `/trainers/`, singles `/trainers/{slug}/`
+- [x] Taxonomy `trainer_direction` — slugs `1` (персональные), `2` (групповые)
+- [x] Production roster sync — 26 published; directions v5/v7; legacy slug merge
+- [x] Admin: direction checkboxes; hidden excerpt/post attributes for trainer CPT
+- [x] Filter logic — unmarked trainers only in «Все направления»
+- [x] Sort — featured image first (`WP_Query` + `posts_clauses`; `get_posts` не работает в WP 6.4)
+- [x] Trainer cards — `object-top`, square aspect, `extrasport-trainer-card` size
+- [x] Media cleanup — orphan trainer attachments, banner/thumb dedupe on sync
+- [x] Redirects + nginx: `/es/command/` → `/trainers/`
+- [x] Parallax — привязка к секции; «Другие услуги клуба» по высоте контента
+- [x] Personal training service page — trainers block with filter
 
-### Previously pushed (same branch)
-- [x] `cd8bd8e` — views/sections/components refactor, share pages
-- [x] `f635c70` — per-club rules/slugs, map balloon, REST metadata
-- [x] `b41929f` — per-site club admin, branding, carousel header fix
-- [x] `96a87cc` — REST lead handling, Yii2 permalinks, forms
+### Previously pushed (same branch, recent)
+- [x] `17bae23` — club overview page, about-club routing
+- [x] `4eb42d0` — hierarchical services CPT, nested URLs
+- [x] `58acec4` — membership `/card/type/`, nav polish
+- [x] `cd8bd8e` — views/sections/components refactor, shares
 
 ### Not committed yet
 - `memory-bank/activeContext.md`, `memory-bank/progress.md` (this update)
@@ -28,12 +30,17 @@
 
 ---
 
+## 2026-08-31
+- [x] Commit + push `58acec4` — membership plans page, nav, inner page polish
+- [x] `/card/type/` — rewrite route, view, demo plans
+- [x] Mobile nav, header scroll, breadcrumbs removed from inner views
+
+---
+
 ## 2026-08-29
 - [x] Smoke-test extrasport.local + devision.local (30/32 pass)
 - [x] Rules per club, slug refactor (`extrasport` / `devision`)
-- [x] Admin «Клуб», multiple form emails, admin branding
-- [x] Map.js per-club balloon fix
-- [x] `docs/WORDPRESS_UPDATE.md`
+- [x] Admin «Клуб», map balloon fix
 
 ---
 
@@ -41,37 +48,34 @@
 
 | Phase | Description | Status | Commit |
 |-------|-------------|--------|--------|
-| 1–2 | WP setup, Multisite, front-page scaffold | ✅ | `PHASE1_2_COMPLETE.md` |
-| 2.5 | Vite + Tailwind CSS v4 | ✅ | `6374c02` |
-| 3 | Layout: header/footer, modals, chat | ✅ | `a4f950a` |
-| 4 | Front page sections | ✅ | `a4f950a` |
-| 5 | JS modules + media | ✅ | `16b774e` |
-| 6 | Rules, forms, CPT pages, multisite options | ✅ | `51bb03d` |
-| 6+ | Per-site club options, domain mapping | ✅ | `7b337a3` |
-| 6++ | Admin club, branding, rules per club | ✅ | `f635c70` |
-| 7 | Views refactor, shares, test-drive unify | ✅ | `cd8bd8e` |
-| 7+ | Membership page `/card/type/`, nav polish | ✅ | `58acec4` |
+| 1–6 | WP setup, Multisite, layout, forms | ✅ | `51bb03d` |
+| 6+ | Per-site club, branding, rules | ✅ | `f635c70` |
+| 7 | Views refactor, shares, test-drive | ✅ | `cd8bd8e` |
+| 7+ | Membership `/card/type/` | ✅ | `58acec4` |
+| 8 | Hierarchical services CPT | ✅ | `4eb42d0` |
+| 8+ | Club overview page | ✅ | `17bae23` |
+| 9 | Trainers CPT, roster, filters | ✅ | `d5a7cd6` |
 
 ---
 
 ## Backlog (WordPress)
 
 ### High
-- [ ] Smoke-test membership page + responsive nav breakpoints
+- [ ] Smoke-test trainers filters + service parallax block
 - [ ] PR `feature/wordpress` → main
+- [ ] News, Events, Jobs pages
 - [ ] Membership plans CPT/admin (replace demo data)
-- [ ] DOCX правил в `assets/docs/`
 
 ### Medium
+- [ ] Trainer photos — дозагрузка/синхронизация оставшихся
 - [ ] Импорт контента Yii2 → WP CPT
-- [ ] Privacy / legal pages
-- [ ] Cleanup legacy assets in theme `assets/`
+- [ ] DOCX правил в `assets/docs/`
 
 ### Low / Final phase
 - [ ] Timer-акция admin + popup
-- [ ] Present video popup admin
-- [ ] WordPress 7.1.x update (см. `docs/WORDPRESS_UPDATE.md`)
+- [ ] WordPress update (см. `docs/WORDPRESS_UPDATE.md`)
 - [ ] Production deploy
+- [ ] Cleanup legacy assets + `wordpress/wp-content/languages/` decision
 
 ---
 
@@ -81,4 +85,4 @@
 - HomeController, HeroDTO — см. `laravel/docs/ai/`
 - Не синхронизировано с текущим WordPress-треком
 
-*Last updated: 2026-08-31*
+*Last updated: 2026-09-01*
