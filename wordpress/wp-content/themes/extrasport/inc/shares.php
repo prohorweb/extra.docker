@@ -34,7 +34,7 @@ function extrasport_get_share_intro( $post_id = null ) {
  * @param int $limit        Max items.
  * @return array<int, array{title: string, excerpt: string, date: string, image: string, url: string}>
  */
-function extrasport_get_other_shares( $exclude_id = 0, $limit = 6 ) {
+function extrasport_get_other_shares( $exclude_id = 0, $limit = 3 ) {
 	$posts = get_posts(
 		array(
 			'post_type'      => 'share',

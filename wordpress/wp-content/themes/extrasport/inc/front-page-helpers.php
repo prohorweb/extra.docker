@@ -174,7 +174,7 @@ function extrasport_get_share_placeholders( $uri ) {
 		);
 	}
 
-	return $items;
+	return array_slice( $items, 0, 3 );
 }
 
 /**
@@ -205,9 +205,9 @@ function extrasport_get_front_page_shares( $uri ) {
 	$share_posts = get_posts(
 		array(
 			'post_type'      => 'share',
-			'posts_per_page' => 6,
-			'orderby'        => 'menu_order',
-			'order'          => 'ASC',
+			'posts_per_page' => 3,
+			'orderby'        => 'date',
+			'order'          => 'DESC',
 		)
 	);
 

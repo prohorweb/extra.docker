@@ -1,10 +1,11 @@
 /**
- * Per-site admin branding — CSS variables are injected via PHP inline styles.
+ * Per-site admin branding — loaded separately from WP color schemes.
  */
 
 :root {
 	--extrasport-brand-primary: #ff6600;
 	--extrasport-brand-accent: #dc5800;
+	--extrasport-admin-menu-bg: #1d2327;
 }
 
 /* Admin bar */
@@ -32,7 +33,35 @@
 	background: var(--extrasport-brand-primary) !important;
 }
 
-/* Left admin menu — current item */
+/* Left admin menu — white text and icons */
+#adminmenuback,
+#adminmenuwrap,
+#adminmenu,
+#adminmenu .wp-submenu,
+#adminmenu .wp-has-current-submenu .wp-submenu,
+#adminmenu .wp-not-current-submenu .wp-submenu,
+#adminmenu .wp-submenu-wrap {
+	background: var(--extrasport-admin-menu-bg) !important;
+}
+
+#adminmenu a.menu-top,
+#adminmenu .wp-submenu a,
+#adminmenu .wp-submenu-head,
+#adminmenu li.menu-top,
+#adminmenu .wp-has-current-submenu .wp-submenu a,
+#adminmenu .wp-not-current-submenu .wp-submenu a {
+	color: #fff !important;
+}
+
+#adminmenu div.wp-menu-image:before,
+#adminmenu li.menu-top:hover div.wp-menu-image:before,
+#adminmenu li.wp-has-current-submenu div.wp-menu-image:before,
+#adminmenu li.current div.wp-menu-image:before,
+#adminmenu li.opensub div.wp-menu-image:before,
+.folded #adminmenu div.wp-menu-image:before {
+	color: #fff !important;
+}
+
 #adminmenu .wp-has-current-submenu .wp-submenu .wp-submenu-head,
 #adminmenu .wp-menu-arrow,
 #adminmenu .wp-has-current-submenu .wp-submenu,
@@ -40,26 +69,33 @@
 #adminmenu li.current a.menu-top,
 #adminmenu li.wp-has-current-submenu a.wp-has-current-submenu {
 	background: var(--extrasport-brand-primary) !important;
+	color: #fff !important;
 }
 
 #adminmenu li.menu-top:hover,
 #adminmenu li.opensub > a.menu-top,
-#adminmenu li > a.menu-top:focus {
+#adminmenu li > a.menu-top:focus,
+#adminmenu li.wp-has-current-submenu > a.menu-top {
 	background: var(--extrasport-brand-accent) !important;
 	color: #fff !important;
 }
 
 #adminmenu .wp-submenu a:hover,
 #adminmenu .wp-submenu a:focus,
-#adminmenu a:hover,
-#adminmenu a:focus,
-.folded #adminmenu .wp-submenu-head:hover {
-	color: var(--extrasport-brand-primary) !important;
+#adminmenu li.menu-top > a.menu-top:hover,
+#adminmenu li.menu-top > a.menu-top:focus {
+	color: #fff !important;
 }
 
 #adminmenu .awaiting-mod,
 #adminmenu .update-plugins {
 	background: var(--extrasport-brand-primary) !important;
+	color: #fff !important;
+}
+
+#adminmenu .update-plugins .plugin-count,
+#adminmenu .update-plugins .update-count {
+	color: #fff !important;
 }
 
 /* Primary buttons */
@@ -79,17 +115,6 @@
 .wp-core-ui .button-primary.focus,
 .wp-core-ui .button-primary:focus {
 	box-shadow: 0 0 0 1px #fff, 0 0 0 3px var(--extrasport-brand-primary) !important;
-}
-
-/* Links & form focus */
-.wrap a,
-.subsubsub a.current {
-	color: var(--extrasport-brand-accent) !important;
-}
-
-input[type="checkbox"]:checked::before,
-input[type="radio"]:checked::before {
-	background: var(--extrasport-brand-primary) !important;
 }
 
 /* Login screen */
@@ -135,4 +160,53 @@ body.login #backtoblog a:hover {
 body.login .message,
 body.login .success {
 	border-left-color: var(--extrasport-brand-primary) !important;
+}
+
+/* Post list — thumbnail column */
+.wp-list-table.widefat .column-thumbnail {
+	width: 72px;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.wp-list-table.widefat .extrasport-admin-thumb-wrap {
+	display: inline-block;
+	width: 56px;
+	height: 56px;
+	overflow: hidden;
+	line-height: 0;
+}
+
+.wp-list-table.widefat .extrasport-admin-thumb-link {
+	border-radius: 4px;
+	box-shadow: none;
+	text-decoration: none;
+}
+
+.wp-list-table.widefat .extrasport-admin-thumb-link:focus .extrasport-admin-thumb,
+.wp-list-table.widefat .extrasport-admin-thumb-link:hover .extrasport-admin-thumb {
+	border-color: var(--extrasport-brand-primary);
+	box-shadow: 0 0 0 1px var(--extrasport-brand-primary);
+}
+
+.wp-list-table.widefat .extrasport-admin-thumb {
+	display: block;
+	width: 56px;
+	height: 56px;
+	min-width: 56px;
+	min-height: 56px;
+	object-fit: cover;
+	object-position: center;
+	border-radius: 4px;
+	background: #fff;
+	border: 1px solid #dcdcde;
+}
+
+.wp-list-table.widefat .extrasport-admin-thumb--empty {
+	display: block;
+	width: 56px;
+	height: 56px;
+	background: #f0f0f1;
+	border: 1px dashed #c3c4c7;
+	border-radius: 4px;
 }

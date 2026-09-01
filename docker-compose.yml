@@ -40,6 +40,8 @@ services:
     command: ["php-fpm"]
     volumes:
       - ./wordpress:/var/www/html
+      - ./frontend/web/img/service:/var/www/yii-service-images:ro
+      - ./frontend/web/uploads:/var/www/yii-uploads:ro
     working_dir: /var/www/html
     depends_on:
       - db

@@ -3,11 +3,8 @@
  * Register Custom Post Types
  *
  * Yii2-compatible permalinks:
- * - service:        /services/{slug}/
- * - group_program:  /services/programs/{slug}/
- * - share:          /card/shares/{slug}/
- *
- * Nested CPTs register before `service` to reduce rewrite collisions.
+ * - service:  /services/{slug}/ or /services/{parent}/{child}/
+ * - share:    /card/shares/{slug}/
  *
  * @package ExtraSport
  */
@@ -16,49 +13,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-/**
- * Register Group Program Post Type (nested under /services/programs/)
- */
-function extrasport_register_program_post_type() {
-	$args = array(
-		'label'               => esc_html__( 'Group Programs', 'extrasport' ),
-		'description'         => esc_html__( 'Group programs and memberships', 'extrasport' ),
-		'public'              => true,
-		'publicly_queryable'  => true,
-		'show_ui'             => true,
-		'show_in_menu'        => true,
-		'show_in_nav_menus'   => true,
-		'show_in_rest'        => true,
-		'has_archive'         => 'services/programs',
-		'hierarchical'        => false,
-		'supports'            => array( 'title', 'editor', 'excerpt', 'thumbnail', 'custom-fields' ),
-		'taxonomies'          => array( 'program_type' ),
-		'rewrite'             => array(
-			'slug'       => 'services/programs',
-			'with_front' => false,
-			'feeds'      => false,
-			'pages'      => true,
-		),
-		'menu_icon'           => 'dashicons-calendar',
-	);
-	register_post_type( 'group_program', $args );
-}
-add_action( 'init', 'extrasport_register_program_post_type', 0 );
+require_once EXTRASPORT_DIR . '/inc/post-type-labels.php';
 
 /**
  * Register Share Post Type (Yii2: /card/shares/)
  */
 function extrasport_register_share_post_type() {
 	$args = array(
-		'labels'              => array(
-			'name'          => __( 'Акции', 'extrasport' ),
-			'singular_name' => __( 'Акция', 'extrasport' ),
-			'menu_name'     => __( 'Акции', 'extrasport' ),
-			'add_new_item'  => __( 'Добавить акцию', 'extrasport' ),
-			'edit_item'     => __( 'Редактировать акцию', 'extrasport' ),
+		'labels'              => extrasport_get_flat_post_labels(
+			__( 'Акция', 'extrasport' ),
+			__( 'Акции', 'extrasport' )
 		),
-		'label'               => esc_html__( 'Shares & Offers', 'extrasport' ),
-		'description'         => esc_html__( 'Club shares, promotions and special offers', 'extrasport' ),
+		'description'         => __( 'Акции, спецпредложения и промо клуба', 'extrasport' ),
 		'public'              => true,
 		'publicly_queryable'  => true,
 		'show_ui'             => true,
@@ -74,7 +40,7 @@ function extrasport_register_share_post_type() {
 			'feeds'      => false,
 			'pages'      => true,
 		),
-		'menu_icon'           => 'dashicons-tag',
+		'menu_icon'           => 'dashicons-megaphone',
 	);
 	register_post_type( 'share', $args );
 }
@@ -85,8 +51,11 @@ add_action( 'init', 'extrasport_register_share_post_type', 0 );
  */
 function extrasport_register_service_post_type() {
 	$args = array(
-		'label'               => esc_html__( 'Services', 'extrasport' ),
-		'description'         => esc_html__( 'Services offered by the club', 'extrasport' ),
+		'labels'              => extrasport_get_hierarchical_post_labels(
+			__( 'Услуга', 'extrasport' ),
+			__( 'Услуги', 'extrasport' )
+		),
+		'description'         => __( 'Услуги клуба: одиночные страницы и группы с дочерними услугами', 'extrasport' ),
 		'public'              => true,
 		'publicly_queryable'  => true,
 		'show_ui'             => true,
@@ -94,28 +63,31 @@ function extrasport_register_service_post_type() {
 		'show_in_nav_menus'   => true,
 		'show_in_rest'        => true,
 		'has_archive'         => 'services',
-		'hierarchical'        => false,
-		'supports'            => array( 'title', 'editor', 'excerpt', 'thumbnail', 'custom-fields' ),
-		'taxonomies'          => array( 'service_category' ),
+		'hierarchical'        => true,
+		'supports'            => array( 'title', 'editor', 'excerpt', 'thumbnail', 'custom-fields', 'page-attributes' ),
 		'rewrite'             => array(
-			'slug'       => 'services',
-			'with_front' => false,
-			'feeds'      => false,
-			'pages'      => true,
+			'slug'         => 'services',
+			'with_front'   => false,
+			'hierarchical' => true,
+			'feeds'        => false,
+			'pages'        => true,
 		),
-		'menu_icon'           => 'dashicons-briefcase',
+		'menu_icon'           => 'dashicons-universal-access-alt',
 	);
 	register_post_type( 'service', $args );
 }
 add_action( 'init', 'extrasport_register_service_post_type', 0 );
 
 /**
- * Register Event Post Type (optional)
+ * Register Event Post Type
  */
 function extrasport_register_event_post_type() {
 	$args = array(
-		'label'               => esc_html__( 'Events', 'extrasport' ),
-		'description'         => esc_html__( 'Club events and competitions', 'extrasport' ),
+		'labels'              => extrasport_get_flat_post_labels(
+			__( 'Мероприятие', 'extrasport' ),
+			__( 'Мероприятия', 'extrasport' )
+		),
+		'description'         => __( 'События, соревнования и активности клуба', 'extrasport' ),
 		'public'              => true,
 		'publicly_queryable'  => true,
 		'show_ui'             => true,
@@ -131,19 +103,22 @@ function extrasport_register_event_post_type() {
 			'feeds'      => false,
 			'pages'      => true,
 		),
-		'menu_icon'           => 'dashicons-tickets',
+		'menu_icon'           => 'dashicons-calendar-alt',
 	);
 	register_post_type( 'event', $args );
 }
 add_action( 'init', 'extrasport_register_event_post_type', 0 );
 
 /**
- * Register Banner Post Type (Баннеры на главной)
+ * Register Banner Post Type
  */
 function extrasport_register_banner_post_type() {
 	$args = array(
-		'label'               => esc_html__( 'Banners', 'extrasport' ),
-		'description'         => esc_html__( 'Homepage carousel banners', 'extrasport' ),
+		'labels'              => extrasport_get_flat_post_labels(
+			__( 'Баннер', 'extrasport' ),
+			__( 'Баннеры', 'extrasport' )
+		),
+		'description'         => __( 'Слайды карусели на главной странице', 'extrasport' ),
 		'public'              => false,
 		'publicly_queryable'  => false,
 		'show_ui'             => true,
@@ -152,7 +127,7 @@ function extrasport_register_banner_post_type() {
 		'show_in_rest'        => true,
 		'hierarchical'        => false,
 		'supports'            => array( 'title', 'thumbnail', 'custom-fields' ),
-		'menu_icon'           => 'dashicons-images-alt',
+		'menu_icon'           => 'dashicons-format-gallery',
 	);
 	register_post_type( 'banner', $args );
 }
@@ -163,14 +138,11 @@ add_action( 'init', 'extrasport_register_banner_post_type', 0 );
  */
 function extrasport_register_lead_post_type() {
 	$args = array(
-		'labels'              => array(
-			'name'          => __( 'Заявки', 'extrasport' ),
-			'singular_name' => __( 'Заявка', 'extrasport' ),
-			'menu_name'     => __( 'Заявки', 'extrasport' ),
-			'all_items'     => __( 'Все заявки', 'extrasport' ),
+		'labels'              => extrasport_get_flat_post_labels(
+			__( 'Заявка', 'extrasport' ),
+			__( 'Заявки', 'extrasport' )
 		),
-		'label'               => esc_html__( 'Leads', 'extrasport' ),
-		'description'         => esc_html__( 'Form submissions stored before email/CRM dispatch', 'extrasport' ),
+		'description'         => __( 'Заявки с форм сайта до отправки в CRM или почту', 'extrasport' ),
 		'public'              => false,
 		'publicly_queryable'  => false,
 		'exclude_from_search' => true,
@@ -195,15 +167,11 @@ add_action( 'init', 'extrasport_register_lead_post_type', 0 );
  * @return void
  */
 function extrasport_register_nested_rewrite_rules() {
-	add_rewrite_rule(
-		'^services/programs/?$',
-		'index.php?post_type=group_program',
-		'top'
-	);
+	add_rewrite_tag( '%service_parent%', '([^/]+)' );
 
 	add_rewrite_rule(
-		'^services/programs/([^/]+)/?$',
-		'index.php?group_program=$matches[1]',
+		'^services/([^/]+)/([^/]+)/?$',
+		'index.php?post_type=service&service_parent=$matches[1]&name=$matches[2]',
 		'top'
 	);
 
@@ -220,6 +188,62 @@ function extrasport_register_nested_rewrite_rules() {
 	);
 }
 add_action( 'init', 'extrasport_register_nested_rewrite_rules', 20 );
+
+/**
+ * Allow nested service parent slug in query vars.
+ *
+ * @param array<string> $vars Public query vars.
+ * @return array<string>
+ */
+function extrasport_register_service_query_vars( $vars ) {
+	$vars[] = 'service_parent';
+
+	return $vars;
+}
+add_filter( 'query_vars', 'extrasport_register_service_query_vars' );
+
+/**
+ * Resolve /services/{parent}/{child}/ to a child service post.
+ *
+ * @param WP_Query $query Main query.
+ * @return void
+ */
+function extrasport_nested_service_query( $query ) {
+	if ( is_admin() || ! $query->is_main_query() ) {
+		return;
+	}
+
+	$parent_slug = $query->get( 'service_parent' );
+	if ( ! $parent_slug ) {
+		return;
+	}
+
+	$parent_id = extrasport_find_top_level_service_by_slug( $parent_slug );
+	if ( ! $parent_id ) {
+		return;
+	}
+
+	$query->set( 'post_type', 'service' );
+	$query->set( 'post_parent', $parent_id );
+	$query->is_archive           = false;
+	$query->is_post_type_archive = false;
+}
+add_action( 'pre_get_posts', 'extrasport_nested_service_query' );
+
+/**
+ * Flush rewrite rules after nested service routes change.
+ *
+ * @return void
+ */
+function extrasport_maybe_flush_service_rewrite() {
+	if ( get_option( 'extrasport_service_rewrite_version' ) === '2' ) {
+		return;
+	}
+
+	flush_rewrite_rules( false );
+	update_option( 'extrasport_service_rewrite_version', '2', false );
+}
+add_action( 'after_setup_theme', 'extrasport_maybe_flush_service_rewrite', 99 );
 
 /**
  * Shares archive — show all promotions, same order as homepage.
@@ -239,3 +263,23 @@ function extrasport_share_archive_query( $query ) {
 	}
 }
 add_action( 'pre_get_posts', 'extrasport_share_archive_query' );
+
+/**
+ * Services archive — only top-level sections (single + group).
+ *
+ * @param WP_Query $query Main query.
+ * @return void
+ */
+function extrasport_service_archive_query( $query ) {
+	if ( is_admin() || ! $query->is_main_query() ) {
+		return;
+	}
+
+	if ( $query->is_post_type_archive( 'service' ) ) {
+		$query->set( 'post_parent', 0 );
+		$query->set( 'posts_per_page', -1 );
+		$query->set( 'orderby', 'menu_order' );
+		$query->set( 'order', 'ASC' );
+	}
+}
+add_action( 'pre_get_posts', 'extrasport_service_archive_query' );

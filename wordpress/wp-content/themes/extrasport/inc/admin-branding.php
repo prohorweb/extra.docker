@@ -70,7 +70,7 @@ function extrasport_enqueue_admin_brand_assets() {
 	wp_enqueue_style(
 		'extrasport-admin-brand',
 		EXTRASPORT_URI . '/assets/css/admin-brand.css',
-		array(),
+		array( 'wp-admin' ),
 		filemtime( $css_path )
 	);
 
@@ -127,42 +127,16 @@ function extrasport_admin_footer_text() {
 add_filter( 'admin_footer_text', 'extrasport_admin_footer_text' );
 
 /**
- * Register club-specific admin color schemes (Profile → Admin Color Scheme).
- *
- * @return void
- */
-function extrasport_register_admin_color_schemes() {
-	$registry = extrasport_get_brand_registry();
-
-	foreach ( $registry as $slug => $brand ) {
-		$label = 'extrasport' === $slug ? 'ExtraSport' : 'De-vision';
-
-		wp_admin_css_color(
-			'extrasport-' . $slug,
-			$label,
-			EXTRASPORT_URI . '/assets/css/admin-brand.css',
-			array( $brand['primary'], '#ffffff', $brand['accent'], '#141416' ),
-			array(
-				'base'    => $brand['accent'],
-				'focus'   => '#ffffff',
-				'current' => $brand['primary'],
-			)
-		);
-	}
-}
-add_action( 'admin_init', 'extrasport_register_admin_color_schemes' );
-
-/**
- * Default admin color scheme for the current site.
+ * Fall back to the default WP admin scheme (legacy extrasport-* schemes broke list tables).
  *
  * @param string $color_scheme User color scheme.
  * @return string
  */
-function extrasport_default_admin_color_scheme( $color_scheme ) {
-	if ( '' !== $color_scheme && 'fresh' !== $color_scheme ) {
-		return $color_scheme;
+function extrasport_reset_legacy_admin_color_scheme( $color_scheme ) {
+	if ( is_string( $color_scheme ) && str_starts_with( $color_scheme, 'extrasport-' ) ) {
+		return 'fresh';
 	}
 
-	return 'extrasport-' . extrasport_get_current_club_slug();
+	return $color_scheme;
 }
-add_filter( 'get_user_option_admin_color', 'extrasport_default_admin_color_scheme' );
+add_filter( 'get_user_option_admin_color', 'extrasport_reset_legacy_admin_color_scheme', 99 );

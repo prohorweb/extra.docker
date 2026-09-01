@@ -46,14 +46,6 @@ function extrasport_get_test_drive_form_context( array $override = array() ) {
 		$context['form_id']    = 'test-drive-services';
 		$context['form_type']    = 'services';
 		$context['source_url']   = get_post_type_archive_link( 'service' ) ?: home_url( '/services/' );
-	} elseif ( is_singular( 'group_program' ) ) {
-		$context['form_id']    = 'test-drive-program';
-		$context['form_type']    = 'group_program';
-		$context['source_url']   = get_permalink();
-	} elseif ( is_post_type_archive( 'group_program' ) ) {
-		$context['form_id']    = 'test-drive-programs';
-		$context['form_type']    = 'group_programs';
-		$context['source_url']   = get_post_type_archive_link( 'group_program' ) ?: home_url( '/services/programs/' );
 	} elseif ( is_singular() ) {
 		$context['form_id']    = 'test-drive-page';
 		$context['form_type']    = get_post_type();

@@ -31,9 +31,35 @@ function extrasport_handle_legacy_redirects() {
 	$uri = untrailingslashit( $path );
 
 	if ( preg_match( '#^/programs(/.*)?$#', $uri, $matches ) ) {
-		$suffix = $matches[1] ?? '';
-		wp_safe_redirect( home_url( '/services/programs' . $suffix . '/' ), 301 );
+		$suffix = trim( $matches[1] ?? '', '/' );
+		$target = extrasport_get_group_service_url( 'group-programs' );
+		if ( $suffix ) {
+			$target = trailingslashit( $target ) . $suffix . '/';
+		}
+		wp_safe_redirect( $target, 301 );
 		exit;
+	}
+
+	if ( preg_match( '#^/services/programs(/.*)?$#', $uri, $matches ) ) {
+		$suffix = trim( $matches[1] ?? '', '/' );
+		$target = extrasport_get_group_service_url( 'group-programs' );
+		if ( $suffix ) {
+			$target = trailingslashit( $target ) . $suffix . '/';
+		}
+		wp_safe_redirect( $target, 301 );
+		exit;
+	}
+
+	if ( preg_match( '#^/services/group-programs/([^/]+)/?$#', $uri, $matches ) ) {
+		$legacy = extrasport_get_group_program_legacy_slug_redirects();
+		$slug   = sanitize_title( $matches[1] );
+		if ( isset( $legacy[ $slug ] ) ) {
+			wp_safe_redirect(
+				trailingslashit( extrasport_get_group_service_url( 'group-programs' ) ) . $legacy[ $slug ] . '/',
+				301
+			);
+			exit;
+		}
 	}
 
 	if ( preg_match( '#^/shares(/.*)?$#', $uri, $matches ) ) {

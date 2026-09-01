@@ -12,6 +12,7 @@
 		while ( have_posts() ) {
 			the_post();
 			?>
+			<?php extrasport_render_breadcrumbs( extrasport_get_group_program_breadcrumbs( get_the_ID() ) ); ?>
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 				<h1 class="font-oswald mb-6 text-3xl uppercase md:text-4xl"><?php the_title(); ?></h1>
 

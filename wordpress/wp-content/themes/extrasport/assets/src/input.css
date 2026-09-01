@@ -193,6 +193,15 @@
 		pointer-events: none;
 	}
 
+	.page-section--actions.page-section--actions-dim-2x::after {
+		background-color: rgb(0 0 0 / 79%);
+	}
+
+	.page-section--actions.page-section--actions-dim-2x .page-section__parallax-bg {
+		background-size: cover;
+		background-position: center center;
+	}
+
 	.page-section__parallax-bg {
 		position: absolute;
 		left: 0;
@@ -238,14 +247,23 @@
 		@apply overflow-hidden;
 	}
 
-	.share-card .card-img-top {
+	.share-card:not(.share-card--service) .card-img-top {
 		@apply block w-full object-cover transition-transform duration-500 ease-out;
 		height: 50vh;
 		max-height: 28rem;
 	}
 
-	.share-card:not(.share-card--static):hover .card-img-top {
-		@apply scale-105;
+	.share-card .card-img-top {
+		@apply block w-full object-cover transition-transform duration-500 ease-out;
+	}
+
+	.share-card--service .share-card__media {
+		aspect-ratio: 644 / 400;
+		@apply w-full;
+	}
+
+	.share-card--service .card-img-top {
+		@apply h-full max-h-none w-full object-cover;
 	}
 
 	.share-card:hover .date-action {
@@ -290,6 +308,14 @@
 
 	.share-card--static {
 		@apply pointer-events-none;
+	}
+
+	.share-card:not(.share-card--static):hover .card-img-top {
+		@apply scale-105;
+	}
+
+	.share-page__panel .share-card--service.share-card--static .card-img-top {
+		@apply h-full max-h-none object-cover;
 	}
 
 	.share-page__panel {
@@ -443,14 +469,20 @@
 	}
 
 	/* Hero / masthead */
-	body.is-front-page .masthead {
+	body.is-front-page .masthead,
+	body.is-services-archive #about {
 		margin-top: -5.5rem;
 	}
 
 	@media (width >= 1024px) {
-		body.is-front-page .masthead {
+		body.is-front-page .masthead,
+		body.is-services-archive #about {
 			margin-top: -5.75rem;
 		}
+	}
+
+	body.is-services-archive #about {
+		@apply relative z-[-1];
 	}
 
 	.masthead {

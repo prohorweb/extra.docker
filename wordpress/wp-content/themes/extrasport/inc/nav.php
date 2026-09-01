@@ -58,11 +58,6 @@ function extrasport_is_nav_link_active( $url ) {
 		return extrasport_is_card_type_page();
 	}
 
-	$programs_archive = extrasport_normalize_nav_url( get_post_type_archive_link( 'group_program' ) ?: home_url( '/services/programs/' ) );
-	if ( $link === $programs_archive ) {
-		return is_post_type_archive( 'group_program' ) || is_singular( 'group_program' );
-	}
-
 	$service_link = extrasport_normalize_nav_url( get_post_type_archive_link( 'service' ) ?: home_url( '/services/' ) );
 	if ( $link === $service_link ) {
 		return is_post_type_archive( 'service' ) || is_singular( 'service' );

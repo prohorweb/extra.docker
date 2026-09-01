@@ -14,7 +14,7 @@ while ( have_posts() ) {
 	$share_data = extrasport_normalize_share_post( get_post() );
 	$intro      = extrasport_get_share_intro( $share_id );
 	$permalink  = get_permalink();
-	$other      = extrasport_get_other_shares( $share_id, 6 );
+	$other      = extrasport_get_other_shares( $share_id, 3 );
 	?>
 	<section
 		id="actions"

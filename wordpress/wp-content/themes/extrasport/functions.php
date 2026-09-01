@@ -20,6 +20,8 @@ function extrasport_setup() {
     // Enable theme support
     add_theme_support( 'title-tag' );
     add_theme_support( 'post-thumbnails' );
+    add_image_size( 'extrasport-service-card', 644, 400, true );
+    add_image_size( 'extrasport-admin-square', 120, 120, true );
     add_theme_support( 'html5', array(
         'search-form',
         'comment-form',
@@ -122,16 +124,26 @@ require_once EXTRASPORT_DIR . '/inc/multisite.php';
 require_once EXTRASPORT_DIR . '/inc/nav.php';
 require_once EXTRASPORT_DIR . '/inc/card-type.php';
 require_once EXTRASPORT_DIR . '/inc/admin-branding.php';
+require_once EXTRASPORT_DIR . '/inc/admin-menu.php';
 require_once EXTRASPORT_DIR . '/inc/theme-settings.php';
 require_once EXTRASPORT_DIR . '/inc/admin-club-settings.php';
 require_once EXTRASPORT_DIR . '/inc/admin-share-meta.php';
+require_once EXTRASPORT_DIR . '/inc/admin-service-meta.php';
 require_once EXTRASPORT_DIR . '/inc/admin-leads.php';
 require_once EXTRASPORT_DIR . '/inc/rules.php';
 require_once EXTRASPORT_DIR . '/inc/form-handlers.php';
 require_once EXTRASPORT_DIR . '/inc/rest-api.php';
+require_once EXTRASPORT_DIR . '/inc/media-import.php';
+require_once EXTRASPORT_DIR . '/inc/yii-db.php';
 require_once EXTRASPORT_DIR . '/inc/seed-shares.php';
+require_once EXTRASPORT_DIR . '/inc/seed-services.php';
+require_once EXTRASPORT_DIR . '/inc/seed-group-programs.php';
+require_once EXTRASPORT_DIR . '/inc/seed-service-content.php';
 require_once EXTRASPORT_DIR . '/inc/front-page-helpers.php';
 require_once EXTRASPORT_DIR . '/inc/shares.php';
+require_once EXTRASPORT_DIR . '/inc/services.php';
+require_once EXTRASPORT_DIR . '/inc/breadcrumbs.php';
+require_once EXTRASPORT_DIR . '/inc/admin-list-thumbnails.php';
 require_once EXTRASPORT_DIR . '/inc/test-drive.php';
 require_once EXTRASPORT_DIR . '/inc/template-router.php';
 

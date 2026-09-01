@@ -29,8 +29,10 @@ export function updateSiteHeaderState() {
 }
 
 function isHeroFullyVisible() {
-	const hero = document.querySelector('.masthead');
-	if (!hero) {
+	const hero =
+		document.querySelector( '.masthead' ) ||
+		document.querySelector( 'body.is-services-archive #about' );
+	if ( ! hero ) {
 		return false;
 	}
 

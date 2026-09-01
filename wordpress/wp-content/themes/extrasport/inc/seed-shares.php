@@ -74,56 +74,13 @@ function extrasport_get_share_seed_items() {
 }
 
 /**
- * Import a theme asset into the media library.
- *
- * @param string $relative_path Path relative to theme directory.
- * @return int Attachment ID or 0.
- */
-function extrasport_import_theme_image( $relative_path ) {
-	$file_path = EXTRASPORT_DIR . '/' . ltrim( $relative_path, '/' );
-	if ( ! file_exists( $file_path ) ) {
-		return 0;
-	}
-
-	$filename = basename( $file_path );
-	$upload   = wp_upload_bits( $filename, null, file_get_contents( $file_path ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
-
-	if ( ! empty( $upload['error'] ) ) {
-		return 0;
-	}
-
-	$filetype   = wp_check_filetype( $filename );
-	$attachment = array(
-		'post_mime_type' => $filetype['type'] ?: 'image/jpeg',
-		'post_title'     => sanitize_file_name( pathinfo( $filename, PATHINFO_FILENAME ) ),
-		'post_content'   => '',
-		'post_status'    => 'inherit',
-	);
-
-	$attach_id = wp_insert_attachment( $attachment, $upload['file'] );
-	if ( is_wp_error( $attach_id ) || ! $attach_id ) {
-		return 0;
-	}
-
-	require_once ABSPATH . 'wp-admin/includes/image.php';
-
-	$attach_data = wp_generate_attachment_metadata( $attach_id, $upload['file'] );
-	wp_update_attachment_metadata( $attach_id, $attach_data );
-
-	return (int) $attach_id;
-}
-
-/**
  * Create demo share posts for the current site.
  *
  * @param bool $force Ignore existing posts when true.
  * @return int Number of created posts.
  */
 function extrasport_seed_shares( $force = false ) {
-	$target_count = count( extrasport_get_share_seed_items() );
-	$existing     = wp_count_posts( 'share' );
-
-	if ( ! $force && ! empty( $existing->publish ) && (int) $existing->publish >= $target_count ) {
+	if ( ! $force && (int) get_option( 'extrasport_shares_seed_version', 0 ) >= EXTRASPORT_SHARES_SEED_VERSION ) {
 		return 0;
 	}
 
@@ -191,17 +148,30 @@ function extrasport_seed_shares( $force = false ) {
  * @return int Post ID or 0.
  */
 function extrasport_find_share_by_slug( $slug ) {
-	$post = get_page_by_path( sanitize_title( $slug ), OBJECT, 'share' );
-	return $post instanceof WP_Post ? (int) $post->ID : 0;
+	$posts = get_posts(
+		array(
+			'post_type'      => 'share',
+			'name'           => sanitize_title( $slug ),
+			'posts_per_page' => 1,
+			'post_status'    => 'any',
+			'fields'         => 'ids',
+		)
+	);
+
+	return ! empty( $posts ) ? (int) $posts[0] : 0;
 }
 
 /**
- * Seed shares when the current site has none.
+ * Seed shares once per site (demo content on first install).
  *
  * @return void
  */
 function extrasport_maybe_seed_shares() {
 	if ( wp_installing() ) {
+		return;
+	}
+
+	if ( is_admin() && (int) get_option( 'extrasport_shares_seed_version', 0 ) >= EXTRASPORT_SHARES_SEED_VERSION ) {
 		return;
 	}
 

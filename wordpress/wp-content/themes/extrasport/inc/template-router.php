@@ -16,10 +16,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function extrasport_get_view_type_map() {
 	return array(
-		'post'          => 'post',
-		'service'       => 'service',
-		'share'         => 'share',
-		'group_program' => 'group-program',
+		'post'    => 'post',
+		'service' => 'service',
+		'share'   => 'share',
 	);
 }
 
@@ -55,6 +54,9 @@ function extrasport_resolve_view() {
 	if ( is_singular() ) {
 		$post_type = get_post_type();
 		$folder    = extrasport_get_view_type_map()[ $post_type ] ?? null;
+		if ( 'service' === $post_type && extrasport_is_service_group( get_queried_object_id() ) ) {
+			return 'views/service/group';
+		}
 		if ( $folder && 'post' !== $folder ) {
 			return 'views/' . $folder . '/show';
 		}

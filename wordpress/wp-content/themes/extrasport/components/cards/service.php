@@ -1,15 +1,55 @@
-<article <?php post_class( 'card-grid group overflow-hidden rounded-xl border border-white/10 bg-white/5 transition hover:border-brand-primary/50' ); ?>>
-	<a href="<?php the_permalink(); ?>" class="block">
-		<?php if ( has_post_thumbnail() ) : ?>
-			<div class="aspect-[16/10] overflow-hidden">
-				<?php the_post_thumbnail( 'large', array( 'class' => 'h-full w-full object-cover transition duration-300 group-hover:scale-105' ) ); ?>
-			</div>
+<?php
+/**
+ * Service card — same layout as share cards.
+ *
+ * @package ExtraSport
+ *
+ * @var array{title: string, excerpt: string, image: string, url: string}|null $service Service card data.
+ * @var string                                                                 $class Extra CSS classes.
+ */
+
+$service = $args['service'] ?? null;
+$class   = isset( $args['class'] ) ? (string) $args['class'] : 'share-card--service';
+$class   = str_contains( $class, 'share-card--service' ) ? $class : trim( 'share-card--service ' . $class );
+
+if ( ! $service && 'service' === get_post_type() ) {
+	$service = extrasport_normalize_service_post( get_post() );
+}
+
+if ( empty( $service ) ) {
+	return;
+}
+
+$is_static = str_contains( $class, 'share-card--static' );
+$url       = ! empty( $service['url'] ) ? (string) $service['url'] : '';
+
+if ( ! $is_static && ! $url ) {
+	return;
+}
+?>
+
+<div class="share-card <?php echo esc_attr( $class ); ?>">
+	<?php if ( $url && ! $is_static ) : ?>
+		<a href="<?php echo esc_url( $url ); ?>" class="share-card__link" aria-label="<?php echo esc_attr( $service['title'] ); ?>"></a>
+	<?php endif; ?>
+	<div class="share-card__media">
+		<?php if ( ! empty( $service['image'] ) ) : ?>
+			<img class="card-img-top" src="<?php echo esc_url( $service['image'] ); ?>" alt="<?php echo esc_attr( $service['title'] ); ?>">
+		<?php else : ?>
+			<div class="card-img-top bg-white/10"></div>
 		<?php endif; ?>
-		<div class="flex items-center justify-between gap-4 p-5">
-			<h3 class="font-oswald text-lg uppercase leading-tight"><?php the_title(); ?></h3>
-			<span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/20 text-brand-primary transition group-hover:bg-brand-primary group-hover:text-white">
-				<i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
-			</span>
+	</div>
+	<div class="card-body">
+		<div class="card-body__row">
+			<div class="card-body_wrapper">
+				<h5 class="card-title"><?php echo esc_html( $service['title'] ); ?></h5>
+				<?php if ( ! empty( $service['excerpt'] ) ) : ?>
+					<div class="card-text"><?php echo esc_html( $service['excerpt'] ); ?></div>
+				<?php endif; ?>
+			</div>
+			<div class="btn-arrow" aria-hidden="true">
+				<i class="fa-sharp fa-solid fa-arrow-right"></i>
+			</div>
 		</div>
-	</a>
-</article>
+	</div>
+</div>
