@@ -11,13 +11,8 @@ $is_services = is_post_type_archive( 'service' );
 $header_pos  = ( $is_home || $is_services ) ? 'site-header--overlay' : 'site-header--static';
 $tel_clean   = preg_replace( '/\s+/', '', $club['tel'] );
 
-$about_links = array(
-	array( 'label' => 'Обзор клуба', 'url' => home_url( '/club/' ) ),
-	array( 'label' => 'Тренеры', 'url' => home_url( '/trainers/' ) ),
-	array( 'label' => 'Новости', 'url' => home_url( '/news/' ) ),
-	array( 'label' => 'Мероприятия', 'url' => home_url( '/events/' ) ),
-	array( 'label' => 'Вакансии', 'url' => home_url( '/jobs/' ) ),
-);
+$about_links     = extrasport_get_about_nav_links();
+$about_external  = extrasport_get_about_external_links();
 
 $nav_links = array(
 	array( 'label' => 'Акции', 'url' => get_post_type_archive_link( 'share' ) ?: home_url( '/card/shares/' ) ),
@@ -62,6 +57,16 @@ $about_active = extrasport_is_about_nav_active( $about_links );
 								</a>
 							</li>
 						<?php endforeach; ?>
+						<?php if ( ! empty( $about_external ) ) : ?>
+							<li class="site-header__dropdown-divider" aria-hidden="true"></li>
+							<?php foreach ( $about_external as $link ) : ?>
+								<li>
+									<a href="<?php echo esc_url( $link['url'] ); ?>" target="_blank" rel="noopener noreferrer" class="site-header__dropdown-link">
+										<?php echo esc_html( $link['label'] ); ?>
+									</a>
+								</li>
+							<?php endforeach; ?>
+						<?php endif; ?>
 					</ul>
 				</div>
 				<?php foreach ( $nav_links as $link ) : ?>
@@ -125,12 +130,13 @@ $about_active = extrasport_is_about_nav_active( $about_links );
 					<?php foreach ( $about_links as $link ) : ?>
 						<li><a href="<?php echo esc_url( $link['url'] ); ?>" class="<?php echo esc_attr( extrasport_nav_item_class( 'block py-2 text-white/80 hover:text-brand-primary', $link['url'] ) ); ?>"><?php echo esc_html( $link['label'] ); ?></a></li>
 					<?php endforeach; ?>
-					<li class="border-t border-white/10 pt-2 mt-2">
-						<a href="<?php echo esc_url( $club['youtube'] ); ?>" target="_blank" rel="noopener noreferrer" class="block py-2 text-white/80 hover:text-brand-primary"><?php esc_html_e( 'Истории успеха', 'extrasport' ); ?></a>
-					</li>
-					<li>
-						<a href="<?php echo esc_url( $club['youtube'] ); ?>" target="_blank" rel="noopener noreferrer" class="block py-2 text-white/80 hover:text-brand-primary"><?php esc_html_e( 'Советы тренеров', 'extrasport' ); ?></a>
-					</li>
+					<?php if ( ! empty( $about_external ) ) : ?>
+						<?php foreach ( $about_external as $index => $link ) : ?>
+							<li class="<?php echo 0 === $index ? 'border-t border-white/10 pt-2 mt-2' : ''; ?>">
+								<a href="<?php echo esc_url( $link['url'] ); ?>" target="_blank" rel="noopener noreferrer" class="block py-2 text-white/80 hover:text-brand-primary"><?php echo esc_html( $link['label'] ); ?></a>
+							</li>
+						<?php endforeach; ?>
+					<?php endif; ?>
 				</ul>
 			</li>
 			<?php foreach ( $nav_links as $link ) : ?>

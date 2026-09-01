@@ -63,6 +63,12 @@ function extrasport_is_nav_link_active( $url ) {
 		return is_post_type_archive( 'service' ) || is_singular( 'service' );
 	}
 
+	foreach ( extrasport_get_about_page_definitions() as $slug => $definition ) {
+		if ( $link === extrasport_normalize_nav_url( extrasport_get_about_page_url( $slug ) ) ) {
+			return extrasport_is_about_page( $slug );
+		}
+	}
+
 	$link_path    = wp_parse_url( $link, PHP_URL_PATH );
 	$link_path    = untrailingslashit( (string) ( $link_path ?: '/' ) ) ?: '/';
 	$current_path = extrasport_get_request_path();

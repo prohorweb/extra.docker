@@ -57,12 +57,14 @@
 
 	/* Site header (Yii2 navbar port) */
 	.site-header {
-		@apply relative z-40 w-full border-0 p-2;
+		@apply relative w-full border-0 p-2;
+		z-index: 100;
 		background-color: rgb(0 0 0 / 72%);
 	}
 
 	.site-header--overlay {
-		z-index: 1;
+		@apply relative;
+		z-index: 100;
 	}
 
 	.site-header--fixed {
@@ -126,8 +128,27 @@
 		@apply flex flex-wrap items-center justify-center gap-3 lg:gap-5 xl:gap-7;
 	}
 
+	.site-header__nav-item {
+		@apply relative;
+		z-index: 110;
+	}
+
+	.site-header__nav-item:is(:hover, :focus-within) {
+		z-index: 120;
+	}
+
+	.site-header__nav-link,
+	.site-header__dropdown-link {
+		font-family: var(--font-oswald);
+		color: azure;
+		letter-spacing: 0.0625em;
+		white-space: nowrap;
+		text-transform: uppercase;
+	}
+
 	.site-header__nav-link {
-		@apply font-oswald text-lg uppercase tracking-wider text-white transition hover:text-brand-primary lg:text-xl xl:text-[1.35rem] xl:leading-none;
+		font-size: 1.25rem;
+		@apply transition hover:text-brand-primary;
 	}
 
 	.site-header__nav-link.is-active,
@@ -147,10 +168,16 @@
 
 	.site-header__dropdown {
 		@apply rounded-md border border-white/10 bg-black/95 shadow-xl;
+		z-index: 9999;
 	}
 
 	.site-header__dropdown-link {
-		@apply block px-4 py-2 font-roboto text-sm normal-case text-white/90 transition hover:bg-white/5 hover:text-brand-primary;
+		font-size: 1em;
+		@apply block px-4 py-2 transition hover:bg-white/5 hover:text-brand-primary;
+	}
+
+	.site-header__dropdown-divider {
+		@apply my-2 border-t border-white/10;
 	}
 
 	.site-header__burger {
@@ -215,6 +242,126 @@
 
 	.page-section--actions-list {
 		min-height: auto;
+	}
+
+	.page-section--club-content {
+		min-height: auto;
+	}
+
+	.club-content-panel {
+		@apply rounded-lg bg-black/70 p-6 md:p-8;
+	}
+
+	.about-page__text h2:empty,
+	.about-page__text h2:has(> :empty:only-child) {
+		@apply hidden;
+	}
+
+	.about-page__text p {
+		@apply mb-4 text-base leading-relaxed md:text-lg;
+	}
+
+	.about-page__text a {
+		@apply text-brand-primary underline-offset-2 hover:text-white hover:underline;
+	}
+
+	.about-page--in-content {
+		@apply mb-8 overflow-hidden rounded-lg md:mb-10;
+	}
+
+	.carousel--about-content {
+		min-height: 0;
+		aspect-ratio: 16 / 9;
+	}
+
+	.carousel--about-content .carousel-track {
+		min-height: 100%;
+		height: 100%;
+	}
+
+	.carousel--about-content .about-page__gallery-img {
+		min-height: 0;
+		height: 100%;
+		width: 100%;
+		object-fit: cover;
+	}
+
+	.carousel--about {
+		@apply relative w-full overflow-hidden;
+		min-height: 45vh;
+		min-height: 45svh;
+	}
+
+	.carousel--about .carousel-track {
+		min-height: inherit;
+		height: 100%;
+	}
+
+	.carousel--about .carousel-slide {
+		@apply flex items-stretch;
+	}
+
+	@media (min-width: 768px) {
+		.carousel--about:not(.carousel--about-content) {
+			min-height: 75vh;
+			min-height: 75svh;
+		}
+	}
+
+	.about-page__gallery-img {
+		@apply block h-full w-full object-cover;
+		min-height: 45vh;
+		min-height: 45svh;
+	}
+
+	@media (min-width: 768px) {
+		.about-page:not(.about-page--in-content) .about-page__gallery-img {
+			min-height: 75vh;
+			min-height: 75svh;
+		}
+	}
+
+	.about-page__params-grid {
+		@apply flex flex-wrap justify-around gap-y-8 py-6 md:py-10;
+	}
+
+	.about-page__params-item {
+		@apply w-1/2 px-3 sm:w-1/3 lg:w-1/4;
+	}
+
+	.param-block {
+		@apply mx-auto max-w-[210px] text-center;
+	}
+
+	.param-block__num {
+		@apply mb-4 border-b border-[#1a1a1a] pb-4 font-oswald text-4xl font-extrabold text-[#ccc] md:text-5xl;
+	}
+
+	.param-block__text {
+		@apply text-sm leading-snug text-white/85 md:text-base;
+	}
+
+	.vr-banner .service-header {
+		@apply relative block h-[75vh] text-brand-primary;
+	}
+
+	.vr-banner .service-header img {
+		@apply h-[75vh] w-full object-cover object-center;
+	}
+
+	.vr-banner .service-header .overlay {
+		@apply absolute inset-0 bg-black/60 transition group-hover:bg-black/50;
+	}
+
+	.vr-banner .service-header .title {
+		@apply absolute z-[1] flex h-[75vh] w-full items-center justify-center text-center font-oswald uppercase text-brand-primary transition-colors;
+		font-size: 5vmax;
+		text-shadow: 3px 3px 0 rgb(0 0 0 / 60%);
+	}
+
+	.vr-banner .service-header:hover .title,
+	.vr-banner .service-header:focus-visible .title {
+		@apply text-white;
 	}
 
 	.page-section--h-75 {

@@ -118,6 +118,9 @@ add_action( 'wp_enqueue_scripts', 'extrasport_enqueue_scripts' );
  * Load Theme Includes
  */
 require_once EXTRASPORT_DIR . '/inc/post-types.php';
+require_once EXTRASPORT_DIR . '/inc/about-pages.php';
+require_once EXTRASPORT_DIR . '/inc/club-page.php';
+require_once EXTRASPORT_DIR . '/inc/seed-club-page.php';
 require_once EXTRASPORT_DIR . '/inc/redirects.php';
 require_once EXTRASPORT_DIR . '/inc/taxonomies.php';
 require_once EXTRASPORT_DIR . '/inc/multisite.php';

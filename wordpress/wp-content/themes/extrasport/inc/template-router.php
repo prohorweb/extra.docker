@@ -47,6 +47,11 @@ function extrasport_resolve_view() {
 		return 'views/card-type/index';
 	}
 
+	$about_view = extrasport_get_current_about_page_view();
+	if ( $about_view ) {
+		return $about_view;
+	}
+
 	if ( is_front_page() ) {
 		return 'views/home/index';
 	}

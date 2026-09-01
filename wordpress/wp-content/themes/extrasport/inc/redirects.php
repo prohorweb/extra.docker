@@ -68,6 +68,21 @@ function extrasport_handle_legacy_redirects() {
 		exit;
 	}
 
+	if ( preg_match( '#^/(es|dv)/(club|command|news|events|job|jobs)(?:/(.+))?$#', $uri, $matches ) ) {
+		$map    = extrasport_get_legacy_about_path_map();
+		$legacy = $matches[2];
+		$suffix = trim( (string) ( $matches[3] ?? '' ), '/' );
+
+		if ( isset( $map[ $legacy ] ) ) {
+			$target = extrasport_get_about_page_url( $map[ $legacy ] );
+			if ( $suffix ) {
+				$target = trailingslashit( $target ) . $suffix . '/';
+			}
+			wp_safe_redirect( $target, 301 );
+			exit;
+		}
+	}
+
 	// Legacy Yii index.php?r=... style URLs.
 	if ( str_contains( $uri, 'index.php' ) && isset( $_GET['r'] ) ) {
 		wp_safe_redirect( home_url( '/' ), 301 );

@@ -71,6 +71,7 @@ function extrasport_get_club_defaults_registry() {
 			'youtube'             => 'http://www.youtube.com/channel/UCCUUiy9ZROCNHBmDvPF-dxw/featured',
 			'whatsapp'            => 'https://wa.me/79669223172',
 			'telegram'            => 'https://t.me/extrasport',
+			'url_3d_tour'         => 'https://pro3d.pro/D49acmjtV23/',
 			'present_video_embed' => '',
 			'timer_enabled'       => false,
 			'timer_title'         => 'Специальное предложение',
