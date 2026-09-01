@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 define( 'EXTRASPORT_ABOUT_PAGE_QUERY_VAR', 'extrasport_about_page' );
-define( 'EXTRASPORT_ABOUT_PAGES_REWRITE_VERSION', 1 );
+define( 'EXTRASPORT_ABOUT_PAGES_REWRITE_VERSION', 2 );
 
 /**
  * Internal about-club pages.
@@ -19,15 +19,11 @@ define( 'EXTRASPORT_ABOUT_PAGES_REWRITE_VERSION', 1 );
  */
 function extrasport_get_about_page_definitions() {
 	return array(
-		'club'     => array(
+		'club'   => array(
 			'label' => __( 'Обзор клуба', 'extrasport' ),
 			'view'  => 'views/club/index',
 		),
-		'trainers' => array(
-			'label' => __( 'Тренеры', 'extrasport' ),
-			'view'  => 'views/about/stub',
-		),
-		'news'     => array(
+		'news'   => array(
 			'label' => __( 'Новости', 'extrasport' ),
 			'view'  => 'views/about/stub',
 		),
@@ -169,11 +165,25 @@ function extrasport_get_current_about_page_view() {
  * @return array<int, array{label: string, url: string}>
  */
 function extrasport_get_about_nav_links() {
-	$links = array();
+	$definitions = extrasport_get_about_page_definitions();
+	$order       = array( 'club', 'trainers', 'news', 'events', 'jobs' );
+	$links       = array();
 
-	foreach ( extrasport_get_about_page_definitions() as $slug => $definition ) {
+	foreach ( $order as $slug ) {
+		if ( 'trainers' === $slug ) {
+			$links[] = array(
+				'label' => __( 'Тренеры', 'extrasport' ),
+				'url'   => extrasport_get_trainers_archive_url(),
+			);
+			continue;
+		}
+
+		if ( ! isset( $definitions[ $slug ] ) ) {
+			continue;
+		}
+
 		$links[] = array(
-			'label' => $definition['label'],
+			'label' => $definitions[ $slug ]['label'],
 			'url'   => extrasport_get_about_page_url( $slug ),
 		);
 	}

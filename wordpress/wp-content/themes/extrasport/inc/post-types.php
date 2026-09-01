@@ -110,6 +110,37 @@ function extrasport_register_event_post_type() {
 add_action( 'init', 'extrasport_register_event_post_type', 0 );
 
 /**
+ * Register Trainer Post Type (Yii2: /es/command/ → /trainers/)
+ */
+function extrasport_register_trainer_post_type() {
+	$args = array(
+		'labels'              => extrasport_get_flat_post_labels(
+			__( 'Тренер', 'extrasport' ),
+			__( 'Тренеры', 'extrasport' )
+		),
+		'description'         => __( 'Тренеры и инструкторы клуба', 'extrasport' ),
+		'public'              => true,
+		'publicly_queryable'  => true,
+		'show_ui'             => true,
+		'show_in_menu'        => true,
+		'show_in_nav_menus'   => true,
+		'show_in_rest'        => true,
+		'has_archive'         => 'trainers',
+		'hierarchical'        => false,
+		'supports'            => array( 'title', 'editor', 'thumbnail' ),
+		'rewrite'             => array(
+			'slug'       => 'trainers',
+			'with_front' => false,
+			'feeds'      => false,
+			'pages'      => true,
+		),
+		'menu_icon'           => 'dashicons-groups',
+	);
+	register_post_type( 'trainer', $args );
+}
+add_action( 'init', 'extrasport_register_trainer_post_type', 0 );
+
+/**
  * Register Banner Post Type
  */
 function extrasport_register_banner_post_type() {

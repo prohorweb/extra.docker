@@ -1,5 +1,3 @@
-import { getPageScrollY } from './scroll-state.js';
-
 const PARALLAX_FACTOR = 0.1;
 const PARALLAX_BUFFER_RATIO = 0.15;
 
@@ -18,10 +16,9 @@ export function initParallax() {
 	const items = sections.map( ( section ) => setupSection( section ) ).filter( Boolean );
 
 	const update = () => {
-		const scrollY = getPageScrollY();
-
-		for ( const { bg } of items ) {
-			bg.style.transform = `translate3d(0, ${ -( scrollY * PARALLAX_FACTOR ) }px, 0)`;
+		for ( const { section, bg } of items ) {
+			const relativeScroll = -section.getBoundingClientRect().top;
+			bg.style.transform = `translate3d(0, ${ -( relativeScroll * PARALLAX_FACTOR ) }px, 0)`;
 		}
 	};
 

@@ -75,7 +75,7 @@ while ( have_posts() ) {
 	</section>
 
 	<?php if ( ! empty( $other ) ) : ?>
-		<section class="page-section page-section--actions page-section--actions-list page-section--h-75 bg-brand-dark" style="background-image: url('<?php echo esc_url( $uri . '/assets/img/actions-bg.jpg' ); ?>');">
+		<section class="page-section page-section--actions page-section--actions-list bg-brand-dark" style="background-image: url('<?php echo esc_url( $uri . '/assets/img/actions-bg.jpg' ); ?>');">
 			<div class="page-section__inner mx-auto w-full max-w-7xl px-4 lg:px-6">
 				<h2 class="section-heading mb-4 md:mb-5"><?php esc_html_e( 'Другие акции клуба', 'extrasport' ); ?></h2>
 				<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">

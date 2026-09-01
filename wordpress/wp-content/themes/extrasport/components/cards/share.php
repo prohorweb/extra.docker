@@ -37,6 +37,10 @@ if ( ! $is_static && ! $url ) {
 	<div class="share-card__media">
 		<?php if ( ! empty( $share['image'] ) ) : ?>
 			<img class="card-img-top" src="<?php echo esc_url( $share['image'] ); ?>" alt="<?php echo esc_attr( $share['title'] ); ?>">
+		<?php elseif ( str_contains( $class, 'trainer-card' ) ) : ?>
+			<div class="card-img-top share-card__placeholder">
+				<img class="membership-card__logo" src="<?php echo esc_url( extrasport_get_trainer_placeholder_logo_url() ); ?>" alt="">
+			</div>
 		<?php else : ?>
 			<div class="card-img-top bg-white/10"></div>
 		<?php endif; ?>

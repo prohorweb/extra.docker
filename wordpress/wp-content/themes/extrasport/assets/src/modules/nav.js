@@ -105,6 +105,20 @@ export function initNav() {
 		});
 	});
 
+	document.querySelectorAll('[data-trainers-filter-toggle]').forEach((btn) => {
+		btn.addEventListener('click', () => {
+			const targetId = btn.getAttribute('aria-controls');
+			const panel = targetId ? document.getElementById(targetId) : null;
+			if (!panel) return;
+
+			const isOpen = panel.classList.contains('is-open');
+			panel.classList.toggle('hidden', isOpen);
+			panel.classList.toggle('is-open', !isOpen);
+			panel.classList.toggle('flex', !isOpen);
+			btn.setAttribute('aria-expanded', String(!isOpen));
+		});
+	});
+
 	// Close mobile nav when opening a modal
 	document.querySelectorAll('[data-modal-open]').forEach((btn) => {
 		btn.addEventListener('click', closeNav);

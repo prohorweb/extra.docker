@@ -73,8 +73,24 @@ while ( have_posts() ) {
 		</div>
 	</section>
 
+	<?php if ( extrasport_is_personal_training_service( $service_id ) ) : ?>
+		<section class="page-section page-section--actions-list bg-black">
+			<div class="page-section__inner mx-auto w-full max-w-7xl px-4 lg:px-6">
+				<?php
+				extrasport_render_trainers_section(
+					array(
+						'show_filter'   => true,
+						'show_all_link' => true,
+						'filter_action' => get_permalink( $service_id ),
+					)
+				);
+				?>
+			</div>
+		</section>
+	<?php endif; ?>
+
 	<?php if ( ! empty( $other ) ) : ?>
-		<section class="page-section page-section--actions page-section--actions-list page-section--h-75 bg-brand-dark" style="background-image: url('<?php echo esc_url( extrasport_get_default_actions_bg_url() ); ?>');">
+		<section class="page-section page-section--actions page-section--actions-list bg-brand-dark" style="background-image: url('<?php echo esc_url( extrasport_get_default_actions_bg_url() ); ?>');">
 			<div class="page-section__inner mx-auto w-full max-w-7xl px-4 lg:px-6">
 				<h2 class="section-heading mb-4 md:mb-5"><?php esc_html_e( 'Другие услуги клуба', 'extrasport' ); ?></h2>
 				<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">

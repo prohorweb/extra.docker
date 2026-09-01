@@ -68,7 +68,11 @@ function extrasport_handle_legacy_redirects() {
 		exit;
 	}
 
-	if ( preg_match( '#^/(es|dv)/(club|command|news|events|job|jobs)(?:/(.+))?$#', $uri, $matches ) ) {
+	if ( extrasport_redirect_legacy_command_url( $uri ) ) {
+		exit;
+	}
+
+	if ( preg_match( '#^/(es|dv)/(club|news|events|job|jobs)(?:/(.+))?$#', $uri, $matches ) ) {
 		$map    = extrasport_get_legacy_about_path_map();
 		$legacy = $matches[2];
 		$suffix = trim( (string) ( $matches[3] ?? '' ), '/' );
@@ -90,3 +94,45 @@ function extrasport_handle_legacy_redirects() {
 	}
 }
 add_action( 'template_redirect', 'extrasport_handle_legacy_redirects', 0 );
+
+/**
+ * Redirect legacy Yii trainer URLs (/es/command/, /dv/command/) to /trainers/.
+ *
+ * @param string $uri Request path without trailing slash.
+ * @return bool True when redirect was sent.
+ */
+function extrasport_redirect_legacy_command_url( $uri ) {
+	if ( ! preg_match( '#^/(es|dv)/command(?:/(.+))?$#', $uri, $matches ) ) {
+		return false;
+	}
+
+	$suffix = trim( (string) ( $matches[2] ?? '' ), '/' );
+
+	if ( $suffix ) {
+		$trainer_slug_aliases = array(
+			'cvetkova-ludmila' => 'ludmila-cvetnikova',
+		);
+
+		if ( isset( $trainer_slug_aliases[ $suffix ] ) ) {
+			$suffix = $trainer_slug_aliases[ $suffix ];
+		}
+
+		$trainer_id = extrasport_find_trainer_post_id_by_slug( $suffix );
+		if ( $trainer_id ) {
+			wp_safe_redirect( get_permalink( $trainer_id ), 301 );
+			return true;
+		}
+	}
+
+	$target = extrasport_get_trainers_archive_url();
+
+	if ( 'POST' === ( $_SERVER['REQUEST_METHOD'] ?? '' ) && ! isset( $_POST['reset'] ) && isset( $_POST['filter'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$filter = sanitize_text_field( wp_unslash( (string) $_POST['filter'] ) );
+		if ( $filter ) {
+			$target = add_query_arg( 'filter', $filter, $target );
+		}
+	}
+
+	wp_safe_redirect( $target, 301 );
+	return true;
+}

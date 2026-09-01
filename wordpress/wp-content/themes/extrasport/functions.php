@@ -21,6 +21,7 @@ function extrasport_setup() {
     add_theme_support( 'title-tag' );
     add_theme_support( 'post-thumbnails' );
     add_image_size( 'extrasport-service-card', 644, 400, true );
+    add_image_size( 'extrasport-trainer-card', 664, 664, array( 'center', 'top' ) );
     add_image_size( 'extrasport-admin-square', 120, 120, true );
     add_theme_support( 'html5', array(
         'search-form',
@@ -121,6 +122,10 @@ require_once EXTRASPORT_DIR . '/inc/post-types.php';
 require_once EXTRASPORT_DIR . '/inc/about-pages.php';
 require_once EXTRASPORT_DIR . '/inc/club-page.php';
 require_once EXTRASPORT_DIR . '/inc/seed-club-page.php';
+require_once EXTRASPORT_DIR . '/inc/trainers.php';
+require_once EXTRASPORT_DIR . '/inc/seed-trainers.php';
+require_once EXTRASPORT_DIR . '/inc/sync-trainers-roster.php';
+require_once EXTRASPORT_DIR . '/inc/admin-trainer-meta.php';
 require_once EXTRASPORT_DIR . '/inc/redirects.php';
 require_once EXTRASPORT_DIR . '/inc/taxonomies.php';
 require_once EXTRASPORT_DIR . '/inc/multisite.php';

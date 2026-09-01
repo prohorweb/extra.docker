@@ -551,6 +551,67 @@ function extrasport_cleanup_duplicate_attachments_by_hash() {
 }
 
 /**
+ * Delete trainer import attachments that are no longer referenced anywhere.
+ *
+ * @return int Number of deleted attachments.
+ */
+function extrasport_cleanup_orphan_trainer_attachments() {
+	global $wpdb;
+
+	if ( ! defined( 'EXTRASPORT_TRAINER_BANNER_META' ) ) {
+		return 0;
+	}
+
+	$attachment_ids = $wpdb->get_col(
+		$wpdb->prepare(
+			"SELECT p.ID
+			FROM {$wpdb->posts} p
+			INNER JOIN {$wpdb->postmeta} pm ON pm.post_id = p.ID
+			WHERE p.post_type = 'attachment'
+				AND pm.meta_key = %s
+				AND (
+					pm.meta_value LIKE %s
+					OR pm.meta_value LIKE %s
+					OR pm.meta_value LIKE %s
+					OR pm.meta_value LIKE %s
+				)",
+			EXTRASPORT_IMPORT_SOURCE_META_KEY,
+			$wpdb->esc_like( 'yii/trainers/' ) . '%',
+			$wpdb->esc_like( 'yii/trainer-banners/' ) . '%',
+			$wpdb->esc_like( 'production/trainers/' ) . '%',
+			$wpdb->esc_like( 'production/trainer-banners/' ) . '%'
+		)
+	);
+
+	$deleted = 0;
+
+	foreach ( $attachment_ids as $attachment_id ) {
+		$attachment_id = (int) $attachment_id;
+
+		$in_use = (int) $wpdb->get_var(
+			$wpdb->prepare(
+				"SELECT COUNT(1)
+				FROM {$wpdb->postmeta}
+				WHERE meta_value = %d
+					AND meta_key IN (%s, %s)",
+				$attachment_id,
+				'_thumbnail_id',
+				EXTRASPORT_TRAINER_BANNER_META
+			)
+		);
+
+		if ( $in_use > 0 ) {
+			continue;
+		}
+
+		wp_delete_attachment( $attachment_id, true );
+		++$deleted;
+	}
+
+	return $deleted;
+}
+
+/**
  * Delete unused legacy serv-* demo attachments.
  *
  * @return int Number of deleted attachments.
@@ -623,6 +684,7 @@ function extrasport_tag_service_import_sources() {
 function extrasport_cleanup_all_media_duplicates() {
 	extrasport_cleanup_legacy_serv_attachments();
 	extrasport_cleanup_duplicate_attachments_by_hash();
+	extrasport_cleanup_orphan_trainer_attachments();
 
 	if ( function_exists( 'extrasport_cleanup_duplicate_service_attachments' ) ) {
 		extrasport_cleanup_duplicate_service_attachments();

@@ -19,6 +19,7 @@ function extrasport_get_view_type_map() {
 		'post'    => 'post',
 		'service' => 'service',
 		'share'   => 'share',
+		'trainer' => 'trainer',
 	);
 }
 

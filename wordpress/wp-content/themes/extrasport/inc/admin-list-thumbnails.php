@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return array<int, string>
  */
 function extrasport_get_thumbnail_admin_post_types() {
-	return array( 'service', 'share', 'event', 'banner' );
+	return array( 'service', 'share', 'event', 'banner', 'trainer' );
 }
 
 /**

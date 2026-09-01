@@ -63,6 +63,11 @@ function extrasport_is_nav_link_active( $url ) {
 		return is_post_type_archive( 'service' ) || is_singular( 'service' );
 	}
 
+	$trainers_link = extrasport_normalize_nav_url( extrasport_get_trainers_archive_url() );
+	if ( $link === $trainers_link ) {
+		return is_post_type_archive( 'trainer' ) || is_singular( 'trainer' );
+	}
+
 	foreach ( extrasport_get_about_page_definitions() as $slug => $definition ) {
 		if ( $link === extrasport_normalize_nav_url( extrasport_get_about_page_url( $slug ) ) ) {
 			return extrasport_is_about_page( $slug );

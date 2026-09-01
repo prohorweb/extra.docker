@@ -242,6 +242,84 @@
 
 	.page-section--actions-list {
 		min-height: auto;
+		padding-block: 3rem;
+	}
+
+	.trainers-filter {
+		@apply bg-[#212529] text-white;
+	}
+
+	.trainers-filter__bar {
+		@apply flex flex-wrap items-center gap-3 px-4 py-3 lg:flex-nowrap lg:justify-start lg:gap-4 lg:px-5;
+	}
+
+	.trainers-filter__label {
+		@apply shrink-0 font-oswald text-sm uppercase tracking-wide text-white/90;
+	}
+
+	.trainers-filter__toggle {
+		@apply ml-auto inline-flex h-10 w-10 items-center justify-center rounded border border-white/20 text-white transition hover:border-brand-primary hover:text-brand-primary lg:hidden;
+	}
+
+	.trainers-filter__toggle-icon {
+		@apply relative block h-3 w-5;
+	}
+
+	.trainers-filter__toggle-icon::before,
+	.trainers-filter__toggle-icon::after,
+	.trainers-filter__toggle-icon {
+		background-color: currentColor;
+	}
+
+	.trainers-filter__toggle-icon::before,
+	.trainers-filter__toggle-icon::after {
+		content: '';
+		@apply absolute left-0 block h-0.5 w-full;
+	}
+
+	.trainers-filter__toggle-icon::before {
+		top: 0;
+		box-shadow: 0 5px 0 currentColor;
+	}
+
+	.trainers-filter__toggle-icon::after {
+		bottom: 0;
+	}
+
+	.trainers-filter__controls {
+		@apply w-full flex-col lg:w-auto lg:flex-row lg:items-center;
+	}
+
+	.trainers-filter__controls.is-open {
+		@apply flex;
+	}
+
+	.trainers-filter__form {
+		@apply flex w-full flex-col items-stretch gap-3 lg:w-auto lg:flex-row lg:flex-nowrap lg:items-center lg:justify-start;
+	}
+
+	.trainers-filter__select {
+		@apply w-full min-w-[220px] lg:w-auto lg:max-w-none;
+	}
+
+	.trainers-filter__button {
+		@apply w-full shrink-0 justify-center lg:w-auto;
+	}
+
+	.trainers-filter__button--reset {
+		@apply border-transparent bg-black/40 hover:bg-black/60;
+	}
+
+	.form-select {
+		@apply w-full appearance-none rounded-none border border-white/20 bg-white/5 px-4 py-3 pr-10 text-white focus:border-brand-primary focus:outline-none focus:ring-1 focus:ring-brand-primary;
+		background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+		background-repeat: no-repeat;
+		background-position: right 0.75rem center;
+		background-size: 16px 12px;
+	}
+
+	.form-select option {
+		@apply bg-brand-dark text-white;
 	}
 
 	.page-section--club-content {
@@ -394,10 +472,58 @@
 		@apply overflow-hidden;
 	}
 
-	.share-card:not(.share-card--service) .card-img-top {
+	.share-card:not(.share-card--service):not(.trainer-card) .card-img-top {
 		@apply block w-full object-cover transition-transform duration-500 ease-out;
 		height: 50vh;
 		max-height: 28rem;
+	}
+
+	.share-card.trainer-card .share-card__media {
+		@apply relative isolate aspect-square w-full;
+	}
+
+	.share-card.trainer-card:not(.share-card--service) .card-img-top {
+		@apply block h-full w-full object-cover object-top transition-transform duration-500 ease-out;
+		max-height: none;
+	}
+
+	.trainer-card:not(.share-card--service) .share-card__placeholder.card-img-top {
+		@apply flex h-full min-h-0 w-full items-center justify-center bg-white/10 p-8;
+		max-height: none;
+	}
+
+	.trainer-card .share-card__placeholder .membership-card__logo {
+		@apply mx-auto block h-auto w-auto max-h-24 max-w-[40%] opacity-85;
+	}
+
+	.trainer-card .share-card__media:has(img)::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		z-index: 1;
+		pointer-events: none;
+		background: radial-gradient(ellipse at center, rgb(0 0 0 / 0%) 40%, rgb(0 0 0 / 58%) 100%);
+	}
+
+	.single-trainer .share-page__media:has(img) {
+		@apply relative isolate overflow-hidden rounded-lg;
+	}
+
+	.single-trainer .share-page__media:has(img)::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		z-index: 1;
+		pointer-events: none;
+		background: radial-gradient(ellipse at center, rgb(0 0 0 / 0%) 40%, rgb(0 0 0 / 58%) 100%);
+	}
+
+	.share-page__placeholder {
+		@apply flex items-center justify-center p-10;
+	}
+
+	.share-page__placeholder .membership-card__logo {
+		@apply mx-auto block h-auto w-auto max-h-32 max-w-[50%] opacity-85;
 	}
 
 	.share-card .card-img-top {
