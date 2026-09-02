@@ -1,6 +1,6 @@
 <?php
 /**
- * Membership plans page — /card/type/
+ * Membership plans page — /cards/
  *
  * @package ExtraSport
  */
@@ -19,7 +19,7 @@ $type_url   = extrasport_get_card_type_url();
 >
 	<div class="page-section__inner mx-auto w-full max-w-7xl px-4 lg:px-6">
 
-		<h1 class="section-heading mb-3 md:mb-4">
+		<h1 class="section-heading mb-4 md:mb-5">
 			<?php
 			printf(
 				/* translators: %s: club title */

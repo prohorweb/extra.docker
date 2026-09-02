@@ -64,7 +64,18 @@ function extrasport_handle_legacy_redirects() {
 
 	if ( preg_match( '#^/shares(/.*)?$#', $uri, $matches ) ) {
 		$suffix = $matches[1] ?? '';
-		wp_safe_redirect( home_url( '/card/shares' . $suffix . '/' ), 301 );
+		wp_safe_redirect( home_url( '/actions' . $suffix . '/' ), 301 );
+		exit;
+	}
+
+	if ( preg_match( '#^/card/shares(/.*)?$#', $uri, $matches ) ) {
+		$suffix = $matches[1] ?? '';
+		wp_safe_redirect( home_url( '/actions' . $suffix . '/' ), 301 );
+		exit;
+	}
+
+	if ( preg_match( '#^/card/type/?$#', $uri ) ) {
+		wp_safe_redirect( home_url( '/cards/' ), 301 );
 		exit;
 	}
 

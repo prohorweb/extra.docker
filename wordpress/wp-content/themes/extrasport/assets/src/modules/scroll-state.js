@@ -37,7 +37,10 @@ function isHeroFullyVisible() {
 	}
 
 	// Sticky hero stays in the viewport rect while covered — use scroll position instead.
-	if ( document.body.classList.contains( 'is-front-page' ) && getPageScrollY() > 50 ) {
+	if (
+		( document.body.classList.contains( 'is-front-page' ) || document.body.classList.contains( 'is-services-archive' ) )
+		&& getPageScrollY() > 50
+	) {
 		return false;
 	}
 

@@ -16,7 +16,7 @@ $uri  = EXTRASPORT_URI;
 >
 	<div class="page-section__inner mx-auto w-full max-w-7xl px-4 lg:px-6">
 
-		<h1 class="section-heading mb-4 md:mb-5">
+		<h1 class="section-heading mb-8 py-4 md:mb-10">
 			<?php printf( esc_html__( 'Акции клуба %s', 'extrasport' ), esc_html( $club['title'] ) ); ?>
 		</h1>
 

@@ -48,7 +48,7 @@ function extrasport_is_nav_link_active( $url ) {
 		return false;
 	}
 
-	$share_link = extrasport_normalize_nav_url( get_post_type_archive_link( 'share' ) ?: home_url( '/card/shares/' ) );
+	$share_link = extrasport_normalize_nav_url( extrasport_get_shares_archive_url() );
 	if ( $link === $share_link ) {
 		return is_post_type_archive( 'share' ) || is_singular( 'share' );
 	}

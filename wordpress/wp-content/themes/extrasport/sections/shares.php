@@ -21,12 +21,12 @@ if ( empty( $shares ) ) {
 >
 	<div class="page-section__inner">
 		<div class="text-center">
-			<h2 class="section-heading">
+			<h2 class="section-heading mb-8 md:mb-10">
 				<?php printf( esc_html__( 'Акции клуба %s', 'extrasport' ), esc_html( $club['title'] ) ); ?>
 			</h2>
 		</div>
 
-		<div class="grid gap-6 text-center md:grid-cols-2 lg:grid-cols-3">
+		<div class="grid items-start gap-6 text-center md:grid-cols-2 lg:grid-cols-3">
 			<?php foreach ( $shares as $index => $share ) : ?>
 				<?php
 				get_template_part(
@@ -34,7 +34,7 @@ if ( empty( $shares ) ) {
 					null,
 					array(
 						'share' => $share,
-						'class' => ( 2 === $index ) ? 'md:hidden lg:block' : '',
+						'class' => trim( 'share-card--home' . ( ( 2 === $index ) ? ' md:hidden lg:block' : '' ) ),
 					)
 				);
 				?>
@@ -42,7 +42,7 @@ if ( empty( $shares ) ) {
 		</div>
 
 		<div class="flex justify-center pb-8 pt-4">
-			<a href="<?php echo esc_url( get_post_type_archive_link( 'share' ) ?: home_url( '/card/shares/' ) ); ?>" class="btn-xl">
+			<a href="<?php echo esc_url( extrasport_get_shares_archive_url() ); ?>" class="btn-xl">
 				<?php esc_html_e( 'Все акции', 'extrasport' ); ?>
 			</a>
 		</div>

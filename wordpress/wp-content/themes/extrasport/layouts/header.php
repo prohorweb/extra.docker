@@ -15,7 +15,7 @@ $about_links     = extrasport_get_about_nav_links();
 $about_external  = extrasport_get_about_external_links();
 
 $nav_links = array(
-	array( 'label' => 'Акции', 'url' => get_post_type_archive_link( 'share' ) ?: home_url( '/card/shares/' ) ),
+	array( 'label' => 'Акции', 'url' => extrasport_get_shares_archive_url() ),
 	array( 'label' => 'Услуги', 'url' => get_post_type_archive_link( 'service' ) ?: home_url( '/services/' ) ),
 	array( 'label' => 'Абонементы и цены', 'url' => extrasport_get_card_type_url() ),
 	array( 'label' => 'Контакты', 'url' => home_url( '/#contacts' ) ),

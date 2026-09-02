@@ -157,7 +157,7 @@ function extrasport_render_carousel_slides( $banner_posts, $club, $uri ) {
  * @return array<int, array{title: string, excerpt: string, date: string, image: string, url: string}>
  */
 function extrasport_get_share_placeholders( $uri ) {
-	$archive_url = get_post_type_archive_link( 'share' ) ?: home_url( '/card/shares/' );
+	$archive_url = extrasport_get_shares_archive_url();
 	$items       = array();
 
 	foreach ( extrasport_get_share_seed_templates() as $template ) {

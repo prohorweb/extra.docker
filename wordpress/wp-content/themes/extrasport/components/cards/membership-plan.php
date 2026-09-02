@@ -16,7 +16,7 @@ if ( empty( $plan ) ) {
 }
 
 $video_src = $uri . '/assets/video/card-bg-' . (int) $plan['video'] . '.mp4';
-$card_mod  = 'cardModal3' === ( $plan['modal_id'] ?? '' ) ? ' membership-card--12-months' : '';
+$card_mod  = 4 === (int) ( $plan['video'] ?? 0 ) ? ' membership-card--12-months' : '';
 ?>
 
 <div class="membership-card<?php echo esc_attr( $card_mod ); ?>">

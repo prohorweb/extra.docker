@@ -1,6 +1,6 @@
 <?php
 /**
- * /card/type/ — membership plans page (Yii2 TypeController port).
+ * /cards/ — membership plans page (Yii2 TypeController port).
  *
  * @package ExtraSport
  */
@@ -12,28 +12,28 @@ if ( ! defined( 'ABSPATH' ) ) {
 define( 'EXTRASPORT_CARD_TYPE_QUERY_VAR', 'extrasport_card_type' );
 
 /**
- * Register /card/type/ rewrite rule.
+ * Register /cards/ rewrite rule.
  *
  * @return void
  */
 function extrasport_register_card_type_rewrite() {
 	add_rewrite_tag( '%' . EXTRASPORT_CARD_TYPE_QUERY_VAR . '%', '1' );
-	add_rewrite_rule( '^card/type/?$', 'index.php?' . EXTRASPORT_CARD_TYPE_QUERY_VAR . '=1', 'top' );
+	add_rewrite_rule( '^cards/?$', 'index.php?' . EXTRASPORT_CARD_TYPE_QUERY_VAR . '=1', 'top' );
 }
 add_action( 'init', 'extrasport_register_card_type_rewrite' );
 
 /**
- * Flush rewrite rules after theme setup when card type route is new.
+ * Flush rewrite rules after cards route changes.
  *
  * @return void
  */
 function extrasport_maybe_flush_card_type_rewrite() {
-	if ( get_option( 'extrasport_card_type_rewrite_version' ) === '1' ) {
+	if ( get_option( 'extrasport_card_type_rewrite_version' ) === '2' ) {
 		return;
 	}
 
 	flush_rewrite_rules( false );
-	update_option( 'extrasport_card_type_rewrite_version', '1', false );
+	update_option( 'extrasport_card_type_rewrite_version', '2', false );
 }
 add_action( 'after_setup_theme', 'extrasport_maybe_flush_card_type_rewrite', 99 );
 
@@ -52,7 +52,7 @@ function extrasport_is_card_type_page() {
  * @return string
  */
 function extrasport_get_card_type_url() {
-	return home_url( '/card/type/' );
+	return home_url( '/cards/' );
 }
 
 /**
@@ -80,42 +80,6 @@ function extrasport_get_membership_amenities() {
 			'clubs'  => array( 'extrasport' ),
 		),
 	);
-}
-
-/**
- * Default membership plans (demo until CPT/admin is wired).
- *
- * @return array<int, array{title: string, price: string, video: int, modal_id: string}>
- */
-function extrasport_get_membership_plans() {
-	$plans = array(
-		array(
-			'title'    => '1 месяц',
-			'price'    => '5900',
-			'video'    => 1,
-			'modal_id' => 'cardModal0',
-		),
-		array(
-			'title'    => '3 месяца',
-			'price'    => '6900',
-			'video'    => 2,
-			'modal_id' => 'cardModal1',
-		),
-		array(
-			'title'    => '6 месяцев',
-			'price'    => '8500',
-			'video'    => 3,
-			'modal_id' => 'cardModal2',
-		),
-		array(
-			'title'    => '12 месяцев',
-			'price'    => '17800',
-			'video'    => 4,
-			'modal_id' => 'cardModal3',
-		),
-	);
-
-	return apply_filters( 'extrasport_membership_plans', $plans );
 }
 
 /**

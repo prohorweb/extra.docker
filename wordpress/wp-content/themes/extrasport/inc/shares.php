@@ -10,6 +10,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Shares archive URL.
+ *
+ * @return string
+ */
+function extrasport_get_shares_archive_url() {
+	return get_post_type_archive_link( 'share' ) ?: home_url( '/actions/' );
+}
+
+/**
  * Get intro text for a share post.
  *
  * @param int|null $post_id Share post ID.

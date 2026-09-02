@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'EXTRASPORT_SHARES_SEED_VERSION', 1 );
+define( 'EXTRASPORT_SHARES_SEED_VERSION', 2 );
 
 /**
  * Share templates used for placeholders and DB seeding.
@@ -44,33 +44,111 @@ function extrasport_get_share_seed_templates() {
 			'price'   => 4000,
 			'content' => '<p>Спортивные секции для детей: гимнастика, единоборства, ОФП и игровые тренировки.</p><p>Детский абонемент — <strong>от 4000 рублей</strong>. Регулярные занятия помогают развить координацию, выносливость и дисциплину.</p><ul><li>Тренеры с педагогическим и спортивным опытом</li><li>Безопасная среда и современный инвентарь</li><li>Гибкое расписание для школьников</li></ul><p>Приходите на пробную тренировку и выберите секцию вместе с ребёнком.</p>',
 		),
+		array(
+			'slug'    => 'personal',
+			'title'   => 'Персональные тренировки — скидка 20%',
+			'excerpt' => 'Пакет из 10 занятий с тренером',
+			'date'    => 'До конца месяца!',
+			'image'   => 'assets/img/service/serv-1.jpg',
+			'price'   => 12000,
+			'content' => '<p>Специальное предложение на пакет персональных тренировок: <strong>10 занятий со скидкой 20%</strong>.</p><p>Тренер составит программу под ваши цели — похудение, набор мышечной массы, восстановление после перерыва или подготовка к соревнованиям.</p><ul><li>Индивидуальный план и контроль техники</li><li>Гибкий график в будни и выходные</li><li>Замеры и корректировка нагрузки</li></ul><p>Оставьте заявку — администратор подберёт тренера и удобное время для старта.</p>',
+		),
+		array(
+			'slug'    => 'spa',
+			'title'   => 'SPA-день в подарок',
+			'excerpt' => 'При покупке годового абонемента',
+			'date'    => 'Ограниченное предложение',
+			'image'   => 'assets/img/service/serv-2.jpg',
+			'content' => '<p>Оформите годовой абонемент и получите <strong>SPA-день в подарок</strong> для себя или близкого человека.</p><p>В программу входит доступ в зону отдыха, сауны и расслабляющие процедуры по клубному регламенту.</p><ul><li>Подарочный сертификат на SPA-день</li><li>Действует при оформлении до конца акции</li><li>Можно активировать в течение 30 дней</li></ul><p>Уточняйте детали у менеджера отдела продаж — количество подарков ограничено.</p>',
+		),
+		array(
+			'slug'    => 'family',
+			'title'   => 'Семейный абонемент',
+			'excerpt' => 'Тренируйтесь вместе выгоднее',
+			'date'    => 'Новинка клуба',
+			'image'   => 'assets/img/service/serv-4.jpg',
+			'price'   => 9900,
+			'content' => '<p>Новый формат семейного абонемента: тренируйтесь вместе и экономьте на посещении клуба.</p><p>Абонемент рассчитан на двух взрослых или взрослого и ребёнка — удобный вариант для семейного спорта без лишних ограничений.</p><ul><li>Посещение тренажёрного зала и групповых программ</li><li>Единый счёт и прозрачные условия</li><li>Специальная цена для семьи</li></ul><p>Запишитесь на консультацию — подберём тариф под ваш состав семьи.</p>',
+		),
 	);
 }
 
 /**
- * Build seed items (3 templates × 2 = 6 posts).
+ * Unique images for legacy duplicate slugs from seed v1.
+ *
+ * @return array<string, string>
+ */
+function extrasport_get_share_legacy_image_map() {
+	return array(
+		'leto-2'    => 'assets/img/service/serv-3.jpg',
+		'bassein-2' => 'assets/img/service/serv-5.jpg',
+		'fitnes-2'  => 'assets/img/clubs/welcom-block-img-1.jpg',
+	);
+}
+
+/**
+ * Build seed items — one post per template.
  *
  * @return array<int, array{slug: string, title: string, excerpt: string, date: string, image: string, content: string, menu_order: int, price?: int}>
  */
 function extrasport_get_share_seed_items() {
-	$items     = array();
-	$templates = extrasport_get_share_seed_templates();
+	$items = array();
 
-	foreach ( array( 1, 2 ) as $round ) {
-		foreach ( $templates as $index => $template ) {
-			$slug = 1 === $round ? $template['slug'] : $template['slug'] . '-2';
-
-			$items[] = array_merge(
-				$template,
-				array(
-					'slug'       => $slug,
-					'menu_order' => ( ( $round - 1 ) * count( $templates ) ) + $index,
-				)
-			);
-		}
+	foreach ( extrasport_get_share_seed_templates() as $index => $template ) {
+		$items[] = array_merge(
+			$template,
+			array(
+				'menu_order' => $index,
+			)
+		);
 	}
 
 	return $items;
+}
+
+/**
+ * Assign featured image from a theme asset path.
+ *
+ * @param int                  $post_id Post ID.
+ * @param string               $image   Theme-relative image path.
+ * @param array<string, int>   $cache   Attachment cache keyed by image path.
+ * @return void
+ */
+function extrasport_set_share_featured_image( $post_id, $image, array &$cache ) {
+	if ( ! $post_id || ! $image ) {
+		return;
+	}
+
+	if ( ! isset( $cache[ $image ] ) ) {
+		$cache[ $image ] = extrasport_import_theme_image( $image );
+	}
+
+	if ( $cache[ $image ] ) {
+		set_post_thumbnail( $post_id, $cache[ $image ] );
+	}
+}
+
+/**
+ * Sync featured images for all seeded and legacy share slugs.
+ *
+ * @return void
+ */
+function extrasport_sync_share_seed_images() {
+	$cache = array();
+
+	foreach ( extrasport_get_share_seed_templates() as $template ) {
+		$post_id = extrasport_find_share_by_slug( $template['slug'] );
+		if ( $post_id ) {
+			extrasport_set_share_featured_image( $post_id, $template['image'], $cache );
+		}
+	}
+
+	foreach ( extrasport_get_share_legacy_image_map() as $slug => $image ) {
+		$post_id = extrasport_find_share_by_slug( $slug );
+		if ( $post_id ) {
+			extrasport_set_share_featured_image( $post_id, $image, $cache );
+		}
+	}
 }
 
 /**
@@ -84,18 +162,18 @@ function extrasport_seed_shares( $force = false ) {
 		return 0;
 	}
 
-	$created      = 0;
-	$image_cache  = array();
-	$seeded_slugs = array();
+	$created     = 0;
+	$image_cache = array();
+	$seeded_slug = array();
 
 	foreach ( extrasport_get_share_seed_items() as $item ) {
-		if ( isset( $seeded_slugs[ $item['slug'] ] ) ) {
+		if ( isset( $seeded_slug[ $item['slug'] ] ) ) {
 			continue;
 		}
 
 		$existing_id = extrasport_find_share_by_slug( $item['slug'] );
 		if ( $existing_id && ! $force ) {
-			$seeded_slugs[ $item['slug'] ] = $existing_id;
+			$seeded_slug[ $item['slug'] ] = $existing_id;
 			continue;
 		}
 
@@ -122,19 +200,13 @@ function extrasport_seed_shares( $force = false ) {
 			update_post_meta( $post_id, '_share_price', (int) $item['price'] );
 		}
 
-		if ( ! empty( $item['image'] ) ) {
-			if ( ! isset( $image_cache[ $item['image'] ] ) ) {
-				$image_cache[ $item['image'] ] = extrasport_import_theme_image( $item['image'] );
-			}
+		extrasport_set_share_featured_image( $post_id, $item['image'], $image_cache );
 
-			if ( $image_cache[ $item['image'] ] ) {
-				set_post_thumbnail( $post_id, $image_cache[ $item['image'] ] );
-			}
-		}
-
-		$seeded_slugs[ $item['slug'] ] = $post_id;
+		$seeded_slug[ $item['slug'] ] = $post_id;
 		++$created;
 	}
+
+	extrasport_sync_share_seed_images();
 
 	update_option( 'extrasport_shares_seed_version', EXTRASPORT_SHARES_SEED_VERSION, false );
 

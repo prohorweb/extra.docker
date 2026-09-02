@@ -37,7 +37,7 @@ function extrasport_get_test_drive_form_context( array $override = array() ) {
 	} elseif ( is_post_type_archive( 'share' ) ) {
 		$context['form_id']    = 'test-drive-shares';
 		$context['form_type']    = 'shares';
-		$context['source_url']   = get_post_type_archive_link( 'share' ) ?: home_url( '/card/shares/' );
+		$context['source_url']   = extrasport_get_shares_archive_url();
 	} elseif ( extrasport_is_about_page( 'club' ) ) {
 		$context['form_id']    = 'test-drive-club';
 		$context['form_type']    = 'test_drive';

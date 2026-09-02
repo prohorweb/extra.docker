@@ -84,7 +84,7 @@ while ( have_posts() ) {
 					<?php endforeach; ?>
 				</div>
 				<div class="mt-10 flex justify-center">
-					<a href="<?php echo esc_url( get_post_type_archive_link( 'share' ) ?: home_url( '/card/shares/' ) ); ?>" class="btn-xl">
+					<a href="<?php echo esc_url( extrasport_get_shares_archive_url() ); ?>" class="btn-xl">
 						<?php esc_html_e( 'Все акции', 'extrasport' ); ?>
 					</a>
 				</div>

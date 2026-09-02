@@ -4,7 +4,7 @@
  *
  * Yii2-compatible permalinks:
  * - service:  /services/{slug}/ or /services/{parent}/{child}/
- * - share:    /card/shares/{slug}/
+ * - share:    /actions/{slug}/
  *
  * @package ExtraSport
  */
@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 require_once EXTRASPORT_DIR . '/inc/post-type-labels.php';
 
 /**
- * Register Share Post Type (Yii2: /card/shares/)
+ * Register Share Post Type (Yii2: /actions/)
  */
 function extrasport_register_share_post_type() {
 	$args = array(
@@ -31,11 +31,11 @@ function extrasport_register_share_post_type() {
 		'show_in_menu'        => true,
 		'show_in_nav_menus'   => true,
 		'show_in_rest'        => true,
-		'has_archive'         => 'card/shares',
+		'has_archive'         => 'actions',
 		'hierarchical'        => false,
 		'supports'            => array( 'title', 'editor', 'excerpt', 'thumbnail', 'custom-fields', 'page-attributes' ),
 		'rewrite'             => array(
-			'slug'       => 'card/shares',
+			'slug'       => 'actions',
 			'with_front' => false,
 			'feeds'      => false,
 			'pages'      => true,
@@ -269,13 +269,13 @@ function extrasport_register_nested_rewrite_rules() {
 	);
 
 	add_rewrite_rule(
-		'^card/shares/?$',
+		'^actions/?$',
 		'index.php?post_type=share',
 		'top'
 	);
 
 	add_rewrite_rule(
-		'^card/shares/([^/]+)/?$',
+		'^actions/([^/]+)/?$',
 		'index.php?share=$matches[1]',
 		'top'
 	);
@@ -376,3 +376,18 @@ function extrasport_service_archive_query( $query ) {
 	}
 }
 add_action( 'pre_get_posts', 'extrasport_service_archive_query' );
+
+/**
+ * Flush rewrite rules after share archive slug changes.
+ *
+ * @return void
+ */
+function extrasport_maybe_flush_share_rewrite() {
+	if ( get_option( 'extrasport_share_rewrite_version' ) === '1' ) {
+		return;
+	}
+
+	flush_rewrite_rules( false );
+	update_option( 'extrasport_share_rewrite_version', '1', false );
+}
+add_action( 'after_setup_theme', 'extrasport_maybe_flush_share_rewrite', 99 );
