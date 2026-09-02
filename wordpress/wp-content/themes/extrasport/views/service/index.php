@@ -9,7 +9,7 @@ $club = extrasport_get_club();
 $uri  = EXTRASPORT_URI;
 ?>
 
-<?php get_template_part( 'sections/about-video', null, array( 'uri' => $uri ) ); ?>
+<?php get_template_part( 'sections/services-video', null, array( 'uri' => $uri ) ); ?>
 
 <section
 	id="actions"

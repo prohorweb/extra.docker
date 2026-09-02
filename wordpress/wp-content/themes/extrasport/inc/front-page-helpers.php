@@ -23,10 +23,6 @@ function extrasport_get_hero_placeholder_videos( $uri ) {
 			'webm' => $uri . '/assets/video/bg_moution.webm',
 		),
 		array(
-			'type' => 'image',
-			'src'  => $uri . '/assets/img/actions-bg.jpg',
-		),
-		array(
 			'type' => 'video',
 			'mp4'  => $uri . '/assets/video/test-drive.mp4',
 		),
@@ -103,7 +99,7 @@ function extrasport_render_hero_carousel_dots( $slide_count ) {
  * @return int
  */
 function extrasport_get_hero_slide_count( $banner_posts ) {
-	return empty( $banner_posts ) ? 3 : 1 + count( $banner_posts );
+	return empty( $banner_posts ) ? 2 : 1 + count( $banner_posts );
 }
 
 /**

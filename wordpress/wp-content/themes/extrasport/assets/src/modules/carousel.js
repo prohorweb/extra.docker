@@ -1,7 +1,7 @@
 /**
  * Native carousel — replacement for Bootstrap carousel + wheel navigation
  */
-import { updateSiteHeaderState } from './scroll-state.js';
+import { getPageScrollY, updateSiteHeaderState } from './scroll-state.js';
 
 function isCarouselFullyVisible(root) {
 	const rect = root.getBoundingClientRect();
@@ -80,7 +80,7 @@ function initCarouselWheel(root, { next, prev, getCurrent, getTotal }) {
 			return;
 		}
 
-		const fullyVisible = isCarouselFullyVisible(root);
+		const fullyVisible = isCarouselFullyVisible(root) && getPageScrollY() < 50;
 
 		if (!fullyVisible) {
 			scrollLock.unlock();

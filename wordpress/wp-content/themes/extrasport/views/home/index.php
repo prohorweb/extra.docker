@@ -32,9 +32,13 @@ $section_args = array(
 ?>
 
 <div class="page-content front-page-main">
+	<div class="hero-overlap">
+		<?php
+		get_template_part( 'sections/hero-carousel', null, $section_args );
+		get_template_part( 'sections/services-video', null, $section_args );
+		?>
+	</div>
 	<?php
-	get_template_part( 'sections/hero-carousel', null, $section_args );
-	get_template_part( 'sections/about-video', null, $section_args );
 	get_template_part( 'sections/shares', null, $section_args );
 	extrasport_render_test_drive_section();
 	get_template_part( 'sections/contacts-map', null, $section_args );

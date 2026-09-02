@@ -31,8 +31,13 @@ export function updateSiteHeaderState() {
 function isHeroFullyVisible() {
 	const hero =
 		document.querySelector( '.masthead' ) ||
-		document.querySelector( 'body.is-services-archive #about' );
+		document.querySelector( 'body.is-services-archive #services' );
 	if ( ! hero ) {
+		return false;
+	}
+
+	// Sticky hero stays in the viewport rect while covered — use scroll position instead.
+	if ( document.body.classList.contains( 'is-front-page' ) && getPageScrollY() > 50 ) {
 		return false;
 	}
 
