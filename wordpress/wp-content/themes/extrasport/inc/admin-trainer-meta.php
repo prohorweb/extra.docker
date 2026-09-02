@@ -62,8 +62,8 @@ function extrasport_render_trainer_directions_meta_box( WP_Post $post ) {
 		return;
 	}
 	?>
-	<fieldset class="extrasport-trainer-directions">
-		<legend class="screen-reader-text"><?php esc_html_e( 'Направления', 'extrasport' ); ?></legend>
+	<fieldset class="extrasport-trainer-directions" data-trainer-directions-required>
+		<legend class="screen-reader-text"><?php esc_html_e( 'Направления', 'extrasport' ); ?> <span class="required">*</span></legend>
 		<?php foreach ( $directions as $term ) : ?>
 			<label class="extrasport-trainer-directions__item">
 				<input
@@ -77,7 +77,7 @@ function extrasport_render_trainer_directions_meta_box( WP_Post $post ) {
 		<?php endforeach; ?>
 	</fieldset>
 	<p class="description">
-		<?php esc_html_e( 'Можно выбрать несколько. Без отметок тренер показывается только в «Все направления».', 'extrasport' ); ?>
+		<?php esc_html_e( 'Обязательно выберите хотя бы одно направление. Без отметок тренер не показывается на сайте.', 'extrasport' ); ?>
 	</p>
 	<?php
 }
@@ -152,9 +152,39 @@ function extrasport_save_trainer_meta( $post_id ) {
 		$direction_ids = array_values( array_intersect( $direction_ids, array_map( 'intval', $allowed_ids ) ) );
 	}
 
+	if ( ! $direction_ids ) {
+		set_transient( 'extrasport_trainer_direction_required_' . get_current_user_id(), (int) $post_id, 45 );
+		return;
+	}
+
 	extrasport_set_trainer_directions( $post_id, $direction_ids );
 }
 add_action( 'save_post_trainer', 'extrasport_save_trainer_meta' );
+
+/**
+ * Show admin notice when trainer directions were not saved.
+ *
+ * @return void
+ */
+function extrasport_trainer_direction_required_notice() {
+	$user_id = get_current_user_id();
+	if ( ! $user_id ) {
+		return;
+	}
+
+	$post_id = (int) get_transient( 'extrasport_trainer_direction_required_' . $user_id );
+	if ( ! $post_id ) {
+		return;
+	}
+
+	delete_transient( 'extrasport_trainer_direction_required_' . $user_id );
+
+	printf(
+		'<div class="notice notice-error is-dismissible"><p>%s</p></div>',
+		esc_html__( 'Выберите хотя бы одно направление. Тренер без направлений не показывается на сайте.', 'extrasport' )
+	);
+}
+add_action( 'admin_notices', 'extrasport_trainer_direction_required_notice' );
 
 /**
  * Admin styles for trainer direction checkboxes.
@@ -175,6 +205,11 @@ function extrasport_trainer_admin_styles( $hook ) {
 	wp_add_inline_style(
 		'wp-admin',
 		'.extrasport-trainer-directions__item{display:flex;align-items:flex-start;gap:8px;margin:0 0 10px;}.extrasport-trainer-directions__item input{margin-top:2px;}'
+	);
+
+	wp_add_inline_script(
+		'jquery-core',
+		'(function($){$(function(){var $form=$("#post");var $fieldset=$("[data-trainer-directions-required]");if(!$form.length||!$fieldset.length){return;}$form.on("submit",function(event){if($fieldset.find(\'input[type="checkbox"]:checked\').length){return;}event.preventDefault();window.alert(' . wp_json_encode( __( 'Выберите хотя бы одно направление.', 'extrasport' ) ) . ');});});})(jQuery);'
 	);
 }
 add_action( 'admin_enqueue_scripts', 'extrasport_trainer_admin_styles' );

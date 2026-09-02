@@ -119,6 +119,20 @@ export function initNav() {
 		});
 	});
 
+	document.querySelectorAll('[data-trainers-filter-select]').forEach((select) => {
+		select.addEventListener('change', () => {
+			const form = select.closest('form');
+			if (!form) return;
+
+			if (!select.value) {
+				window.location.href = form.getAttribute('action') || window.location.pathname;
+				return;
+			}
+
+			form.submit();
+		});
+	});
+
 	// Close mobile nav when opening a modal
 	document.querySelectorAll('[data-modal-open]').forEach((btn) => {
 		btn.addEventListener('click', closeNav);

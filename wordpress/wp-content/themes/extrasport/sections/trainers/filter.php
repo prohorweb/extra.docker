@@ -9,6 +9,15 @@ $directions = extrasport_get_trainer_directions();
 $selected   = extrasport_get_selected_trainer_direction();
 $selected   = extrasport_resolve_trainer_direction_filter_term( $selected ) ? $selected : '';
 $action     = ! empty( $args['action'] ) ? (string) $args['action'] : extrasport_get_trainers_archive_url();
+$count      = isset( $args['count'] )
+	? max( 0, (int) $args['count'] )
+	: count(
+		extrasport_get_trainers(
+			array(
+				'direction' => $selected,
+			)
+		)
+	);
 
 if ( empty( $directions ) ) {
 	return;
@@ -19,21 +28,33 @@ if ( empty( $directions ) ) {
 	<div class="trainers-filter__bar">
 		<span class="trainers-filter__label"><?php esc_html_e( 'Выберите направление', 'extrasport' ); ?></span>
 
-		<button
-			type="button"
-			class="trainers-filter__toggle lg:hidden"
-			aria-controls="trainersFilterCollapse"
-			aria-expanded="false"
-			aria-label="<?php esc_attr_e( 'Показать фильтр', 'extrasport' ); ?>"
-			data-trainers-filter-toggle
-		>
-			<span class="trainers-filter__toggle-icon" aria-hidden="true"></span>
-		</button>
+		<div class="trainers-filter__meta">
+			<span class="trainers-filter__count">
+				<?php
+				printf(
+					/* translators: %d: number of trainers */
+					esc_html__( 'Выбрано тренеров: %d', 'extrasport' ),
+					$count
+				);
+				?>
+			</span>
+
+			<button
+				type="button"
+				class="trainers-filter__toggle lg:hidden"
+				aria-controls="trainersFilterCollapse"
+				aria-expanded="false"
+				aria-label="<?php esc_attr_e( 'Показать фильтр', 'extrasport' ); ?>"
+				data-trainers-filter-toggle
+			>
+				<span class="trainers-filter__toggle-icon" aria-hidden="true"></span>
+			</button>
+		</div>
 
 		<div class="trainers-filter__controls hidden lg:flex" id="trainersFilterCollapse">
 			<form class="trainers-filter__form" method="get" action="<?php echo esc_url( $action ); ?>">
 				<label class="sr-only" for="trainer-direction"><?php esc_html_e( 'Направление', 'extrasport' ); ?></label>
-				<select id="trainer-direction" name="filter" class="form-select trainers-filter__select">
+				<select id="trainer-direction" name="filter" class="form-select trainers-filter__select" data-trainers-filter-select>
 					<option value=""><?php esc_html_e( 'Все направления', 'extrasport' ); ?></option>
 					<?php foreach ( $directions as $term ) : ?>
 						<option value="<?php echo esc_attr( $term->slug ); ?>" <?php selected( $selected, $term->slug ); ?>>
@@ -41,14 +62,6 @@ if ( empty( $directions ) ) {
 						</option>
 					<?php endforeach; ?>
 				</select>
-
-				<button type="submit" class="btn-primary btn-lg trainers-filter__button">
-					<?php esc_html_e( 'Показать', 'extrasport' ); ?>
-				</button>
-
-				<a href="<?php echo esc_url( $action ); ?>" class="btn-primary btn-lg trainers-filter__button trainers-filter__button--reset">
-					<?php esc_html_e( 'Сбросить', 'extrasport' ); ?>
-				</a>
 			</form>
 		</div>
 	</div>

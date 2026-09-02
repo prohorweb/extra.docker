@@ -301,8 +301,9 @@ function extrasport_seed_trainers( $force = false ) {
 			if ( $term_ids ) {
 				extrasport_set_trainer_directions( $post_id, array_unique( $term_ids ) );
 			} else {
-				extrasport_set_trainer_directions( $post_id, array() );
+				extrasport_set_trainer_directions( $post_id, extrasport_get_all_trainer_direction_term_ids() );
 			}
+			extrasport_ensure_trainer_has_directions( $post_id );
 
 			$banner = $yii->get_row(
 				$yii->prepare(

@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'EXTRASPORT_TRAINERS_ROSTER_VERSION', 7 );
+define( 'EXTRASPORT_TRAINERS_ROSTER_VERSION', 8 );
 
 /**
  * Canonical production roster for Piter (/es/command/).
@@ -23,42 +23,42 @@ function extrasport_get_production_trainers_roster() {
 			'title'      => 'Бедоидзе Николай',
 			'position'   => 'Старший тренер тренажёрного зала',
 			'image'      => '111-1558619997.jpg',
-			'directions' => array(),
+			'directions' => array( 1, 2 ),
 		),
 		array(
 			'slug'       => 'pavel-urin',
 			'title'      => 'Павел Юрин',
 			'position'   => 'Персональный тренер',
 			'image'      => 'Pavel-1558620440.jpg',
-			'directions' => array(),
+			'directions' => array( 1, 2 ),
 		),
 		array(
 			'slug'       => 'artem-mahalov',
 			'title'      => 'Артем Махалов',
 			'position'   => 'Персональный тренер',
 			'image'      => 'Artem-Mahalov-1-1558621177.jpg',
-			'directions' => array(),
+			'directions' => array( 1, 2 ),
 		),
 		array(
 			'slug'       => 'lifar-denis',
 			'title'      => 'Лифар Денис',
 			'position'   => 'Персональный тренер',
 			'image'      => 'Lifar-Denis-1-1558621707.jpg',
-			'directions' => array(),
+			'directions' => array( 1, 2 ),
 		),
 		array(
 			'slug'       => 'pavel',
 			'title'      => 'Шильцов Андрей',
 			'position'   => 'Тренер тренажерного зала',
 			'image'      => 'IMG_3102-1688586296.jpg',
-			'directions' => array(),
+			'directions' => array( 1, 2 ),
 		),
 		array(
 			'slug'       => 'zalnina-ksenia',
 			'title'      => 'Жалнина Ксения',
 			'position'   => 'Персональный тренер',
 			'image'      => 'htfdrftfytgj-1666787668.jpg',
-			'directions' => array(),
+			'directions' => array( 1, 2 ),
 		),
 		array(
 			'slug'       => 'fominova-natalia',
@@ -72,35 +72,35 @@ function extrasport_get_production_trainers_roster() {
 			'title'      => 'Федотов Андрей',
 			'position'   => 'Тренер тренажерного зала',
 			'image'      => 'WhatsApp-Image-2022-08-29-at-17.16.34-1661858849.jpg',
-			'directions' => array(),
+			'directions' => array( 1, 2 ),
 		),
 		array(
 			'slug'       => 'subin-artur',
 			'title'      => 'Шубин Артур',
 			'position'   => 'Тренер тренажерного зала',
 			'image'      => 'WhatsApp-Image-2022-08-23-at-22.21.21-1661858686.jpg',
-			'directions' => array(),
+			'directions' => array( 1, 2 ),
 		),
 		array(
 			'slug'       => 'saksonova-natala',
 			'title'      => 'Саксонова Надежда',
 			'position'   => 'Тренер групповых программ',
 			'image'      => '',
-			'directions' => array(),
+			'directions' => array( 1, 2 ),
 		),
 		array(
 			'slug'       => 'plotnikova-margarita',
 			'title'      => 'Плотникова Маргарита',
 			'position'   => 'Тренер групповых программм',
 			'image'      => '',
-			'directions' => array(),
+			'directions' => array( 1, 2 ),
 		),
 		array(
 			'slug'       => 'petrov-denis',
 			'title'      => 'Петров Денис',
 			'position'   => 'Тренер по единоборствам',
 			'image'      => '',
-			'directions' => array(),
+			'directions' => array( 1, 2 ),
 		),
 		array(
 			'slug'       => 'musaeva-ulia',
@@ -534,7 +534,11 @@ function extrasport_sync_trainers_roster( $force = false ) {
 		}
 
 		$direction_ids = extrasport_map_trainer_direction_term_ids( (array) ( $entry['directions'] ?? array() ) );
+		if ( ! $direction_ids ) {
+			$direction_ids = extrasport_get_all_trainer_direction_term_ids();
+		}
 		extrasport_set_trainer_directions( $post_id, $direction_ids );
+		extrasport_ensure_trainer_has_directions( $post_id );
 	}
 
 	foreach ( $roster as $entry ) {
@@ -575,6 +579,8 @@ function extrasport_sync_trainers_roster( $force = false ) {
 			wp_trash_post( (int) $legacy_id );
 		}
 	}
+
+	extrasport_assign_all_trainer_directions_to_unmarked_trainers();
 
 	extrasport_delete_orphan_trainer_posts( $published_slugs );
 

@@ -119,21 +119,38 @@ function extrasport_resolve_trainer_direction_filter_term( $direction = '' ) {
 }
 
 /**
- * Apply trainer direction filter args to a WP_Query query.
+ * Get all trainer direction term IDs.
  *
- * Trainers without direction marks are excluded when a filter is active.
- *
- * @param array<string, mixed> $query_args Query args.
- * @param string               $direction  Optional raw direction slug.
- * @return array<string, mixed>
+ * @return array<int>
  */
-function extrasport_apply_trainer_direction_filter( array $query_args, $direction = '' ) {
+function extrasport_get_all_trainer_direction_term_ids() {
+	return array_map( 'intval', wp_list_pluck( extrasport_get_trainer_directions(), 'term_id' ) );
+}
+
+/**
+ * Build trainer direction tax_query constraints.
+ *
+ * Always requires at least one direction. Optionally filters by a selected direction.
+ *
+ * @param string $direction Optional raw direction slug.
+ * @return array<int|string, mixed>
+ */
+function extrasport_build_trainer_direction_tax_query( $direction = '' ) {
+	$tax_query = array(
+		array(
+			'taxonomy' => 'trainer_direction',
+			'operator' => 'EXISTS',
+		),
+	);
+
 	$term = extrasport_resolve_trainer_direction_filter_term( $direction );
 	if ( ! $term ) {
-		return $query_args;
+		return $tax_query;
 	}
 
-	$query_args['tax_query'] = array(
+	return array(
+		'relation' => 'AND',
+		$tax_query[0],
 		array(
 			'taxonomy'         => 'trainer_direction',
 			'field'            => 'term_id',
@@ -142,6 +159,19 @@ function extrasport_apply_trainer_direction_filter( array $query_args, $directio
 			'include_children' => false,
 		),
 	);
+}
+
+/**
+ * Apply trainer direction filter args to a WP_Query query.
+ *
+ * Trainers without direction marks are excluded from all selections.
+ *
+ * @param array<string, mixed> $query_args Query args.
+ * @param string               $direction  Optional raw direction slug.
+ * @return array<string, mixed>
+ */
+function extrasport_apply_trainer_direction_filter( array $query_args, $direction = '' ) {
+	$query_args['tax_query'] = extrasport_build_trainer_direction_tax_query( $direction );
 
 	return $query_args;
 }
@@ -149,7 +179,7 @@ function extrasport_apply_trainer_direction_filter( array $query_args, $directio
 /**
  * Assign trainer direction terms.
  *
- * Empty array means the trainer is shown only in "Все направления".
+ * Empty array means the trainer is hidden from all trainer lists.
  *
  * @param int        $post_id  Trainer post ID.
  * @param array<int> $term_ids Direction term IDs.
@@ -307,27 +337,29 @@ function extrasport_get_trainers( array $args = array() ) {
  */
 function extrasport_get_other_trainers( $exclude_id = 0, $limit = 3 ) {
 	$posts = get_posts(
-		array(
-			'post_type'              => 'trainer',
-			'post_status'            => 'publish',
-			'posts_per_page'         => (int) $limit,
-			'orderby'                => 'rand',
-			'post__not_in'           => $exclude_id ? array( (int) $exclude_id ) : array(),
-			'meta_query'             => array(
-				array(
-					'key'     => '_thumbnail_id',
-					'compare' => 'EXISTS',
+		extrasport_apply_trainer_direction_filter(
+			array(
+				'post_type'              => 'trainer',
+				'post_status'            => 'publish',
+				'posts_per_page'         => (int) $limit,
+				'orderby'                => 'rand',
+				'post__not_in'           => $exclude_id ? array( (int) $exclude_id ) : array(),
+				'meta_query'             => array(
+					array(
+						'key'     => '_thumbnail_id',
+						'compare' => 'EXISTS',
+					),
+					array(
+						'key'     => '_thumbnail_id',
+						'value'   => '0',
+						'compare' => '>',
+						'type'    => 'NUMERIC',
+					),
 				),
-				array(
-					'key'     => '_thumbnail_id',
-					'value'   => '0',
-					'compare' => '>',
-					'type'    => 'NUMERIC',
-				),
-			),
-			'no_found_rows'          => true,
-			'update_post_meta_cache' => true,
-			'update_post_term_cache' => true,
+				'no_found_rows'          => true,
+				'update_post_meta_cache' => true,
+				'update_post_term_cache' => true,
+			)
 		)
 	);
 
@@ -456,23 +488,7 @@ function extrasport_trainer_archive_query( $query ) {
 	$query->set( 'extrasport_thumbnail_priority', true );
 
 	$direction = extrasport_get_selected_trainer_direction();
-	$term        = extrasport_resolve_trainer_direction_filter_term( $direction );
-	if ( ! $term ) {
-		return;
-	}
-
-	$query->set(
-		'tax_query',
-		array(
-			array(
-				'taxonomy'         => 'trainer_direction',
-				'field'            => 'term_id',
-				'terms'            => array( (int) $term->term_id ),
-				'operator'         => 'IN',
-				'include_children' => false,
-			),
-		)
-	);
+	$query->set( 'tax_query', extrasport_build_trainer_direction_tax_query( $direction ) );
 }
 add_action( 'pre_get_posts', 'extrasport_trainer_archive_query' );
 
@@ -544,3 +560,78 @@ function extrasport_trainer_head_meta() {
 	}
 }
 add_action( 'wp_head', 'extrasport_trainer_head_meta', 1 );
+
+/**
+ * Ensure a trainer has at least one direction assigned.
+ *
+ * Trainers without directions are assigned all available directions.
+ *
+ * @param int $post_id Trainer post ID.
+ * @return array<int> Assigned direction term IDs.
+ */
+function extrasport_ensure_trainer_has_directions( $post_id ) {
+	$post_id  = (int) $post_id;
+	$term_ids = extrasport_get_trainer_direction_term_ids( $post_id );
+
+	if ( $term_ids ) {
+		return $term_ids;
+	}
+
+	$all_term_ids = extrasport_get_all_trainer_direction_term_ids();
+	if ( $all_term_ids ) {
+		extrasport_set_trainer_directions( $post_id, $all_term_ids );
+	}
+
+	return $all_term_ids;
+}
+
+/**
+ * Assign all directions to every trainer missing direction marks.
+ *
+ * @return int Number of updated trainers.
+ */
+function extrasport_assign_all_trainer_directions_to_unmarked_trainers() {
+	$all_term_ids = extrasport_get_all_trainer_direction_term_ids();
+	if ( ! $all_term_ids ) {
+		return 0;
+	}
+
+	$trainer_ids = get_posts(
+		array(
+			'post_type'              => 'trainer',
+			'post_status'            => 'any',
+			'posts_per_page'         => -1,
+			'fields'                 => 'ids',
+			'no_found_rows'          => true,
+			'update_post_meta_cache' => false,
+			'update_post_term_cache' => false,
+		)
+	);
+
+	$updated = 0;
+	foreach ( $trainer_ids as $trainer_id ) {
+		if ( extrasport_get_trainer_direction_term_ids( (int) $trainer_id ) ) {
+			continue;
+		}
+
+		extrasport_set_trainer_directions( (int) $trainer_id, $all_term_ids );
+		++$updated;
+	}
+
+	return $updated;
+}
+
+/**
+ * One-time backfill for trainers missing direction marks.
+ *
+ * @return void
+ */
+function extrasport_maybe_backfill_trainer_directions() {
+	if ( '2' === get_option( 'extrasport_trainer_directions_backfill_version' ) ) {
+		return;
+	}
+
+	extrasport_assign_all_trainer_directions_to_unmarked_trainers();
+	update_option( 'extrasport_trainer_directions_backfill_version', '2', false );
+}
+add_action( 'after_setup_theme', 'extrasport_maybe_backfill_trainer_directions', 40 );

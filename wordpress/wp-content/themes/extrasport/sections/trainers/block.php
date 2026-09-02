@@ -45,6 +45,7 @@ $trainers = extrasport_get_trainers(
 			null,
 			array(
 				'action' => (string) ( $args['filter_action'] ?? '' ),
+				'count'  => count( $trainers ),
 			)
 		);
 		?>
