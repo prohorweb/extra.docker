@@ -53,6 +53,78 @@ function extrasport_find_news_post_id_by_slug( $slug ) {
 }
 
 /**
+ * Build a readable news card preview from article HTML.
+ *
+ * @param string $content Post content HTML.
+ * @param string $title   Post title to strip if duplicated at the start.
+ * @param int    $length  Max preview length in characters.
+ * @return string
+ */
+function extrasport_build_news_intro( $content, $title = '', $length = 170 ) {
+	$html = html_entity_decode( (string) $content, ENT_QUOTES | ENT_HTML5, 'UTF-8' );
+	$html = preg_replace( '/<(script|style)\b[^>]*>.*?<\/\1>/is', ' ', $html );
+	$html = preg_replace( '/<h1\b[^>]*>.*?<\/h1>/is', ' ', (string) $html );
+
+	$candidates = array();
+	if ( preg_match_all( '/<p\b[^>]*>(.*?)<\/p>/is', (string) $html, $paragraphs ) ) {
+		foreach ( $paragraphs[1] as $paragraph ) {
+			$plain = trim( preg_replace( '/\s+/u', ' ', wp_strip_all_tags( (string) $paragraph ) ) );
+			if ( mb_strlen( $plain ) >= 40 ) {
+				$candidates[] = $plain;
+			}
+		}
+	}
+
+	$text = $candidates ? $candidates[0] : '';
+	if ( ! $text ) {
+		$text = trim( preg_replace( '/\s+/u', ' ', wp_strip_all_tags( (string) $html ) ) );
+	}
+
+	if ( ! $text ) {
+		return '';
+	}
+
+	$title = trim( preg_replace( '/\s+/u', ' ', wp_strip_all_tags( (string) $title ) ) );
+	if ( $title && 0 === mb_stripos( $text, $title ) ) {
+		$rest = trim( mb_substr( $text, mb_strlen( $title ) ) );
+		$rest = ltrim( $rest, " \t\n\r\0\x0B.,;:!?-—" );
+		if ( $rest && ! preg_match( '/^\p{Ll}/u', $rest ) ) {
+			$text = $rest;
+		}
+	}
+
+	$full = trim( preg_replace( '/\s+/u', ' ', wp_strip_all_tags( (string) $html ) ) );
+	if ( $title && $full && 0 === mb_stripos( $full, $title ) ) {
+		$full_rest = trim( mb_substr( $full, mb_strlen( $title ) ) );
+		$full_rest = ltrim( $full_rest, " \t\n\r\0\x0B.,;:!?-—" );
+		if ( $full_rest && ! preg_match( '/^\p{Ll}/u', $full_rest ) ) {
+			$full = $full_rest;
+		}
+	}
+
+	if ( mb_strlen( $text ) < 100 || preg_match( '/[:：]\s*$/u', $text ) ) {
+		if ( mb_strlen( $full ) > mb_strlen( $text ) ) {
+			$text = $full;
+		}
+	}
+
+	$length = max( 80, (int) $length );
+	if ( mb_strlen( $text ) <= $length ) {
+		return $text;
+	}
+
+	$snippet = mb_substr( $text, 0, $length + 1 );
+	$cut     = mb_strrpos( $snippet, ' ' );
+	if ( false !== $cut && $cut > (int) ( $length * 0.6 ) ) {
+		$snippet = mb_substr( $snippet, 0, $cut );
+	} else {
+		$snippet = mb_substr( $text, 0, $length );
+	}
+
+	return rtrim( $snippet, " \t\n\r\0\x0B.,;:!?-—" ) . '…';
+}
+
+/**
  * Intro text for a news post.
  *
  * @param int|null $post_id News post ID.

@@ -16,9 +16,9 @@ if ( have_posts() ) {
 }
 ?>
 
-<section class="page-section page-section--jobs bg-black">
+<section class="page-section page-section--actions-list page-section--jobs bg-brand-dark">
 	<div class="page-section__inner mx-auto w-full max-w-7xl px-4 lg:px-6">
-		<h1 class="section-heading mb-8 py-4 text-2xl font-semibold md:mb-10 md:text-3xl lg:text-4xl">
+		<h1 class="section-heading mb-4 py-4 text-2xl md:mb-5 md:text-3xl lg:text-4xl">
 			<?php
 			printf(
 				/* translators: %s: club title */

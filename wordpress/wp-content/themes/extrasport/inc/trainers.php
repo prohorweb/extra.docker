@@ -130,27 +130,19 @@ function extrasport_get_all_trainer_direction_term_ids() {
 /**
  * Build trainer direction tax_query constraints.
  *
- * Always requires at least one direction. Optionally filters by a selected direction.
+ * Empty filter ("Все направления") shows all trainers, including unmarked.
+ * Active filter shows only trainers marked with that direction.
  *
  * @param string $direction Optional raw direction slug.
  * @return array<int|string, mixed>
  */
 function extrasport_build_trainer_direction_tax_query( $direction = '' ) {
-	$tax_query = array(
-		array(
-			'taxonomy' => 'trainer_direction',
-			'operator' => 'EXISTS',
-		),
-	);
-
 	$term = extrasport_resolve_trainer_direction_filter_term( $direction );
 	if ( ! $term ) {
-		return $tax_query;
+		return array();
 	}
 
 	return array(
-		'relation' => 'AND',
-		$tax_query[0],
 		array(
 			'taxonomy'         => 'trainer_direction',
 			'field'            => 'term_id',
@@ -164,14 +156,18 @@ function extrasport_build_trainer_direction_tax_query( $direction = '' ) {
 /**
  * Apply trainer direction filter args to a WP_Query query.
  *
- * Trainers without direction marks are excluded from all selections.
- *
  * @param array<string, mixed> $query_args Query args.
  * @param string               $direction  Optional raw direction slug.
  * @return array<string, mixed>
  */
 function extrasport_apply_trainer_direction_filter( array $query_args, $direction = '' ) {
-	$query_args['tax_query'] = extrasport_build_trainer_direction_tax_query( $direction );
+	$tax_query = extrasport_build_trainer_direction_tax_query( $direction );
+
+	if ( $tax_query ) {
+		$query_args['tax_query'] = $tax_query;
+	} else {
+		unset( $query_args['tax_query'] );
+	}
 
 	return $query_args;
 }
@@ -488,7 +484,12 @@ function extrasport_trainer_archive_query( $query ) {
 	$query->set( 'extrasport_thumbnail_priority', true );
 
 	$direction = extrasport_get_selected_trainer_direction();
-	$query->set( 'tax_query', extrasport_build_trainer_direction_tax_query( $direction ) );
+	$tax_query = extrasport_build_trainer_direction_tax_query( $direction );
+	if ( $tax_query ) {
+		$query->set( 'tax_query', $tax_query );
+	} else {
+		$query->set( 'tax_query', array() );
+	}
 }
 add_action( 'pre_get_posts', 'extrasport_trainer_archive_query' );
 
@@ -627,6 +628,10 @@ function extrasport_assign_all_trainer_directions_to_unmarked_trainers() {
  * @return void
  */
 function extrasport_maybe_backfill_trainer_directions() {
+	if ( extrasport_is_devision_site() ) {
+		return;
+	}
+
 	if ( '2' === get_option( 'extrasport_trainer_directions_backfill_version' ) ) {
 		return;
 	}

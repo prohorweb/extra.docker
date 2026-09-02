@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'EXTRASPORT_NEWS_SEED_VERSION', 1 );
+define( 'EXTRASPORT_NEWS_SEED_VERSION', 2 );
 
 /**
  * Resolve Yii news image on disk.
@@ -97,13 +97,19 @@ function extrasport_seed_news( $force = false ) {
 		$post_id = extrasport_find_news_post_id_by_slug( $slug );
 		$date    = sanitize_text_field( (string) $row->date );
 		$time    = $date ? strtotime( $date . ' 12:00:00' ) : false;
+		$title   = sanitize_text_field( (string) $row->title );
+		$content = wp_kses_post( (string) $row->content );
+		$intro   = extrasport_build_news_intro( $content, $title );
+		if ( ! $intro ) {
+			$intro = sanitize_textarea_field( (string) $row->intro );
+		}
 
 		$post_data = array(
 			'post_type'    => 'news',
 			'post_name'    => $slug,
-			'post_title'   => sanitize_text_field( (string) $row->title ),
-			'post_content' => wp_kses_post( (string) $row->content ),
-			'post_excerpt' => sanitize_textarea_field( (string) $row->intro ),
+			'post_title'   => $title,
+			'post_content' => $content,
+			'post_excerpt' => $intro,
 			'post_status'  => 'publish',
 			'menu_order'   => (int) $row->position,
 		);
@@ -125,7 +131,7 @@ function extrasport_seed_news( $force = false ) {
 		}
 
 		update_post_meta( $post_id, EXTRASPORT_NEWS_DATE_META, $date );
-		update_post_meta( $post_id, EXTRASPORT_NEWS_INTRO_META, sanitize_textarea_field( (string) $row->intro ) );
+		update_post_meta( $post_id, EXTRASPORT_NEWS_INTRO_META, $intro );
 		update_post_meta( $post_id, EXTRASPORT_NEWS_META_TITLE, sanitize_text_field( (string) $row->meta_title ) );
 		update_post_meta( $post_id, EXTRASPORT_NEWS_META_KEYWORDS, sanitize_text_field( (string) $row->meta_keywords ) );
 		update_post_meta( $post_id, EXTRASPORT_NEWS_META_DESCRIPTION, sanitize_textarea_field( (string) $row->meta_description ) );

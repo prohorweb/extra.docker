@@ -18,7 +18,7 @@ export default {
 			colors: {
 				brand: {
 					primary: '#e11d48',
-					dark: '#141416',
+					dark: '#080809',
 				},
 			},
 		},

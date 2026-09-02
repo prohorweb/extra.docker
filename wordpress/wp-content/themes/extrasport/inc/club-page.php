@@ -48,24 +48,32 @@ function extrasport_get_club_stats_registry() {
 		),
 		'devision'   => array(
 			array(
-				'num'  => '2007',
-				'text' => '2007 год — год<br> открытия клуба',
+				'num'  => '2014',
+				'text' => '2014 год — год<br> открытия клуба',
 			),
 			array(
-				'num'  => '2020',
-				'text' => '2020 м2 — общая<br> площадь клуба',
+				'num'  => '3200',
+				'text' => '3200 м2 — общая<br> площадь клуба',
 			),
 			array(
-				'num'  => '450',
-				'text' => '450 м2 — <br>тренажерный зал',
+				'num'  => '1000',
+				'text' => '1000 м2 — <br>тренажерный зал',
 			),
 			array(
-				'num'  => '136',
-				'text' => '136 м2 —<br>аэробные залы',
+				'num'  => '240',
+				'text' => '240 м2 —<br> 2 аэробных зала',
 			),
 			array(
-				'num'  => '49',
-				'text' => '49 м2 — <br>Cycle-студия',
+				'num'  => '42',
+				'text' => '42 м2 — <br>зал единоборств',
+			),
+			array(
+				'num'  => '104',
+				'text' => '104 м2 — <br>Cycle-студия',
+			),
+			array(
+				'num'  => '20',
+				'text' => '20 метров — бассейн <br>на 3 дорожки',
 			),
 		),
 	);
@@ -175,10 +183,14 @@ function extrasport_normalize_club_content_html( $html ) {
 	}
 
 	$replacements = array(
-		'https://extrasport.ru/piter/services/' => home_url( '/services/' ),
-		'http://extrasport.ru/piter/services/'  => home_url( '/services/' ),
-		'https://piter.extrasport.ru/es/services/' => home_url( '/services/' ),
-		'http://piter.extrasport.ru/es/services/'  => home_url( '/services/' ),
+		'https://extrasport.ru/piter/services/'     => home_url( '/services/' ),
+		'http://extrasport.ru/piter/services/'      => home_url( '/services/' ),
+		'https://piter.extrasport.ru/es/services/'  => home_url( '/services/' ),
+		'http://piter.extrasport.ru/es/services/'   => home_url( '/services/' ),
+		'https://de-vision.ru/dv/services/'         => home_url( '/services/' ),
+		'http://de-vision.ru/dv/services/'          => home_url( '/services/' ),
+		'https://de-vision.ru/services/'            => home_url( '/services/' ),
+		'http://de-vision.ru/services/'             => home_url( '/services/' ),
 	);
 
 	return str_replace( array_keys( $replacements ), array_values( $replacements ), $html );

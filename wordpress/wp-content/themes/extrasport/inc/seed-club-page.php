@@ -93,6 +93,10 @@ function extrasport_import_club_banner_image( $filename ) {
  * @return void
  */
 function extrasport_seed_club_page( $force = false ) {
+	if ( ! extrasport_is_extrasport_site() ) {
+		return;
+	}
+
 	if ( ! $force && (int) get_option( 'extrasport_club_page_version', 0 ) >= EXTRASPORT_CLUB_PAGE_VERSION ) {
 		return;
 	}

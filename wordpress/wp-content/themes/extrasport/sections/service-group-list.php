@@ -23,7 +23,7 @@ $cards = $args['cards'] ?? extrasport_get_service_group_cards();
 		<h1 class="section-heading mb-4 md:mb-5"><?php echo esc_html( $title ); ?></h1>
 
 		<?php if ( ! empty( $cards ) ) : ?>
-			<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+			<div class="grid gap-6 md:grid-cols-2">
 				<?php foreach ( $cards as $service ) : ?>
 					<?php get_template_part( 'components/cards/service', null, array( 'service' => $service ) ); ?>
 				<?php endforeach; ?>

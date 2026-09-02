@@ -5,13 +5,30 @@
 	--font-oswald: "Oswald", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 	--font-roboto: "Roboto", sans-serif;
 	--color-brand-primary: #ff6600;
-	--color-brand-dark: #141416;
+	--color-brand-dark: #080809;
 	--color-brand-accent: #dc5800;
 }
 
 @layer base {
+	html {
+		height: 100%;
+	}
+
 	body {
 		@apply font-roboto text-white bg-brand-dark antialiased;
+		display: flex;
+		min-height: 100%;
+		min-height: 100dvh;
+		flex-direction: column;
+	}
+
+	.site-main {
+		flex: 1 0 auto;
+		width: 100%;
+	}
+
+	.site-footer {
+		flex-shrink: 0;
 	}
 
 	h1,
@@ -537,11 +554,67 @@
 		@apply overflow-hidden;
 	}
 
-	.share-card:not(.share-card--service):not(.trainer-card):not(.share-card--home) .share-card__media {
-		@apply relative isolate;
+	/* Overlay cards — shares (square) & services (landscape) in grids/lists. */
+	.share-card:not(.trainer-card):not(.share-card--static):not(.share-card--service) {
+		@apply relative aspect-square w-full overflow-hidden;
 	}
 
-	.share-card:not(.share-card--service):not(.trainer-card):not(.share-card--home) .share-card__media:has(img)::after {
+	.share-card.share-card--service:not(.share-card--static) {
+		@apply relative w-full overflow-hidden;
+		aspect-ratio: 644 / 400;
+	}
+
+	.share-card.share-card--service:not(.share-card--static) .card-body {
+		@apply absolute inset-x-0 bottom-0 z-[2] w-full overflow-hidden transition-colors duration-300;
+	}
+
+	.share-card.share-card--service:not(.share-card--static) .card-body__row {
+		@apply w-full;
+	}
+
+	.share-card.share-card--service:not(.share-card--static) .card-body_wrapper {
+		@apply transition-colors duration-300;
+	}
+
+	.share-card.share-card--service:not(.share-card--static) .card-text {
+		@apply m-0 overflow-hidden opacity-0;
+		max-height: 0;
+		transition:
+			max-height 0.35s ease,
+			opacity 0.25s ease,
+			margin-top 0.35s ease;
+	}
+
+	.share-card.share-card--service:not(.share-card--static):hover .card-text,
+	.share-card.share-card--service:not(.share-card--static):focus-within .card-text {
+		@apply mt-1 opacity-100;
+		max-height: 6rem;
+	}
+
+	.share-card.share-card--service:not(.share-card--static) .btn-arrow {
+		@apply self-stretch transition-colors duration-300;
+	}
+
+	.share-card.share-card--service:not(.share-card--static):hover .card-body_wrapper,
+	.share-card.share-card--service:not(.share-card--static):focus-within .card-body_wrapper {
+		background-color: var(--color-brand-accent);
+	}
+
+	.share-card.share-card--service:not(.share-card--static):hover .card-body,
+	.share-card.share-card--service:not(.share-card--static):focus-within .card-body {
+		background-color: transparent;
+	}
+
+	.share-card.share-card--service:not(.share-card--static):hover .btn-arrow,
+	.share-card.share-card--service:not(.share-card--static):focus-within .btn-arrow {
+		@apply bg-brand-primary text-white;
+	}
+
+	.share-card:not(.trainer-card):not(.share-card--static) .share-card__media {
+		@apply absolute inset-0 isolate h-full w-full;
+	}
+
+	.share-card:not(.trainer-card):not(.share-card--static) .share-card__media:has(img)::after {
 		content: '';
 		position: absolute;
 		inset: 0;
@@ -550,39 +623,20 @@
 		background: radial-gradient(ellipse at center, rgb(0 0 0 / 0%) 40%, rgb(0 0 0 / 58%) 100%);
 	}
 
-	.share-card:not(.share-card--service):not(.trainer-card):not(.share-card--home) .card-img-top {
-		@apply block w-full object-cover transition-transform duration-500 ease-out;
-		height: 50vh;
-		max-height: 28rem;
+	.share-card:not(.trainer-card):not(.share-card--static) .card-img-top {
+		@apply block h-full w-full max-h-none object-cover object-center transition-transform duration-500 ease-out;
+	}
+
+	.share-card:not(.trainer-card):not(.share-card--static) .card-body {
+		@apply absolute inset-x-0 bottom-0 z-[2];
+	}
+
+	.share-card:not(.trainer-card):not(.share-card--static) .date-action {
+		z-index: 3;
 	}
 
 	.share-card.share-card--home {
 		@apply relative aspect-square w-full overflow-hidden;
-	}
-
-	.share-card.share-card--home .share-card__media {
-		@apply absolute inset-0 isolate h-full w-full;
-	}
-
-	.share-card.share-card--home .share-card__media:has(img)::after {
-		content: '';
-		position: absolute;
-		inset: 0;
-		z-index: 1;
-		pointer-events: none;
-		background: radial-gradient(ellipse at center, rgb(0 0 0 / 0%) 40%, rgb(0 0 0 / 58%) 100%);
-	}
-
-	.share-card.share-card--home .card-img-top {
-		@apply block h-full w-full max-h-none object-cover object-center transition-transform duration-500 ease-out;
-	}
-
-	.share-card.share-card--home .card-body {
-		@apply absolute inset-x-0 bottom-0 z-[2];
-	}
-
-	.share-card.share-card--home .date-action {
-		z-index: 3;
 	}
 
 	.share-card.trainer-card .share-card__media {
@@ -637,12 +691,12 @@
 		@apply block w-full object-cover transition-transform duration-500 ease-out;
 	}
 
-	.share-card--service .share-card__media {
+	.share-card--service.share-card--static .share-card__media {
 		aspect-ratio: 644 / 400;
-		@apply w-full;
+		@apply relative w-full;
 	}
 
-	.share-card--service .card-img-top {
+	.share-card--service.share-card--static .card-img-top {
 		@apply h-full max-h-none w-full object-cover;
 	}
 
@@ -655,18 +709,18 @@
 	}
 
 	.share-card .card-body__row {
-		@apply flex;
+		@apply flex w-full items-stretch;
 	}
 
 	.share-card .card-body_wrapper {
-		@apply w-full bg-black/75 p-4 text-left;
+		@apply min-w-0 flex-1 bg-black/75 p-4 text-left;
 	}
 
-	.share-card:hover .card-body_wrapper {
+	.share-card:not(.share-card--service):hover .card-body_wrapper {
 		@apply bg-brand-primary;
 	}
 
-	.share-card:hover .card-body {
+	.share-card:not(.share-card--service):hover .card-body {
 		@apply bg-brand-primary text-white;
 	}
 
@@ -682,7 +736,7 @@
 		@apply flex shrink-0 items-center bg-brand-primary px-4 text-4xl text-brand-dark transition;
 	}
 
-	.share-card:hover .btn-arrow {
+	.share-card:not(.share-card--service):hover .btn-arrow {
 		@apply text-white;
 	}
 
@@ -690,7 +744,7 @@
 		@apply pointer-events-none;
 	}
 
-	.share-card:not(.share-card--static):hover .card-img-top {
+	.share-card:not(.share-card--static):not(.share-card--service):hover .card-img-top {
 		@apply scale-105;
 	}
 
@@ -1001,11 +1055,11 @@
 	}
 
 	body.is-front-page #services.page-section--services-video {
-		@apply relative z-[1] bg-black;
+		@apply relative z-[1] bg-brand-dark;
 	}
 
 	body.is-services-archive #services.page-section--services-video {
-		@apply sticky top-0 z-0 bg-black;
+		@apply sticky top-0 z-0 bg-brand-dark;
 	}
 
 	body.is-services-archive #actions.page-section--actions-list {

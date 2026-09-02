@@ -9,13 +9,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+define( 'EXTRASPORT_SERVICE_LINK_TO_META', '_service_link_to' );
+
 /**
  * Demo top-level service cards for the archive.
  *
  * @return array<int, array{slug: string, title: string, excerpt: string, image: string, mode: string}>
  */
 function extrasport_get_service_placeholder_templates() {
-	return array(
+	$templates = array(
 		array(
 			'slug'    => 'personal_training',
 			'title'   => 'Персональный тренинг',
@@ -52,6 +54,15 @@ function extrasport_get_service_placeholder_templates() {
 			'mode'    => 'group',
 		),
 	);
+
+	return array_values(
+		array_filter(
+			$templates,
+			static function ( $template ) {
+				return ! in_array( (string) ( $template['slug'] ?? '' ), extrasport_get_excluded_service_slugs_for_current_site(), true );
+			}
+		)
+	);
 }
 
 /**
@@ -60,7 +71,7 @@ function extrasport_get_service_placeholder_templates() {
  * @return array<string, array<int, array{slug: string, title: string, excerpt: string, image: string, menu_order: int}>>
  */
 function extrasport_get_service_child_seed_templates() {
-	return array(
+	$templates = array(
 		'boevye-iskusstva' => array(
 			array(
 				'slug'        => 'boks',
@@ -92,6 +103,14 @@ function extrasport_get_service_child_seed_templates() {
 			),
 		),
 	);
+
+	foreach ( array_keys( $templates ) as $parent_slug ) {
+		if ( in_array( $parent_slug, extrasport_get_excluded_service_slugs_for_current_site(), true ) ) {
+			unset( $templates[ $parent_slug ] );
+		}
+	}
+
+	return $templates;
 }
 
 /**
@@ -145,6 +164,17 @@ function extrasport_get_service_card_url( $post ) {
 	$post = get_post( $post );
 	if ( ! $post instanceof WP_Post ) {
 		return '';
+	}
+
+	$link_to = sanitize_title( (string) get_post_meta( $post->ID, EXTRASPORT_SERVICE_LINK_TO_META, true ) );
+	if ( $link_to ) {
+		$target_id = extrasport_find_top_level_service_by_slug( $link_to );
+		if ( $target_id ) {
+			$url = get_permalink( $target_id );
+			if ( $url ) {
+				return $url;
+			}
+		}
 	}
 
 	return get_permalink( $post );
@@ -449,6 +479,61 @@ function extrasport_get_service_child_placeholders( $parent_slug, $uri ) {
 }
 
 /**
+ * Build a group-program card that aliases a top-level service.
+ *
+ * @param array{slug?: string, title?: string, image?: string, link_to?: string} $item Roster item.
+ * @return array{title: string, excerpt: string, image: string, url: string}|null
+ */
+function extrasport_normalize_group_program_alias_card( array $item ) {
+	$link_to = sanitize_title( (string) ( $item['link_to'] ?? '' ) );
+	if ( ! $link_to ) {
+		return null;
+	}
+
+	$target_id = extrasport_find_top_level_service_by_slug( $link_to );
+	if ( ! $target_id ) {
+		return null;
+	}
+
+	$target = get_post( $target_id );
+	if ( ! $target instanceof WP_Post ) {
+		return null;
+	}
+
+	$card            = extrasport_normalize_service_post( $target );
+	$roster_title    = sanitize_text_field( (string) ( $item['title'] ?? '' ) );
+	$roster_image    = sanitize_file_name( (string) ( $item['image'] ?? '' ) );
+	$card['title']   = $roster_title ?: $card['title'];
+	$card['url']     = get_permalink( $target_id ) ?: $card['url'];
+
+	if ( $roster_image && function_exists( 'extrasport_find_attachment_by_import_source' ) ) {
+		$prefixes = array(
+			'devision/group_programs/',
+			'production/group_programs/',
+			'group_programs/',
+		);
+		$attachment_id = 0;
+		foreach ( $prefixes as $prefix ) {
+			$attachment_id = extrasport_find_attachment_by_import_source( $prefix . $roster_image );
+			if ( $attachment_id ) {
+				break;
+			}
+		}
+		if ( $attachment_id ) {
+			$url = wp_get_attachment_image_url( $attachment_id, 'extrasport-service-card' );
+			if ( ! $url ) {
+				$url = wp_get_attachment_image_url( $attachment_id, 'large' );
+			}
+			if ( $url ) {
+				$card['image'] = $url;
+			}
+		}
+	}
+
+	return $card;
+}
+
+/**
  * Cards for a grouped service section.
  *
  * @param int|null $parent_id Group service ID. Null uses current post in loop.
@@ -457,7 +542,44 @@ function extrasport_get_service_child_placeholders( $parent_slug, $uri ) {
 function extrasport_get_service_group_cards( $parent_id = null ) {
 	$parent_id = $parent_id ?: get_the_ID();
 	$parent    = get_post( $parent_id );
-	$children  = extrasport_get_service_children( $parent_id );
+
+	if (
+		$parent instanceof WP_Post
+		&& 'group-programs' === $parent->post_name
+		&& function_exists( 'extrasport_get_current_group_programs_roster' )
+	) {
+		$roster = extrasport_get_current_group_programs_roster();
+		if ( $roster ) {
+			$cards        = array();
+			$children_map = array();
+
+			foreach ( extrasport_get_service_children( $parent_id ) as $child ) {
+				$children_map[ $child->post_name ] = $child;
+			}
+
+			foreach ( $roster as $item ) {
+				$link_to = sanitize_title( (string) ( $item['link_to'] ?? '' ) );
+				if ( $link_to ) {
+					$card = extrasport_normalize_group_program_alias_card( $item );
+					if ( $card ) {
+						$cards[] = $card;
+					}
+					continue;
+				}
+
+				$slug = sanitize_title( (string) ( $item['slug'] ?? '' ) );
+				if ( $slug && isset( $children_map[ $slug ] ) ) {
+					$cards[] = extrasport_normalize_service_post( $children_map[ $slug ] );
+				}
+			}
+
+			if ( $cards ) {
+				return $cards;
+			}
+		}
+	}
+
+	$children = extrasport_get_service_children( $parent_id );
 
 	if ( ! empty( $children ) ) {
 		return array_map( 'extrasport_normalize_service_post', $children );

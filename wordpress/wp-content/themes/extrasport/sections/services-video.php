@@ -9,7 +9,7 @@ $uri      = $args['uri'] ?? EXTRASPORT_URI;
 $basename = $args['video'] ?? extrasport_get_service_clubs_video_basename();
 ?>
 
-<section id="services" class="page-section page-section--media page-section--services-video bg-black">
+<section id="services" class="page-section page-section--media page-section--services-video bg-brand-dark">
 	<video class="hidden md:block" muted autoplay loop playsinline>
 		<source src="<?php echo esc_url( $uri . '/assets/video/' . $basename . '.mp4' ); ?>" type="video/mp4">
 		<source src="<?php echo esc_url( $uri . '/assets/video/' . $basename . '.webm' ); ?>" type="video/webm">

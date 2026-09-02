@@ -43,10 +43,18 @@ function bindJobApplyTriggers() {
 			const title = trigger.dataset.jobTitle ?? '';
 			const form = document.getElementById('jobApplyForm');
 			const titleInput = form?.querySelector('[name="title"]');
+			const vacancyWrap = document.getElementById('jobApplyVacancyWrap');
+			const vacancyTitleEl = document.getElementById('jobApplyVacancyTitle');
 			const detailModal = trigger.closest('.modal');
 
 			if (titleInput) {
 				titleInput.value = title;
+			}
+			if (vacancyTitleEl) {
+				vacancyTitleEl.textContent = title;
+			}
+			if (vacancyWrap) {
+				vacancyWrap.classList.toggle('hidden', !title);
 			}
 
 			if (detailModal) {
@@ -107,6 +115,15 @@ function bindJobApplyForm() {
 			errorEl.classList.add('hidden');
 		}
 
+		const titleInput = form.querySelector('[name="title"]');
+		if (!titleInput?.value.trim()) {
+			if (errorEl) {
+				errorEl.textContent = 'Не указана вакансия. Обновите страницу и попробуйте снова.';
+				errorEl.classList.remove('hidden');
+			}
+			return;
+		}
+
 		const formData = new FormData(form);
 
 		try {
@@ -114,6 +131,11 @@ function bindJobApplyForm() {
 			form.reset();
 			if (fileNameEl) {
 				fileNameEl.textContent = '';
+			}
+			document.getElementById('jobApplyVacancyWrap')?.classList.add('hidden');
+			const vacancyTitleEl = document.getElementById('jobApplyVacancyTitle');
+			if (vacancyTitleEl) {
+				vacancyTitleEl.textContent = '';
 			}
 			window.extrasportCloseModal?.(document.getElementById('jobApplyModal'));
 			window.extrasportOpenModal?.('finish-popup');

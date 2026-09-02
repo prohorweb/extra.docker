@@ -140,7 +140,7 @@ function extrasport_cleanup_duplicate_service_attachments() {
  * @return array<int, array<string, mixed>>
  */
 function extrasport_get_service_seed_items() {
-	return array(
+	$items = array(
 		array(
 			'slug'       => 'personal_training',
 			'title'      => 'Персональный тренинг',
@@ -187,6 +187,69 @@ function extrasport_get_service_seed_items() {
 			'content'    => '',
 		),
 	);
+
+	return array_values(
+		array_filter(
+			$items,
+			static function ( $item ) {
+				return ! in_array( (string) ( $item['slug'] ?? '' ), extrasport_get_excluded_service_slugs_for_current_site(), true );
+			}
+		)
+	);
+}
+
+/**
+ * Service slugs that should not exist on the current club site.
+ *
+ * @return array<int, string>
+ */
+function extrasport_get_excluded_service_slugs_for_current_site() {
+	if ( extrasport_is_devision_site() ) {
+		return array( 'boevye-iskusstva', 'boks', 'kikboksing', 'muaj-taj', 'grappling' );
+	}
+
+	return array();
+}
+
+/**
+ * Remove excluded services (and children) for the current club.
+ *
+ * @return void
+ */
+function extrasport_cleanup_excluded_services_for_current_site() {
+	$excluded = extrasport_get_excluded_service_slugs_for_current_site();
+	if ( ! $excluded ) {
+		return;
+	}
+
+	$parent_id = extrasport_find_top_level_service_by_slug( 'boevye-iskusstva' );
+	if ( $parent_id && extrasport_is_devision_site() ) {
+		$children = get_posts(
+			array(
+				'post_type'              => 'service',
+				'post_parent'            => $parent_id,
+				'post_status'            => array( 'publish', 'draft', 'pending', 'private', 'trash' ),
+				'posts_per_page'         => -1,
+				'fields'                 => 'ids',
+				'no_found_rows'          => true,
+				'update_post_meta_cache' => false,
+				'update_post_term_cache' => false,
+			)
+		);
+
+		foreach ( $children as $child_id ) {
+			wp_delete_post( (int) $child_id, true );
+		}
+
+		wp_delete_post( $parent_id, true );
+	}
+
+	foreach ( $excluded as $slug ) {
+		$post_id = extrasport_find_service_by_slug( $slug );
+		if ( $post_id ) {
+			wp_delete_post( $post_id, true );
+		}
+	}
 }
 
 /**

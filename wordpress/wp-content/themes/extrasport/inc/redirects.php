@@ -51,8 +51,28 @@ function extrasport_handle_legacy_redirects() {
 	}
 
 	if ( preg_match( '#^/services/group-programs/([^/]+)/?$#', $uri, $matches ) ) {
+		$slug = sanitize_title( $matches[1] );
+
+		if ( function_exists( 'extrasport_get_current_group_programs_roster' ) ) {
+			foreach ( extrasport_get_current_group_programs_roster() as $item ) {
+				$item_slug = sanitize_title( (string) ( $item['slug'] ?? '' ) );
+				$link_to   = sanitize_title( (string) ( $item['link_to'] ?? '' ) );
+				if ( $item_slug === $slug && $link_to ) {
+					$target_id = extrasport_find_top_level_service_by_slug( $link_to );
+					if ( $target_id ) {
+						wp_safe_redirect( get_permalink( $target_id ), 301 );
+						exit;
+					}
+				}
+			}
+		}
+
+		if ( 'latina-pro' === $slug && extrasport_is_devision_site() ) {
+			wp_safe_redirect( extrasport_get_group_service_url( 'group-programs' ), 301 );
+			exit;
+		}
+
 		$legacy = extrasport_get_group_program_legacy_slug_redirects();
-		$slug   = sanitize_title( $matches[1] );
 		if ( isset( $legacy[ $slug ] ) ) {
 			wp_safe_redirect(
 				trailingslashit( extrasport_get_group_service_url( 'group-programs' ) ) . $legacy[ $slug ] . '/',

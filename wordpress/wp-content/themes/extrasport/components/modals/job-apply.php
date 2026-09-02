@@ -22,6 +22,13 @@ $club = extrasport_get_club();
 			<?php esc_html_e( 'Пожалуйста, заполните форму, наш менеджер свяжется с вами.', 'extrasport' ); ?>
 		</p>
 
+		<div class="job-apply__vacancy mb-6 hidden text-center" id="jobApplyVacancyWrap">
+			<div class="text-xs uppercase tracking-wide text-white/60">
+				<?php esc_html_e( 'Вакансия', 'extrasport' ); ?>
+			</div>
+			<div class="job-apply__vacancy-title mt-1 font-oswald text-lg uppercase text-brand-primary" id="jobApplyVacancyTitle"></div>
+		</div>
+
 		<form id="jobApplyForm" class="space-y-4" action="#" method="post" enctype="multipart/form-data" novalidate data-form-type="job_apply">
 			<?php get_template_part( 'components/form', 'honeypot', array( 'form_id' => 'jobApplyForm' ) ); ?>
 			<input type="hidden" name="form_token" value="<?php echo esc_attr( extrasport_create_form_token() ); ?>">

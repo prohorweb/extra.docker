@@ -377,6 +377,18 @@ function extrasport_process_job_apply_submission( $name, $tel, $accept, $job_tit
 		);
 	}
 
+	wp_update_post(
+		array(
+			'ID'         => $lead_id,
+			'post_title' => sprintf(
+				/* translators: 1: vacancy title, 2: applicant name */
+				__( 'Отклик — %1$s — %2$s', 'extrasport' ),
+				$job_title,
+				$name
+			),
+		)
+	);
+
 	update_post_meta( $lead_id, 'resume_path', $upload['url'] );
 
 	$subject = 'Отклик на вакансию ' . $job_title;

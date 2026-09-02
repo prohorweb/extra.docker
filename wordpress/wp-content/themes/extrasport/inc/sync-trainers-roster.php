@@ -435,6 +435,10 @@ function extrasport_import_roster_trainer_photo( $filename ) {
  * @return void
  */
 function extrasport_sync_trainers_roster( $force = false ) {
+	if ( ! extrasport_is_extrasport_site() ) {
+		return;
+	}
+
 	if ( ! $force && (int) get_option( 'extrasport_trainers_roster_version', 0 ) >= EXTRASPORT_TRAINERS_ROSTER_VERSION ) {
 		return;
 	}

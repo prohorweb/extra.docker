@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'EXTRASPORT_SERVICES_CONTENT_VERSION', 1 );
+define( 'EXTRASPORT_SERVICES_CONTENT_VERSION', 2 );
 
 /**
  * WP service slug => Yii content source.
@@ -70,6 +70,159 @@ function extrasport_find_service_by_slug( $slug ) {
 }
 
 /**
+ * Whether a service content link should be removed from imported HTML.
+ *
+ * @param string $href Link URL.
+ * @param string $text Visible link text.
+ * @return bool
+ */
+function extrasport_should_remove_service_content_link( $href, $text ) {
+	$href = (string) $href;
+	$text = (string) $text;
+
+	if ( preg_match( '#(?:de-vision|extrasport)\.ru#i', $href ) ) {
+		return true;
+	}
+
+	if ( preg_match( '#piter\.extrasport\.ru#i', $href ) ) {
+		return true;
+	}
+
+	if ( preg_match( '#/(schedule|raspisanie)(/|$|\?|#)#i', $href ) ) {
+		return true;
+	}
+
+	if ( preg_match( '#/(services/programs|services/group-programs)/#i', $href ) ) {
+		return true;
+	}
+
+	if ( preg_match( '/расписание/ui', $text ) ) {
+		return true;
+	}
+
+	if ( preg_match( '/подробное описание/ui', $text ) ) {
+		return true;
+	}
+
+	if ( preg_match( '/посмотреть видео/ui', $text ) ) {
+		return true;
+	}
+
+	return false;
+}
+
+/**
+ * Whether an image src belongs to the current site media library.
+ *
+ * @param string $src Image URL or path.
+ * @return bool
+ */
+function extrasport_is_local_service_content_image( $src ) {
+	$src = trim( (string) $src );
+
+	if ( ! $src || str_starts_with( $src, 'data:' ) ) {
+		return false;
+	}
+
+	if ( preg_match( '#^https?://#i', $src ) ) {
+		$host      = wp_parse_url( $src, PHP_URL_HOST );
+		$site_host = wp_parse_url( home_url(), PHP_URL_HOST );
+
+		return $host && $site_host && strcasecmp( (string) $host, (string) $site_host ) === 0;
+	}
+
+	if ( str_starts_with( $src, '/' ) ) {
+		return str_contains( $src, '/wp-content/uploads/' );
+	}
+
+	return false;
+}
+
+/**
+ * Remove legacy outbound links and broken external images from service HTML.
+ *
+ * @param string $html Post content HTML.
+ * @return string
+ */
+function extrasport_clean_service_content_html( $html ) {
+	$html = trim( (string) $html );
+
+	if ( ! $html ) {
+		return '';
+	}
+
+	do {
+		$previous = $html;
+		$html     = preg_replace_callback(
+			'#<a\b[^>]*href=["\']([^"\']*)["\'][^>]*>(.*?)</a>#is',
+			static function ( $matches ) {
+				$href = html_entity_decode( (string) $matches[1], ENT_QUOTES, 'UTF-8' );
+				$text = trim( wp_strip_all_tags( html_entity_decode( (string) $matches[2], ENT_QUOTES, 'UTF-8' ) ) );
+
+				if ( extrasport_should_remove_service_content_link( $href, $text ) ) {
+					return '';
+				}
+
+				return $matches[0];
+			},
+			$html
+		);
+	} while ( $html !== $previous );
+
+	$html = preg_replace_callback(
+		'#<img\b[^>]*src=["\']([^"\']*)["\'][^>]*/?>#i',
+		static function ( $matches ) {
+			$src = html_entity_decode( (string) $matches[1], ENT_QUOTES, 'UTF-8' );
+
+			return extrasport_is_local_service_content_image( $src ) ? $matches[0] : '';
+		},
+		$html
+	);
+
+	$html = preg_replace( '#<(p|u|b|strong|em|span|div)(?:\s[^>]*)?>(?:\s|&nbsp;|<br\s*/?>)*</\1>#iu', '', $html );
+
+	return trim( $html );
+}
+
+/**
+ * Clean HTML content on all service posts for the current site.
+ *
+ * @return void
+ */
+function extrasport_cleanup_service_posts_content_html() {
+	$posts = get_posts(
+		array(
+			'post_type'      => 'service',
+			'posts_per_page' => -1,
+			'post_status'    => 'any',
+		)
+	);
+
+	foreach ( $posts as $post ) {
+		if ( ! $post instanceof WP_Post ) {
+			continue;
+		}
+
+		$content = trim( (string) $post->post_content );
+		if ( ! $content ) {
+			continue;
+		}
+
+		$cleaned = extrasport_clean_service_content_html( $content );
+		if ( $cleaned === $content ) {
+			continue;
+		}
+
+		wp_update_post(
+			array(
+				'ID'           => $post->ID,
+				'post_content' => $cleaned,
+			)
+		);
+	}
+}
+
+/**
  * Sanitize legacy Yii HTML for WordPress post content.
  *
  * @param string $html Raw HTML.
@@ -83,7 +236,9 @@ function extrasport_normalize_yii_html( $html ) {
 		return '';
 	}
 
-	return wp_kses_post( $html );
+	$html = wp_kses_post( $html );
+
+	return extrasport_clean_service_content_html( $html );
 }
 
 /**
@@ -273,6 +428,8 @@ function extrasport_seed_service_content( $force = false ) {
 			update_post_meta( $post_id, '_service_intro', $intro );
 		}
 	}
+
+	extrasport_cleanup_service_posts_content_html();
 
 	update_option( 'extrasport_services_content_version', EXTRASPORT_SERVICES_CONTENT_VERSION, false );
 }

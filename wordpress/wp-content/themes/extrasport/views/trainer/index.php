@@ -8,7 +8,7 @@
 $club = extrasport_get_club();
 ?>
 
-<section class="page-section page-section--actions-list bg-black">
+<section class="page-section page-section--actions-list bg-brand-dark">
 	<div class="page-section__inner mx-auto w-full max-w-7xl px-4 lg:px-6">
 		<h1 class="section-heading mb-4 py-4 text-2xl md:mb-5 md:text-3xl lg:text-4xl">
 			<?php

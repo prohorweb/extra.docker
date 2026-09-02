@@ -219,6 +219,10 @@ function extrasport_cleanup_trainer_direction_terms( array $valid_term_ids ) {
  * @return void
  */
 function extrasport_seed_trainers( $force = false ) {
+	if ( ! extrasport_is_extrasport_site() ) {
+		return;
+	}
+
 	if ( ! $force && (int) get_option( 'extrasport_trainers_seed_version', 0 ) >= EXTRASPORT_TRAINERS_SEED_VERSION ) {
 		return;
 	}

@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 define( 'EXTRASPORT_CLUB_OPTION', 'extrasport_club' );
-define( 'EXTRASPORT_CLUB_DATA_VERSION', 4 );
+define( 'EXTRASPORT_CLUB_DATA_VERSION', 5 );
 
 /**
  * Legacy Yii2 subdomain slugs mapped to current club slugs.
@@ -84,20 +84,21 @@ function extrasport_get_club_defaults_registry() {
 			'rules_slug'          => 'devision',
 			'rules_title_suffix'  => 'De-vision',
 			'rules_modal_title'   => 'ПРАВИЛА СПОРТИВНОГО КЛУБА DE-VISION',
-			'tel'                 => '+7 (812) 565-49-86',
+			'tel'                 => '+7 (812) 644-02-88',
 			'email'               => 'rodeo_manager@de-vision.ru',
 			'address'             => 'СПб, пр. Культуры, д. 1, ТРЦ «Родео Драйв»',
 			'coordinates'         => '59.984,30.368',
 			'metro'               => 'м. Озерки, м. Академическая, м. Проспект Просвещения',
-			'start_work'          => 'с 8:00 до 23:00',
+			'start_work'          => 'с 8:00 до 22:00',
 			'start_work_weekend'  => 'с 9:00 до 22:00',
-			'sales_work'          => 'с 10:00 до 22:00',
-			'url_appstore'        => '',
-			'url_googleplay'      => '',
-			'vk'                  => '',
-			'youtube'             => '',
-			'whatsapp'            => '',
+			'sales_work'          => 'с 9:30 до 22:00',
+			'url_appstore'        => 'https://apps.apple.com/ru/app/de-vision/id1469862169',
+			'url_googleplay'      => 'https://play.google.com/store/apps/details?id=air.com.devision',
+			'vk'                  => 'https://vk.me/club69170005',
+			'youtube'             => 'https://www.youtube.com/channel/UCCUUiy9ZROCNHBmDvPF-dxw/featured',
+			'whatsapp'            => 'https://wa.me/79219555013',
 			'telegram'            => '',
+			'url_3d_tour'         => 'https://pro3d.pro/r6moPMPJboE/',
 			'present_video_embed' => '',
 			'timer_enabled'       => false,
 			'timer_title'         => 'Специальное предложение',
@@ -439,6 +440,8 @@ add_action( 'after_setup_theme', 'extrasport_maybe_seed_current_club', 20 );
 /**
  * Apply canonical club contact data when defaults are updated.
  *
+ * Preserves imported content fields like about_content.
+ *
  * @return void
  */
 function extrasport_maybe_sync_club_defaults() {
@@ -450,8 +453,49 @@ function extrasport_maybe_sync_club_defaults() {
 	$registry = extrasport_get_club_defaults_registry();
 	$slug     = extrasport_get_current_club_slug();
 	$defaults = $registry[ $slug ] ?? $registry['extrasport'];
+	$current  = get_option( EXTRASPORT_CLUB_OPTION, array() );
 
-	update_option( EXTRASPORT_CLUB_OPTION, $defaults, false );
+	if ( ! is_array( $current ) ) {
+		$current = array();
+	}
+
+	$preserve_keys = array( 'about_content', 'about_intro', 'url_3d_tour' );
+	$merged        = wp_parse_args( $defaults, $current );
+
+	foreach ( $preserve_keys as $key ) {
+		if ( ! empty( $current[ $key ] ) ) {
+			$merged[ $key ] = $current[ $key ];
+		}
+	}
+
+	update_option( EXTRASPORT_CLUB_OPTION, $merged, false );
 	update_option( 'extrasport_club_data_version', EXTRASPORT_CLUB_DATA_VERSION, false );
 }
 add_action( 'after_setup_theme', 'extrasport_maybe_sync_club_defaults', 25 );
+
+/**
+ * Whether the current site is EXTRASPORT Piter.
+ *
+ * @return bool
+ */
+function extrasport_is_extrasport_site() {
+	return 'extrasport' === extrasport_get_current_club_slug();
+}
+
+/**
+ * Whether the current site is De-vision.
+ *
+ * @return bool
+ */
+function extrasport_is_devision_site() {
+	return 'devision' === extrasport_get_current_club_slug();
+}
+
+/**
+ * Legacy Yii2 subdomain for the current club.
+ *
+ * @return string piter|matros
+ */
+function extrasport_get_legacy_yii_subdomain() {
+	return extrasport_is_devision_site() ? 'matros' : 'piter';
+}

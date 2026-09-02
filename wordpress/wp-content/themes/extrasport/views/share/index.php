@@ -21,7 +21,7 @@ $uri  = EXTRASPORT_URI;
 		</h1>
 
 		<?php if ( have_posts() ) : ?>
-			<div class="grid gap-6 md:grid-cols-2">
+			<div class="grid items-start gap-6 md:grid-cols-2 lg:grid-cols-3">
 				<?php
 				while ( have_posts() ) {
 					the_post();
@@ -41,7 +41,7 @@ $uri  = EXTRASPORT_URI;
 				?>
 			</div>
 		<?php else : ?>
-			<div class="grid gap-6 md:grid-cols-2">
+			<div class="grid items-start gap-6 md:grid-cols-2 lg:grid-cols-3">
 				<?php foreach ( extrasport_get_share_placeholders( $uri ) as $share ) : ?>
 					<?php get_template_part( 'components/cards/share', null, array( 'share' => $share ) ); ?>
 				<?php endforeach; ?>

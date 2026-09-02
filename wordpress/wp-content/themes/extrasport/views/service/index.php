@@ -24,7 +24,7 @@ $uri  = EXTRASPORT_URI;
 		</h1>
 
 		<?php if ( have_posts() ) : ?>
-			<div class="grid gap-6 md:grid-cols-2">
+			<div class="grid items-start gap-6 md:grid-cols-2">
 				<?php
 				while ( have_posts() ) {
 					the_post();
@@ -44,7 +44,7 @@ $uri  = EXTRASPORT_URI;
 				?>
 			</div>
 		<?php else : ?>
-			<div class="grid gap-6 md:grid-cols-2">
+			<div class="grid items-start gap-6 md:grid-cols-2">
 				<?php foreach ( extrasport_get_service_placeholders( $uri ) as $service ) : ?>
 					<?php get_template_part( 'components/cards/service', null, array( 'service' => $service ) ); ?>
 				<?php endforeach; ?>

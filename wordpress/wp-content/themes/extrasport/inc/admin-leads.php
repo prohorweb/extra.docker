@@ -95,6 +95,7 @@ function extrasport_render_lead_meta_box( WP_Post $post ) {
 		__( 'Контекст формы', 'extrasport' ) => get_post_meta( $post->ID, 'form_type', true ),
 		__( 'Имя', 'extrasport' ) => get_post_meta( $post->ID, 'name', true ),
 		__( 'Телефон', 'extrasport' ) => get_post_meta( $post->ID, 'tel', true ),
+		__( 'Вакансия', 'extrasport' ) => get_post_meta( $post->ID, 'job_title', true ),
 		__( 'Согласие', 'extrasport' ) => get_post_meta( $post->ID, 'accept', true ) ? __( 'Да', 'extrasport' ) : __( 'Нет', 'extrasport' ),
 		__( 'Страница', 'extrasport' ) => get_post_meta( $post->ID, 'source_url', true ),
 		__( 'Клуб', 'extrasport' ) => get_post_meta( $post->ID, 'club', true ),

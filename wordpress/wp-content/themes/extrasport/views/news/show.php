@@ -8,7 +8,7 @@
 while ( have_posts() ) {
 	the_post();
 	?>
-	<section class="page-section page-section--actions-list single-news bg-black">
+	<section class="page-section page-section--actions-list single-news bg-brand-dark">
 		<div class="page-section__inner mx-auto w-full max-w-7xl px-4 lg:px-6">
 			<?php extrasport_render_breadcrumbs( extrasport_get_news_breadcrumbs() ); ?>
 

@@ -9,7 +9,7 @@ $club = extrasport_get_club();
 $tel  = preg_replace( '/\s+/', '', $club['tel'] );
 ?>
 
-<footer class="site-footer bg-black border-t border-white/10">
+<footer class="site-footer bg-brand-dark border-t border-white/10">
 	<div class="mx-auto max-w-7xl px-4 py-12 lg:px-6">
 		<div class="grid gap-10 lg:grid-cols-2">
 
