@@ -14,6 +14,16 @@
 		@apply font-roboto text-white bg-brand-dark antialiased;
 	}
 
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		font-family: var(--font-oswald);
+		@apply font-semibold;
+	}
+
 	body.overflow-hidden {
 		@apply overflow-hidden;
 	}
@@ -31,6 +41,14 @@
 }
 
 @layer components {
+	.m-0 {
+		margin: 0 !important;
+	}
+
+	.ms-2 {
+		margin-left: 0.5rem !important;
+	}
+
 	.font-oswald {
 		font-family: var(--font-oswald);
 	}
@@ -55,15 +73,19 @@
 		@apply px-6 py-3 text-base;
 	}
 
+	.btn-secondary {
+		@apply inline-flex cursor-pointer items-center rounded-none border border-white/30 bg-white/10 px-4 py-2 text-sm uppercase tracking-wide text-white transition hover:border-brand-primary hover:text-brand-primary;
+	}
+
 	/* Site header (Yii2 navbar port) */
 	.site-header {
-		@apply relative w-full border-0 p-2;
+		@apply relative w-full border-0 p-0;
 		z-index: 100;
 		background-color: rgb(0 0 0 / 72%);
 	}
 
 	.site-header--overlay {
-		@apply relative;
+		@apply absolute inset-x-0 top-0;
 		z-index: 100;
 	}
 
@@ -77,20 +99,51 @@
 		@apply hidden;
 	}
 
-	.site-header--fixed .site-header__main {
-		@apply py-2;
+	.site-header--fixed .site-header__logo img,
+	.site-header--fixed .site-header__logo svg {
+		@apply max-h-10 md:max-h-11;
 	}
 
 	.site-header--static {
 		background-color: rgb(0 0 0 / 85%);
 	}
 
-	.site-header__main {
-		@apply mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-2.5 xl:grid xl:grid-cols-[13.5rem_1fr_13.5rem] xl:px-6 xl:py-3;
+	.site-header__inner {
+		@apply relative mx-auto flex w-full max-w-7xl items-center gap-4 px-4 py-6 xl:px-6;
 	}
 
-	.site-header__nav-center {
-		@apply flex-col items-center justify-center gap-2;
+	.site-header__logo {
+		@apply flex shrink-0 items-center justify-start;
+		flex: 0 0 17rem;
+		max-width: 17rem;
+	}
+
+	.site-header__logo-link {
+		@apply inline-flex w-full max-w-[17rem] items-center justify-start;
+	}
+
+	.site-header__logo img,
+	.site-header__logo svg {
+		@apply h-auto w-full max-h-14 md:max-h-16;
+	}
+
+	body.club-devision .site-header__logo img,
+	body.club-devision .site-header__logo svg {
+		@apply w-auto max-h-14 md:max-h-[4rem];
+	}
+
+	.site-header__nav {
+		@apply min-w-0 flex-1 flex-col items-center justify-center gap-1;
+	}
+
+	.site-header__nav-list {
+		@apply flex flex-wrap items-center justify-center gap-3 lg:gap-5 xl:gap-7;
+	}
+
+	.site-header__bottom {
+		@apply flex shrink-0 items-center justify-end;
+		flex: 0 0 13.5rem;
+		max-width: 13.5rem;
 	}
 
 	.site-header__club-info {
@@ -108,24 +161,6 @@
 
 	.site-header__club-phone {
 		@apply ms-1;
-	}
-
-	.site-header__logo {
-		@apply block shrink-0 max-w-[13.5rem];
-	}
-
-	.site-header__logo img,
-	.site-header__logo svg {
-		@apply h-auto w-full max-h-14;
-	}
-
-	body.club-devision .site-header__logo img,
-	body.club-devision .site-header__logo svg {
-		@apply w-auto max-h-[3.25rem];
-	}
-
-	.site-header__nav {
-		@apply flex flex-wrap items-center justify-center gap-3 lg:gap-5 xl:gap-7;
 	}
 
 	.site-header__nav-item {
@@ -148,7 +183,7 @@
 
 	.site-header__nav-link {
 		font-size: 1.25rem;
-		@apply transition hover:text-brand-primary;
+		@apply py-2 transition hover:text-brand-primary;
 	}
 
 	.site-header__nav-link.is-active,
@@ -185,7 +220,33 @@
 	}
 
 	.site-header__actions {
-		@apply shrink-0 justify-end xl:w-full xl:max-w-[13.5rem] xl:justify-self-end;
+		@apply flex shrink-0 items-center justify-end gap-2;
+	}
+
+	@media (width < 1280px) {
+		.site-header__inner {
+			@apply grid items-center gap-3;
+			grid-template-columns: 1fr auto;
+			grid-template-areas: 'logo bottom';
+		}
+
+		.site-header__logo {
+			grid-area: logo;
+			@apply justify-start;
+		}
+
+		.site-header__nav {
+			@apply hidden;
+		}
+
+		.site-header__bottom {
+			grid-area: bottom;
+			@apply mt-0 w-auto justify-end;
+		}
+
+		.site-header__actions {
+			@apply static;
+		}
 	}
 
 	.site-header__actions .btn-outline-primary {
@@ -448,7 +509,7 @@
 	}
 
 	.section-heading {
-		@apply font-oswald text-center uppercase;
+		@apply font-oswald font-semibold text-center uppercase;
 	}
 
 	.page-section--actions .section-heading {
@@ -564,7 +625,7 @@
 	}
 
 	.share-card .card-title {
-		@apply font-oswald text-base font-bold uppercase md:text-lg;
+		@apply font-oswald text-base font-semibold uppercase md:text-lg;
 	}
 
 	.share-card .card-text {
@@ -620,6 +681,141 @@
 	.share-page__content ul li::before {
 		content: "•";
 		@apply absolute left-0 top-0 text-2xl leading-none text-brand-primary;
+	}
+
+	.news-blog__list {
+		@apply mx-auto mb-0 flex w-full max-w-3xl flex-col gap-12 md:max-w-4xl md:gap-16 lg:max-w-5xl;
+	}
+
+	.news-blog__item {
+		@apply mb-0;
+	}
+
+	.news-block {
+		@apply block;
+	}
+
+	.news-block__date {
+		@apply mb-3 flex items-center font-roboto text-base uppercase tracking-wide text-white;
+	}
+
+	.news-block__date h3 {
+		margin-top: 0;
+		margin-bottom: 0.5rem;
+		font-family: var(--font-oswald);
+		font-weight: 600;
+		line-height: 1.2;
+		font-size: calc(1.3rem + 0.6vw);
+		@apply text-white;
+	}
+
+	@media (min-width: 1200px) {
+		.news-block__date h3 {
+			font-size: 1.75rem;
+		}
+	}
+
+	.news-block__date span {
+		@apply text-base leading-normal text-[#cccccc];
+	}
+
+	.news-block__wrap {
+		@apply min-w-0;
+	}
+
+	.news-block__title {
+		font-size: 1.75rem;
+		@apply mb-4 font-oswald font-semibold uppercase leading-snug text-brand-primary;
+	}
+
+	.news-block__title a,
+	.news-block__title a:visited {
+		@apply text-inherit no-underline transition-colors hover:text-white;
+	}
+
+	.news-block__text {
+		@apply mb-6 max-w-none text-base leading-relaxed text-white;
+	}
+
+	.single-news .news-block__text :where(p, li, td, th, blockquote, h2, h3, h4) {
+		@apply text-white;
+	}
+
+	.news-block__button {
+		@apply max-w-xs;
+	}
+
+	.news-archive__title {
+		@apply font-semibold tracking-wide text-white;
+	}
+
+	.single-news .news-single__title {
+		@apply font-semibold tracking-wide text-white;
+	}
+
+	.page-section--actions-list .news-block__button .btn-primary {
+		@apply font-semibold;
+	}
+
+	.news-blog__pagination .nav-links {
+		@apply flex flex-wrap items-center justify-center gap-2;
+	}
+
+	.news-blog__pagination .page-numbers {
+		@apply inline-flex min-h-10 min-w-10 items-center justify-center border border-white/20 px-3 text-white/80 no-underline transition hover:border-brand-primary hover:text-brand-primary;
+	}
+
+	.news-blog__pagination .page-numbers.current {
+		@apply border-brand-primary bg-brand-primary text-brand-dark;
+	}
+
+	.careers-page__subtitle {
+		@apply font-oswald uppercase text-white;
+	}
+
+	.careers-page__grid {
+		@apply grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-10 lg:gap-12;
+	}
+
+	.career-item {
+		@apply flex h-full flex-col gap-4;
+	}
+
+	.career-item__title {
+		@apply font-oswald text-lg uppercase leading-snug text-white md:text-xl;
+	}
+
+	.career-item__button {
+		@apply w-fit max-w-full justify-center;
+	}
+
+	.job-modal__title {
+		@apply font-oswald uppercase leading-snug text-white;
+	}
+
+	.job-modal__club {
+		@apply block text-base font-normal normal-case text-white/70 md:text-lg;
+	}
+
+	.job-modal__content :where(p, li) {
+		@apply text-white;
+	}
+
+	.job-modal__content :where(ul) {
+		@apply mb-4 list-none ps-0;
+	}
+
+	.job-modal__content :where(li) {
+		@apply relative mb-3 ps-5;
+	}
+
+	.job-modal__content :where(li)::before {
+		content: "•";
+		@apply absolute left-0 top-0 text-brand-primary;
+	}
+
+	.job-apply__upload-label {
+		@apply w-full justify-center;
 	}
 
 	.btn-xl {
@@ -744,14 +940,7 @@
 	/* Hero / masthead */
 	body.is-front-page .masthead,
 	body.is-services-archive #about {
-		margin-top: -5.5rem;
-	}
-
-	@media (width >= 1024px) {
-		body.is-front-page .masthead,
-		body.is-services-archive #about {
-			margin-top: -5.75rem;
-		}
+		margin-top: 0;
 	}
 
 	body.is-services-archive #about {
@@ -789,14 +978,14 @@
 	}
 
 	.masthead-heading {
-		@apply font-oswald font-bold uppercase text-brand-primary;
+		@apply font-oswald font-semibold uppercase text-brand-primary;
 		font-size: clamp(2rem, 5vmax, 4.5rem);
 		line-height: 1.1;
 		text-shadow: 3px 3px 0 rgb(0 0 0 / 60%);
 	}
 
 	.masthead-subheading {
-		@apply mt-4 font-oswald font-light uppercase text-white;
+		@apply mt-4 font-oswald font-semibold uppercase text-white;
 		font-size: clamp(1.1rem, 3vmax, 2.5rem);
 		line-height: 1.2;
 	}
@@ -864,6 +1053,14 @@
 	}
 
 	/* Mobile nav */
+	.mobile-nav {
+		@apply fixed inset-0 z-[100];
+	}
+
+	.mobile-nav__panel {
+		@apply z-[100];
+	}
+
 	.mobile-nav.hidden {
 		@apply hidden;
 	}

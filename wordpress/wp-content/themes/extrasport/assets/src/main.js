@@ -12,12 +12,14 @@ import { initTimer } from './modules/timer.js';
 import { initRules } from './modules/rules.js';
 import { initAnalytics } from './modules/analytics.js';
 import { initParallax } from './modules/parallax.js';
+import { initJobs } from './modules/jobs.js';
 
 document.addEventListener('DOMContentLoaded', () => {
 	initModals();
 	initNav();
 	initChat();
 	initForms();
+	initJobs();
 	initCarousels();
 	initMap();
 	initAnalytics();

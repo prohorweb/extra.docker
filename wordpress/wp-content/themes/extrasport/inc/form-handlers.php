@@ -239,3 +239,163 @@ function extrasport_process_lead_submission( $type, $name, $tel, $accept, $form_
 
 	return $lead_id;
 }
+
+/**
+ * Send form notification email with attachment.
+ *
+ * @param string $subject   Email subject.
+ * @param string $to_key    Settings key for recipient list.
+ * @param array  $fields    Field label => value pairs.
+ * @param string $file_path Absolute path to attachment.
+ * @param string $file_name Attachment filename.
+ * @return bool
+ */
+function extrasport_send_form_email_with_attachment( $subject, $to_key, array $fields, $file_path, $file_name ) {
+	$settings   = extrasport_get_theme_settings();
+	$from       = $settings['email_from'] ?: get_option( 'admin_email' );
+	$recipients = extrasport_parse_email_list( $settings[ $to_key ] ?? get_option( 'admin_email' ) );
+
+	if ( empty( $recipients ) ) {
+		$recipients = array( get_option( 'admin_email' ) );
+	}
+
+	$lines = array();
+	foreach ( $fields as $label => $value ) {
+		$lines[] = $label . ': ' . $value;
+	}
+
+	$body = implode( "\n", $lines );
+
+	$mail_callback = static function ( $phpmailer ) use ( $file_path, $file_name ) {
+		if ( is_readable( $file_path ) ) {
+			$phpmailer->addAttachment( $file_path, $file_name );
+		}
+	};
+
+	add_action( 'phpmailer_init', $mail_callback );
+	$sent = wp_mail( implode( ',', $recipients ), $subject, $body, array( 'From: ' . $from ) );
+	remove_action( 'phpmailer_init', $mail_callback );
+
+	return $sent;
+}
+
+/**
+ * Validate uploaded job resume.
+ *
+ * @param array<string, mixed> $file Uploaded file array from $_FILES.
+ * @return true|WP_Error
+ */
+function extrasport_validate_job_resume_upload( array $file ) {
+	if ( empty( $file['tmp_name'] ) || ! is_uploaded_file( $file['tmp_name'] ) ) {
+		return new WP_Error(
+			'extrasport_resume_required',
+			__( 'Для продолжения, пожалуйста, прикрепите резюме.', 'extrasport' )
+		);
+	}
+
+	if ( ! empty( $file['error'] ) && UPLOAD_ERR_OK !== (int) $file['error'] ) {
+		return new WP_Error(
+			'extrasport_resume_upload_failed',
+			__( 'Не удалось загрузить файл. Попробуйте снова.', 'extrasport' )
+		);
+	}
+
+	if ( (int) $file['size'] > extrasport_get_job_resume_max_bytes() ) {
+		return new WP_Error(
+			'extrasport_resume_too_large',
+			__( 'Вес файла более 100 Кб', 'extrasport' )
+		);
+	}
+
+	$filename  = sanitize_file_name( (string) ( $file['name'] ?? '' ) );
+	$extension = strtolower( pathinfo( $filename, PATHINFO_EXTENSION ) );
+	$mimes     = extrasport_get_job_resume_mime_types();
+
+	if ( ! isset( $mimes[ $extension ] ) ) {
+		return new WP_Error(
+			'extrasport_resume_invalid_type',
+			__( 'Допустимы только файлы *.pdf или *.docx.', 'extrasport' )
+		);
+	}
+
+	$checked = wp_check_filetype_and_ext( $file['tmp_name'], $filename, $mimes );
+	if ( empty( $checked['ext'] ) || empty( $checked['type'] ) ) {
+		return new WP_Error(
+			'extrasport_resume_invalid_type',
+			__( 'Допустимы только файлы *.pdf или *.docx.', 'extrasport' )
+		);
+	}
+
+	return true;
+}
+
+/**
+ * Process job application with resume attachment.
+ *
+ * @param string               $name      Submitter name.
+ * @param string               $tel       Submitter phone.
+ * @param bool                 $accept    Privacy checkbox state.
+ * @param string               $job_title Vacancy title.
+ * @param array<string, mixed> $file      Uploaded resume file.
+ * @return int|WP_Error Lead post ID.
+ */
+function extrasport_process_job_apply_submission( $name, $tel, $accept, $job_title, array $file ) {
+	$club = extrasport_get_club();
+
+	$resume_check = extrasport_validate_job_resume_upload( $file );
+	if ( is_wp_error( $resume_check ) ) {
+		return $resume_check;
+	}
+
+	$filename  = sanitize_file_name( (string) $file['name'] );
+	$extension = strtolower( pathinfo( $filename, PATHINFO_EXTENSION ) );
+	$upload    = wp_upload_bits(
+		sanitize_title( $name ) . '-resume-' . time() . '.' . $extension,
+		null,
+		file_get_contents( $file['tmp_name'] ) // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+	);
+
+	if ( ! empty( $upload['error'] ) ) {
+		return new WP_Error(
+			'extrasport_resume_store_failed',
+			__( 'Не удалось сохранить файл. Попробуйте снова.', 'extrasport' ),
+			array( 'status' => 500 )
+		);
+	}
+
+	$extra = array(
+		'accept'    => $accept ? '1' : '0',
+		'job_title' => $job_title,
+	);
+
+	$lead_id = extrasport_store_lead( 'job_apply', $name, $tel, $extra );
+	if ( ! $lead_id ) {
+		return new WP_Error(
+			'extrasport_lead_store_failed',
+			__( 'Не удалось сохранить заявку. Попробуйте позже.', 'extrasport' ),
+			array( 'status' => 500 )
+		);
+	}
+
+	update_post_meta( $lead_id, 'resume_path', $upload['url'] );
+
+	$subject = 'Отклик на вакансию ' . $job_title;
+	$to_key  = 'email_feedback';
+	$fields  = array(
+		'Имя'     => $name,
+		'Телефон' => $tel,
+		'Вакансия'=> $job_title,
+		'Клуб'    => $club['title'],
+	);
+
+	$sent = extrasport_send_form_email_with_attachment(
+		$subject,
+		$to_key,
+		$fields,
+		$upload['file'],
+		basename( $upload['file'] )
+	);
+	update_post_meta( $lead_id, 'email_sent', $sent ? '1' : '0' );
+
+	return $lead_id;
+}

@@ -25,12 +25,14 @@ $about_active = extrasport_is_about_nav_active( $about_links );
 ?>
 
 <header id="mainNav" class="site-header <?php echo esc_attr( $header_pos ); ?>" aria-label="<?php esc_attr_e( 'Site header', 'extrasport' ); ?>">
-	<div class="site-header__main">
-		<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="site-header__logo shrink-0">
-			<?php echo extrasport_render_brand_logo(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-		</a>
+	<div class="site-header__inner">
+		<div class="site-header__logo">
+			<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="site-header__logo-link">
+				<?php echo extrasport_render_brand_logo(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+			</a>
+		</div>
 
-		<div class="site-header__nav-center hidden xl:flex">
+		<div class="site-header__nav hidden xl:flex">
 			<div class="site-header__club-info">
 				<i class="fa-solid fa-location-dot text-brand-primary" aria-hidden="true"></i>
 				<span class="site-header__club-label"><?php esc_html_e( 'Ваш клуб:', 'extrasport' ); ?></span>
@@ -43,7 +45,7 @@ $about_active = extrasport_is_about_nav_active( $about_links );
 				</a>
 			</div>
 
-			<nav class="site-header__nav" aria-label="<?php esc_attr_e( 'Main navigation', 'extrasport' ); ?>">
+			<nav class="site-header__nav-list" aria-label="<?php esc_attr_e( 'Main navigation', 'extrasport' ); ?>">
 				<div class="site-header__nav-item group relative">
 					<button type="button" class="site-header__nav-link flex items-center gap-1<?php echo $about_active ? ' is-active' : ''; ?>">
 						<?php esc_html_e( 'О клубе', 'extrasport' ); ?>
@@ -77,26 +79,28 @@ $about_active = extrasport_is_about_nav_active( $about_links );
 			</nav>
 		</div>
 
-		<div class="site-header__actions flex items-center gap-2">
-			<button type="button" class="btn-outline-primary hidden md:inline-flex" data-modal-open="callModal">
-				<i class="fa-solid fa-phone-volume me-2" aria-hidden="true"></i>
-				<?php esc_html_e( 'Обратный звонок', 'extrasport' ); ?>
-			</button>
+		<div class="site-header__bottom">
+			<div class="site-header__actions">
+				<button type="button" class="btn-outline-primary hidden md:inline-flex" data-modal-open="callModal">
+					<i class="fa-solid fa-phone-volume me-2" aria-hidden="true"></i>
+					<?php esc_html_e( 'Обратный звонок', 'extrasport' ); ?>
+				</button>
 
-			<button type="button" id="navToggle" class="site-header__burger flex items-center gap-2 xl:hidden" aria-expanded="false" aria-controls="mobileNav">
-				<span class="font-oswald text-sm uppercase tracking-wider"><?php esc_html_e( 'Меню', 'extrasport' ); ?></span>
-				<span class="flex flex-col gap-1" aria-hidden="true">
-					<span class="block h-0.5 w-5 bg-white"></span>
-					<span class="block h-0.5 w-5 bg-white"></span>
-					<span class="block h-0.5 w-5 bg-white"></span>
-				</span>
-			</button>
+				<button type="button" id="navToggle" class="site-header__burger flex items-center gap-2 xl:hidden" aria-expanded="false" aria-controls="mobileNav">
+					<span class="font-oswald text-sm uppercase tracking-wider"><?php esc_html_e( 'Меню', 'extrasport' ); ?></span>
+					<span class="flex flex-col gap-1" aria-hidden="true">
+						<span class="block h-0.5 w-5 bg-white"></span>
+						<span class="block h-0.5 w-5 bg-white"></span>
+						<span class="block h-0.5 w-5 bg-white"></span>
+					</span>
+				</button>
+			</div>
 		</div>
 	</div>
 </header>
 
 <!-- Mobile / offcanvas menu -->
-<div id="mobileNav" class="mobile-nav fixed inset-0 z-50 hidden" aria-hidden="true">
+<div id="mobileNav" class="mobile-nav hidden" aria-hidden="true">
 	<div class="mobile-nav__backdrop absolute inset-0 bg-black/60" data-nav-close></div>
 	<div class="mobile-nav__panel absolute inset-y-0 right-0 flex w-full max-w-sm flex-col bg-brand-dark shadow-2xl">
 

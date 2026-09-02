@@ -141,6 +141,68 @@ function extrasport_register_trainer_post_type() {
 add_action( 'init', 'extrasport_register_trainer_post_type', 0 );
 
 /**
+ * Register News Post Type (Yii2: /es/news/ → /news/)
+ */
+function extrasport_register_news_post_type() {
+	$args = array(
+		'labels'              => extrasport_get_flat_post_labels(
+			__( 'Новость', 'extrasport' ),
+			__( 'Новости', 'extrasport' )
+		),
+		'description'         => __( 'Новости и объявления клуба', 'extrasport' ),
+		'public'              => true,
+		'publicly_queryable'  => true,
+		'show_ui'             => true,
+		'show_in_menu'        => true,
+		'show_in_nav_menus'   => true,
+		'show_in_rest'        => true,
+		'has_archive'         => 'news',
+		'hierarchical'        => false,
+		'supports'            => array( 'title', 'editor', 'excerpt', 'thumbnail' ),
+		'rewrite'             => array(
+			'slug'       => 'news',
+			'with_front' => false,
+			'feeds'      => false,
+			'pages'      => true,
+		),
+		'menu_icon'           => 'dashicons-media-text',
+	);
+	register_post_type( 'news', $args );
+}
+add_action( 'init', 'extrasport_register_news_post_type', 0 );
+
+/**
+ * Register Job Post Type (Yii2: /es/job/ → /jobs/)
+ */
+function extrasport_register_job_post_type() {
+	$args = array(
+		'labels'              => extrasport_get_flat_post_labels(
+			__( 'Вакансия', 'extrasport' ),
+			__( 'Вакансии', 'extrasport' )
+		),
+		'description'         => __( 'Открытые вакансии клуба', 'extrasport' ),
+		'public'              => true,
+		'publicly_queryable'  => true,
+		'show_ui'             => true,
+		'show_in_menu'        => true,
+		'show_in_nav_menus'   => true,
+		'show_in_rest'        => true,
+		'has_archive'         => 'jobs',
+		'hierarchical'        => false,
+		'supports'            => array( 'title', 'editor', 'page-attributes' ),
+		'rewrite'             => array(
+			'slug'       => 'jobs',
+			'with_front' => false,
+			'feeds'      => false,
+			'pages'      => true,
+		),
+		'menu_icon'           => 'dashicons-id-alt',
+	);
+	register_post_type( 'job', $args );
+}
+add_action( 'init', 'extrasport_register_job_post_type', 0 );
+
+/**
  * Register Banner Post Type
  */
 function extrasport_register_banner_post_type() {

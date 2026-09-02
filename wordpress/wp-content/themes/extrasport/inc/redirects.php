@@ -78,6 +78,24 @@ function extrasport_handle_legacy_redirects() {
 		$suffix = trim( (string) ( $matches[3] ?? '' ), '/' );
 
 		if ( isset( $map[ $legacy ] ) ) {
+			if ( 'news' === $map[ $legacy ] ) {
+				if ( $suffix && function_exists( 'extrasport_find_news_post_id_by_slug' ) ) {
+					$news_id = extrasport_find_news_post_id_by_slug( $suffix );
+					if ( $news_id ) {
+						wp_safe_redirect( get_permalink( $news_id ), 301 );
+						exit;
+					}
+				}
+				$target = extrasport_get_news_archive_url();
+				wp_safe_redirect( $target, 301 );
+				exit;
+			}
+
+			if ( 'jobs' === $map[ $legacy ] ) {
+				wp_safe_redirect( extrasport_get_jobs_archive_url(), 301 );
+				exit;
+			}
+
 			$target = extrasport_get_about_page_url( $map[ $legacy ] );
 			if ( $suffix ) {
 				$target = trailingslashit( $target ) . $suffix . '/';

@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 define( 'EXTRASPORT_ABOUT_PAGE_QUERY_VAR', 'extrasport_about_page' );
-define( 'EXTRASPORT_ABOUT_PAGES_REWRITE_VERSION', 2 );
+define( 'EXTRASPORT_ABOUT_PAGES_REWRITE_VERSION', 3 );
 
 /**
  * Internal about-club pages.
@@ -23,16 +23,8 @@ function extrasport_get_about_page_definitions() {
 			'label' => __( 'Обзор клуба', 'extrasport' ),
 			'view'  => 'views/club/index',
 		),
-		'news'   => array(
-			'label' => __( 'Новости', 'extrasport' ),
-			'view'  => 'views/about/stub',
-		),
 		'events'   => array(
 			'label' => __( 'Мероприятия', 'extrasport' ),
-			'view'  => 'views/about/stub',
-		),
-		'jobs'     => array(
-			'label' => __( 'Вакансии', 'extrasport' ),
 			'view'  => 'views/about/stub',
 		),
 	);
@@ -174,6 +166,22 @@ function extrasport_get_about_nav_links() {
 			$links[] = array(
 				'label' => __( 'Тренеры', 'extrasport' ),
 				'url'   => extrasport_get_trainers_archive_url(),
+			);
+			continue;
+		}
+
+		if ( 'news' === $slug ) {
+			$links[] = array(
+				'label' => __( 'Новости', 'extrasport' ),
+				'url'   => extrasport_get_news_archive_url(),
+			);
+			continue;
+		}
+
+		if ( 'jobs' === $slug ) {
+			$links[] = array(
+				'label' => __( 'Вакансии', 'extrasport' ),
+				'url'   => extrasport_get_jobs_archive_url(),
 			);
 			continue;
 		}
