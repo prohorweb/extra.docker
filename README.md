@@ -45,6 +45,44 @@ npm install && npm run build
 
 Открыть: https://extrasport.local/ , https://devision.local/
 
+### WordPress без legacy (по умолчанию)
+
+Тема `extrasport` **не зависит от Yii2** в runtime по умолчанию:
+
+| Флаг | По умолчанию | Что отключает |
+|------|--------------|---------------|
+| `EXTRASPORT_DISABLE_YII_DB` | `true` | Подключение к БД `extra` / `extra_matros`, remote URL production-сайта, Yii fallback для legal/club |
+| `EXTRASPORT_DISABLE_LEGACY_IMPORT` | `true` | Автоматические seed/migration/sync hooks |
+
+Флаги задаются в `wp-config.php` или через `WORDPRESS_CONFIG_EXTRA` в Docker. Исходники: `inc/legacy-flags.php`.
+
+Контейнер `extra_wordpress` **не монтирует** `frontend/web/img/service` и `frontend/web/uploads`.
+
+#### Одноразовый импорт из Yii2
+
+1. Скопировать пример override:
+   ```bash
+   cp docker-compose.legacy-import.example.yml docker-compose.override.yml
+   ```
+2. Перезапустить WordPress:
+   ```bash
+   docker compose up -d wordpress
+   ```
+3. Открыть сайты — seed/migration выполнятся автоматически (пока версии в options не совпадут).
+4. После импорта удалить override и вернуть флаги по умолчанию:
+   ```bash
+   rm docker-compose.override.yml && docker compose up -d wordpress
+   ```
+
+Для ручного импорта без override можно временно добавить в `wp-config.php`:
+
+```php
+define( 'EXTRASPORT_DISABLE_YII_DB', false );
+define( 'EXTRASPORT_DISABLE_LEGACY_IMPORT', false );
+```
+
+и смонтировать Yii media volumes (см. `docker-compose.legacy-import.example.yml`).
+
 ---
 
 ## Laravel Strangler Fig (legacy track)

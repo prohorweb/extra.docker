@@ -187,6 +187,10 @@ function extrasport_get_default_privacy_content() {
  * @return string
  */
 function extrasport_get_yii_legal_page_content( $slug ) {
+	if ( ! extrasport_is_yii_db_enabled() ) {
+		return '';
+	}
+
 	$yii = extrasport_get_yii_db();
 	if ( ! $yii ) {
 		return '';

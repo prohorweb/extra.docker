@@ -302,7 +302,9 @@ function extrasport_seed_service_media_on_screen( $screen ) {
 
 	extrasport_seed_service_media( false );
 }
-add_action( 'current_screen', 'extrasport_seed_service_media_on_screen' );
+if ( extrasport_is_legacy_import_enabled() ) {
+	add_action( 'current_screen', 'extrasport_seed_service_media_on_screen' );
+}
 
 /**
  * Demo services for the archive when CPT is empty.

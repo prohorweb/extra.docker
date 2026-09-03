@@ -43,6 +43,10 @@ function extrasport_get_yii_db_name_for_club( $club_slug = '' ) {
  * @return wpdb|null
  */
 function extrasport_get_yii_db_for_club( $club_slug = '' ) {
+	if ( ! extrasport_is_yii_db_enabled() ) {
+		return null;
+	}
+
 	static $connections = array();
 
 	$db_name = extrasport_get_yii_db_name_for_club( $club_slug );

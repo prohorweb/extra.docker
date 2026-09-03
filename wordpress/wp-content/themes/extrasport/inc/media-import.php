@@ -15,6 +15,10 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return string
  */
 function extrasport_get_yii_uploads_dir() {
+	if ( ! extrasport_allows_legacy_file_paths() ) {
+		return '';
+	}
+
 	$candidates = array(
 		'/var/www/yii-uploads',
 		EXTRASPORT_DIR . '/../../../../frontend/web/uploads',
@@ -36,11 +40,14 @@ function extrasport_get_yii_uploads_dir() {
  * @return string
  */
 function extrasport_get_yii_service_image_dir() {
-	$candidates = array(
-		'/var/www/yii-service-images',
-		EXTRASPORT_DIR . '/../../../../frontend/web/img/service',
-		EXTRASPORT_DIR . '/assets/img/service',
-	);
+	$candidates = array();
+
+	if ( extrasport_allows_legacy_file_paths() ) {
+		$candidates[] = '/var/www/yii-service-images';
+		$candidates[] = EXTRASPORT_DIR . '/../../../../frontend/web/img/service';
+	}
+
+	$candidates[] = EXTRASPORT_DIR . '/assets/img/service';
 
 	foreach ( $candidates as $candidate ) {
 		$resolved = realpath( $candidate );
@@ -394,6 +401,13 @@ function extrasport_get_yii_service_image_url( $source ) {
  * @return string
  */
 function extrasport_get_direct_service_image_url( $source ) {
+	if ( ! extrasport_allows_legacy_file_paths() && ! str_starts_with( (string) $source, 'serv-' ) ) {
+		$parsed = extrasport_parse_service_image_source( $source );
+		if ( 'upload' === $parsed['type'] ) {
+			return '';
+		}
+	}
+
 	$parsed = extrasport_parse_service_image_source( $source );
 
 	if ( 'upload' === $parsed['type'] ) {

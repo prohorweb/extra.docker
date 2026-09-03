@@ -309,6 +309,10 @@ function extrasport_get_club_gallery_slides() {
  * @return string
  */
 function extrasport_get_legacy_club_public_base_url() {
+	if ( ! extrasport_is_yii_db_enabled() ) {
+		return '';
+	}
+
 	if ( 'devision' === extrasport_get_current_club_slug() ) {
 		return 'https://de-vision.ru';
 	}
@@ -335,6 +339,10 @@ function extrasport_get_yii_uploads_public_url( ...$relative_paths ) {
 	}
 
 	$first = (string) ( $relative_paths[0] ?? '' );
+
+	if ( ! extrasport_is_yii_db_enabled() ) {
+		return '';
+	}
 
 	return extrasport_get_legacy_club_public_base_url() . '/uploads/' . ltrim( $first, '/' );
 }
