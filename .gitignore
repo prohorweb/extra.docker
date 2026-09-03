@@ -28,6 +28,9 @@ Thumbs.db
 # Docker локальные оверриды
 docker-compose.override.yml
 
+# Deploy backups (server-side)
+backups/
+
 # Legacy archive (local only, not in git)
 legacy/
 

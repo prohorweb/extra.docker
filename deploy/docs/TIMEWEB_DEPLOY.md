@@ -77,13 +77,32 @@ chmod +x deploy/scripts/post-deploy-healthcheck.sh
 
 ## CD (GitHub Actions)
 
+Workflows: `.github/workflows/ci.yml`, `.github/workflows/deploy.yml`
+
+**Deploy** runs on push to `main` (and manual `workflow_dispatch`) with GitHub Environment **`production`** (manual approval).
+
+### Repository secrets
+
+| Secret | Example |
+|--------|---------|
+| `SSH_HOST` | VPS IP or hostname |
+| `SSH_USER` | deploy user |
+| `SSH_PRIVATE_KEY` | private key (no passphrase) |
+| `SSH_PORT` | `22` (optional) |
+| `DEPLOY_PATH` | `/opt/extra.docker` |
+
+Server must have: git, docker, compose, node/npm, clone of repo, `.env` configured.
+
+Deploy script (prod only, no legacy):
+
 ```bash
-git pull
-docker compose -f deploy/docker-compose.yml up -d --remove-orphans
-./deploy/scripts/post-deploy-healthcheck.sh
+./deploy/scripts/deploy-production.sh
 ```
 
-Pre-deploy backup:
+Steps: DB backup → `git pull` → `npm run build` → `docker compose -f deploy/docker-compose.yml up -d --remove-orphans` → health-check.
+
+Pre-deploy backup (manual):
+
 
 ```bash
 docker exec extra_mariadb mysqldump -u"${WORDPRESS_DB_USER}" -p"${WORDPRESS_DB_PASSWORD}" "${WORDPRESS_DB_NAME}" > backup.sql

@@ -18,6 +18,8 @@
 - [x] WP data migrated to deploy volume; sites 200 (extrasport, devision, extra.local)
 - [x] Memory-bank: `deploy-workflow.md`, updated activeContext
 
+- [x] GitHub Actions: `.github/workflows/ci.yml`, `.github/workflows/deploy.yml`
+
 ### Admin follow-up (manual)
 - [ ] **Upgrade Network** — multisite DB after WP 7.1
 - [ ] Optional: **Re-install ru_RU** — Russian wp-admin language pack

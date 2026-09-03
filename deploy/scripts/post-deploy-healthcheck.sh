@@ -14,7 +14,7 @@ check_url() {
 	local label="$1"
 	local url="$2"
 	local code
-	code="$(curl -fsS -o /dev/null -w '%{http_code}' "$url" || echo "000")"
+	code="$(curl -fsSL -o /dev/null -w '%{http_code}' "$url" || echo "000")"
 	if [[ "$code" =~ ^(200|301|302)$ ]]; then
 		echo "OK  $label ($code) $url"
 	else
