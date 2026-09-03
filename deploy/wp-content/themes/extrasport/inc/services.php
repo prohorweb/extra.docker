@@ -243,21 +243,21 @@ function extrasport_get_service_template_image_paths() {
  */
 function extrasport_get_service_template_image_url( $source ) {
 	if ( is_string( $source ) && str_contains( $source, '/' ) ) {
-		return extrasport_get_yii_service_image_url( $source );
+		return extrasport_get_service_image_url( $source );
 	}
 
 	if ( is_string( $source ) && preg_match( '/^serv-\d+\.jpg$/', $source ) ) {
-		return extrasport_get_yii_service_image_url( $source );
+		return extrasport_get_service_image_url( $source );
 	}
 
 	if ( is_string( $source ) && str_contains( $source, 'serv-' ) ) {
-		return extrasport_get_yii_service_image_url( basename( $source ) );
+		return extrasport_get_service_image_url( basename( $source ) );
 	}
 
 	$paths = extrasport_get_service_template_image_paths();
 	$index = max( 1, min( count( $paths ), (int) $source ) ) - 1;
 
-	return extrasport_get_yii_service_image_url( $paths[ $index ] );
+	return extrasport_get_service_image_url( $paths[ $index ] );
 }
 
 /**
@@ -290,23 +290,6 @@ function extrasport_get_post_preview_image_url( $post_id ) {
 }
 
 /**
- * Import Yii service media when the services list is opened in admin.
- *
- * @param WP_Screen|null $screen Current admin screen.
- * @return void
- */
-function extrasport_seed_service_media_on_screen( $screen ) {
-	if ( ! $screen instanceof WP_Screen || 'edit' !== $screen->base || 'service' !== $screen->post_type ) {
-		return;
-	}
-
-	extrasport_seed_service_media( false );
-}
-if ( extrasport_is_legacy_import_enabled() ) {
-	add_action( 'current_screen', 'extrasport_seed_service_media_on_screen' );
-}
-
-/**
  * Demo services for the archive when CPT is empty.
  *
  * @param string $uri Theme URI.
@@ -319,7 +302,7 @@ function extrasport_get_service_placeholders( $uri ) {
 		$items[] = array(
 			'title'   => $template['title'],
 			'excerpt' => $template['excerpt'],
-			'image'   => extrasport_get_yii_service_image_url( $template['image'] ),
+			'image'   => extrasport_get_service_image_url( $template['image'] ),
 			'url'     => extrasport_get_service_placeholder_url( $template ),
 		);
 	}
@@ -472,7 +455,7 @@ function extrasport_get_service_child_placeholders( $parent_slug, $uri ) {
 		$cards[] = array(
 			'title'   => $template['title'],
 			'excerpt' => $template['excerpt'],
-			'image'   => extrasport_get_yii_service_image_url( $template['image'] ),
+			'image'   => extrasport_get_service_image_url( $template['image'] ),
 			'url'     => trailingslashit( $parent_url ) . sanitize_title( $template['slug'] ) . '/',
 		);
 	}

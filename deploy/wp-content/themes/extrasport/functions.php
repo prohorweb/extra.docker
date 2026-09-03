@@ -137,7 +137,7 @@ add_action( 'wp_enqueue_scripts', 'extrasport_enqueue_scripts' );
 /**
  * Load Theme Includes
  */
-require_once EXTRASPORT_DIR . '/inc/legacy-flags.php';
+require_once EXTRASPORT_DIR . '/inc/content-html.php';
 require_once EXTRASPORT_DIR . '/inc/post-types.php';
 require_once EXTRASPORT_DIR . '/inc/about-pages.php';
 require_once EXTRASPORT_DIR . '/inc/legal-pages.php';
@@ -168,31 +168,8 @@ require_once EXTRASPORT_DIR . '/inc/timer.php';
 require_once EXTRASPORT_DIR . '/inc/form-handlers.php';
 require_once EXTRASPORT_DIR . '/inc/rest-api.php';
 require_once EXTRASPORT_DIR . '/inc/media-import.php';
-require_once EXTRASPORT_DIR . '/inc/yii-db.php';
 require_once EXTRASPORT_DIR . '/inc/group-program-content.php';
 require_once EXTRASPORT_DIR . '/inc/front-page-helpers.php';
-
-if ( extrasport_is_legacy_import_enabled() ) {
-	require_once EXTRASPORT_DIR . '/inc/seed-club-page.php';
-	require_once EXTRASPORT_DIR . '/inc/seed-trainers.php';
-	require_once EXTRASPORT_DIR . '/inc/sync-trainers-roster.php';
-	require_once EXTRASPORT_DIR . '/inc/devision/seed-club-page.php';
-	require_once EXTRASPORT_DIR . '/inc/devision/sync-trainers-roster.php';
-	require_once EXTRASPORT_DIR . '/inc/devision/seed-news.php';
-	require_once EXTRASPORT_DIR . '/inc/devision/seed-jobs.php';
-	require_once EXTRASPORT_DIR . '/inc/devision/seed-group-programs.php';
-	require_once EXTRASPORT_DIR . '/inc/devision-migration.php';
-	require_once EXTRASPORT_DIR . '/inc/seed-news.php';
-	require_once EXTRASPORT_DIR . '/inc/seed-jobs.php';
-	require_once EXTRASPORT_DIR . '/inc/seed-cards.php';
-	require_once EXTRASPORT_DIR . '/inc/seed-shares.php';
-	require_once EXTRASPORT_DIR . '/inc/seed-services.php';
-	require_once EXTRASPORT_DIR . '/inc/seed-group-programs.php';
-	require_once EXTRASPORT_DIR . '/inc/seed-service-content.php';
-	require_once EXTRASPORT_DIR . '/inc/devision/seed-group-program-content.php';
-	require_once EXTRASPORT_DIR . '/inc/extrasport/seed-group-program-content.php';
-	require_once EXTRASPORT_DIR . '/inc/extrasport-migration.php';
-}
 require_once EXTRASPORT_DIR . '/inc/shares.php';
 require_once EXTRASPORT_DIR . '/inc/services.php';
 require_once EXTRASPORT_DIR . '/inc/breadcrumbs.php';

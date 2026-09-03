@@ -181,41 +181,6 @@ function extrasport_get_default_privacy_content() {
 }
 
 /**
- * Load legal page HTML from the legacy Yii database when available.
- *
- * @param string $slug privacy|legal.
- * @return string
- */
-function extrasport_get_yii_legal_page_content( $slug ) {
-	if ( ! extrasport_is_yii_db_enabled() ) {
-		return '';
-	}
-
-	$yii = extrasport_get_yii_db();
-	if ( ! $yii ) {
-		return '';
-	}
-
-	$row = $yii->get_row( 'SELECT privacy, legal FROM club LIMIT 1' );
-	if ( ! $row ) {
-		return '';
-	}
-
-	$privacy = trim( (string) ( $row->privacy ?? '' ) );
-	$legal   = trim( (string) ( $row->legal ?? '' ) );
-
-	if ( 'privacy' === $slug ) {
-		return $privacy ?: $legal;
-	}
-
-	if ( 'legal' === $slug ) {
-		return $legal ?: $privacy;
-	}
-
-	return '';
-}
-
-/**
  * Resolved HTML content for a legal page.
  *
  * @param string $slug privacy|legal.
@@ -223,11 +188,6 @@ function extrasport_get_yii_legal_page_content( $slug ) {
  */
 function extrasport_get_legal_page_content( $slug ) {
 	$slug = sanitize_key( $slug );
-
-	$yii_content = extrasport_get_yii_legal_page_content( $slug );
-	if ( $yii_content ) {
-		return wp_kses_post( $yii_content );
-	}
 
 	if ( 'privacy' === $slug ) {
 		return extrasport_get_default_privacy_content();

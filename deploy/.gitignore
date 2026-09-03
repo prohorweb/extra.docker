@@ -1,0 +1,9 @@
+# Theme build deps
+wp-content/themes/extrasport/node_modules/
+
+# Local secrets
+.env
+
+.DS_Store
+
+# uploads/ — tracked in git (see repo root .gitignore)

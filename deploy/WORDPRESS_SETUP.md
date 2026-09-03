@@ -3,7 +3,7 @@
 Миграция фронтенда Yii2 (`frontend/`) в кастомную тему **`extrasport`** на WordPress Multisite.
 
 **Ветка:** `feature/wordpress`  
-**Тема:** `wordpress/wp-content/themes/extrasport/`  
+**Тема:** `deploy/wp-content/themes/extrasport/`  
 **Стратегия:** Yii2 — только референс структуры и контента. Bootstrap/jQuery **не переносим**. Вёрстка — **Tailwind CSS v4 + Vite + нативный JavaScript**.
 
 ---
@@ -23,20 +23,21 @@
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│  nginx (extrasport.local / devision.local → wordpress/)     │
+│  nginx → /var/www/wordpress (wp_core + theme mount)         │
 └───────────────────────────┬─────────────────────────────────┘
                             ▼
 ┌─────────────────────────────────────────────────────────────┐
-│  WordPress 6.4 Multisite (extra_new, wp_blogs.domain)       │
+│  WordPress 7.1 Multisite (образ + volume wp_core)           │
 │  blog 1: extrasport.local  │  blog 2: devision.local         │
 └───────────────────────────┬─────────────────────────────────┘
                             ▼
 ┌─────────────────────────────────────────────────────────────┐
-│  Theme: extrasport                                          │
-│  header.php / footer.php + template-parts/layout/*          │
+│  Theme: extrasport (bind-mount)                             │
 │  Vite → assets/dist/output.css + main.js                    │
 └─────────────────────────────────────────────────────────────┘
 ```
+
+**Deploy:** core из Docker-образа, тема из git, БД — SQL-импорт. См. [deploy/README.md](deploy/README.md).
 
 ### Где что хранится (важно для Multisite)
 
@@ -95,7 +96,7 @@
 ## Структура темы
 
 ```
-wordpress/wp-content/themes/extrasport/
+deploy/wp-content/themes/extrasport/
 ├── assets/
 │   ├── src/
 │   │   ├── input.css          # Tailwind + @theme tokens
@@ -128,10 +129,13 @@ wordpress/wp-content/themes/extrasport/
 ### 1. Docker
 
 ```bash
-docker compose up -d
+docker compose up -d db wordpress nginx
 ```
 
 Сервисы: `extra_wordpress`, `extra_nginx`, `extra_mariadb`.
+
+WordPress core — из образа `wordpress:7.1-php8.2-fpm-alpine` (volume `wp_core`).  
+Конфиг: `deploy/wp-config.php`.
 
 ### 2. `/etc/hosts`
 
@@ -140,29 +144,26 @@ docker compose up -d
 127.0.0.1 devision.local
 ```
 
-### 3. `wp-config.php`
+### 3. База данных
+
+Импорт при деплое (не из `./db/`):
 
 ```bash
-cp wordpress/wp-config-sample.php wordpress/wp-config.php
+chmod +x deploy/scripts/wordpress-import-db.sh
+./deploy/scripts/wordpress-import-db.sh path/to/wordpress-dump.sql
 ```
 
-БД (актуально для локального окружения):
-
-```php
-define( 'DB_NAME', 'extra_new' );
-define( 'DB_USER', 'extra' );
-define( 'DB_PASSWORD', 'extra123' );
-define( 'DB_HOST', 'db' );
-```
-
-Multisite-константы — см. блок в `wp-config-sample.php` или `inc/wp-config-multisite.php`.  
-**Важно:** `MULTISITE = true` только после `wp core multisite-convert` (таблица `wp_blogs` должна существовать).
+Переменные БД — в `docker-compose.yml` или `.env.wordpress.example`.
 
 ### 4. Установка сети (если с нуля)
 
+Используйте wp-cli с volume `wp_core` и темой:
+
 ```bash
-docker run --rm --network extradocker_default \
-  -v "$(pwd)/wordpress:/var/www/html" \
+docker run --rm --network extra-docker_default \
+  -v extra-docker_wp_core:/var/www/html \
+  -v "$(pwd)/deploy/wp-content/themes/extrasport:/var/www/html/wp-content/themes/extrasport" \
+  -v "$(pwd)/deploy/wp-config.php:/var/www/html/wp-config.php:ro" \
   wordpress:cli wp core install \
   --url=https://extrasport.local \
   --title='ExtraSport' \
@@ -171,56 +172,52 @@ docker run --rm --network extradocker_default \
   --admin_email=admin@extrasport.local \
   --allow-root
 
-docker run --rm --network extradocker_default \
-  -v "$(pwd)/wordpress:/var/www/html" \
+docker run --rm --network extra-docker_default \
+  -v extra-docker_wp_core:/var/www/html \
+  -v "$(pwd)/deploy/wp-config.php:/var/www/html/wp-config.php:ro" \
   wordpress:cli wp core multisite-convert \
   --title='ExtraSport Network' \
   --allow-root
 ```
 
+> Имя сети и volume (`extra-docker_*`) может отличаться — проверьте `docker network ls` и `docker volume ls`.
+
 ### 5. Второй клуб (devision)
 
 ```bash
-docker run --rm --network extradocker_default \
-  -v "$(pwd)/wordpress:/var/www/html" \
+docker run --rm --network extra-docker_default \
+  -v extra-docker_wp_core:/var/www/html \
+  -v "$(pwd)/deploy/wp-config.php:/var/www/html/wp-config.php:ro" \
   wordpress:cli wp site create \
   --slug=devision --title='De-Vision' \
   --email=admin@extrasport.local --allow-root
 
-docker run --rm --network extradocker_default \
-  -v "$(pwd)/wordpress:/var/www/html" \
+docker run --rm --network extra-docker_default \
+  -v extra-docker_wp_core:/var/www/html \
+  -v "$(pwd)/deploy/wp-config.php:/var/www/html/wp-config.php:ro" \
   wordpress:cli db query \
   "UPDATE wp_blogs SET domain='devision.local', path='/' WHERE blog_id=2" \
   --allow-root
-
-docker run --rm --network extradocker_default \
-  -v "$(pwd)/wordpress:/var/www/html" \
-  wordpress:cli option update home 'https://devision.local' \
-  --url=https://devision.local --allow-root
-
-docker run --rm --network extradocker_default \
-  -v "$(pwd)/wordpress:/var/www/html" \
-  wordpress:cli option update siteurl 'https://devision.local' \
-  --url=https://devision.local --allow-root
 ```
 
 ### 6. Тема + сборка фронта
 
 ```bash
-docker run --rm --network extradocker_default \
-  -v "$(pwd)/wordpress:/var/www/html" \
-  wordpress:cli theme activate extrasport \
-  --url=https://extrasport.local --allow-root
-
-docker run --rm --network extradocker_default \
-  -v "$(pwd)/wordpress:/var/www/html" \
-  wordpress:cli theme activate extrasport \
-  --url=https://devision.local --allow-root
-
-cd wordpress/wp-content/themes/extrasport
+cd deploy/wp-content/themes/extrasport
 npm install
 npm run dev    # watch
 npm run build  # production
+```
+
+Активация темы (если нужно):
+
+```bash
+docker run --rm --network extra-docker_default \
+  -v extra-docker_wp_core:/var/www/html \
+  -v "$(pwd)/deploy/wp-content/themes/extrasport:/var/www/html/wp-content/themes/extrasport" \
+  -v "$(pwd)/deploy/wp-config.php:/var/www/html/wp-config.php:ro" \
+  wordpress:cli theme activate extrasport \
+  --url=https://extrasport.local --allow-root
 ```
 
 ### 7. Проверка
@@ -234,7 +231,7 @@ npm run build  # production
 ## Разработка фронта
 
 ```bash
-cd wordpress/wp-content/themes/extrasport
+cd deploy/wp-content/themes/extrasport
 npm run dev     # vite build --watch
 npm run build   # production → assets/dist/
 ```

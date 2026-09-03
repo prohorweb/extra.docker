@@ -1,6 +1,6 @@
 <?php
 /**
- * 301 fallback redirects for legacy / temporary URL paths
+ * 301 redirects for old URL paths (bookmarks, search engines).
  *
  * @package ExtraSport
  */
@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Redirect temporary WP paths and legacy Yii query URLs to Yii2-compatible permalinks.
+ * Redirect old site paths to current WordPress permalinks.
  *
  * @return void
  */
@@ -136,7 +136,7 @@ function extrasport_handle_legacy_redirects() {
 		}
 	}
 
-	// Legacy Yii index.php?r=... style URLs.
+	// Old index.php?r=... query URLs.
 	if ( str_contains( $uri, 'index.php' ) && isset( $_GET['r'] ) ) {
 		wp_safe_redirect( home_url( '/' ), 301 );
 		exit;
@@ -145,7 +145,26 @@ function extrasport_handle_legacy_redirects() {
 add_action( 'template_redirect', 'extrasport_handle_legacy_redirects', 0 );
 
 /**
- * Redirect legacy Yii trainer URLs (/es/command/, /dv/command/) to /trainers/.
+ * Old group-program demo slugs => current program child slugs.
+ *
+ * @return array<string, string>
+ */
+function extrasport_get_group_program_legacy_slug_redirects() {
+	return array(
+		'step-aerobics'  => 'smesannyj-format',
+		'trx'            => 'specialnye-klassy',
+		'power-classes'  => 'silovye-klassy',
+		'special'        => 'aerobnye-klassy',
+		'dance'          => 'tancevalnye-napravlenia',
+		'stretch'        => 'rastazka',
+		'yoga'           => 'skola-funkcionalnogo-treninga',
+		'martial-arts'   => 'tematiceskie-programmy-helluin',
+		'velotraining'   => 'cycle',
+	);
+}
+
+/**
+ * Redirect old trainer URLs (/es/command/, /dv/command/) to /trainers/.
  *
  * @param string $uri Request path without trailing slash.
  * @return bool True when redirect was sent.

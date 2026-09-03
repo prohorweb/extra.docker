@@ -28,56 +28,8 @@ Thumbs.db
 # Docker локальные оверриды
 docker-compose.override.yml
 
-# Временные файлы Yii2 (Runtime и скомпилированные ассеты)
-/*/runtime/*
-/*/web/assets/*
-frontend/web/.sass-cache/
+# Legacy archive (local only, not in git)
+legacy/
 
-# Локальные конфигурации Yii2 Advanced (создаются через php init)
-/common/config/*-local.php
-/console/config/*-local.php
-/frontend/config/*-local.php
-/backend/config/*-local.php
-
-# Входные скрипты Yii2 (создаются через php init)
-/frontend/web/index.php
-/frontend/web/index-test.php
-/backend/web/index.php
-/backend/web/index-test.php
-
-# Тестовые исполняемые скрипты Yii
-/yii_test
-/yii_test.bat
-
-# Временные файлы и кэш минификации (без ведущих слэшей)
-frontend/web/minify/
-frontend/web/minify/*
-frontend/web/robots[0-9].txt
-frontend/web/*.png
-
-# Настройка папки uploads (игнорируем всё, кроме нужных форматов)
-frontend/web/uploads/*
-!frontend/web/uploads/image/
-!frontend/web/uploads/**/*.jpg
-!frontend/web/uploads/**/*.jpeg
-!frontend/web/uploads/**/*.png
-!frontend/web/uploads/**/*.svg
-!frontend/web/uploads/**/*.webp
-!frontend/web/uploads/**/*.pdf
-!frontend/web/uploads/.gitkeep
-
-
-# Системное имя Windows
-nul
-
-# SSL-сертификаты (генерируются локально через mkcert)
-docker/nginx/ssl/
-
-# Laravel
-laravel/vendor/
-laravel/node_modules/
-laravel/.env
-laravel/storage/logs/*.log
-laravel/storage/framework/cache/data/*
-laravel/storage/framework/sessions/*
-laravel/storage/framework/views/*
+# Deploy theme build deps
+deploy/wp-content/themes/extrasport/node_modules/

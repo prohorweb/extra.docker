@@ -10,91 +10,56 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Absolute path to Yii2 frontend uploads root.
+ * Absolute path to bundled service card images (assets/img/service).
  *
  * @return string
  */
-function extrasport_get_yii_uploads_dir() {
-	if ( ! extrasport_allows_legacy_file_paths() ) {
-		return '';
-	}
+function extrasport_get_theme_service_image_dir() {
+	$candidate = realpath( EXTRASPORT_DIR . '/assets/img/service' );
 
-	$candidates = array(
-		'/var/www/yii-uploads',
-		EXTRASPORT_DIR . '/../../../../frontend/web/uploads',
-	);
-
-	foreach ( $candidates as $candidate ) {
-		$resolved = realpath( $candidate );
-		if ( $resolved && is_dir( $resolved ) ) {
-			return trailingslashit( $resolved );
-		}
+	if ( $candidate && is_dir( $candidate ) ) {
+		return trailingslashit( $candidate );
 	}
 
 	return '';
 }
 
 /**
- * Absolute path to Yii2 frontend service images (legacy img/service).
- *
- * @return string
- */
-function extrasport_get_yii_service_image_dir() {
-	$candidates = array();
-
-	if ( extrasport_allows_legacy_file_paths() ) {
-		$candidates[] = '/var/www/yii-service-images';
-		$candidates[] = EXTRASPORT_DIR . '/../../../../frontend/web/img/service';
-	}
-
-	$candidates[] = EXTRASPORT_DIR . '/assets/img/service';
-
-	foreach ( $candidates as $candidate ) {
-		$resolved = realpath( $candidate );
-		if ( $resolved && is_dir( $resolved ) ) {
-			return trailingslashit( $resolved );
-		}
-	}
-
-	return '';
-}
-
-/**
- * Resolve a Yii upload image file on disk.
- *
- * @param string $subdir   Upload subdirectory, e.g. services or group_programs.
- * @param string $filename Image file name.
- * @return string
- */
-function extrasport_resolve_yii_upload_image_path( $subdir, $filename ) {
-	$subdir   = sanitize_file_name( (string) $subdir );
-	$filename = sanitize_file_name( (string) $filename );
-	$dir      = extrasport_get_yii_uploads_dir();
-
-	if ( ! $dir || ! $subdir || ! $filename ) {
-		return '';
-	}
-
-	$path = $dir . $subdir . '/' . $filename;
-
-	return file_exists( $path ) ? $path : '';
-}
-
-/**
- * Resolve a Yii service image file on disk (legacy img/service).
+ * Resolve a bundled service image file on disk.
  *
  * @param string $filename Image file name, e.g. serv-1.jpg.
  * @return string
  */
-function extrasport_resolve_yii_service_image_path( $filename ) {
+function extrasport_resolve_theme_service_image_path( $filename ) {
 	$filename = sanitize_file_name( (string) $filename );
-	$dir      = extrasport_get_yii_service_image_dir();
+	$dir      = extrasport_get_theme_service_image_dir();
 
 	if ( ! $dir || ! $filename ) {
 		return '';
 	}
 
 	$path = $dir . $filename;
+
+	return file_exists( $path ) ? $path : '';
+}
+
+/**
+ * Resolve an uploaded service image under wp-content/uploads.
+ *
+ * @param string $subdir   Upload subdirectory.
+ * @param string $filename Image file name.
+ * @return string
+ */
+function extrasport_resolve_upload_service_image_path( $subdir, $filename ) {
+	$subdir   = sanitize_file_name( (string) $subdir );
+	$filename = sanitize_file_name( (string) $filename );
+
+	if ( ! $subdir || ! $filename ) {
+		return '';
+	}
+
+	$upload_dir = wp_upload_dir();
+	$path       = trailingslashit( $upload_dir['basedir'] ) . $subdir . '/' . $filename;
 
 	return file_exists( $path ) ? $path : '';
 }
@@ -122,7 +87,7 @@ function extrasport_parse_service_image_source( $source ) {
 	}
 
 	return array(
-		'type'     => 'legacy',
+		'type'     => 'theme',
 		'subdir'   => '',
 		'filename' => basename( $source ),
 	);
@@ -138,14 +103,14 @@ function extrasport_resolve_service_image_path( $source ) {
 	$parsed = extrasport_parse_service_image_source( $source );
 
 	if ( 'upload' === $parsed['type'] ) {
-		return extrasport_resolve_yii_upload_image_path( $parsed['subdir'], $parsed['filename'] );
+		return extrasport_resolve_upload_service_image_path( $parsed['subdir'], $parsed['filename'] );
 	}
 
-	return extrasport_resolve_yii_service_image_path( $parsed['filename'] );
+	return extrasport_resolve_theme_service_image_path( $parsed['filename'] );
 }
 
 /**
- * Meta key that links an attachment to its Yii import source.
+ * Meta key that links an attachment to its import source path.
  */
 define( 'EXTRASPORT_IMPORT_SOURCE_META_KEY', '_extrasport_import_source' );
 
@@ -272,31 +237,6 @@ function extrasport_import_theme_image( $relative_path ) {
 }
 
 /**
- * Import a Yii upload image into the media library.
- *
- * @param string $subdir   Upload subdirectory, e.g. services or group_programs.
- * @param string $filename Image file name.
- * @return int Attachment ID or 0.
- */
-function extrasport_import_yii_upload_image( $subdir, $filename ) {
-	$file_path = extrasport_resolve_yii_upload_image_path( $subdir, $filename );
-
-	return extrasport_import_local_image( $file_path );
-}
-
-/**
- * Import a Yii service image into the media library.
- *
- * @param string $filename Image file name, e.g. serv-1.jpg.
- * @return int Attachment ID or 0.
- */
-function extrasport_import_yii_service_image( $filename ) {
-	$file_path = extrasport_resolve_yii_service_image_path( $filename );
-
-	return extrasport_import_local_image( $file_path );
-}
-
-/**
  * Import a service image reference into the media library.
  *
  * @param string $source Image reference.
@@ -344,45 +284,12 @@ function extrasport_get_service_attachment_id( $source ) {
 }
 
 /**
- * Cached Yii service image imports (legacy img/service).
- *
- * @param string $filename Image file name.
- * @return int Attachment ID or 0.
- */
-function extrasport_get_yii_service_attachment_id( $filename ) {
-	return extrasport_get_service_attachment_id( $filename );
-}
-
-/**
- * Assign a service image as the post thumbnail.
- *
- * @param int    $post_id  Post ID.
- * @param string $source   Image reference.
- * @param bool   $force    Replace an existing thumbnail.
- * @return bool
- */
-function extrasport_set_service_thumbnail_from_yii( $post_id, $source, $force = false ) {
-	$post_id = (int) $post_id;
-
-	if ( ! $post_id || ( has_post_thumbnail( $post_id ) && ! $force ) ) {
-		return has_post_thumbnail( $post_id );
-	}
-
-	$attachment_id = extrasport_import_service_image( $source );
-	if ( ! $attachment_id ) {
-		return false;
-	}
-
-	return (bool) set_post_thumbnail( $post_id, $attachment_id );
-}
-
-/**
- * Public URL for a service image (media library or Yii fallback).
+ * Public URL for a service image (media library or theme/upload fallback).
  *
  * @param string $source Image reference.
  * @return string
  */
-function extrasport_get_yii_service_image_url( $source ) {
+function extrasport_get_service_image_url( $source ) {
 	$attachment_id = extrasport_get_service_attachment_id( $source );
 	if ( $attachment_id ) {
 		$url = wp_get_attachment_image_url( $attachment_id, 'large' );
@@ -401,26 +308,21 @@ function extrasport_get_yii_service_image_url( $source ) {
  * @return string
  */
 function extrasport_get_direct_service_image_url( $source ) {
-	if ( ! extrasport_allows_legacy_file_paths() && ! str_starts_with( (string) $source, 'serv-' ) ) {
-		$parsed = extrasport_parse_service_image_source( $source );
-		if ( 'upload' === $parsed['type'] ) {
-			return '';
-		}
-	}
-
 	$parsed = extrasport_parse_service_image_source( $source );
 
 	if ( 'upload' === $parsed['type'] ) {
-		$uploads_dir = extrasport_get_yii_uploads_dir();
-		$path        = extrasport_resolve_yii_upload_image_path( $parsed['subdir'], $parsed['filename'] );
-		if ( $path && $uploads_dir && str_starts_with( $path, $uploads_dir ) ) {
-			$relative = ltrim( str_replace( $uploads_dir, '', $path ), '/' );
+		$path = extrasport_resolve_upload_service_image_path( $parsed['subdir'], $parsed['filename'] );
+		if ( $path ) {
+			$upload_dir = wp_upload_dir();
+			$relative   = ltrim( str_replace( trailingslashit( $upload_dir['basedir'] ), '', $path ), '/' );
 
-			return home_url( '/uploads/' . $relative );
+			return trailingslashit( $upload_dir['baseurl'] ) . $relative;
 		}
+
+		return '';
 	}
 
-	$path = extrasport_resolve_yii_service_image_path( $parsed['filename'] );
+	$path = extrasport_resolve_theme_service_image_path( $parsed['filename'] );
 	if ( $path && str_starts_with( $path, EXTRASPORT_DIR ) ) {
 		return EXTRASPORT_URI . '/' . ltrim( str_replace( EXTRASPORT_DIR, '', $path ), '/' );
 	}

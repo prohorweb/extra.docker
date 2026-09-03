@@ -560,12 +560,3 @@ function extrasport_is_extrasport_site() {
 function extrasport_is_devision_site() {
 	return 'devision' === extrasport_get_current_club_slug();
 }
-
-/**
- * Legacy Yii2 subdomain for the current club.
- *
- * @return string piter|matros
- */
-function extrasport_get_legacy_yii_subdomain() {
-	return extrasport_is_devision_site() ? 'matros' : 'piter';
-}

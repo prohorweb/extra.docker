@@ -147,36 +147,13 @@ function extrasport_get_club_breadcrumbs() {
 }
 
 /**
- * Resolve a legacy main banner image on disk.
- *
- * @param string $filename Banner filename from Yii main_banners.img.
- * @return string
- */
-function extrasport_resolve_yii_main_banner_path( $filename ) {
-	$filename = sanitize_file_name( (string) $filename );
-
-	if ( ! $filename ) {
-		return '';
-	}
-
-	foreach ( array( 'image/banners', 'banners' ) as $subdir ) {
-		$path = extrasport_resolve_yii_upload_image_path( $subdir, $filename );
-		if ( $path ) {
-			return $path;
-		}
-	}
-
-	return '';
-}
-
-/**
- * Rewrite legacy Yii links inside club about HTML.
+ * Rewrite old internal links inside club about HTML.
  *
  * @param string $html Club about HTML.
  * @return string
  */
 function extrasport_normalize_club_content_html( $html ) {
-	$html = extrasport_normalize_yii_html( $html );
+	$html = extrasport_normalize_rich_content_html( $html );
 
 	if ( ! $html ) {
 		return '';
@@ -214,15 +191,6 @@ function extrasport_get_club_page_content() {
 	if ( $html ) {
 		$cache = extrasport_normalize_club_content_html( $html );
 		return $cache;
-	}
-
-	$yii = extrasport_get_yii_db();
-	if ( $yii ) {
-		$row = $yii->get_row( 'SELECT content FROM club LIMIT 1' );
-		if ( $row && ! empty( $row->content ) ) {
-			$cache = extrasport_normalize_club_content_html( $row->content );
-			return $cache;
-		}
 	}
 
 	$cache = '<p>' . esc_html( extrasport_get_club_about_intro() ) . '</p>';
@@ -264,85 +232,6 @@ function extrasport_get_club_gallery_slides() {
 		return $cache;
 	}
 
-	$yii = extrasport_get_yii_db();
-	if ( ! $yii ) {
-		$cache = array();
-		return $cache;
-	}
-
-	$rows = $yii->get_results(
-		'SELECT img FROM main_banners WHERE status = 10 ORDER BY position ASC'
-	);
-
-	if ( is_array( $rows ) ) {
-		foreach ( $rows as $row ) {
-			if ( empty( $row->img ) ) {
-				continue;
-			}
-
-			$filename = sanitize_file_name( (string) $row->img );
-			$path     = extrasport_resolve_yii_main_banner_path( $filename );
-
-			if ( $path ) {
-				$slides[] = array(
-					'url' => extrasport_get_yii_uploads_public_url( 'image/banners/' . $filename, 'banners/' . $filename ),
-					'alt' => '',
-				);
-				continue;
-			}
-
-			$remote = extrasport_get_legacy_club_public_base_url() . '/uploads/image/banners/' . rawurlencode( $filename );
-			$slides[] = array(
-				'url' => $remote,
-				'alt' => '',
-			);
-		}
-	}
-
-	$cache = array_filter( $slides );
+	$cache = array();
 	return $cache;
-}
-
-/**
- * Legacy public site base URL for the current club.
- *
- * @return string
- */
-function extrasport_get_legacy_club_public_base_url() {
-	if ( ! extrasport_is_yii_db_enabled() ) {
-		return '';
-	}
-
-	if ( 'devision' === extrasport_get_current_club_slug() ) {
-		return 'https://de-vision.ru';
-	}
-
-	return 'https://piter.extrasport.ru';
-}
-
-/**
- * Public URL for a Yii upload file when nginx serves /uploads/.
- *
- * @param string ...$relative_paths Candidate relative paths under uploads/.
- * @return string
- */
-function extrasport_get_yii_uploads_public_url( ...$relative_paths ) {
-	foreach ( $relative_paths as $relative_path ) {
-		$relative_path = ltrim( (string) $relative_path, '/' );
-		$parts         = explode( '/', $relative_path );
-		$filename      = array_pop( $parts );
-		$subdir        = implode( '/', $parts );
-
-		if ( extrasport_resolve_yii_upload_image_path( $subdir, $filename ) ) {
-			return home_url( '/uploads/' . $relative_path );
-		}
-	}
-
-	$first = (string) ( $relative_paths[0] ?? '' );
-
-	if ( ! extrasport_is_yii_db_enabled() ) {
-		return '';
-	}
-
-	return extrasport_get_legacy_club_public_base_url() . '/uploads/' . ltrim( $first, '/' );
 }
