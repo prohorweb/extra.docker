@@ -76,7 +76,7 @@ if [[ -z "$NETWORK" || -z "$WP_VOLUME" ]]; then
 	exit 0
 fi
 
-WP_CLI_IMAGE="${WP_CLI_IMAGE:-wordpress:cli-2.11.2-php8.2}"
+WP_CLI_IMAGE="${WP_CLI_IMAGE:-wordpress:cli-php8.2}"
 
 run_wp() {
 	docker run --rm \
