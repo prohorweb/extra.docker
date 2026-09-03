@@ -50,17 +50,7 @@ $accept_id = 'soglas-' . $form_id;
 				<input type="hidden" name="source_url" value="<?php echo esc_attr( $source_url ); ?>">
 				<input type="text" name="name" class="form-input" placeholder="<?php esc_attr_e( 'Ваше имя *', 'extrasport' ); ?>" autocomplete="name">
 				<input type="tel" name="tel" class="form-input" placeholder="<?php esc_attr_e( 'Ваш телефон *', 'extrasport' ); ?>" autocomplete="tel">
-				<div class="flex items-start gap-2 text-sm">
-					<input type="checkbox" name="accept" id="<?php echo esc_attr( $accept_id ); ?>" class="mt-1">
-					<label for="<?php echo esc_attr( $accept_id ); ?>">
-						<?php
-						printf(
-							wp_kses_post( __( 'Ознакомлен с <a href="%s" target="_blank" rel="noopener noreferrer" class="underline hover:text-brand-primary">политикой конфиденциальности</a>', 'extrasport' ) ),
-							esc_url( $club['privacy_url'] )
-						);
-						?>
-					</label>
-				</div>
+				<?php get_template_part( 'components/form', 'consent', array( 'id_prefix' => $accept_id ) ); ?>
 				<div class="form-error hidden text-sm text-red-400" role="alert"></div>
 				<button type="submit" class="btn-primary btn-lg w-full justify-center uppercase">
 					<?php esc_html_e( 'Записаться', 'extrasport' ); ?>

@@ -4,8 +4,6 @@
  *
  * @package ExtraSport
  */
-
-$club = extrasport_get_club();
 ?>
 
 <div id="jobApplyModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="jobApplyModalTitle">
@@ -50,17 +48,8 @@ $club = extrasport_get_club();
 					<?php esc_html_e( 'Формат *.pdf или *.docx. Вес файла не более 100 Кб', 'extrasport' ); ?>
 				</p>
 			</div>
-			<div class="form-group flex items-start gap-2 text-sm">
-				<input type="checkbox" name="accept" id="soglas-job-apply" class="mt-1">
-				<label for="soglas-job-apply">
-					<?php
-					printf(
-						/* translators: %s: privacy policy URL */
-						wp_kses_post( __( 'Ознакомлен с <a href="%s" target="_blank" rel="noopener noreferrer">политикой конфиденциальности</a>', 'extrasport' ) ),
-						esc_url( $club['privacy_url'] )
-					);
-					?>
-				</label>
+			<div class="form-group">
+				<?php get_template_part( 'components/form', 'consent', array( 'id_prefix' => 'soglas-job-apply' ) ); ?>
 			</div>
 			<div class="form-error hidden text-sm text-red-400" role="alert"></div>
 			<button type="submit" class="btn-primary btn-lg w-full justify-center">

@@ -853,6 +853,14 @@
 		@apply font-semibold tracking-wide text-white;
 	}
 
+	.single-legal .legal-page__title {
+		@apply font-semibold tracking-wide text-white;
+	}
+
+	.single-legal .legal-page__content :where(p, li, td, th, blockquote, h2, h3, h4) {
+		@apply text-white/85;
+	}
+
 	.page-section--actions-list .news-block__button .btn-primary {
 		@apply font-semibold;
 	}
@@ -1147,6 +1155,23 @@
 		@apply w-full rounded-none border border-white/20 bg-white/5 px-4 py-3 text-white placeholder:text-white/40 focus:border-brand-primary focus:outline-none focus:ring-1 focus:ring-brand-primary;
 	}
 
+	.form-input.is-invalid,
+	.timer-popup__input.is-invalid {
+		@apply border-red-400 ring-1 ring-red-400/80 focus:border-red-400 focus:ring-red-400/80;
+	}
+
+	.form-field__error {
+		@apply mt-1 text-xs leading-snug text-red-400;
+	}
+
+	.timer-popup__field .form-field__error {
+		@apply text-red-100;
+	}
+
+	.timer-popup__field {
+		@apply min-w-0;
+	}
+
 	/* Modals */
 	.modal {
 		@apply fixed inset-0 z-50 hidden items-center justify-center p-4;
@@ -1291,6 +1316,43 @@
 		@apply h-full w-full object-cover;
 	}
 
+	/* Form consent links (privacy policy in forms, cookie banner) */
+	.form-consent__link {
+		@apply no-underline transition-colors;
+	}
+
+	.club-extrasport .form-consent__link {
+		color: #ff6600;
+	}
+
+	.club-devision .form-consent__link {
+		color: #74b72e;
+	}
+
+	.form-consent__link:hover {
+		@apply text-white;
+	}
+
+	.site-footer__bottom-nav {
+		@apply flex flex-wrap items-center gap-x-6 gap-y-2;
+	}
+
+	.site-footer__bottom-link {
+		@apply cursor-pointer border-0 bg-transparent p-0 text-sm text-white no-underline transition-colors hover:text-white/80;
+	}
+
+	.modal__panel--timer .form-consent {
+		@apply mt-4 text-white/95;
+	}
+
+	.modal__panel--timer .form-consent__link {
+		@apply text-white no-underline;
+	}
+
+	.modal__panel--timer .form-consent__link:hover {
+		@apply text-white opacity-90;
+	}
+
 	/* Cookie consent banner */
 	.cookie-banner {
 		@apply fixed inset-x-0 bottom-0 z-[9001] border-t border-white/10 bg-black p-4 text-white shadow-2xl;
@@ -1305,10 +1367,6 @@
 		@apply flex-1 text-sm leading-relaxed text-white/90;
 	}
 
-	.cookie-banner__link {
-		@apply text-brand-primary underline hover:text-white;
-	}
-
 	.cookie-banner__btn {
 		@apply shrink-0 rounded-md border-2 border-brand-primary bg-black px-5 py-2 text-sm font-semibold uppercase text-brand-primary transition hover:border-white hover:text-white;
 	}
@@ -1318,7 +1376,7 @@
 		to { transform: translateY(0); }
 	}
 
-	/* Timer units */
+	/* Timer units (legacy simple countdown) */
 	.timer-unit {
 		@apply flex flex-col items-center min-w-[3rem];
 	}
@@ -1329,6 +1387,329 @@
 
 	.timer-label {
 		@apply text-xs uppercase text-white/50;
+	}
+
+	/* Timer promo popup */
+	.modal--timer .modal__backdrop {
+		@apply bg-black/80;
+	}
+
+	.modal__panel--timer {
+		@apply max-w-[790px] border-0 px-6 py-10 text-white sm:px-10;
+	}
+
+	.club-extrasport .modal__panel--timer {
+		background-color: #e56d2c;
+	}
+
+	.club-devision .modal__panel--timer {
+		background-color: #74b72e;
+	}
+
+	.modal__close--timer {
+		@apply text-white hover:bg-white/10 hover:text-white;
+	}
+
+	.timer-popup__title {
+		@apply mb-5 text-center font-black uppercase;
+		font-size: clamp(1.25rem, 2.4vw, 2.4rem);
+		line-height: 1.2;
+	}
+
+	.timer-popup__desc {
+		@apply mx-auto mb-10 max-w-[590px] text-center text-sm leading-relaxed text-white/90 sm:mb-14;
+	}
+
+	.club-devision .timer-popup__desc {
+		@apply text-white/95;
+	}
+
+	.timer-popup__clock {
+		@apply mx-auto mb-10 flex justify-center sm:mb-16;
+	}
+
+	.timer-popup__fields {
+		@apply grid gap-3 sm:grid-cols-3;
+	}
+
+	.timer-popup__input {
+		@apply w-full border-0 bg-white px-4 py-4 text-base text-black placeholder:text-black/50 focus:outline-none focus:ring-2;
+	}
+
+	.timer-popup__input.is-invalid {
+		@apply ring-2 ring-red-500/80;
+	}
+
+	.club-extrasport .timer-popup__input:focus {
+		--tw-ring-color: rgb(220 88 0 / 0.35);
+	}
+
+	.club-devision .timer-popup__input:focus {
+		--tw-ring-color: rgb(90 148 36 / 0.45);
+	}
+
+	.timer-popup__submit {
+		@apply w-full border-0 bg-[#212224] px-4 py-4 text-sm font-semibold uppercase tracking-wide text-white transition hover:bg-black;
+	}
+
+	.club-devision .timer-popup__submit {
+		@apply bg-[#1f2f12] hover:bg-[#15200c];
+	}
+
+	/* Flip clock (ported from legacy Yii popup) */
+	.flip-clock-wrapper {
+		@apply relative mx-auto inline-block text-center;
+	}
+
+	.flip-clock-wrapper * {
+		box-sizing: border-box;
+		backface-visibility: hidden;
+	}
+
+	.flip-clock-wrapper ul {
+		@apply relative m-0 float-left list-none rounded-none bg-[#202123];
+		width: 70px;
+		height: 150px;
+		font-size: 100px;
+		font-weight: 700;
+		line-height: 147px;
+	}
+
+	.flip-clock-wrapper ul li {
+		@apply absolute left-0 top-0 z-[1] h-full w-full;
+		line-height: 147px;
+	}
+
+	.flip-clock-wrapper ul li:first-child {
+		@apply z-[2];
+	}
+
+	.flip-clock-wrapper ul li.flip-clock-active {
+		z-index: 3;
+	}
+
+	.flip-clock-wrapper .flip {
+		box-shadow: 0 2px 5px rgb(0 0 0 / 0.7);
+	}
+
+	.flip-clock-wrapper ul.play li.flip-clock-before {
+		z-index: 3;
+	}
+
+	.flip-clock-wrapper ul.play li.flip-clock-active {
+		animation: flip-clock-asd 0.01s 0.49s linear both;
+		z-index: 5;
+	}
+
+	.flip-clock-wrapper ul.play li.flip-clock-active .down {
+		z-index: 2;
+		animation: flip-clock-turn 0.5s 0.5s linear both;
+	}
+
+	.flip-clock-wrapper ul.play li.flip-clock-before .up {
+		z-index: 2;
+		animation: flip-clock-turn2 0.5s linear both;
+	}
+
+	.flip-clock-wrapper ul li a {
+		@apply block h-full cursor-default overflow-visible;
+		margin: 0 !important;
+		perspective: 200px;
+		transform-style: preserve-3d;
+	}
+
+	.flip-clock-wrapper ul li a div {
+		@apply absolute left-0 z-[1] overflow-hidden;
+		width: 100%;
+		height: 50%;
+		font-size: 100px;
+	}
+
+	.flip-clock-wrapper ul li a div.up {
+		transform-origin: 50% 100%;
+		@apply top-0;
+	}
+
+	.flip-clock-wrapper ul li a div.up::after {
+		content: '';
+		@apply absolute left-0 z-[5] h-0.5 w-full bg-black/40;
+		top: 73px;
+	}
+
+	.flip-clock-wrapper ul li a div.down {
+		transform-origin: 50% 0;
+		@apply bottom-0;
+	}
+
+	.flip-clock-wrapper ul li a div div.inn {
+		@apply absolute left-0 z-[1] w-full text-center;
+		height: 200%;
+		background-color: #212224;
+		font-size: 90px;
+		text-shadow: 0 1px 2px #000;
+	}
+
+	.club-extrasport .flip-clock-wrapper ul li a div div.inn {
+		color: #f76300;
+	}
+
+	.club-devision .flip-clock-wrapper ul li a div div.inn {
+		color: #b8e986;
+	}
+
+	.flip-clock-wrapper ul li a div.up div.inn {
+		@apply top-0;
+	}
+
+	.flip-clock-wrapper ul li a div.down div.inn {
+		@apply bottom-0;
+	}
+
+	.flip-clock-divider {
+		@apply relative float-left inline-block;
+		width: 50px;
+		height: 100px;
+	}
+
+	.flip-clock-divider:first-child {
+		@apply w-0;
+	}
+
+	.flip-clock-divider .flip-clock-label {
+		@apply absolute text-sm uppercase;
+		top: -25px;
+		right: -97px;
+	}
+
+	.club-extrasport .flip-clock-divider .flip-clock-label {
+		@apply text-black;
+	}
+
+	.club-devision .flip-clock-divider .flip-clock-label {
+		@apply text-white;
+	}
+
+	.flip-clock-divider.minutes .flip-clock-label {
+		right: -100px;
+	}
+
+	.flip-clock-divider.seconds .flip-clock-label {
+		right: -100px;
+	}
+
+	.flip-clock-dot {
+		@apply absolute left-[5px] block h-2.5 w-2.5 rounded-full opacity-0;
+		background: #323434;
+	}
+
+	.flip-clock-dot.top {
+		top: 30px;
+	}
+
+	.flip-clock-dot.bottom {
+		bottom: 30px;
+	}
+
+	@media (max-width: 750px) {
+		.flip-clock-wrapper ul {
+			width: 38px;
+			height: 100px;
+			font-size: 80px;
+			line-height: 97px;
+		}
+
+		.flip-clock-wrapper ul li {
+			line-height: 97px;
+		}
+
+		.flip-clock-wrapper ul li a div {
+			font-size: 50px;
+		}
+
+		.flip-clock-wrapper ul li a div div.inn {
+			font-size: 45px;
+		}
+
+		.flip-clock-divider {
+			width: 20px;
+		}
+
+		.flip-clock-divider .flip-clock-label {
+			right: -66px;
+		}
+
+		.flip-clock-divider.minutes .flip-clock-label,
+		.flip-clock-divider.seconds .flip-clock-label {
+			right: -65px;
+		}
+	}
+
+	@media (max-width: 330px) {
+		.flip-clock-wrapper ul {
+			width: 30px;
+			font-size: 60px;
+		}
+
+		.flip-clock-wrapper ul li a div {
+			font-size: 40px;
+		}
+
+		.flip-clock-wrapper ul li a div div.inn {
+			font-size: 35px;
+		}
+
+		.flip-clock-divider {
+			width: 10px;
+		}
+	}
+
+	.flip-clock-wrapper ul li a div .shadow {
+		@apply absolute z-[2] h-full w-full;
+	}
+
+	.flip-clock-wrapper ul.play li.flip-clock-before .up .shadow,
+	.flip-clock-wrapper ul.play li.flip-clock-before .down .shadow {
+		background: linear-gradient(to bottom, rgb(0 0 0 / 0.1) 0%, rgb(0 0 0 / 1) 100%);
+		animation: flip-clock-show 0.5s linear both;
+	}
+
+	.flip-clock-wrapper ul.play li.flip-clock-before .down .shadow {
+		background: linear-gradient(to bottom, rgb(0 0 0 / 1) 0%, rgb(0 0 0 / 0.1) 100%);
+	}
+
+	.flip-clock-wrapper ul.play li.flip-clock-active .up .shadow {
+		background: linear-gradient(to bottom, rgb(0 0 0 / 0.1) 0%, rgb(0 0 0 / 1) 100%);
+		animation: flip-clock-hide 0.5s 0.3s linear both;
+	}
+
+	.flip-clock-wrapper ul.play li.flip-clock-active .down .shadow {
+		background: linear-gradient(to bottom, rgb(0 0 0 / 1) 0%, rgb(0 0 0 / 0.1) 100%);
+		animation: flip-clock-hide 0.5s 0.2s linear both;
+	}
+
+	@keyframes flip-clock-asd {
+		0% { z-index: 2; }
+		100% { z-index: 4; }
+	}
+
+	@keyframes flip-clock-turn {
+		0% { transform: rotateX(90deg); }
+		100% { transform: rotateX(0deg); }
+	}
+
+	@keyframes flip-clock-turn2 {
+		0% { transform: rotateX(0deg); }
+		100% { transform: rotateX(-90deg); }
+	}
+
+	@keyframes flip-clock-show {
+		0% { opacity: 0; }
+		100% { opacity: 1; }
+	}
+
+	@keyframes flip-clock-hide {
+		0% { opacity: 1; }
+		100% { opacity: 0; }
 	}
 
 	/* Inner pages */

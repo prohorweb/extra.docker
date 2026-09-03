@@ -50,6 +50,10 @@ function extrasport_resolve_view() {
 		return 'views/card-type/index';
 	}
 
+	if ( extrasport_is_legal_page() ) {
+		return 'views/legal/show';
+	}
+
 	$about_view = extrasport_get_current_about_page_view();
 	if ( $about_view ) {
 		return $about_view;

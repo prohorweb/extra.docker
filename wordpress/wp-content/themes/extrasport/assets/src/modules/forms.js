@@ -2,6 +2,7 @@
  * Form validation and REST submit
  */
 import { submitExtrasportLead } from './ajax.js';
+import { bindFormFieldValidation, validateAccept } from './form-validation.js';
 
 function getFormPayload(form) {
 	const name = form.querySelector('[name="name"]');
@@ -25,65 +26,62 @@ function getFormPayload(form) {
 	};
 }
 
-function validateFormPayload(payload, requireAccept = true) {
-	const errors = [];
-
-	if (!payload.name) {
-		errors.push('Поле имя не может быть пустым');
-	} else if (/[^а-яё ]+/gi.test(payload.name)) {
-		errors.push('Поле имя должно содержать только буквы кириллицы');
+function setFormError(form, message) {
+	const errorEl = form.querySelector('.form-error');
+	if (!errorEl) {
+		return;
 	}
 
-	if (!payload.tel) {
-		errors.push('Поле телефон не может быть пустым');
-	} else if (payload.tel.includes('_')) {
-		errors.push('Поле телефон заполнено неправильно');
+	if (message) {
+		errorEl.textContent = message;
+		errorEl.classList.remove('hidden');
+		return;
 	}
 
-	if (requireAccept && !payload.accept) {
-		errors.push('Для продолжения установите флажок «Ознакомлен»');
-	}
-
-	return errors;
+	errorEl.textContent = '';
+	errorEl.classList.add('hidden');
 }
 
 function bindLeadForm(form, options = {}) {
 	if (!form) return;
 
+	const fieldValidation = bindFormFieldValidation(form);
+	const acceptInput = form.querySelector('[name="accept"]');
+
+	acceptInput?.addEventListener('change', () => {
+		if (acceptInput.checked) {
+			setFormError(form, '');
+		}
+	});
+
 	form.addEventListener('submit', async (e) => {
 		e.preventDefault();
 
-		const errorEl = form.querySelector('.form-error');
 		const payload = getFormPayload(form);
-		const errors = validateFormPayload(payload, options.requireAccept !== false);
+		const fieldError = fieldValidation.validateAll();
+		const acceptError = options.requireAccept === false ? '' : validateAccept(payload.accept);
+		const firstError = fieldError || acceptError;
 
-		if (errors.length) {
-			if (options.useAlert) {
-				alert(errors[0]);
-			} else if (errorEl) {
-				errorEl.textContent = errors[0];
-				errorEl.classList.remove('hidden');
+		if (firstError) {
+			if (acceptError && !fieldError) {
+				setFormError(form, acceptError);
+			} else {
+				setFormError(form, '');
 			}
 			return;
 		}
 
-		if (errorEl) {
-			errorEl.classList.add('hidden');
-		}
+		setFormError(form, '');
 
 		try {
 			await submitExtrasportLead(options.type ?? form.dataset.formType ?? 'subscribe', payload);
 
+			fieldValidation.clearErrors();
 			if (typeof options.onSuccess === 'function') {
 				options.onSuccess();
 			}
 		} catch (err) {
-			if (options.useAlert) {
-				alert(err.message);
-			} else if (errorEl) {
-				errorEl.textContent = err.message;
-				errorEl.classList.remove('hidden');
-			}
+			setFormError(form, err.message);
 		}
 	});
 }
@@ -111,9 +109,10 @@ export function initForms() {
 
 	bindLeadForm(document.getElementById('popup-timer-form'), {
 		type: 'timer',
-		requireAccept: false,
-		useAlert: true,
 		onSuccess: () => {
+			if (typeof window.dataLayer !== 'undefined') {
+				window.dataLayer.push({ event: 'timer' });
+			}
 			window.extrasportCloseModal?.(document.getElementById('popup-timer'));
 			window.extrasportOpenModal?.('finish-popup');
 		},

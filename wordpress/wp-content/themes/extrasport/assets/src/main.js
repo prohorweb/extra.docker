@@ -3,6 +3,7 @@ import './input.css';
 import { initNav } from './modules/nav.js';
 import { initModals } from './modules/modal.js';
 import { initChat } from './modules/chat.js';
+import { initPhoneMasks } from './modules/phone-mask.js';
 import { initForms } from './modules/forms.js';
 import { initCarousels } from './modules/carousel.js';
 import { initMap } from './modules/map.js';
@@ -18,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	initModals();
 	initNav();
 	initChat();
+	initPhoneMasks();
 	initForms();
 	initJobs();
 	initCarousels();

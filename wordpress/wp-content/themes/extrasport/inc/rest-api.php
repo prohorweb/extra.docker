@@ -165,7 +165,7 @@ function extrasport_rest_submit_lead( WP_REST_Request $request ) {
 		);
 	}
 
-	if ( in_array( $type, array( 'callback', 'subscribe' ), true ) && ! $accept ) {
+	if ( in_array( $type, array( 'callback', 'subscribe', 'timer' ), true ) && ! $accept ) {
 		return new WP_Error(
 			'extrasport_accept_required',
 			__( 'Для продолжения установите флажок «Ознакомлен».', 'extrasport' ),

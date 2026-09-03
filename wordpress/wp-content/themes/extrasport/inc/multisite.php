@@ -77,7 +77,9 @@ function extrasport_get_club_defaults_registry() {
 			'timer_enabled'       => false,
 			'timer_title'         => 'Специальное предложение',
 			'timer_intro'         => 'Оставьте заявку до окончания акции',
+			'timer_start'         => '',
 			'timer_end'           => '',
+			'company_name'        => 'ООО «ФИТНЕС ПРО» ИНН 7810743960',
 		),
 		'devision'   => array(
 			'slug'                => 'devision',
@@ -103,9 +105,11 @@ function extrasport_get_club_defaults_registry() {
 			'url_3d_tour'         => 'https://pro3d.pro/r6moPMPJboE/',
 			'present_video_embed' => '',
 			'timer_enabled'       => false,
-			'timer_title'         => 'Специальное предложение',
-			'timer_intro'         => 'Оставьте заявку до окончания акции',
+			'timer_title'         => 'Год фитнеса с бассейном 5500. Второй абонемент в ПОДАРОК!',
+			'timer_intro'         => 'Оставьте заявку по форме ниже, наш менеджер свяжется с вами и расскажет как внести предоплату, чтобы забронировать за вами абонемент.',
+			'timer_start'         => '',
 			'timer_end'           => '',
+			'company_name'        => '',
 		),
 	);
 }

@@ -6,7 +6,7 @@
  */
 
 $club        = extrasport_get_club();
-$is_home     = is_front_page();
+$is_home     = is_front_page() && ! extrasport_is_custom_shell_page();
 $is_services = is_post_type_archive( 'service' );
 $header_pos  = ( $is_home || $is_services ) ? 'site-header--overlay' : 'site-header--static';
 $tel_clean   = preg_replace( '/\s+/', '', $club['tel'] );

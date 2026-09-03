@@ -87,15 +87,17 @@ $tel  = preg_replace( '/\s+/', '', $club['tel'] );
 	<div class="border-t border-white/10 py-4">
 		<div class="mx-auto flex max-w-7xl flex-col gap-2 px-4 text-sm text-white/60 md:flex-row md:justify-between lg:px-6">
 			<p class="m-0">&copy; <?php echo esc_html( gmdate( 'Y' ) ); ?> ExtraSport, LLC</p>
-			<div class="flex flex-wrap gap-4">
-				<button type="button" class="hover:text-white" data-modal-open="rules">
+			<nav class="site-footer__bottom-nav" aria-label="<?php esc_attr_e( 'Юридическая информация', 'extrasport' ); ?>">
+				<button type="button" class="site-footer__bottom-link" data-modal-open="rules">
 					<?php esc_html_e( 'Правила поведения в клубе', 'extrasport' ); ?>
 				</button>
-				<span aria-hidden="true">|</span>
-				<a href="<?php echo esc_url( $club['legal_url'] ); ?>" target="_blank" rel="noopener noreferrer" class="hover:text-white">
+				<a href="<?php echo esc_url( $club['legal_url'] ); ?>" class="site-footer__bottom-link">
 					<?php esc_html_e( 'Правовая информация', 'extrasport' ); ?>
 				</a>
-			</div>
+				<a href="<?php echo esc_url( $club['privacy_url'] ); ?>" class="site-footer__bottom-link">
+					<?php esc_html_e( 'Политика конфиденциальности', 'extrasport' ); ?>
+				</a>
+			</nav>
 		</div>
 	</div>
 </footer>

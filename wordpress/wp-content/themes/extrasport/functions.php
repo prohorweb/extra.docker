@@ -100,10 +100,13 @@ function extrasport_enqueue_scripts() {
             'isLoggedIn'=> is_user_logged_in(),
             'analytics' => extrasport_get_analytics_snippets(),
             'cookieConsent' => array(
-                'message'     => sprintf(
-                    /* translators: %s: privacy policy URL */
-                    __( 'Мы используем файлы cookie и сходные технологии для предоставления вам персонализированной информации, подбора подходящей рекламы, в статических и исследовательских целях, а также для улучшения работы сайта. <a href="%s" target="_blank">Подробнее...</a>', 'extrasport' ),
-                    esc_url( $club['privacy_url'] )
+                'message'     => wp_kses(
+                    sprintf(
+                        /* translators: %s: privacy policy URL */
+                        __( 'Мы используем файлы cookie и сходные технологии для предоставления вам персонализированной информации, подбора подходящей рекламы, в статических и исследовательских целях, а также для улучшения работы сайта. <a href="%s" target="_blank" rel="noopener noreferrer" class="form-consent__link">Подробнее...</a>', 'extrasport' ),
+                        esc_url( $club['privacy_url'] )
+                    ),
+                    extrasport_get_form_consent_allowed_html()
                 ),
                 'dismiss'     => __( 'Принять', 'extrasport' ),
                 'privacyUrl'  => esc_url( $club['privacy_url'] ),
@@ -136,6 +139,7 @@ add_action( 'wp_enqueue_scripts', 'extrasport_enqueue_scripts' );
  */
 require_once EXTRASPORT_DIR . '/inc/post-types.php';
 require_once EXTRASPORT_DIR . '/inc/about-pages.php';
+require_once EXTRASPORT_DIR . '/inc/legal-pages.php';
 require_once EXTRASPORT_DIR . '/inc/club-page.php';
 require_once EXTRASPORT_DIR . '/inc/seed-club-page.php';
 require_once EXTRASPORT_DIR . '/inc/trainers.php';
@@ -166,10 +170,12 @@ require_once EXTRASPORT_DIR . '/inc/classic-editor.php';
 require_once EXTRASPORT_DIR . '/inc/admin-menu.php';
 require_once EXTRASPORT_DIR . '/inc/theme-settings.php';
 require_once EXTRASPORT_DIR . '/inc/admin-club-settings.php';
+require_once EXTRASPORT_DIR . '/inc/admin-timer-settings.php';
 require_once EXTRASPORT_DIR . '/inc/admin-share-meta.php';
 require_once EXTRASPORT_DIR . '/inc/admin-service-meta.php';
 require_once EXTRASPORT_DIR . '/inc/admin-leads.php';
 require_once EXTRASPORT_DIR . '/inc/rules.php';
+require_once EXTRASPORT_DIR . '/inc/timer.php';
 require_once EXTRASPORT_DIR . '/inc/form-handlers.php';
 require_once EXTRASPORT_DIR . '/inc/rest-api.php';
 require_once EXTRASPORT_DIR . '/inc/media-import.php';

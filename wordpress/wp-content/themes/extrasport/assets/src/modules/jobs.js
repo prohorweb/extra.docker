@@ -2,39 +2,40 @@
  * Job vacancies page — detail modal → apply modal flow
  */
 import { submitJobApply } from './ajax.js';
+import { bindFormFieldValidation, validateAccept } from './form-validation.js';
 
 const RESUME_MAX_BYTES = 100 * 1024;
 
-function validateJobApplyForm(form) {
-	const name = form.querySelector('[name="name"]')?.value.trim() ?? '';
-	const tel = form.querySelector('[name="tel"]')?.value.trim() ?? '';
+function setFormError(form, message) {
+	const errorEl = form.querySelector('.form-error');
+	if (!errorEl) {
+		return;
+	}
+
+	if (message) {
+		errorEl.textContent = message;
+		errorEl.classList.remove('hidden');
+		return;
+	}
+
+	errorEl.textContent = '';
+	errorEl.classList.add('hidden');
+}
+
+function validateJobApplyExtras(form) {
 	const accept = form.querySelector('[name="accept"]')?.checked ?? false;
 	const fileInput = form.querySelector('[name="rezume"]');
 	const file = fileInput?.files?.[0];
 
-	if (!name) {
-		return 'Поле имя не может быть пустым';
-	}
-	if (/[^а-яё ]+/gi.test(name)) {
-		return 'Поле имя должно содержать только буквы кириллицы';
-	}
-	if (!tel) {
-		return 'Поле телефон не может быть пустым';
-	}
-	if (tel.includes('_')) {
-		return 'Поле телефон заполнено неправильно';
-	}
 	if (!file) {
 		return 'Для продолжения, пожалуйста, прикрепите резюме';
 	}
+
 	if (file.size > RESUME_MAX_BYTES) {
 		return 'Вес файла более 100 Кб';
 	}
-	if (!accept) {
-		return 'Для продолжения установите флажок «Ознакомлен»';
-	}
 
-	return '';
+	return validateAccept(accept);
 }
 
 function bindJobApplyTriggers() {
@@ -70,9 +71,16 @@ function bindJobApplyForm() {
 	const form = document.getElementById('jobApplyForm');
 	if (!form) return;
 
+	const fieldValidation = bindFormFieldValidation(form);
 	const fileInput = form.querySelector('[name="rezume"]');
 	const fileNameEl = form.querySelector('.job-apply__file-name');
-	const errorEl = form.querySelector('.form-error');
+	const acceptInput = form.querySelector('[name="accept"]');
+
+	acceptInput?.addEventListener('change', () => {
+		if (acceptInput.checked) {
+			setFormError(form, '');
+		}
+	});
 
 	fileInput?.addEventListener('change', () => {
 		const file = fileInput.files?.[0];
@@ -82,18 +90,13 @@ function bindJobApplyForm() {
 		}
 
 		if (file.size > RESUME_MAX_BYTES) {
-			if (errorEl) {
-				errorEl.textContent = 'Вес файла более 100 Кб';
-				errorEl.classList.remove('hidden');
-			}
+			setFormError(form, 'Вес файла более 100 Кб');
 			fileInput.value = '';
 			if (fileNameEl) fileNameEl.textContent = '';
 			return;
 		}
 
-		if (errorEl) {
-			errorEl.classList.add('hidden');
-		}
+		setFormError(form, '');
 		if (fileNameEl) {
 			fileNameEl.textContent = file.name;
 		}
@@ -102,25 +105,23 @@ function bindJobApplyForm() {
 	form.addEventListener('submit', async (event) => {
 		event.preventDefault();
 
-		const error = validateJobApplyForm(form);
+		const fieldError = fieldValidation.validateAll();
+		const extraError = validateJobApplyExtras(form);
+		const error = fieldError || extraError;
 		if (error) {
-			if (errorEl) {
-				errorEl.textContent = error;
-				errorEl.classList.remove('hidden');
+			if (!fieldError) {
+				setFormError(form, error);
+			} else {
+				setFormError(form, '');
 			}
 			return;
 		}
 
-		if (errorEl) {
-			errorEl.classList.add('hidden');
-		}
+		setFormError(form, '');
 
 		const titleInput = form.querySelector('[name="title"]');
 		if (!titleInput?.value.trim()) {
-			if (errorEl) {
-				errorEl.textContent = 'Не указана вакансия. Обновите страницу и попробуйте снова.';
-				errorEl.classList.remove('hidden');
-			}
+			setFormError(form, 'Не указана вакансия. Обновите страницу и попробуйте снова.');
 			return;
 		}
 
@@ -129,6 +130,7 @@ function bindJobApplyForm() {
 		try {
 			await submitJobApply(formData);
 			form.reset();
+			fieldValidation.clearErrors();
 			if (fileNameEl) {
 				fileNameEl.textContent = '';
 			}
@@ -144,10 +146,7 @@ function bindJobApplyForm() {
 				window.dataLayer.push({ event: 'zayavka' });
 			}
 		} catch (err) {
-			if (errorEl) {
-				errorEl.textContent = err.message ?? 'Ошибка отправки формы';
-				errorEl.classList.remove('hidden');
-			}
+			setFormError(form, err.message ?? 'Ошибка отправки формы');
 		}
 	});
 }

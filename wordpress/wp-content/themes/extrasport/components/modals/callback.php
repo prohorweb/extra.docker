@@ -4,8 +4,6 @@
  *
  * @package ExtraSport
  */
-
-$club = extrasport_get_club();
 ?>
 
 <div id="callModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="callModalTitle">
@@ -24,17 +22,8 @@ $club = extrasport_get_club();
 			<div class="form-group">
 				<input type="tel" name="tel" class="form-input" placeholder="<?php esc_attr_e( 'Ваш телефон *', 'extrasport' ); ?>" autocomplete="tel">
 			</div>
-			<div class="form-group flex items-start gap-2 text-sm">
-				<input type="checkbox" name="accept" id="soglas-callback" class="mt-1">
-				<label for="soglas-callback">
-					<?php
-					printf(
-						/* translators: %s: privacy policy URL */
-						wp_kses_post( __( 'Ознакомлен с <a href="%s" target="_blank" rel="noopener noreferrer">политикой конфиденциальности</a>', 'extrasport' ) ),
-						esc_url( $club['privacy_url'] )
-					);
-					?>
-				</label>
+			<div class="form-group">
+				<?php get_template_part( 'components/form', 'consent', array( 'id_prefix' => 'soglas-callback' ) ); ?>
 			</div>
 			<div class="form-error hidden text-sm text-red-400" role="alert"></div>
 			<button type="submit" class="btn-primary w-full justify-center"><?php esc_html_e( 'Заказать звонок', 'extrasport' ); ?></button>

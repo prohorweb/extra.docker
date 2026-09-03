@@ -256,7 +256,7 @@ function extrasport_render_club_settings_page() {
 			</table>
 
 			<p class="description">
-				<?php esc_html_e( 'Настройки таймер-акции и видео-клуб popup будут добавлены в финальной фазе проекта.', 'extrasport' ); ?>
+				<?php esc_html_e( 'Настройки видео-клуб popup будут добавлены в финальной фазе проекта.', 'extrasport' ); ?>
 			</p>
 
 			<p class="description">
