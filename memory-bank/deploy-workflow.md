@@ -55,7 +55,7 @@ docker compose -f deploy/docker-compose.yml -f deploy/docker-compose.dev.yml up 
 
 | Стек | Контейнер | Volume | БД | Доступ |
 |------|-----------|--------|-----|--------|
-| **WordPress deploy** | `extra_mariadb` | `extradocker_wp_db_data` | `extra` | phpMyAdmin :8081, user `extra` |
+| **WordPress deploy** | `extra_mariadb` | `db_data` (compose-managed) | `extra` | phpMyAdmin :8081 **dev only** |
 | **Legacy dev** | `legacy_mariadb` | `deploy_legacy_db_data` | `extra` (Yii2), `extra_new` (Laravel) | host `:3307` |
 
 WordPress **не** использует `extra_new`. Legacy **не** шарит MariaDB с WP.

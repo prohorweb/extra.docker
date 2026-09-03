@@ -13,8 +13,8 @@ Deployable WordPress content — **no core files**. Core comes from Docker image
 
 | File | Purpose |
 |------|---------|
-| [`docker-compose.yml`](docker-compose.yml) | WordPress + nginx + MariaDB + phpMyAdmin |
-| [`docker-compose.dev.yml`](docker-compose.dev.yml) | + legacy Yii2/Laravel stack |
+| [`docker-compose.yml`](docker-compose.yml) | WordPress + nginx + MariaDB (production) |
+| [`docker-compose.dev.yml`](docker-compose.dev.yml) | + phpMyAdmin, legacy Yii2/Laravel |
 
 ```bash
 # Production-like (from repo root)
@@ -32,7 +32,7 @@ docker compose up -d
 cd deploy/wp-content/themes/extrasport && npm install && npm run build
 ```
 
-Docs: [WORDPRESS_SETUP.md](WORDPRESS_SETUP.md), [docs/WORDPRESS_UPDATE.md](docs/WORDPRESS_UPDATE.md)
+Docs: [WORDPRESS_SETUP.md](WORDPRESS_SETUP.md), [docs/WORDPRESS_UPDATE.md](docs/WORDPRESS_UPDATE.md), [docs/TIMEWEB_DEPLOY.md](docs/TIMEWEB_DEPLOY.md)
 
 Env: [.env.example](.env.example)
 

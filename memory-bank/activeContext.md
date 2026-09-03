@@ -46,7 +46,7 @@ docker compose -f deploy/docker-compose.yml -f deploy/docker-compose.dev.yml up 
 | `extra_mariadb` | `extra` | WordPress only (`extra` / `extra123`) |
 | `legacy_mariadb` | `extra`, `extra_new` | Yii2 + Laravel (dev, port 3307) |
 
-Volumes: `extradocker_wp_db_data`, `extradocker_wp_core`, `deploy_legacy_db_data`.
+Volumes: `db_data`, `wp_core` (auto-created). Legacy dev: `deploy_legacy_db_data`.
 
 ### Services
 | Container | Port | Notes |
@@ -94,7 +94,7 @@ Legacy on port 80: `nginx.legacy-proxy.conf` → `legacy_nginx` (extra.local, ex
 | `nginx.legacy-proxy.conf` | Dev legacy proxy on :80/:443 |
 | `legacy/nginx.conf` | Yii/Laravel internal routing |
 | `deploy/wp-content/themes/extrasport/` | Active theme |
-| `memory-bank/deploy-workflow.md` | Full process doc |
+| `deploy/docs/TIMEWEB_DEPLOY.md` | Timeweb production runbook |
 
 ---
 

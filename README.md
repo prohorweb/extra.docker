@@ -60,7 +60,7 @@ Legacy DB is on port **3307** (host) and is **not** shared with WordPress.
 | `extra_wordpress` | prod + dev | WordPress 7.1 FPM |
 | `extra_nginx` | prod + dev | WP reverse proxy (:80/:443) |
 | `extra_mariadb` | prod + dev | MariaDB 11 |
-| `extra_phpmyadmin` | prod + dev | :8081 |
+| `extra_phpmyadmin` | dev only | :8081 on localhost |
 | `legacy_mariadb` | dev only | Yii2 + Laravel DB (:3307) |
 | `legacy_php`, `legacy_laravel`, `legacy_nginx`, `legacy_node` | dev only | Yii2 + Laravel apps |
 

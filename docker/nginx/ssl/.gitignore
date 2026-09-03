@@ -1,0 +1,4 @@
+# Local/dev TLS — do not commit private keys
+*.key
+key.pem
+privkey.pem

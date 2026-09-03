@@ -12,6 +12,20 @@ services:
     volumes:
       - ../nginx.legacy-proxy.conf:/etc/nginx/conf.d/legacy-proxy.conf:ro
 
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: extra_phpmyadmin
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8081:80"
+    depends_on:
+      - db
+    environment:
+      PMA_ARBITRARY: 1
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: ${MARIADB_ROOT_PASSWORD:-root123}
+
   legacy-db:
     image: mariadb:11
     container_name: legacy_mariadb
