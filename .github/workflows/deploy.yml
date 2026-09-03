@@ -2,6 +2,15 @@ name: Deploy production
 
 on:
   workflow_dispatch:
+    inputs:
+      import_db:
+        description: Import DB from DATABASE_DUMP_URL (destructive — overwrites DB)
+        type: boolean
+        default: false
+      deploy_branch:
+        description: Git branch to deploy
+        type: string
+        default: main
   push:
     branches:
       - main
@@ -19,14 +28,20 @@ jobs:
     steps:
       - name: Deploy over SSH
         uses: appleboy/ssh-action@v1.2.0
+        env:
+          IMPORT_DB: ${{ github.event_name == 'workflow_dispatch' && inputs.import_db && '1' || '0' }}
+          DEPLOY_BRANCH: ${{ github.event_name == 'workflow_dispatch' && inputs.deploy_branch || 'main' }}
+          DATABASE_DUMP_URL: ${{ secrets.DATABASE_DUMP_URL }}
+          DATABASE_DUMP_TOKEN: ${{ secrets.DATABASE_DUMP_TOKEN }}
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT || 22 }}
           command_timeout: 25m
+          envs: IMPORT_DB,DEPLOY_BRANCH,DATABASE_DUMP_URL,DATABASE_DUMP_TOKEN
           script: |
             set -euo pipefail
             cd "${{ secrets.DEPLOY_PATH }}"
-            chmod +x deploy/scripts/deploy-production.sh
-            DEPLOY_BRANCH=main ./deploy/scripts/deploy-production.sh
+            chmod +x deploy/scripts/*.sh
+            ./deploy/scripts/deploy-production.sh

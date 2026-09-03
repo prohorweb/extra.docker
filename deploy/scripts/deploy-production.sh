@@ -38,6 +38,12 @@ echo "==> Build theme assets"
 echo "==> Start production stack"
 docker compose -f deploy/docker-compose.yml up -d --remove-orphans
 
+if [[ "${IMPORT_DB:-0}" == "1" ]]; then
+	echo "==> Import database (IMPORT_DB=1)"
+	chmod +x deploy/scripts/fetch-and-import-db.sh
+	./deploy/scripts/fetch-and-import-db.sh
+fi
+
 echo "==> Health check"
 chmod +x deploy/scripts/post-deploy-healthcheck.sh
 MAIN="${HEALTHCHECK_HOST_MAIN:-${WORDPRESS_DOMAIN_CURRENT_SITE:-extrasport.local}}"
