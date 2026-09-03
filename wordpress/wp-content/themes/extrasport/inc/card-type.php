@@ -56,28 +56,67 @@ function extrasport_get_card_type_url() {
 }
 
 /**
+ * Icon directory for membership amenity SVGs (relative to assets/images/).
+ *
+ * @return string
+ */
+function extrasport_get_membership_amenity_icon_dir() {
+	return extrasport_is_devision_site() ? 'devision/' : '';
+}
+
+/**
  * Included amenities for the card type page.
  *
- * @return array<int, array{icon: string, label: string, clubs?: array<string>}>
+ * @return array<int, array{icon: string, label: string}>
  */
 function extrasport_get_membership_amenities() {
+	$icon_dir = extrasport_get_membership_amenity_icon_dir();
+
+	if ( extrasport_is_devision_site() ) {
+		return array(
+			array(
+				'icon'  => $icon_dir . 'card-choice-services-1.svg',
+				'label' => "Безлимитный\nфитнес *",
+			),
+			array(
+				'icon'  => $icon_dir . 'card-choice-services-2.svg',
+				'label' => "Неограниченное\nколичество визитов *",
+			),
+			array(
+				'icon'  => $icon_dir . 'card-choice-services-3.svg',
+				'label' => "Полный доступ\nво все зоны клуба *",
+			),
+			array(
+				'icon'  => $icon_dir . 'card-choice-services-4.svg',
+				'label' => "Ринг. Тренировки\nпо расписанию *",
+			),
+			array(
+				'icon'  => $icon_dir . 'card-choice-services-5.svg',
+				'label' => "Турецкая парна,\nнеограничено",
+			),
+			array(
+				'icon'  => $icon_dir . 'card-choice-services-6.svg',
+				'label' => "Плавательный\nбассейн *",
+			),
+		);
+	}
+
 	return array(
 		array(
-			'icon'  => 'card-choice-services-1.svg',
+			'icon'  => $icon_dir . 'card-choice-services-1.svg',
 			'label' => "Безлимитный\nфитнес *",
 		),
 		array(
-			'icon'  => 'card-choice-services-3.svg',
+			'icon'  => $icon_dir . 'card-choice-services-3.svg',
 			'label' => "Полный доступ\nво все зоны клуба *",
 		),
 		array(
-			'icon'  => 'card-choice-services-5.svg',
+			'icon'  => $icon_dir . 'card-choice-services-5.svg',
 			'label' => "Финская сухая сауна,\nнеограничено",
 		),
 		array(
-			'icon'   => 'card-choice-services-6.svg',
-			'label'  => "Плавательный\nбассейн *",
-			'clubs'  => array( 'extrasport' ),
+			'icon'  => $icon_dir . 'card-choice-services-6.svg',
+			'label' => "Плавательный\nбассейн *",
 		),
 	);
 }
@@ -103,4 +142,25 @@ function extrasport_filter_membership_amenities( array $amenities ) {
 			}
 		)
 	);
+}
+
+/**
+ * Footer note under membership plan cards.
+ *
+ * @return array{lead: string, highlight: string, promo: string, phone: string, phone_href: string}|null
+ */
+function extrasport_get_membership_plans_footer_note() {
+	if ( extrasport_is_devision_site() ) {
+		$phone = '+7 (812) 565-49-95';
+
+		return array(
+			'lead'       => __( 'Во все абонементы входит', 'extrasport' ),
+			'highlight'  => __( 'БЕЗЛИМИТНЫЙ ФИТНЕС С БАССЕЙНОМ', 'extrasport' ),
+			'promo'      => __( 'Уточняйте текущие акции и спецпредложения у менеджеров клуба по телефону', 'extrasport' ),
+			'phone'      => $phone,
+			'phone_href' => 'tel:' . preg_replace( '/[^\d+]/', '', $phone ),
+		);
+	}
+
+	return null;
 }

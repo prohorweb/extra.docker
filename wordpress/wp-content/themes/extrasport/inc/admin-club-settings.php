@@ -80,6 +80,7 @@ function extrasport_sanitize_club_settings_input( array $input ) {
 		'address'            => sanitize_text_field( (string) ( $input['club_address'] ?? $current['address'] ) ),
 		'metro'              => sanitize_text_field( (string) ( $input['club_metro'] ?? $current['metro'] ) ),
 		'coordinates'        => sanitize_text_field( (string) ( $input['club_coordinates'] ?? $current['coordinates'] ) ),
+		'yandex_maps_api_key' => sanitize_text_field( (string) ( $input['club_yandex_maps_api_key'] ?? $current['yandex_maps_api_key'] ?? '' ) ),
 		'start_work'         => sanitize_text_field( (string) ( $input['club_start_work'] ?? $current['start_work'] ) ),
 		'start_work_weekend' => sanitize_text_field( (string) ( $input['club_start_work_weekend'] ?? $current['start_work_weekend'] ) ),
 		'sales_work'         => sanitize_text_field( (string) ( $input['club_sales_work'] ?? $current['sales_work'] ) ),
@@ -173,6 +174,18 @@ function extrasport_render_club_settings_page() {
 					<td>
 						<input name="club_coordinates" type="text" id="club_coordinates" value="<?php echo esc_attr( $club['coordinates'] ); ?>" class="regular-text" placeholder="59.8533,30.3497">
 						<p class="description"><?php esc_html_e( 'Широта и долгота через запятую.', 'extrasport' ); ?></p>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row"><label for="club_yandex_maps_api_key"><?php esc_html_e( 'Ключ Yandex Maps', 'extrasport' ); ?></label></th>
+					<td>
+						<input name="club_yandex_maps_api_key" type="text" id="club_yandex_maps_api_key" value="<?php echo esc_attr( (string) ( $club['yandex_maps_api_key'] ?? '' ) ); ?>" class="regular-text" autocomplete="off">
+						<p class="description">
+							<?php esc_html_e( 'JavaScript API ключ для карты на главной. Необязательно — карта работает и без ключа.', 'extrasport' ); ?>
+							<?php if ( defined( 'EXTRASPORT_YANDEX_MAPS_API_KEY' ) && EXTRASPORT_YANDEX_MAPS_API_KEY ) : ?>
+								<br><?php esc_html_e( 'Сейчас переопределён константой EXTRASPORT_YANDEX_MAPS_API_KEY в wp-config.php.', 'extrasport' ); ?>
+							<?php endif; ?>
+						</p>
 					</td>
 				</tr>
 			</table>

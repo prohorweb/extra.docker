@@ -11,7 +11,7 @@ $uri       = $args['uri'] ?? EXTRASPORT_URI;
 $tel_clean = $args['tel_clean'] ?? preg_replace( '/\s+/', '', $club['tel'] );
 ?>
 
-<section id="contacts" class="page-section map-section relative bg-brand-dark bg-cover bg-center bg-no-repeat" style="background-image: url('<?php echo esc_url( $uri . '/assets/img/bg_contact.jpeg' ); ?>')">
+<section id="contacts" class="page-section map-section relative bg-brand-dark bg-contain bg-no-repeat" style="background-image: url('<?php echo esc_url( $uri . '/assets/img/bg_contact.jpeg' ); ?>')">
 	<div class="pointer-events-none absolute inset-0 bg-brand-dark/75" aria-hidden="true"></div>
 	<div class="map-section__content relative z-10 mx-auto w-full max-w-7xl px-4 lg:px-6">
 		<div class="max-w-md py-12 lg:py-0">
@@ -53,7 +53,7 @@ $tel_clean = $args['tel_clean'] ?? preg_replace( '/\s+/', '', $club['tel'] );
 	</div>
 	<div
 		id="map"
-		class="map-section__map relative min-h-[50vh] w-full lg:absolute lg:inset-y-0 lg:right-0 lg:min-h-0 lg:h-full lg:w-[55%]"
+		class="map-section__map relative min-h-[75vh] w-full lg:absolute lg:inset-y-0 lg:right-0 lg:min-h-0 lg:h-full lg:w-[55%]"
 		data-coords="<?php echo esc_attr( $club['coordinates'] ); ?>"
 		data-marker="<?php echo esc_url( $brand['marker_url'] ); ?>"
 		data-title="<?php echo esc_attr( $club['title'] ); ?>"

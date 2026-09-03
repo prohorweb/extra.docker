@@ -61,6 +61,7 @@ function extrasport_get_club_defaults_registry() {
 			'email'               => 'piter@extrasport.ru',
 			'address'             => 'Санкт-Петербург, ул. Типанова, 21, ТК «Питер»',
 			'coordinates'         => '59.8533,30.3497',
+			'yandex_maps_api_key' => '',
 			'metro'               => 'м. Проспект Славы, м. Московская',
 			'start_work'          => 'с 8:00 до 22:00',
 			'start_work_weekend'  => 'с 9:00 до 22:00',
@@ -88,6 +89,7 @@ function extrasport_get_club_defaults_registry() {
 			'email'               => 'rodeo_manager@de-vision.ru',
 			'address'             => 'СПб, пр. Культуры, д. 1, ТРЦ «Родео Драйв»',
 			'coordinates'         => '59.984,30.368',
+			'yandex_maps_api_key' => '',
 			'metro'               => 'м. Озерки, м. Академическая, м. Проспект Просвещения',
 			'start_work'          => 'с 8:00 до 22:00',
 			'start_work_weekend'  => 'с 9:00 до 22:00',
@@ -225,6 +227,70 @@ function extrasport_render_brand_logo( array $attrs = array() ) {
 		(int) $brand['logo_height'],
 		$attr_string
 	);
+}
+
+/**
+ * Short club logo for membership plan cards (inline animated SVG).
+ *
+ * @return string
+ */
+function extrasport_render_membership_card_logo() {
+	static $instance = 0;
+
+	$slug = extrasport_get_current_club_slug();
+	$path = EXTRASPORT_DIR . '/assets/images/' . ( 'devision' === $slug ? 'devision' : 'extrasport' ) . '/logo-short.svg';
+	$fallback = EXTRASPORT_URI . '/assets/images/logo-short.svg';
+
+	if ( ! is_readable( $path ) ) {
+		return sprintf(
+			'<div class="membership-card__logo"><img src="%s" alt=""></div>',
+			esc_url( $fallback )
+		);
+	}
+
+	$svg = file_get_contents( $path );
+	if ( false === $svg || ! str_contains( $svg, '<svg' ) ) {
+		return sprintf(
+			'<div class="membership-card__logo"><img src="%s" alt=""></div>',
+			esc_url( $fallback )
+		);
+	}
+
+	++$instance;
+	$suffix = '-mc' . $instance;
+	$ids    = array();
+
+	if ( preg_match_all( '/\bid=(["\'])([^"\']+)\1/', $svg, $matches ) ) {
+		$ids = array_unique( $matches[2] );
+		usort(
+			$ids,
+			static function ( $a, $b ) {
+				return strlen( $b ) - strlen( $a );
+			}
+		);
+	}
+
+	foreach ( $ids as $id ) {
+		$svg = str_replace(
+			array(
+				'id="' . $id . '"',
+				"id='" . $id . "'",
+				'href="#' . $id . '"',
+				"href='#" . $id . "'",
+				'url(#' . $id . ')',
+			),
+			array(
+				'id="' . $id . $suffix . '"',
+				"id='" . $id . $suffix . "'",
+				'href="#' . $id . $suffix . '"',
+				"href='#" . $id . $suffix . "'",
+				'url(#' . $id . $suffix . ')',
+			),
+			$svg
+		);
+	}
+
+	return '<div class="membership-card__logo">' . $svg . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted theme asset.
 }
 
 /**

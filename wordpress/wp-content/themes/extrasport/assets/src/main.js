@@ -21,7 +21,9 @@ document.addEventListener('DOMContentLoaded', () => {
 	initForms();
 	initJobs();
 	initCarousels();
-	initMap();
+	if ( document.getElementById( 'map' ) ) {
+		initMap();
+	}
 	initAnalytics();
 	initCookieConsent();
 	initPresentVideo();

@@ -33,17 +33,27 @@ $type_url   = extrasport_get_card_type_url();
 			<?php esc_html_e( 'В каждый абонемент входит', 'extrasport' ); ?>
 		</h2>
 
-		<div class="card-choice__services grid grid-cols-2 gap-x-6 gap-y-5 md:grid-cols-4 md:gap-x-8 md:gap-y-6">
+		<?php
+		$amenities_count = count( $amenities );
+		$amenities_mod   = 'card-choice__services--default';
+
+		if ( 6 === $amenities_count ) {
+			$amenities_mod = 'card-choice__services--six';
+		} elseif ( 4 === $amenities_count ) {
+			$amenities_mod = 'card-choice__services--four';
+		}
+		?>
+		<div class="card-choice__services <?php echo esc_attr( $amenities_mod ); ?>">
 			<?php foreach ( $amenities as $amenity ) : ?>
-				<div class="card-choice__service text-center">
+				<div class="card-choice__service">
 					<img
 						class="card-choice__service-icon"
-						src="<?php echo esc_url( $uri . '/assets/images/' . $amenity['icon'] ); ?>"
+						src="<?php echo esc_url( $uri . '/assets/images/' . ltrim( (string) $amenity['icon'], '/' ) ); ?>"
 						alt=""
 						loading="lazy"
 						decoding="async"
 					>
-					<p class="text-sm leading-snug text-white/90"><?php echo nl2br( esc_html( $amenity['label'] ) ); ?></p>
+					<p class="text-xs leading-snug text-white/90 sm:text-sm"><?php echo nl2br( esc_html( $amenity['label'] ) ); ?></p>
 				</div>
 			<?php endforeach; ?>
 		</div>
@@ -57,6 +67,27 @@ $type_url   = extrasport_get_card_type_url();
 				<?php get_template_part( 'components/cards/membership-plan', null, array( 'plan' => $plan, 'uri' => $uri ) ); ?>
 			<?php endforeach; ?>
 		</div>
+
+		<?php
+		$plans_note = extrasport_get_membership_plans_footer_note();
+		if ( $plans_note ) :
+			?>
+			<div class="card-choice__plans-note text-center text-sm leading-relaxed text-white/85 md:text-base">
+				<p class="mb-2">
+					<?php echo esc_html( $plans_note['lead'] ); ?>
+					<span class="card-choice__plans-note-highlight font-oswald uppercase tracking-wide text-brand-primary">
+						<?php echo esc_html( $plans_note['highlight'] ); ?>
+					</span>
+				</p>
+				<p>
+					<?php echo esc_html( $plans_note['promo'] ); ?>
+					<a
+						href="<?php echo esc_url( $plans_note['phone_href'] ); ?>"
+						class="whitespace-nowrap text-brand-primary hover:text-white"
+					><?php echo esc_html( $plans_note['phone'] ); ?></a>
+				</p>
+			</div>
+		<?php endif; ?>
 	</div>
 </section>
 

@@ -26,7 +26,7 @@ $card_mod  = 4 === (int) ( $plan['video'] ?? 0 ) ? ' membership-card--12-months'
 				<div class="membership-card__spacer" aria-hidden="true"></div>
 				<div class="membership-card__row">
 					<div class="membership-card__month"><?php echo esc_html( $plan['title'] ); ?></div>
-					<img class="membership-card__logo" src="<?php echo esc_url( $uri . '/assets/images/logo-short.svg' ); ?>" alt="">
+					<?php echo extrasport_render_membership_card_logo(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 					<div class="membership-card__price"><?php echo esc_html( $plan['price'] ); ?></div>
 				</div>
 				<div class="membership-card__cta-area">

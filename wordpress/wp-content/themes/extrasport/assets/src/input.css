@@ -951,7 +951,23 @@
 	}
 
 	.card-choice__services {
-		@apply mb-5 md:mb-8;
+		@apply mb-5 grid gap-x-2 gap-y-5 bg-black/75 py-6 md:mb-8 md:gap-x-4 lg:gap-x-6;
+	}
+
+	.card-choice__services--six {
+		@apply grid-cols-3 md:grid-cols-6;
+	}
+
+	.card-choice__services--four {
+		@apply grid-cols-2 md:grid-cols-4;
+	}
+
+	.card-choice__services--default {
+		@apply grid-cols-2 sm:grid-cols-3 md:grid-cols-none md:flex md:flex-nowrap md:items-start md:justify-center;
+	}
+
+	.card-choice__service {
+		@apply min-w-0 text-center;
 	}
 
 	.card-choice__service-icon {
@@ -968,6 +984,14 @@
 
 	.card-choice__plans {
 		@apply gap-4 md:gap-5;
+	}
+
+	.card-choice__plans-note {
+		@apply mt-8 max-w-4xl mx-auto md:mt-10;
+	}
+
+	.card-choice__plans-note-highlight {
+		@apply inline-block px-1;
 	}
 
 	.membership-card__box {
@@ -988,7 +1012,8 @@
 	}
 
 	.membership-card__row {
-		@apply flex shrink-0 items-center justify-center gap-[0.65rem] lg:gap-6;
+		@apply flex shrink-0 items-center justify-center gap-[0.65rem] lg:gap-6 py-4;
+	background-color: rgba(0, 0, 0, 0.75);
 	}
 
 	.membership-card__cta-area {
@@ -1004,7 +1029,16 @@
 	}
 
 	.membership-card__logo {
-		@apply h-[2.6rem] w-auto max-w-[2.925rem] shrink-0 opacity-85 lg:h-16 lg:max-w-[4.5rem];
+		@apply flex h-[2.6rem] w-auto shrink-0 items-center opacity-85 lg:h-16;
+	}
+
+	.membership-card__logo svg,
+	.membership-card__logo img {
+		@apply w-full h-auto max-h-[100px] m-0 p-0;
+	}
+
+	.club-devision .membership-card__logo {
+		@apply h-[2.75rem] lg:h-[3.75rem];
 	}
 
 	.membership-card__cta {
@@ -1350,6 +1384,10 @@
 	}
 
 	/* Map section layout on large screens */
+	.map-section {
+		background-position: inherit;
+	}
+
 	.map-section__map {
 		opacity: 0.85;
 	}
@@ -1361,11 +1399,11 @@
 
 	@media (min-width: 1024px) {
 		.map-section {
-			@apply min-h-[100svh];
+			@apply min-h-[75vh];
 		}
 
 		.map-section__content {
-			@apply flex min-h-[100svh] items-center;
+			@apply flex min-h-[75vh] items-center;
 		}
 	}
 

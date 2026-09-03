@@ -1,0 +1,98 @@
+<svg role="img" aria-label="Extrasport" viewBox="0 0 126 124" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g transform="translate(0,0)">
+    <g id="8566" opacity="1" style="mix-blend-mode:normal">
+      <g>
+        <g>
+          <g transform="matrix(1,0,0,1,5,4)">
+            <g id="8527" opacity="1" style="mix-blend-mode:normal">
+              <g>
+                <g>
+                  <g transform="matrix(1,0,0,1,0,0)">
+                    <g id="5484" opacity="1" style="mix-blend-mode:normal">
+                      <g>
+                        <g>
+                          <path id="5484_fill_path" d="M58,116c32.0325,0 58,-25.9675 58,-58c0,-32.0325 -25.9675,-58 -58,-58c-32.0325,0 -58,25.9675 -58,58c0,32.0325 25.9675,58 58,58zM59.5,96c21.263,0 38.5,-17.237 38.5,-38.5c0,-21.263 -17.237,-38.5 -38.5,-38.5c-21.263,0 -38.5,17.237 -38.5,38.5c0,21.263 17.237,38.5 38.5,38.5z" fill-rule="evenodd" fill="rgb(55, 52, 53)" fill-opacity="1" style="mix-blend-mode:NORMAL"></path>
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </g>
+          </g>
+          <g transform="matrix(1,0,0,1,28,35)">
+            <g id="2158" opacity="1" style="mix-blend-mode:normal">
+              <g>
+                <defs>
+                  <clipPath id="2158_clipPath" x="-50%" y="-50%" width="200%" height="200%">
+                    <path d="M0,0h60v0v46v0h-60v0v-46z" fill="white" clip-rule="nonzero"></path>
+                  </clipPath>
+                </defs>
+                <g clip-path="url(#2158_clipPath)">
+                  <g transform="matrix(1,0,0,1,1,0)">
+                    <g id="2155" opacity="1" style="mix-blend-mode:normal">
+                      <g>
+                        <g>
+                          <g style="mix-blend-mode:normal">
+                            <defs>
+                              <radialGradient id="li8xq8kp047858821243376815" fx="-6.513323707369585" fy="-0.9407133762096453" fr="0" cx="-6.513323707369585" cy="-0.9407133762096453" r="75.16383031993917" gradientUnits="userSpaceOnUse">
+                                <stop offset="0%" stop-opacity="1" stop-color="rgb(255, 255, 255)"></stop>
+                                <stop offset="100%" stop-opacity="1" stop-color="rgb(245, 107, 63)"></stop>
+                              </radialGradient>
+                            </defs>
+                            <path id="2155_fill_path" d="M14.28578,14.55102c0,-1.29617 1.27914,-2.34694 2.85713,-2.34694h29.5237l13.33338,-12.20408h-45.71412v0.0318c-7.44577,0.49913 -13.33338,6.80881 -13.33338,14.51922c0,8.03629 6.39588,14.55102 14.28566,14.55102h27.61895c1.57799,0 2.85713,1.05077 2.85713,2.34694c0,1.29617 -1.27914,2.34694 -2.85713,2.34694h-29.52371l-13.3334,12.20408h45.71415v-0.03183c7.44578,-0.49915 13.33338,-6.80875 13.33338,-14.51919c0,-8.03629 -6.39588,-14.55102 -14.28566,-14.55102h-27.61895c-1.57799,0 -2.85713,-1.05077 -2.85713,-2.34694z" fill-rule="evenodd" fill="url(#li8xq8kp047858821243376815)"></path>
+                          </g>
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                  <g transform="matrix(1,0,0,1,0,0)">
+                    <g id="2159" opacity="1" style="mix-blend-mode:normal">
+                      <g>
+                        <g>
+                          <g style="mix-blend-mode:normal">
+                            <defs>
+                              <radialGradient id="li8xq8lj5309710845047069" fx="-6.513323707369585" fy="-0.9407133762096453" fr="0" cx="-6.513323707369585" cy="-0.9407133762096453" r="75.16383031993917" gradientUnits="userSpaceOnUse">
+                                <stop offset="0%" stop-opacity="1" stop-color="rgb(255, 255, 255)"></stop>
+                                <stop offset="100%" stop-opacity="1" stop-color="rgb(245, 107, 63)"></stop>
+                              </radialGradient>
+                            </defs>
+                            <path id="2159_fill_path" d="M14.2858,31.449c0,1.2961 1.2791,2.3469 2.8571,2.3469h29.5237l13.3334,12.2041h-45.7141v-0.0318c-7.4458,-0.4991 -13.33341,-6.8088 -13.33341,-14.5192c0,-8.0363 6.39589,-14.551 14.28571,-14.551h27.6189c1.578,0 2.8571,-1.0508 2.8571,-2.347c0,-1.2961 -1.2791,-2.3469 -2.8571,-2.3469h-29.5237l-13.3334,-12.2041h45.7141v0.03183c7.4458,0.49915 13.3334,6.80874 13.3334,14.51917c0,8.0363 -6.3959,14.551 -14.2856,14.551h-27.619c-1.578,0 -2.8571,1.0508 -2.8571,2.347z" fill-rule="evenodd" fill="url(#li8xq8lj5309710845047069)"></path>
+                          </g>
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </g>
+          </g>
+        </g>
+        <g transform="matrix(1,0,0,1,0,0)">
+          <g id="8568" opacity="1" style="mix-blend-mode:normal">
+            <g>
+              <g>
+                <g style="mix-blend-mode:normal">
+                  <defs>
+                    <radialGradient id="li8xq8mp7613682786597524" fx="41.021737012583756" fy="42.89755389418951" fr="0" cx="41.021737012583756" cy="42.89755389418951" r="66.86479590539942" gradientUnits="userSpaceOnUse">
+                      <stop offset="0%" stop-opacity="1" stop-color="rgb(255, 255, 255)"></stop>
+                      <stop offset="100%" stop-opacity="1" stop-color="rgb(245, 107, 63)"></stop>
+                    </radialGradient>
+                  </defs>
+                  <path id="8568_fill_path" d="M58,116c32.0325,0 58,-25.9675 58,-58c0,-32.0325 -25.9675,-58 -58,-58c-32.0325,0 -58,25.9675 -58,58c0,32.0325 25.9675,58 58,58zM58.5,96c21.263,0 38.5,-17.237 38.5,-38.5c0,-21.263 -17.237,-38.5 -38.5,-38.5c-21.263,0 -38.5,17.237 -38.5,38.5c0,21.263 17.237,38.5 38.5,38.5z" fill-rule="evenodd" fill="url(#li8xq8mp7613682786597524)"></path>
+                </g>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+  <animateTransform href="#2155" attributeName="transform" type="translate" values="30 23;30 23;30 23;30 23;30 23;30 23" dur="10s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.11;0.14;0.2;0.23;1" keySplines="0.5 0.35 0.15 1;0.5 0.35 0.15 1;0.5 0.35 0.15 1;0.5 0.35 0.15 1;0.5 0.35 0.15 1" additive="sum" fill="freeze"></animateTransform>
+  <animateTransform href="#2155" attributeName="transform" type="scale" values="1 1;1 1;0 1;0 1;1 1;1 1" dur="10s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.11;0.14;0.2;0.23;1" keySplines="0.5 0.35 0.15 1;0.5 0.35 0.15 1;0.5 0.35 0.15 1;0.5 0.35 0.15 1;0.5 0.35 0.15 1" additive="sum" fill="freeze"></animateTransform>
+  <animateTransform href="#2155" attributeName="transform" type="translate" values="-30 -23;-30 -23;-30 -23;-30 -23;-30 -23;-30 -23" dur="10s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.11;0.14;0.2;0.23;1" keySplines="0.5 0.35 0.15 1;0.5 0.35 0.15 1;0.5 0.35 0.15 1;0.5 0.35 0.15 1;0.5 0.35 0.15 1" additive="sum" fill="freeze"></animateTransform>
+  <animateTransform href="#2159" attributeName="transform" type="translate" values="30 23;30 23;30 23;30 23;30 23" dur="10s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.14;0.18;0.2;1" keySplines="0.5 0.35 0.15 1;0.5 0.35 0.15 1;0.5 0.35 0.15 1;0.5 0.35 0.15 1" additive="sum" fill="freeze"></animateTransform>
+  <animateTransform href="#2159" attributeName="transform" type="scale" values="0 1;0 1;1 1;0 1;0 1" dur="10s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.14;0.18;0.2;1" keySplines="0.5 0.35 0.15 1;0.5 0.35 0.15 1;0.5 0.35 0.15 1;0.5 0.35 0.15 1" additive="sum" fill="freeze"></animateTransform>
+  <animateTransform href="#2159" attributeName="transform" type="translate" values="-30 -23;-30 -23;-30 -23;-30 -23;-30 -23" dur="10s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.14;0.18;0.2;1" keySplines="0.5 0.35 0.15 1;0.5 0.35 0.15 1;0.5 0.35 0.15 1;0.5 0.35 0.15 1" additive="sum" fill="freeze"></animateTransform>
+  <animateTransform href="#8568" attributeName="transform" type="rotate" values="0 58 58;0 58 58;360 58 58;360 58 58" dur="10s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.11;0.19;1" keySplines="0.5 0.25 1 1;0.5 0.25 0.5 0.75;0 0 0.5 0.75" additive="sum" fill="freeze"></animateTransform>
+</svg>

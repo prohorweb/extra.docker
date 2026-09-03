@@ -68,6 +68,49 @@ function extrasport_get_theme_settings() {
 }
 
 /**
+ * Yandex Maps JavaScript API key.
+ *
+ * @return string
+ */
+function extrasport_get_yandex_maps_api_key() {
+	if ( defined( 'EXTRASPORT_YANDEX_MAPS_API_KEY' ) && EXTRASPORT_YANDEX_MAPS_API_KEY ) {
+		return (string) EXTRASPORT_YANDEX_MAPS_API_KEY;
+	}
+
+	$club = extrasport_get_club();
+	$key  = trim( (string) ( $club['yandex_maps_api_key'] ?? '' ) );
+
+	return (string) apply_filters( 'extrasport_yandex_maps_api_key', $key );
+}
+
+/**
+ * Whether Yandex Maps script should load on the current request.
+ *
+ * @return bool
+ */
+function extrasport_should_enqueue_yandex_maps() {
+	return is_front_page();
+}
+
+/**
+ * Build Yandex Maps JS API script URL.
+ *
+ * @return string
+ */
+function extrasport_get_yandex_maps_script_url() {
+	$args = array(
+		'lang' => 'ru_RU',
+	);
+
+	$key = extrasport_get_yandex_maps_api_key();
+	if ( '' !== $key ) {
+		$args['apikey'] = $key;
+	}
+
+	return add_query_arg( $args, 'https://api-maps.yandex.ru/2.1/' );
+}
+
+/**
  * Parse a comma/semicolon/newline-separated recipient list.
  *
  * @param string|array<int, string> $value Raw recipient field.
