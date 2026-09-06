@@ -1,0 +1,29 @@
+# Local dev: reuse existing WordPress volumes (copy to docker-compose.override.yml).
+#
+# cp docker-compose.override.example.yml docker-compose.override.yml
+
+services:
+  db:
+    volumes:
+      - db_data:/var/lib/mysql
+
+  wordpress:
+    volumes:
+      - wp_core:/var/www/html
+      - ./deploy/wp-content/themes/extrasport:/var/www/html/wp-content/themes/extrasport
+      - ./deploy/wp-content/uploads:/var/www/html/wp-content/uploads
+      - ./deploy/wp-config.php:/var/www/html/wp-config.php:ro
+
+  nginx:
+    volumes:
+      - wp_core:/var/www/wordpress:ro
+      - ./deploy/wp-content/themes/extrasport:/var/www/wordpress/wp-content/themes/extrasport:ro
+      - ./deploy/wp-content/uploads:/var/www/wordpress/wp-content/uploads:ro
+
+volumes:
+  db_data:
+    external: true
+    name: extradocker_wp_db_data
+  wp_core:
+    external: true
+    name: extradocker_wp_core

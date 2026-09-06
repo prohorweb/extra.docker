@@ -20,6 +20,15 @@ docker compose up -d
 cd deploy/wp-content/themes/extrasport && npm install && npm run build
 ```
 
+**Local dev with existing data:** WordPress DB lives in Docker volume `extradocker_wp_db_data` (user `extra` / password from `.env`, default `extra123`). Attach it via override:
+
+```bash
+cp docker-compose.override.example.yml docker-compose.override.yml
+docker compose up -d   # from repo root — not -f deploy/docker-compose.yml alone
+```
+
+Running only `docker compose -f deploy/docker-compose.yml` creates a **new empty** volume `deploy_db_data` — passwords won't match old data → *Error establishing database connection*.
+
 - **Compose:** [`deploy/docker-compose.yml`](deploy/docker-compose.yml)
 - **Docs:** [deploy/WORDPRESS_SETUP.md](deploy/WORDPRESS_SETUP.md)
 
